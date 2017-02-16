@@ -44,4 +44,5 @@ How is the GUI updated after a command has completed execution?
 	Each tab is updated: first the turtle graphic is updated, then the list of variables, then the list of previous commands. It moves to the next line of the IDE text parser.
 
 ## CRC Cards
-See photo
+![alt text](https://coursework.cs.duke.edu/CompSci308_2017Spring/slogo_team07/blob/master/doc/FrontEnd.JPG "Front End")
+![alt text](https://coursework.cs.duke.edu/CompSci308_2017Spring/slogo_team07/blob/master/doc/ClassStructures.JPG "Class Structures")
