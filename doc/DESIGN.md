@@ -53,7 +53,7 @@ For the menu bar, the user will interact with it by hovering over each of the op
 All errors will be handled the same way, a pop up box will alert the user with a message describing the error. They will have to acknowledge it and close it before they return to the program again. If the user inputs an instruction that we do not recognize we will alert them that they have inputted an invalid command. If an instruction leads to the turtle going out of the bounds of the display, we will tell them that.
 
 ## API Details
-###Frontend External (used by the backend)
+### Frontend External (used by the backend)
 >**What features from assignment specification?**
 Entering commands and showing errors.
 >
@@ -78,7 +78,7 @@ Packages: Pages, Errors
 Exceptions: InvalidInputException
 
 
-###Backend External (used by the frontend) 
+### Backend External (used by the frontend) 
 >**What features from assignment specification?**
 The external backend API is composed primarily of functionality relating to interpretation. The front-end will take in a String from the user, using the InputBox, which must then be parsed. The front-end, however, will have no knowledge of syntax or how to “read” this instruction. Hence, it must pass this information to the Interpreter class. The Interpreter class will then parse the String, convert it to an Instruction of the correct type and return this Instruction to the front-end (LogoController). The front-end will then simply be able to call execute() on the instruction in order  to accomplish the intended result from the input. Hence, this portion will allow for an input like *forward 10* to be translated into actual functionality -- the backend will create a TurtleCommand Instruction of type Forward, with the instance variable 10, to be executed by the front. 
 >
@@ -118,7 +118,7 @@ Packages: model, interpreter
 Exception: SyntaxException (Unbalanced, Unknown, etc.), CommandException (Unknown, Invalid, etc.)
 
 
-###Frontend Internal (used by future programmers)
+### Frontend Internal (used by future programmers)
 >The Frontend Internal API is implemented through the ToolBar, Tool, Page, and PageView abstract classes. It is also implemented through the Model and View interfaces.
 >>
 **What features from assignment specification?**
@@ -144,7 +144,7 @@ Model: Future programmer can make a new model to describe how an object is updat
 View: Future programmer can make a new view to describe how an object’s display is updated in the frontend.
 
 
-##Backend Internal (used by future programmers)
+## Backend Internal (used by future programmers)
 >**What features from assignment specification?**
 The Backend Internal API will be the public methods used by future programmers to extend backend functionality for this project. It will implement all of the commands specified by the SLogo language (Turtle Commands, Turtle Queries, Math, etc.) and allow for addition of new commands by future programmers.
 >
@@ -233,7 +233,6 @@ First, the line Instruction instruction = new Repeat(iterations) (in which itera
 	- For the input box, we had a hard time deciding whether it should be a Page or its own structure. Keeping it as a Page might reduce repeated code, but it wouldn’t allow for multiple input boxes if we wanted to have multiple simulations run at once. We ended up deciding that a Simulation should be required to have an input box because then we would be able to have multiple simulations run at once and have a different input box for each of them. However, this could result in repeated code with the Page class.
 	- It was a difficult decision to decide how the front-end would interact with the backend. We initially considered making an ActorFactory class that is a Singleton and keeps track of every actor that has been created and is being displayed. Then, whenever a command is called by a user, every actor that has been created through the factory class will be updated. The pros of this are that it would be easy to update the actors and keep track of which ones have been created. The cons are that we would be required to use a Singleton, which we were told not to do, and the actors would essentially be global variables, which also isn’t good design. We decided to create a middle-class called “Controller” which is between the Front-End and Back-End and says how they interact. The Controller is initialized in the main class and it has an interpreter, a list of simulations, and a toolbox. Then, whenever the input box in a simulation is updated, the Controller class can get the simulation’s list of actors and update them based on the input and its interpreter. The pros of this are that we don’t need to make a Singleton class in order for it to work, and the Controller class will be the only point of access between the front-end and back-end, reducing any unnecessary dependencies between them. The cons are that there are still some points of ambiguity between backend and frontend with this implementation, and we would need to find way to make the frontend/backend delineation more clear.
 	- When considering multiple concurrent simulations, we had a hard time deciding how to call a command only on the current simulation being displayed without giving too much information. One method of implementing this is passing the entire Controller object to the backend whenever a command is called, and then the backend can get the current simulation from the controller and call the command on all of its actors. The pros of this are that there is a simple flow of data. The cons are that the back-end would have knowledge of more information than necessary (it would see the entire Controller class, which contains every simulation including the current one). The solution that we came up with was creating an InstructionData data type, which only keeps track of the Controller’s current simulation and all of its actors. Then, whenever a new command is called, a new instance of this data type is created and passed to the backend. The pros of this are that the backend only sees everything that it needs to see and nothing more. The cons are that the flow of instructions gets a little less understandable.
--  Include any design decisions that the group discussed at length (include pros and cons from all sides of the discussion) as well as any ambiguities, assumptions, or dependencies regarding the program that impact the overall design.
 
 
 ## Team Responsibilities
@@ -241,21 +240,39 @@ First, the line Instruction instruction = new Repeat(iterations) (in which itera
 >The current division of labor places Maddie and Matt on the back-end and Jimmy and Jesse on the front-end. These subgroups will be working together and delegating tasks accordingly, and will meet periodically to incorporate front and back end changes. The class responsibilities will be as follows:
 >
 Main: Jimmy, Jesse
+
 RunLogo: Jimmy
+
 LogoController: Maddie/ Jimmy
+
 Model interface: Jimmy
+
 View interface: Jimmy
+
 ToolBar: Jimmy
+
 Menu abstract classes: Jesse
+
 Menu classes: Jesse
+
 Interpreter: Maddie
+
 Page abstract class: Jimmy
+
 Page/PageView classes: Jimmy
+
 Simulation/SimulationView: Jesse
+
 InputBox: Jimmy
+
 Actor abstract class: Maddie
+
 Actor classes (turtle, etc.): Maddie
+
 ActorView classes: Jimmy
+
 InstructionData: Matthew
+
 Instruction abstract class: Matthew
+
 Instruction classes: Matthew, Maddie
