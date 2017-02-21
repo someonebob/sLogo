@@ -1,5 +1,7 @@
 package models;
 
+import instruction.InstructionData;
+
 /**	This interface will use a variety of resource files to transform
 	An input string into a useable command (we call it an Instruction).
 	By returning an Instruction, we have transformed something with no functionality
