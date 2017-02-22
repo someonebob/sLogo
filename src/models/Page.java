@@ -12,7 +12,7 @@ package models;
  *
  */
 
-public interface Page{
+public interface Page implements Model{
 /**
 Get formatted string representing the text
 Held in a page -- for instance, a page holding
