@@ -1,6 +1,6 @@
 package models;
-import java.awt.Point;
 
+import javafx.geometry.Point2D;
 import util.PolarAngle;
 import util.RectAngle;
 
@@ -26,8 +26,8 @@ Information in actors, for update and display
 	 * actor
 	 * @return Point location
 	 */
-	public Point getLocation(); //get location of actor
-	public void setLocation(Point p); //set location of actor
+	public Point2D getLocation(); //get location of actor
+	public void setLocation(Point2D p); //set location of actor
 	
 	/**
 	 * An int representing the speed of the
