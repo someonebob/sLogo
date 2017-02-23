@@ -1,4 +1,7 @@
-package instruction;
+package instruction.TurtleCommands;
+
+import instruction.InstructionData;
+import interpreter.InstructionNode;
 
 public class Forward extends TurtleCommand{
 	private static final int NUM_ARGS = 1;

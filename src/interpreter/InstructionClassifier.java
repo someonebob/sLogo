@@ -42,8 +42,23 @@ public class InstructionClassifier {
 	 * @return Instruction object corresponding to String
 	 */
 	public Instruction generateInstruction(String command) {
-		// TODO: Set-up reflection
-		return null;
+		Class<?> clazz;
+		Instruction instruction = null;
+		Object instructionHopeful = new Object();
+		try {
+			clazz = Class.forName(command);
+			instructionHopeful = clazz.newInstance();
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
+			// TODO Handle error --> non-valid class
+		} //This is probably wrong
+		
+		if (!(instructionHopeful instanceof Instruction)){
+			//TODO: Error handling --> non-Instruction input
+		}
+		else{
+			instruction = (Instruction)instructionHopeful;
+		}
+		return instruction;
 	}
 	
 	public void generateTerms(){

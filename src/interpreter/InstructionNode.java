@@ -1,8 +1,11 @@
-package instruction;
+package interpreter;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
+import instruction.Instruction;
+import util.InstructionSplitter;
 
 /**
  * This class represents the nodes used in the parsed string
@@ -19,35 +22,34 @@ public class InstructionNode {
 	private String myValue;
 	private List<InstructionNode> myChildren;
 	
-	public InstructionNode(String text){
+	
+	public InstructionNode(){
+		myText = "";
+		myValue = "";
+		myChildren = new ArrayList<InstructionNode>();
+	}
+	
+	public InstructionNode(String text, List<InstructionNode> children){
 		if(text.isEmpty()){
 			//TODO: Error checking
 		}
 		myText = text;
-		//myChildren = constructNodes(text);
+		myChildren = children;
+		myValue = InstructionSplitter.getInstructionStrings(text).get(0);
 	}
-	
-	/*private List<InstructionNode> constructNodes(String text){
-		List<String> myWords = splitString(text);
-		myValue = myWords.get(0);
-		//TODO: Complete
-	}*/
 	
 	/**
-	 * Split String by whitespace to get relevant words
+	 * Returns the correct instruction corresponding to the
+	 * current InstructionNode
 	 * 
 	 * @param toParse
-	 * @return
+	 * @return functional Instruction representing this InstructionNode
 	 */
-	private List<String> splitString(String toParse){
-		ArrayList<String> toRet = new ArrayList<String>();
-		Scanner scan = new Scanner(toParse);
-		while(scan.hasNext()){
-			toRet.add(scan.next());
-		}
-		return toRet;
+	public Instruction generateCommand(String toParse){
+		//TODO: Complete
+		return null;
 	}
-
+	
 	public String getMyText() {
 		return myText;
 	}
