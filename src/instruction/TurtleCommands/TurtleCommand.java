@@ -1,12 +1,9 @@
 package instruction.TurtleCommands;
 
-import java.util.List;
-
 import instruction.Instruction;
 import instruction.InstructionData;
 import interpreter.InstructionNode;
 import javafx.geometry.Point2D;
-import models.Actor;
 import util.MathUtility;
 import util.PointPolar;
 
