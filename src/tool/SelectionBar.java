@@ -1,8 +1,7 @@
 package tool;
 
-import java.util.List;
-
 import javafx.scene.Node;
+import javafx.scene.control.MenuBar;
 
 /**
  * A bar which contains Tools, which say how properties of the display are
@@ -11,26 +10,32 @@ import javafx.scene.Node;
  * @author jimmy
  *
  */
-public interface ToolBar
+public class SelectionBar
 {
+	MenuBar mainMenu;
+
+	public SelectionBar()
+	{
+		mainMenu = new MenuBar();
+	}
+
 	/**
 	 * Adds a new tool to the toolbar
 	 * 
 	 * @param tool
 	 */
-	public void addTool(Tool tool);
-
-	/**
-	 * Returns the list of tools that are in the toolbar
-	 * 
-	 * @return List of tools
-	 */
-	public List<Tool> getTools();
+	public void addTool(Tool tool)
+	{
+		mainMenu.getMenus().add(tool.getMenu());
+	}
 
 	/**
 	 * Returns the ToolBox display as a JavaFX.Node
 	 * 
 	 * @return JavaFX.Node
 	 */
-	public Node display();
+	public Node display()
+	{
+		return mainMenu;
+	}
 }
