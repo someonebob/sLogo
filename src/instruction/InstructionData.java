@@ -5,6 +5,7 @@ import java.util.List;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import models.Actor;
+import models.Simulation;
 
 /**
  * This acts as container for all of the data associated with the current state
@@ -15,34 +16,56 @@ import models.Actor;
  * @author Matthew Barbano
  *
  */
-public interface InstructionData {
+public class InstructionData {
+	Simulation simulation;
+	
+	public InstructionData(Simulation simulation){ //Add VariablePage here too
+		this.simulation = simulation;
+	}
+	
+	public Actor getActiveActor(){
+		return simulation.getActiveActor();
+	}
+	
+	public void setActiveActor(Actor activeActor){
+		simulation.setActiveActor(activeActor);
+	}
+	
 	/**
 	 * Returns the List of Actors held by this class
 	 * 
 	 * @return
 	 */
-	public List<Actor> getActorList();
+	public List<Actor> getActors(){
+		return simulation.getActors();
+	}
 
 	/**
 	 * Returns the background color of the current simulation
 	 * 
 	 * @return
 	 */
-	public Color getBackgroundColor();
+	public Color getColor(){
+		return simulation.getColor();
+	}
 
 	/**
 	 * Returns the ImageView used for Turtles in the current simulation
 	 * 
 	 * @return
 	 */
-	public ImageView getTurtleImage();
+	public ImageView getTurtleImage(){
+		return simulation.getTurtleImage();
+	}
 
 	/**
 	 * Sets the List of Actors in the current simulation to actorList
 	 * 
 	 * @param actorList
 	 */
-	public void setActorList(List<Actor> actorList);
+	public void setActors(List<Actor> actorList){
+		simulation.setActors(actorList);
+	}
 
 	/**
 	 * Sets the background color of the current simulation to color. Note that
@@ -52,7 +75,9 @@ public interface InstructionData {
 	 * 
 	 * @param color
 	 */
-	public void setBackgroundColor(Color color);
+	public void setColor(Color color){
+		simulation.setColor(color);
+	}
 
 	/**
 	 * Sets the ImageView used to display turtles to imageView. Note that the
@@ -62,5 +87,7 @@ public interface InstructionData {
 	 * 
 	 * @param imageView
 	 */
-	public void setTurtleImage(ImageView imageView);
+	public void setTurtleImage(ImageView imageView){
+		simulation.setTurtleImage(imageView);
+	}
 }
