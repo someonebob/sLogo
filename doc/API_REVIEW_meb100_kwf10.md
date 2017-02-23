@@ -29,12 +29,16 @@ The InstructionData wrapper class allows Instructions to modify the Simulation w
 ## Part 2
 1. How do you think Design Patterns are currently represented in the design or could be used to help improve the design?
 The MVC Design pattern could improve the design. We discussed in class striking a balance between using this pattern for all GUI components and only for a few; I think it would be appropriate to use just for the highest-level GUI wrappers and then just have a model and view for its subdivisions.
- 2. How do you think the "advanced" Java features will help you implement your design?
+
+2. How do you think the "advanced" Java features will help you implement your design?
 Reflection will definitely be useful in creating commands without a large if tree. Also, binding could be helpful for modifying the Simulation, but it will need to replace InstructionData.
- 3. What feature/design problem are you most excited to work on?
+ 
+3. What feature/design problem are you most excited to work on?
 The trig/vector math involved with turtle movement
- 4. What feature/design problem are you most worried about working on?
+ 
+4. What feature/design problem are you most worried about working on?
 Implementing the commands in the “Control Structures” category
+
 5. Come up with at least five use cases for your part (it is absolutely fine if they are useful for both teams).
 Forward 50
 Interpreter creates the InstructionNode tree with Forward root and 50 child. It creates a Foward Instruction, whose execute uses InstructionData to modify the Actor's
