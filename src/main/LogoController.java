@@ -6,12 +6,17 @@ import java.util.List;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import tool.SelectionBar;
 import tool.Tool;
-import tool.ToolBar;
 import view.InputBox;
 import view.PageView;
 import view.SimulationView;
 
+/**
+ * 
+ * @author jimmy
+ *
+ */
 public class LogoController
 {
 	public final int DISPLAY_WIDTH = 600;
@@ -19,7 +24,7 @@ public class LogoController
 
 	private List<PageView> pages;
 	private SimulationView simulation;
-	private ToolBar toolbar;
+	private SelectionBar selectionBar;
 	private InputBox inputBox;
 	private Stage stage;
 	private BorderPane pane;
@@ -28,18 +33,19 @@ public class LogoController
 	{
 		pages = new ArrayList<PageView>();
 		simulation = new SimulationView();
-		// toolbar = new ToolBar();
-		// inputBox = new InputBox();
+		selectionBar = new SelectionBar();
+		inputBox = new InputBox();
 		stage.setTitle("SLogo");
 		stage.show();
-
 		this.stage = stage;
 		stage.setScene(makeScene());
 	}
 
 	private Scene makeScene()
 	{
-		pane = new BorderPane();
+		this.pane = new BorderPane();
+		pane.setBottom(inputBox.display());
+		pane.setTop(selectionBar.display());
 		return new Scene(pane, DISPLAY_WIDTH, DISPLAY_HEIGHT);
 	}
 
@@ -55,7 +61,7 @@ public class LogoController
 
 	public void addTool(Tool tool)
 	{
-		toolbar.addTool(tool);
+		selectionBar.addTool(tool);
 	}
 
 }

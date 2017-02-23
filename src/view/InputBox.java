@@ -1,5 +1,8 @@
 package view;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
@@ -17,7 +20,12 @@ public class InputBox {
 	private TextField console;
 	private String input;
 	private VBox inputs;
+	private Text current;
+	private List<Text> previous;
 	
+	/**
+	 * Generates all the nodes and defines their actions
+	 */
 	public InputBox(){
 		initiateItems();
 		console.setOnAction(e -> consoleAction());
@@ -31,6 +39,10 @@ public class InputBox {
 		return input;
 	}
 	
+	/**
+	 * Returns the group of nodes to be displayed
+	 * @return
+	 */
 	public BorderPane display(){
 		return inputBox;
 	}
@@ -38,6 +50,8 @@ public class InputBox {
 	private void initiateItems(){
 		inputBox = new BorderPane();
 		scroll = new ScrollPane();
+		scroll.setPrefHeight(200);
+		scroll.setMaxHeight(200);
 		
 		inputs = new VBox();
 		scroll.setContent(inputs);
@@ -46,13 +60,22 @@ public class InputBox {
 		console.setPromptText("Enter your code here...");
 		inputBox.setCenter(scroll);
 		inputBox.setBottom(console);
+		
+		previous = new ArrayList<>();
 	}
 	
 	private void consoleAction(){
 		input = console.getText();
 		console.clear();
-		Text current = new Text(input);
+		current = new Text(input);
+		previous.add(current);
+		current.setOnMouseClicked(e -> textAction());
 		inputs.getChildren().add(current);
+		
+	}
+	
+	private void textAction(){
+		System.out.println("poop");
 	}
 
 }

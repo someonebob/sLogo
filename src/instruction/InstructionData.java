@@ -19,6 +19,10 @@ import models.Simulation;
 public class InstructionData {
 	Simulation simulation;
 	
+	public InstructionData(){
+		//TODO: Implement default constructor
+	}
+	
 	public InstructionData(Simulation simulation){ //Add VariablePage here too
 		this.simulation = simulation;
 	}

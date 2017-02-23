@@ -15,7 +15,7 @@ public interface View
 	/**
 	 * Updates how the view is displayed
 	 */
-	public void update();
+	public void update(String instruction);
 
 	/**
 	 * Returns the View's representation as a JavaFX.Node so that it can be
