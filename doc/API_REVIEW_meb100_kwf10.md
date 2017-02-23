@@ -1,13 +1,6 @@
 # API Review
 Partner: Kyle Finke (kwf10)
 
-- NUM_ARGS set via constructors
-- Add another 
-- Error checking: public methods are the ones that need error checking (protected/private don't)
-- Backend - just throw the exception, but in the frontend do the try catch to check for these Exceptions
-- Alt: I catch the exception and pass text to display to frontend
-- Compile vs Runtime errors
-
 ## Part 1
 1. What about your API/design is intended to be flexible?
 To add another command, all you need to do is write a new concrete subclass in the Instruction hierarchy. No modification of existing classes is required.
@@ -33,13 +26,25 @@ all of them, a window will pop up on the GUI indicating the error.
 4. Why do you think your API/design is good (also define what your measure of good is)?
 The InstructionData wrapper class allows Instructions to modify the Simulation without having access to Simulation methods it should not know about. Also, the Instruction hierarchy is closed to modification.
 
- Part 2
-How do you think Design Patterns are currently represented in the design or could be used to help improve the design?
+## Part 2
+1. How do you think Design Patterns are currently represented in the design or could be used to help improve the design?
 The MVC Design pattern could improve the design. We discussed in class striking a balance between using this pattern for all GUI components and only for a few; I think it would be appropriate to use just for the highest-level GUI wrappers and then just have a model and view for its subdivisions.
- How do you think the "advanced" Java features will help you implement your design?
+ 2. How do you think the "advanced" Java features will help you implement your design?
 Reflection will definitely be useful in creating commands without a large if tree. Also, binding could be helpful for modifying the Simulation, but it will need to replace InstructionData.
- What feature/design problem are you most excited to work on?
+ 3. What feature/design problem are you most excited to work on?
 The trig/vector math involved with turtle movement
- What feature/design problem are you most worried about working on?
-Implementing the commands in the ìControl Structuresî category
+ 4. What feature/design problem are you most worried about working on?
+Implementing the commands in the ‚ÄúControl Structures‚Äù category
 5. Come up with at least five use cases for your part (it is absolutely fine if they are useful for both teams).
+Forward 50
+Interpreter creates the InstructionNode tree with Forward root and 50 child. It creates a Foward Instruction, whose execute uses InstructionData to modify the Actor's
+position.
+Backward 50
+Same as Forward 50, except with a Backward Instruction object.
+Forward Sum 2 4
+Here, the tree is Forward, with Sum as its child, with 2 and 4 as its children. Once the tree is made, Interpreter works its way back up, first
+transforming the Sum 2 4 subtree into 6, then evaluating Forward 6 into 6.
+Lessthan 3 5
+Same as Forward 50, except with Lessthan Instruction object. Returns 1.
+Forward 5 Forward 10
+There could either be two separate trees in this case, or a single tree with a blank root InstructionNode.
