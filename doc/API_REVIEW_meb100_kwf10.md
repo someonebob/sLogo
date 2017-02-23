@@ -40,15 +40,15 @@ The trig/vector math involved with turtle movement
 Implementing the commands in the “Control Structures” category
 
 5. Come up with at least five use cases for your part (it is absolutely fine if they are useful for both teams).
-Forward 50
+- Forward 50: 
 Interpreter creates the InstructionNode tree with Forward root and 50 child. It creates a Foward Instruction, whose execute uses InstructionData to modify the Actor's
 position.
-Backward 50
+- Backward 50: 
 Same as Forward 50, except with a Backward Instruction object.
-Forward Sum 2 4
+- Forward Sum 2 4: 
 Here, the tree is Forward, with Sum as its child, with 2 and 4 as its children. Once the tree is made, Interpreter works its way back up, first
 transforming the Sum 2 4 subtree into 6, then evaluating Forward 6 into 6.
-Lessthan 3 5
+- Lessthan 3 5: 
 Same as Forward 50, except with Lessthan Instruction object. Returns 1.
-Forward 5 Forward 10
+- Forward 5 Forward 10: 
 There could either be two separate trees in this case, or a single tree with a blank root InstructionNode.
