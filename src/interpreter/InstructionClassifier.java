@@ -11,10 +11,9 @@ import java.util.regex.Pattern;
 import instruction.Instruction;
 
 /**
- * This class performs the reflection necessary to produce 
- * instances of each command type without direct statement of the
- * desired class type. This class can translate a String into an instance 
- * of the intended class type.
+ * This class performs the reflection necessary to produce instances of each
+ * command type without direct statement of the desired class type. This class
+ * can translate a String into an instance of the intended class type.
  * 
  * @author maddiebriere
  *
@@ -23,12 +22,12 @@ import instruction.Instruction;
 public class InstructionClassifier {
 	public final String SYNTAX = "src/resources.languages/Syntax.properties";
 	public final String LANGUAGE = "src/resources.langauges/";
-	
+
 	private String mySyntax;
 	private String myLanguage;
-	 private List<Entry<String, Pattern>> myTerms;
-	
-	public InstructionClassifier(String s){
+	private List<Entry<String, Pattern>> myTerms;
+
+	public InstructionClassifier(String s) {
 		myLanguage = LANGUAGE + s;
 		mySyntax = SYNTAX;
 		generateTerms();
@@ -50,18 +49,17 @@ public class InstructionClassifier {
 			instructionHopeful = clazz.newInstance();
 		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
 			// TODO Handle error --> non-valid class
-		} //This is probably wrong
-		
-		if (!(instructionHopeful instanceof Instruction)){
-			//TODO: Error handling --> non-Instruction input
-		}
-		else{
-			instruction = (Instruction)instructionHopeful;
+		} // This is probably wrong
+
+		if (!(instructionHopeful instanceof Instruction)) {
+			// TODO: Error handling --> non-Instruction input
+		} else {
+			instruction = (Instruction) instructionHopeful;
 		}
 		return instruction;
 	}
-	
-	public void generateTerms(){
+
+	public void generateTerms() {
 		myTerms = new ArrayList<Entry<String, Pattern>>();
 		addPatterns(mySyntax);
 		addPatterns(myLanguage);
@@ -73,8 +71,7 @@ public class InstructionClassifier {
 		while (iter.hasMoreElements()) {
 			String key = iter.nextElement();
 			String regex = resources.getString(key);
-			myTerms.add(new SimpleEntry<>(key,
-					Pattern.compile(regex, Pattern.CASE_INSENSITIVE)));
+			myTerms.add(new SimpleEntry<>(key, Pattern.compile(regex, Pattern.CASE_INSENSITIVE)));
 		}
 	}
 
@@ -93,8 +90,5 @@ public class InstructionClassifier {
 	public void setMySyntax(String mySyntax) {
 		this.mySyntax = mySyntax;
 	}
-	
-	
-	
-	
+
 }

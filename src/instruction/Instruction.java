@@ -19,6 +19,7 @@ public abstract class Instruction {
 	private InstructionNode root;
 	private String textRepresentation;
 	
+	
 	public Instruction(){
 		instructionData = new InstructionData();
 		root = new InstructionNode();
@@ -58,9 +59,9 @@ public abstract class Instruction {
 	public abstract double execute();
 
 	/**
-	 * Returns the text originally input for an instruction, such as �Forward
-	 * 50.� It is used by the LogoController to display previously entered
-	 * commands. It can be used by future programmers if parsing a command�s
+	 * Returns the text originally input for an instruction, such as "Forward
+	 * 50." It is used by the LogoController to display previously entered
+	 * commands. It can be used by future programmers if parsing a command's
 	 * text in a new Instruction becomes necessary.
 	 **/
 	public String getText(){
