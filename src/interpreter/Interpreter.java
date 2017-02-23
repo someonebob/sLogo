@@ -1,7 +1,10 @@
 package interpreter;
 
-import instruction.InstructionData;
-import instruction.InstructionNode;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+import instruction.*;
 
 /**	This interface will use a variety of resource files to transform
 	An input string into a useable command (we call it an Instruction).
@@ -12,11 +15,20 @@ import instruction.InstructionNode;
 **/
 
 public class Interpreter{
+	
+	private InstructionClassifier myClassifier;
+	
+	public Interpreter(String language){
+		myClassifier = new InstructionClassifier(language);
+	}
+	
 	/**
 	Parse the instruction from the input String and then execute the instruction
 	 **/
 	public void parseAndRun(String s, InstructionData i){
 		InstructionNode head = parse(s);
+		//Instruction toExecute = new Instruction(i, head);
+		//toExecute.execute();
 	}
 	
 	/**
@@ -30,4 +42,13 @@ public class Interpreter{
 		//TODO: Complete
 		return null;
 	}
+
+	public InstructionClassifier getMyClassifier() {
+		return myClassifier;
+	}
+
+	public void setMyClassifier(InstructionClassifier myClassifier) {
+		this.myClassifier = myClassifier;
+	}
+	
 }
