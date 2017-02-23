@@ -18,13 +18,14 @@ public class SimulationView implements View
 	}
 
 	@Override
-	public void update()
+	public void update(String instruction)
 	{
 	}
 
 	@Override
 	public Node display()
 	{
+		return null;
 
 	}
 }

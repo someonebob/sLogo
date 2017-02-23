@@ -4,6 +4,9 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import tool.FileTool;
+import tool.SelectionBar;
+import tool.SettingsTool;
 
 public class TestMain extends Application{
 	private BorderPane root;
@@ -28,7 +31,9 @@ public class TestMain extends Application{
 		workspace = new Workspace();
 		root.setLeft(workspace.display());
 		
-
+		SelectionBar bar = new SelectionBar();
+		bar.addAllTools(new FileTool(window), new SettingsTool());
+		root.setTop(bar.display());
 		
 		window.setScene(scene);
 		window.setTitle("SLogo");

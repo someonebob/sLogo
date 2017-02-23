@@ -29,6 +29,7 @@ public class Workspace implements PageView{
 	private void initiateItems(){
 		scroll = new ScrollPane();
 		variables = new VBox(10);
+		variables.setPrefWidth(200);
 		scroll.setContent(variables);
 	}
 

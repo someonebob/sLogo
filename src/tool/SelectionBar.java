@@ -28,6 +28,16 @@ public class SelectionBar
 	{
 		mainMenu.getMenus().add(tool.getMenu());
 	}
+	
+	/**
+	 * Adds multiple tools to the toolbar
+	 * @param tools
+	 */
+	public void addAllTools(Tool...tools)
+	{
+		for(Tool t : tools)
+		mainMenu.getMenus().add(t.getMenu());
+	}
 
 	/**
 	 * Returns the ToolBox display as a JavaFX.Node
