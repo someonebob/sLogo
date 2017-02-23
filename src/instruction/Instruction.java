@@ -1,5 +1,8 @@
 package instruction;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * This is a the root of the inheritance hierarchy whose concrete subclasses
  * represent all possible commands in this project's implementation of the SLogo
@@ -16,7 +19,7 @@ public abstract class Instruction {
 	
 	public Instruction(InstructionData instructionData, InstructionNode root){
 		this.instructionData = instructionData;
-		this.textRepresentation = root.getText();  //Returns String for FULL command
+		this.textRepresentation = root.getMyText();  //Returns String for FULL command
 		this.root = root;
 	}
 	
@@ -41,9 +44,10 @@ public abstract class Instruction {
 
 	/**
 	 * Performs the action associated with this Instruction. Unique for each
-	 * concrete subclass implementation.
+	 * concrete subclass implementation. Returns the same return value for
+	 * the SLogo command represented by this instruction.
 	 */
-	public abstract void execute();
+	public abstract double execute();
 
 	/**
 	 * Returns the text originally input for an instruction, such as “Forward
@@ -54,5 +58,18 @@ public abstract class Instruction {
 	public String getText(){
 		return textRepresentation;
 	}
-
+	
+	public abstract int getNumArgs();  //Implement as private constant in subclasses
+	
+	public InstructionNode getRoot(){
+		return root;
+	}
+	
+	protected List<Double> getArguments(){
+		List<Double> arguments = new ArrayList<>();
+		for(InstructionNode child : getRoot().getMyChildren()){
+			arguments.add(Double.parseDouble(child.getMyValue()));
+		}
+		return arguments;
+	}
 }

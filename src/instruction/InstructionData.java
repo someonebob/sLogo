@@ -55,7 +55,7 @@ public class InstructionData {
 	 * @return
 	 */
 	public ImageView getTurtleImage(){
-		return simulation.getTurtleImage();
+		return simulation.getActiveActor().getTurtleImage();
 	}
 
 	/**
@@ -88,6 +88,6 @@ public class InstructionData {
 	 * @param imageView
 	 */
 	public void setTurtleImage(ImageView imageView){
-		simulation.setTurtleImage(imageView);
+		simulation.getActiveActor().setTurtleImage(imageView);
 	}
 }

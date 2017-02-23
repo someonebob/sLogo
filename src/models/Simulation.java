@@ -14,5 +14,8 @@ public interface Simulation{
 	public void setColor(Color c);
 	
 	public List<Actor> getActors();
+	public void setActors(List<Actor> newActors);
+	public Actor getActiveActor();
+	public void setActiveActor(Actor newActor);
  //likely to add more to this as we develop program
 }
