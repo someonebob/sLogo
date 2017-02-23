@@ -4,9 +4,13 @@ import java.util.List;
 
 import javafx.geometry.Point2D;
 import models.Actor;
+import util.MathUtility;
+import util.PointPolar;
 
 /**
- * Exploits overloading methods
+ * This class is the abstract superclass for all Instructions which change
+ * a turtle's state on the simulation screen (for example, move forward, turn, etc.)
+ * It contains helper methods used repeatedly by these Instructions.
  * @author Matthew Barbano
  *
  */
@@ -15,29 +19,30 @@ public abstract class TurtleCommand extends Instruction{
 		super(instructionData, root);
 	}
 	
-	public void move(Point2D newLocation){
+	protected void moveNewLocation(Point2D newLocation){
 		getInstructionData().getActiveActor().setLocation(newLocation);
 	}
 	
-	public void move(double distance){
+	protected void move(double distance){
 		Point2D currentLocation = getInstructionData().getActiveActor().getLocation();
-		
+		double currentHeading = getInstructionData().getActiveActor().getHeading();
+		Point2D deltaVector = MathUtility.polarToRectangular(new PointPolar(distance, currentHeading));
+		moveNewLocation(currentLocation.add(deltaVector));
 	}
-	/*
-	public void move(double newX, double newY){
-		List<Actor> actorList = getInstructionData().getActors();
-		for(Actor actor : actorList){
-			actor.setLocation(new Point(newX, newY));
-		}
+	
+	protected void turnNewHeading(double newHeading){
+		getInstructionData().getActiveActor().setHeading(newHeading);
 	}
-	public void move(double deltaX, double deltaY){
-		List<Actor> actorList = getInstructionData().getActors();
-		for(Actor actor : actorList){
-			move(actor.getLocation().getX() + deltaX, actor.getLocation().getY() + deltaY);
-		}
+	
+	protected void turn(double deltaHeading){
+		turnNewHeading(getInstructionData().getActiveActor().getHeading() + deltaHeading);
 	}
-	public void move(double oldX, double oldY, double distance){
-		move(oldX, oldY, distance * Math.cos())
+	
+	protected void togglePenState(){
+		//TODO
 	}
-	*/
+	
+	protected void togglePenVisibility(){
+		//TODO
+	}
 }
