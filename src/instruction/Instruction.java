@@ -19,7 +19,6 @@ public abstract class Instruction {
 	private InstructionNode root;
 	private String textRepresentation;
 	
-	
 	public Instruction(){
 		instructionData = new InstructionData();
 		root = new InstructionNode();
