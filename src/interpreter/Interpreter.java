@@ -1,8 +1,6 @@
 package interpreter;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 import instruction.*;
 import util.InstructionSplitter;

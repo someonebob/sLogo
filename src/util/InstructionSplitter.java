@@ -57,6 +57,7 @@ public class InstructionSplitter {
 		while (scan.hasNext()) {
 			toRet.add(scan.next());
 		}
+		scan.close();
 		return toRet;
 	}
 
