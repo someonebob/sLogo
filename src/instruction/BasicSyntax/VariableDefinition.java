@@ -1,4 +1,4 @@
-package instruction;
+package instruction.BasicSyntax;
 
 /**
  * This is located lower in the Instruction hierarchy. It represents the

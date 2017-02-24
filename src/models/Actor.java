@@ -1,8 +1,7 @@
 package models;
 
 import javafx.geometry.Point2D;
-import util.PolarAngle;
-import util.RectAngle;
+import javafx.scene.image.ImageView;
 
 /**
  * Interface represents any actor displayed during
@@ -39,20 +38,12 @@ Information in actors, for update and display
 
 	public double getSize();
 	public void setSize(double d);
-
-	/**
-	 * Where PolarAngle is a util class
-	 * @return angle in polar coordinates
-	 */
-	public PolarAngle getPolarAngle();
-	public void setPolarAngle(PolarAngle p);
-
-	/**
-	 * Where RectAngle is a util class
-	 * @return angle in rectangular coordinates
-	 */
-	public RectAngle getRectAngle();
-	public void setRectAngle(RectAngle p);
+	
+	public double getHeading();
+	public void setHeading(double d);
+	
+	public ImageView getTurtleImage();
+	public void setTurtleImage(ImageView newImage);
 
 	/**
 	 * Visibility of actor on screen

@@ -12,13 +12,13 @@ package models;
  *
  */
 
-public interface Page implements Model{
+public abstract class Page implements Model{
 /**
 Get formatted string representing the text
 Held in a page -- for instance, a page holding
 Current variables would output a formatted
 Variable list
 **/
-	public String getText(); //get formatted text
+	public abstract String getText(); //get formatted text
 	//no set text
 }
