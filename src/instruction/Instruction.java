@@ -18,7 +18,14 @@ public abstract class Instruction {
 	private InstructionData instructionData;
 	private InstructionNode root;
 	private String textRepresentation;
-	
+	/*
+	public static void main(String[] args){
+		InstructionData data = new InstructionData();
+		Instruction forward = new Backward(data, new InstructionNode());
+		System.out.println(forward.execute());
+		System.out.println(data.getActiveActor().getLocation());
+	}
+	*/
 	public Instruction(){
 		instructionData = new InstructionData();
 		root = new InstructionNode();
@@ -27,7 +34,7 @@ public abstract class Instruction {
 	
 	public Instruction(InstructionData instructionData, InstructionNode root){
 		this.instructionData = instructionData;
-		this.textRepresentation = root.getMyText();  //Returns String for FULL command
+		this.textRepresentation = root.getMyText();
 		this.root = root;
 	}
 	
@@ -67,7 +74,7 @@ public abstract class Instruction {
 		return textRepresentation;
 	}
 	
-	public abstract int getNumArgs();  //Implement as private constant in subclasses
+	public abstract int getNumArgs();
 	
 	public InstructionNode getRoot(){
 		return root;

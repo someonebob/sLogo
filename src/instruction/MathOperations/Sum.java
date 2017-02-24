@@ -1,19 +1,23 @@
 package instruction.MathOperations;
 
-import instruction.Instruction;
+import instruction.InstructionData;
+import interpreter.InstructionNode;
 
-public class Sum extends Instruction{
-
+public class Sum extends MathOperation{
+	private static int NUM_ARGS = 2;
+	
+	public Sum(InstructionData data, InstructionNode node) {
+		super(data, node);
+	}
+	
 	@Override
 	public double execute() {
-		// TODO Auto-generated method stub
-		return 0;
+		return getArguments().get(0) + getArguments().get(1);
 	}
 
 	@Override
 	public int getNumArgs() {
-		// TODO Auto-generated method stub
-		return 0;
+		return NUM_ARGS;
 	}
 
 }
