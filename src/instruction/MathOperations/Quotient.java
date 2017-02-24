@@ -6,6 +6,12 @@ import interpreter.InstructionNode;
 
 public class Quotient extends MathOperation{
 	private static int NUM_ARGS = 2;
+	
+	public Quotient(){
+		super(new InstructionData(), new InstructionNode());
+		//TODO: check and complete
+	}
+	
 	public Quotient(InstructionData data, InstructionNode node) {
 		super(data, node);
 	}

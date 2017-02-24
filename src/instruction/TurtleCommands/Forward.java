@@ -6,6 +6,11 @@ import interpreter.InstructionNode;
 public class Forward extends TurtleCommand{
 	private static final int NUM_ARGS = 1;
 	
+	public Forward(){
+		super(new InstructionData(), new InstructionNode());
+		//TODO: check and complete
+	}
+	
 	public Forward(InstructionData instructionData, InstructionNode root) {
 		super(instructionData, root);
 	}

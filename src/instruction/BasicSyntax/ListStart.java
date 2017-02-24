@@ -1,6 +1,8 @@
 package instruction.BasicSyntax;
 
 import instruction.Instruction;
+import instruction.InstructionData;
+import interpreter.InstructionNode;
 
 /**
  * Represents character starting a List of commands
@@ -17,6 +19,11 @@ import instruction.Instruction;
 
 public class ListStart extends Instruction {
 
+	public ListStart(){
+		super(new InstructionData(), new InstructionNode());
+		//TODO: check and complete
+	}
+	
 	@Override
 	public double execute() {
 		// TODO Auto-generated method stub
