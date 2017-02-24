@@ -38,6 +38,9 @@ public class Interpreter {
 		 * more control of execution in Instruction, Interpreter,
 		 * InstructionNode, etc.?
 		 */
+		
+		
+		//TODO: Decide if this might need to be a list
 		InstructionNode head = parse(instruction);
 		Instruction toExecute = myClassifier.generateInstruction(head.getMyValue());
 		toExecute.execute();
