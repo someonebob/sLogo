@@ -36,18 +36,6 @@ public class InstructionNode {
 		myValue = InstructionSplitter.getInstructionStrings(text).get(0);
 	}
 
-	/**
-	 * Generate the command corresponding to the current node.
-	 * 
-	 * This is tricky, but very important! This will generate ONLY the current
-	 * instruction, by
-	 * 
-	 * @return
-	 */
-	public Instruction generateCommand() {
-		// TODO: Complete
-		return null;
-	}
 
 	/**
 	 * Total text return. Example: "forward forward 50" 1st node: "forward
