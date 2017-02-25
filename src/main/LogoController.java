@@ -6,9 +6,10 @@ import java.util.List;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import tool.AbstractButton;
 import tool.FileTool;
 import tool.SelectionBar;
-import tool.Tool;
+import tool.SettingsTool;
 import view.InputBox;
 import view.PageView;
 import view.SavedCommandsView;
@@ -33,6 +34,9 @@ public class LogoController
 	private SavedCommandsView userCommands;
 	private Stage stage;
 	private BorderPane pane;
+	
+	private FileTool file;
+	private SettingsTool settings;
 
 	public LogoController(Stage stage)
 	{
@@ -43,6 +47,7 @@ public class LogoController
 		workspace = new WorkspaceView();
 		userCommands = new SavedCommandsView();
 		
+		addTools();
 		initiateObservers();
 		this.stage = stage;
 		stage.setTitle("SLogo");
@@ -71,16 +76,21 @@ public class LogoController
 		this.simulation = simulation;
 	}
 
-	public void addTool(Tool tool)
+	public void addTools()
 	{
-		selectionBar.addTool(tool);
+		file = new FileTool(stage);
+		settings = new SettingsTool();
+		selectionBar.addAllTools(file, settings);;
 	}
 
 	private void initiateObservers(){
 		inputBox.addObserver(workspace);
-		FileTool file = new FileTool(stage);
+		inputBox.addObserver(simulation);
 		file.addObserver(simulation);
-		selectionBar.addTool(file);
+		settings.addObserver(simulation);
+		for(AbstractButton ab : settings.getButtons()){
+			ab.addObserver(simulation);
+		}
 	}
 
 }

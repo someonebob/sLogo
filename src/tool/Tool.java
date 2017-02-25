@@ -13,20 +13,30 @@ import javafx.scene.control.MenuItem;
  * @author jimmy
  *
  */
-public abstract class Tool extends Observable
-{
+public abstract class Tool extends Observable {
 	Menu menu;
 
-	public Tool(String menuName)
-	{
+	public Tool(String menuName) {
 		menu = new Menu(menuName);
-		menu.getItems().addAll(makeMenuItems());
+		makeMenuItems();
+		if (getButtons() != null) {
+
+			for (AbstractButton ab : getButtons()) {
+
+				for (AbstractButton ab2 : ab.getItemList()) {
+					menu.getItems().add(ab2.getItem());
+				}
+
+			}
+		}
+
 	}
 
-	public Menu getMenu()
-	{
+	public Menu getMenu() {
 		return menu;
 	}
 
-	public abstract List<MenuItem> makeMenuItems();
+	public abstract void makeMenuItems();
+
+	public abstract List<AbstractButton> getButtons();
 }

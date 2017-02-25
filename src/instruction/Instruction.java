@@ -19,6 +19,7 @@ public abstract class Instruction {
 	private InstructionData instructionData;
 	private InstructionNode root;
 	private String textRepresentation;
+<<<<<<< HEAD
 	private List<Double> arguments;
 	/*
 	public static void main(String[] args){
@@ -35,12 +36,15 @@ public abstract class Instruction {
 		textRepresentation = "";
 		arguments = new ArrayList<>();
 	}
+=======
+	private List<String> arguments;
+>>>>>>> master
 	
 	public Instruction(InstructionData instructionData, InstructionNode root){
 		this.instructionData = instructionData;
 		this.textRepresentation = root.getMyText(); //Fix problem
 		this.root = root;
-		this.arguments = convertTreeToArguments();
+		this.arguments = getArgumentsFromTree();
 	}
 	
 	/**
@@ -79,25 +83,38 @@ public abstract class Instruction {
 		return textRepresentation;
 	}
 	
-	public abstract int getNumArgs();
-	
 	protected InstructionNode getRoot(){
 		return root;
 	}
 	
-	private List<Double> convertTreeToArguments(){
-		List<Double> argumentsLocal = new ArrayList<>();
-		for(InstructionNode child : getRoot().getMyChildren()){
-			argumentsLocal.add(Double.parseDouble(child.getMyValue()));
-		}
-		return argumentsLocal;
+	private List<String> getArgumentsFromTree(){
+		/*
+		 * 
+		 * MADDIE SHOULD ADD CODE HERE
+		 * This method should return a list of the arguments for this 
+		 * instruction as Doubles.
+		 * 
+		 */
+		return null;
 	}
 	
-	protected List<Double> getArguments(){
+	protected List<Double> getArgumentsDouble(){
+		List<Double> doubleList = new ArrayList<>();
+		for(String stringArgument : arguments){
+			doubleList.add(Double.parseDouble(stringArgument));
+		}
+		return doubleList;
+	}
+	
+	protected double getArgumentDouble(int index){
+		return Double.parseDouble(arguments.get(index));
+	}
+	
+	protected List<String> getArgumentsString(){
 		return arguments;
 	}
-	
-	protected double getArgument(int index){
+
+	protected String getArgumentString(int index){
 		return arguments.get(index);
 	}
 	
