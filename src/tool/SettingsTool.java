@@ -54,15 +54,18 @@ public class SettingsTool extends Tool
 			blue.setOnAction(e -> {
 				System.out.println("hi");
 				this.color = Color.BLUE;
-				this.setOnAction(color);
+				this.setChanged();
+				this.notifyObservers(color);
 			});
 			red.setOnAction(e -> {
 				this.color = Color.RED;
-				this.setOnAction(color);
+				this.setChanged();
+				this.notifyObservers(color);
 			});
 			yellow.setOnAction(e -> {
 				this.color = Color.YELLOW;
-				this.setOnAction(color);
+				this.setChanged();
+				this.notifyObservers(color);
 			});
 		}
 	}
