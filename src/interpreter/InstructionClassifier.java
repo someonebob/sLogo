@@ -48,7 +48,6 @@ public class InstructionClassifier {
      */
     public String findShortcutKey(String text) {
         final String ERROR = "NO MATCH";
-        //Better 
         /**
          * Default to higher classifiers if only possibility
          */
