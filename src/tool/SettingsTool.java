@@ -5,7 +5,6 @@ import java.util.List;
 
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.paint.Color;
 
 /**
@@ -16,7 +15,7 @@ import javafx.scene.paint.Color;
 public class SettingsTool extends Tool
 {
 	public static final String name = "Settings";
-	
+
 	private List<AbstractButton> buttons;
 
 	public SettingsTool()
@@ -28,71 +27,72 @@ public class SettingsTool extends Tool
 	public void makeMenuItems()
 	{
 		buttons = new ArrayList<>();
-		buttons.add(new backgroundColorButton());
-		/*
-		buttons.add(makeActorColorItem());
-		buttons.add(makePenColorItem());
-		buttons.add(new SeparatorMenuItem());
-		buttons.add(makeLanguageItem());
-		*/
+		buttons.add(new BackgroundColorButton());
+		buttons.add(new ActorColorButton());
+		buttons.add(new PenColorButton());
+		buttons.add(new LanguageButton());
 	}
-	
-	public List<AbstractButton> getButtons(){
+
+	@Override
+	public List<AbstractButton> getButtons()
+	{
 		return buttons;
 
 	}
-	
-	public class backgroundColorButton extends AbstractButton
+
+	public class BackgroundColorButton extends AbstractButton
 	{
 		private Color color;
-		
-		public backgroundColorButton()
+
+		public BackgroundColorButton()
 		{
-			super(new MenuItem("Background Color"));
-			color = Color.BLACK;
-			this.setOnAction(color);
+			super(new Menu("Background Color"));
+			MenuItem blue = new MenuItem("blue");
+			MenuItem red = new MenuItem("red");
+			MenuItem yellow = new MenuItem("yellow");
+			((Menu) this.getItem()).getItems().addAll(blue, red, yellow);
+			blue.setOnAction(e -> {
+				System.out.println("hi");
+				this.color = Color.BLUE;
+				this.setOnAction(color);
+			});
+			red.setOnAction(e -> {
+				this.color = Color.RED;
+				this.setOnAction(color);
+			});
+			yellow.setOnAction(e -> {
+				this.color = Color.YELLOW;
+				this.setOnAction(color);
+			});
 		}
 	}
 
-	private MenuItem makeBkgdColorItem()
+	public class ActorColorButton extends AbstractButton
 	{
-		Menu backgroundColor = new Menu("Background Color");
-		
-		MenuItem red = new MenuItem("Red");
-		MenuItem green = new MenuItem("Green");
-		MenuItem blue = new MenuItem("Blue");
-		
-		backgroundColor.getItems().addAll(red, green, blue);
-		
-		
-		return backgroundColor;
+		private Color color;
+
+		public ActorColorButton()
+		{
+			super(new MenuItem("Actor Color"));
+		}
 	}
-	
-	private MenuItem makeActorColorItem()
+
+	public class PenColorButton extends AbstractButton
 	{
-		MenuItem actorColor = new MenuItem("Actor Color");
-		actorColor.setOnAction(e -> {
-			System.out.println("Nice color m'dude");
-		});
-		return actorColor;
+		private Color color;
+
+		public PenColorButton()
+		{
+			super(new MenuItem("Pen Color"));
+		}
 	}
-	
-	private MenuItem makePenColorItem()
+
+	public class LanguageButton extends AbstractButton
 	{
-		MenuItem penColor = new MenuItem("Pen Color");
-		penColor.setOnAction(e -> {
-			System.out.println("Nice color m'dude");
-		});
-		return penColor;
-	}
-	
-	private MenuItem makeLanguageItem()
-	{
-		MenuItem language = new MenuItem("Language");
-		language.setOnAction(e -> {
-			System.out.println("Nice color m'dude");
-		});
-		return language;
+		public LanguageButton()
+		{
+			super(new MenuItem("Language"));
+		}
 	}
 
 }
