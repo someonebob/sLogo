@@ -26,15 +26,17 @@ public class FileTool extends Tool{
 		this.window = window;
 	}
 
-
+	
 	@Override
-	public List<MenuItem> makeMenuItems() {
+	public void makeMenuItems() {
+		/*
 		List<MenuItem> menuItems = new ArrayList<MenuItem>();
 		menuItems.add(makeNewItem());
 		menuItems.add(makeOpenItem());
 		menuItems.add(makeSaveItem());
 
 		return menuItems;
+		*/
 	}
 	
 	private MenuItem makeNewItem(){
@@ -80,6 +82,13 @@ public class FileTool extends Tool{
 		chooser.getExtensionFilters().setAll(new ExtensionFilter("LOGO", EXTENSION));
 		
 		return chooser;
+	}
+
+
+	@Override
+	public List<AbstractButton> getButtons() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

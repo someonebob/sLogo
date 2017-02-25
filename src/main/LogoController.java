@@ -6,10 +6,10 @@ import java.util.List;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import tool.AbstractButton;
 import tool.FileTool;
 import tool.SelectionBar;
 import tool.SettingsTool;
-import tool.Tool;
 import view.InputBox;
 import view.PageView;
 import view.SavedCommandsView;
@@ -85,8 +85,12 @@ public class LogoController
 
 	private void initiateObservers(){
 		inputBox.addObserver(workspace);
+		inputBox.addObserver(simulation);
 		file.addObserver(simulation);
-		
+		settings.addObserver(simulation);
+		for(AbstractButton ab : settings.getButtons()){
+			ab.addObserver(simulation);
+		}
 	}
 
 }
