@@ -55,6 +55,7 @@ public class InputBox {
 		
 		inputs = new VBox();
 		scroll.setContent(inputs);
+		scroll.vvalueProperty().bind(inputs.heightProperty());
 		
 		console = new TextField();
 		console.setPromptText("Enter your code here...");

@@ -5,6 +5,11 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
+/**
+ * 
+ * @author Jesse
+ *
+ */
 public class Workspace implements PageView{
 	private ScrollPane scroll;
 	private VBox variables;
