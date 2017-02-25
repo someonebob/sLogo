@@ -3,10 +3,8 @@ package tool;
 import java.util.ArrayList;
 import java.util.List;
 
-import javafx.scene.control.ColorPicker;
-import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
-import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 
 /**
  * @author jimmy
@@ -19,9 +17,9 @@ public class SettingsTool extends Tool
 
 	private List<AbstractButton> buttons;
 
-	public SettingsTool()
+	public SettingsTool(Stage window)
 	{
-		super(name);
+		super(name, window);
 	}
 
 	@Override
@@ -29,7 +27,7 @@ public class SettingsTool extends Tool
 	{
 		buttons = new ArrayList<>();
 		buttons.add(new BackgroundColorButton());
-		buttons.add(new ActorColorButton());
+		buttons.add(new ActorImageButton());
 		buttons.add(new PenColorButton());
 		buttons.add(new LanguageButton());
 	}
@@ -41,54 +39,24 @@ public class SettingsTool extends Tool
 
 	}
 
-	public class BackgroundColorButton extends AbstractButton
+	public class BackgroundColorButton extends AbstractColorButton
 	{
-		private Color color;
-
 		public BackgroundColorButton()
 		{
-			super(new Menu("Background Color"));
-			MenuItem blue = new MenuItem("blue");
-			MenuItem red = new MenuItem("red");
-			MenuItem yellow = new MenuItem("yellow");
-			((Menu) this.getItem()).getItems().addAll(blue, red, yellow);
-			this.getItem().setOnAction(e -> {
-				final ColorPicker colorPicker = new ColorPicker();
-				colorPicker.setValue(Color.CORAL);
-			});
-			// blue.setOnAction(e -> {
-			// System.out.println("hi");
-			// this.color = Color.BLUE;
-			// this.setChanged();
-			// this.notifyObservers(color);
-			// });
-			// red.setOnAction(e -> {
-			// this.color = Color.RED;
-			// this.setChanged();
-			// this.notifyObservers(color);
-			// });
-			// yellow.setOnAction(e -> {
-			// this.color = Color.YELLOW;
-			// this.setChanged();
-			// this.notifyObservers(color);
-			// });
+			super(new MenuItem("Background Color"));
 		}
 	}
 
-	public class ActorColorButton extends AbstractButton
+	public class ActorImageButton extends AbstractButton
 	{
-		private Color color;
-
-		public ActorColorButton()
+		public ActorImageButton()
 		{
-			super(new MenuItem("Actor Color"));
+			super(new MenuItem("Actor Image"));
 		}
 	}
 
-	public class PenColorButton extends AbstractButton
+	public class PenColorButton extends AbstractColorButton
 	{
-		private Color color;
-
 		public PenColorButton()
 		{
 			super(new MenuItem("Pen Color"));
