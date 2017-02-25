@@ -2,6 +2,7 @@ package view;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
 
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
@@ -14,7 +15,7 @@ import javafx.scene.text.Text;
  * @author Jesse
  *
  */
-public class InputBox {
+public class InputBox extends Observable {
 	private BorderPane inputBox;
 	private ScrollPane scroll;
 	private TextField console;
@@ -66,6 +67,8 @@ public class InputBox {
 	}
 	
 	private void consoleAction(){
+		setChanged();
+		notifyObservers();
 		input = console.getText();
 		console.clear();
 		current = new Text(input);
@@ -78,5 +81,6 @@ public class InputBox {
 	private void textAction(){
 		System.out.println("poop");
 	}
+
 
 }
