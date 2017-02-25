@@ -22,9 +22,9 @@ public class FileTool extends Tool{
 	private Stage window;
 	private List<AbstractButton> buttons;
 
-	public FileTool(Stage window) {
+	public FileTool() {
 		super(name);
-		this.window = window;
+		window = new Stage();
 	}
 
 	
@@ -48,7 +48,10 @@ public class FileTool extends Tool{
 		public NewButton() {
 			super(new MenuItem("New"));
 			//TODO action
-			this.setOnAction(null);
+			this.getItem().setOnAction(e -> {
+				this.setChanged();
+				this.notifyObservers();
+			});
 		}
 		
 	}
@@ -58,7 +61,14 @@ public class FileTool extends Tool{
 		public OpenButton() {
 			super(new MenuItem("Open"));
 			// TODO Auto-generated constructor stub
-			this.setOnAction(setupFileChooser().showOpenDialog(window));
+			this.getItem().setOnAction(e -> {
+				File selectedFile = setupFileChooser().showOpenDialog(window);
+				if(selectedFile != null){
+					this.setChanged();
+					this.notifyObservers(selectedFile);
+				}
+				
+			});
 		}
 		
 	}
@@ -67,8 +77,15 @@ public class FileTool extends Tool{
 
 		public SaveButton() {
 			super(new MenuItem("Save"));
-			// TODO Auto-generated constructor stub
-			this.setOnAction(null);
+			// TODO Make it save
+			this.getItem().setOnAction(e -> {
+				File save = setupFileChooser().showSaveDialog(window);
+				if(save != null){
+					this.setChanged();
+					this.notifyObservers(save);
+				}
+				
+			});
 		}
 		
 	}
@@ -77,14 +94,14 @@ public class FileTool extends Tool{
 
 		public SaveAsButton() {
 			super(new MenuItem("Save As"));
-			// TODO Auto-generated constructor stub
-			this.setOnAction(null);
+			// TODO make it save
+			this.getItem().setOnAction(e -> {
+				this.setChanged();
+				this.notifyObservers();
+			});
 		}
 		
 	}
-	
-	
-	
 	
 	
 	private FileChooser setupFileChooser(){

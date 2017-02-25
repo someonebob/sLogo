@@ -56,22 +56,22 @@ public class SettingsTool extends Tool
 				final ColorPicker colorPicker = new ColorPicker();
 				colorPicker.setValue(Color.CORAL);
 			});
-			// blue.setOnAction(e -> {
-			// System.out.println("hi");
-			// this.color = Color.BLUE;
-			// this.setChanged();
-			// this.notifyObservers(color);
-			// });
-			// red.setOnAction(e -> {
-			// this.color = Color.RED;
-			// this.setChanged();
-			// this.notifyObservers(color);
-			// });
-			// yellow.setOnAction(e -> {
-			// this.color = Color.YELLOW;
-			// this.setChanged();
-			// this.notifyObservers(color);
-			// });
+			 blue.setOnAction(e -> {
+			 System.out.println("hi");
+			 this.color = Color.BLUE;
+			 this.setChanged();
+			 this.notifyObservers(color);
+			 });
+			 red.setOnAction(e -> {
+			 this.color = Color.RED;
+			 this.setChanged();
+			 this.notifyObservers(color);
+			 });
+			 yellow.setOnAction(e -> {
+			 this.color = Color.YELLOW;
+			 this.setChanged();
+			 this.notifyObservers(color);
+			 });
 		}
 	}
 
