@@ -1,12 +1,14 @@
 package tool;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.SeparatorMenuItem;
-import javafx.scene.paint.Color;
+import javafx.scene.image.Image;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
+import javafx.stage.Stage;
 
 /**
  * @author jimmy
@@ -16,83 +18,83 @@ import javafx.scene.paint.Color;
 public class SettingsTool extends Tool
 {
 	public static final String name = "Settings";
-	
+
 	private List<AbstractButton> buttons;
 
-	public SettingsTool()
+	public SettingsTool(Stage window)
 	{
-		super(name);
+		super(name, window);
 	}
 
 	@Override
 	public void makeMenuItems()
 	{
 		buttons = new ArrayList<>();
-		buttons.add(new backgroundColorButton());
-		/*
-		buttons.add(makeActorColorItem());
-		buttons.add(makePenColorItem());
-		buttons.add(new SeparatorMenuItem());
-		buttons.add(makeLanguageItem());
-		*/
+		buttons.add(new BackgroundColorButton());
+		buttons.add(new TurtleImageButton());
+		buttons.add(new PenColorButton());
+		buttons.add(new LanguageButton());
 	}
-	
-	public List<AbstractButton> getButtons(){
+
+	@Override
+	public List<AbstractButton> getButtons()
+	{
 		return buttons;
 
 	}
-	
-	public class backgroundColorButton extends AbstractButton
+
+	private FileChooser setupFileChooser()
 	{
-		private Color color;
-		
-		public backgroundColorButton()
+		final String EXTENSION = "*.png";
+
+		FileChooser chooser = new FileChooser();
+		chooser.setTitle("New Image");
+		File defaultDirectory = new File(System.getProperty("user.dir") + "/images");
+		chooser.setInitialDirectory(defaultDirectory);
+		chooser.getExtensionFilters().setAll(new ExtensionFilter("IMAGE", EXTENSION));
+
+		return chooser;
+	}
+
+	public class BackgroundColorButton extends AbstractColorButton
+	{
+		public BackgroundColorButton()
 		{
 			super(new MenuItem("Background Color"));
-			color = Color.BLACK;
-			this.setOnAction(color);
 		}
 	}
 
-	private MenuItem makeBkgdColorItem()
+	public class TurtleImageButton extends AbstractButton
 	{
-		Menu backgroundColor = new Menu("Background Color");
-		
-		MenuItem red = new MenuItem("Red");
-		MenuItem green = new MenuItem("Green");
-		MenuItem blue = new MenuItem("Blue");
-		
-		backgroundColor.getItems().addAll(red, green, blue);
-		
-		
-		return backgroundColor;
+		public TurtleImageButton()
+		{
+			super(new MenuItem("Turtle Image"));
+			this.getItem().setOnAction(e -> {
+				Stage newWindow = new Stage();
+				File selectedFile = setupFileChooser().showOpenDialog(newWindow);
+				if (selectedFile != null) {
+					Image newImage = new Image(selectedFile.toURI().toString());
+					this.setChanged();
+					this.notifyObservers(newImage);
+				}
+			});
+		}
 	}
-	
-	private MenuItem makeActorColorItem()
+
+	public class PenColorButton extends AbstractColorButton
 	{
-		MenuItem actorColor = new MenuItem("Actor Color");
-		actorColor.setOnAction(e -> {
-			System.out.println("Nice color m'dude");
-		});
-		return actorColor;
+		public PenColorButton()
+		{
+			super(new MenuItem("Pen Color"));
+		}
 	}
-	
-	private MenuItem makePenColorItem()
+
+	public class LanguageButton extends AbstractButton
 	{
-		MenuItem penColor = new MenuItem("Pen Color");
-		penColor.setOnAction(e -> {
-			System.out.println("Nice color m'dude");
-		});
-		return penColor;
-	}
-	
-	private MenuItem makeLanguageItem()
-	{
-		MenuItem language = new MenuItem("Language");
-		language.setOnAction(e -> {
-			System.out.println("Nice color m'dude");
-		});
-		return language;
+		public LanguageButton()
+		{
+			super(new MenuItem("Language"));
+		}
 	}
 
 }

@@ -1,6 +1,5 @@
 package view;
 
-import java.util.Observable;
 import java.util.Observer;
 
 import javafx.scene.Node;
@@ -15,7 +14,7 @@ import javafx.scene.Node;
  */
 public interface View extends Observer
 {
-
+	
 	/**
 	 * Returns the View's representation as a JavaFX.Node so that it can be
 	 * displayed.
@@ -23,6 +22,13 @@ public interface View extends Observer
 	 * @return JavaFX.Node view image
 	 */
 	public Node display();
+	
+	/**
+	 * Updates the View to reflect new form
+	 * @param arg
+	 */
+	public void updateData(String arg);
 
-	void update(Observable o, Object arg);
+	
+	
 }

@@ -19,7 +19,12 @@ public class WorkspaceView implements PageView{
 	public WorkspaceView(){
 		initiateItems();
 	}
-
+	
+	@Override
+	public Node display() {
+		return scroll;
+	}
+	
 	@Override
 	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub
@@ -31,16 +36,19 @@ public class WorkspaceView implements PageView{
 	}
 	
 	@Override
-	public Node display() {
-		return scroll;
+	public void updateData(String arg) {
+		// TODO Auto-generated method stub
+		
 	}
-	
+
 	private void initiateItems(){
 		scroll = new ScrollPane();
 		variables = new VBox(10);
 		variables.setPrefWidth(200);
 		scroll.setContent(variables);
 	}
+
+
 
 
 
