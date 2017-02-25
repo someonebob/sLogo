@@ -84,10 +84,8 @@ public class LogoController
 	}
 
 	private void initiateObservers(){
-		inputBox.addObserver(workspace);
-		inputBox.addObserver(simulation);
-		file.addObserver(simulation);
-		settings.addObserver(simulation);
+
+
 		for(AbstractButton ab : settings.getButtons()){
 			ab.addObserver(simulation);
 		}

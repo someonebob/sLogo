@@ -1,5 +1,6 @@
 package util;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.regex.Pattern;
@@ -15,14 +16,14 @@ import java.util.regex.Pattern;
 public class ArgumentReader {
 	public static String NUM_ARGS = "resources/languages/NumArgs";
 	
-	private String numArgsFile;
-	private List<Entry<String, Pattern>> myNumArgsList;
-	
-	public ArgumentReader(){
-		numArgsFile = NUM_ARGS;
+	public static int getNumArgs(String instructionType){
+		int numArgs=1;
+		List<Entry<String,Pattern> >myNumArgsList = new ArrayList<Entry<String,Pattern>>();
+		ResourceToList.addTerms(NUM_ARGS, myNumArgsList);
+		//TODO: Finish
+
+		return numArgs;
 	}
 	
-	private void initializeList(){
-		
-	}
+	
 }
