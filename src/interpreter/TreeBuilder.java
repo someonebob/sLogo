@@ -63,7 +63,7 @@ public class TreeBuilder {
 		head.setMyValue(value);
 		head.setMyText(getCurrentText());
 		setCurrentText(InstructionSplitter.removeFirstItem(getCurrentText()));//remove node from current text
-		int numArgs = ArgumentReader.getNumArgs(value);
+		int numArgs = ArgumentReader.getNumArgs(classifier.findShortcutKey(value));
 		for(int i=0; i<numArgs; i++){
 			head.getMyChildren().add(buildSubTree());
 		}

@@ -26,4 +26,16 @@ public class ResourceToList {
 			list.add(new SimpleEntry<>(key, Pattern.compile(regex, Pattern.CASE_INSENSITIVE)));
 		}
 	}
+	
+	public static int getNumericalTerm(String resource, String key){
+		ResourceBundle resources = ResourceBundle.getBundle(resource);
+		Object target = resources.getObject(key);
+		try{
+			return Integer.parseInt((String)target);
+		}
+		catch(Exception e){
+			//TODO: Error handling
+			return 0;
+		}
+	}
 }
