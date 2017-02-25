@@ -4,23 +4,19 @@ import instruction.Instruction;
 import instruction.InstructionData;
 import interpreter.InstructionNode;
 
-public class Less extends Instruction{
-
+public class Less extends BooleanOperation{
+	
 	public Less(){
 		super(new InstructionData(), new InstructionNode());
-		//TODO: check and complete
+	}
+	
+	public Less(InstructionData data, InstructionNode node){
+		super(data, node);
 	}
 	
 	@Override
 	public double execute() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int getNumArgs() {
-		// TODO Auto-generated method stub
-		return 0;
+		return (getArgument(0) < getArgument(1)) ? 1 : 0;
 	}
 
 }

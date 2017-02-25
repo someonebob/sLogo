@@ -8,7 +8,6 @@ public class Forward extends TurtleCommand{
 	
 	public Forward(){
 		super(new InstructionData(), new InstructionNode());
-		//TODO: check and complete
 	}
 	
 	public Forward(InstructionData instructionData, InstructionNode root) {
@@ -17,7 +16,7 @@ public class Forward extends TurtleCommand{
 
 	@Override
 	public double execute() {
-		double distance = getArguments().get(0);
+		double distance = getArgument(0);
 		move(distance);
 		return distance;
 	}
