@@ -31,21 +31,15 @@ public class FileTool extends Tool{
 	@Override
 	public void makeMenuItems() {
 		buttons = new ArrayList <>();
-		
-		/*
-		List<MenuItem> menuItems = new ArrayList<MenuItem>();
-		menuItems.add(makeNewItem());
-		menuItems.add(makeOpenItem());
-		menuItems.add(makeSaveItem());
-
-		return menuItems;
-		*/
+		buttons.add(new NewButton());
+		buttons.add(new OpenButton());
+		buttons.add(new SaveButton());
+		buttons.add(new SaveAsButton());
 	}
 	
 
 	@Override
 	public List<AbstractButton> getButtons() {
-		// TODO Auto-generated method stub
 		return buttons;
 	}
 	

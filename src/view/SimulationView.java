@@ -11,6 +11,7 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import models.Simulation;
 import tool.FileTool;
+import tool.FileTool.NewButton;
 import tool.SettingsTool.BackgroundColorButton;
 
 /**
@@ -50,12 +51,7 @@ public class SimulationView implements View
 	@Override
 	public void update(Observable o, Object arg)
 	{
-
-		if (o instanceof InputBox) {
-
-		}
-
-		if (o instanceof FileTool) {
+		if (o instanceof NewButton){
 			newTab();
 		}
 
