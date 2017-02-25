@@ -10,7 +10,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import models.Simulation;
-import tool.SettingsTool.backgroundColorButton;
+import tool.FileTool;
+import tool.SettingsTool.BackgroundColorButton;
 
 /**
  * @author jimmy
@@ -28,9 +29,10 @@ public class SimulationView implements View
 		root = new TabPane();
 		newTab();
 	}
-	
-	public void addTab(){
-		
+
+	public void addTab()
+	{
+
 	}
 
 	public Simulation getModel()
@@ -46,13 +48,22 @@ public class SimulationView implements View
 	}
 	
 	@Override
-	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
-		if(o instanceof backgroundColorButton){
-			if(arg instanceof Color){
+	public void update(Observable o, Object arg)
+	{
+
+		if (o instanceof InputBox) {
+
+		}
+
+		if (o instanceof FileTool) {
+			newTab();
+		}
+
+		if (o instanceof BackgroundColorButton) {
+			if (arg instanceof Color) {
 				background.setFill((Paint) arg);
 			}
-			
+
 		}
 	}
 
@@ -62,13 +73,13 @@ public class SimulationView implements View
 		
 	}
 
-	
-	private void newTab(){
+	private void newTab()
+	{
 		Tab newTab = new Tab();
 		ActorView actor = new ActorView();
 		StackPane layout = new StackPane();
 		background = new Rectangle(400, 400, Color.ALICEBLUE);
-		
+
 		newTab.setText("new tab");
 		newTab.setContent(layout);
 		layout.getChildren().addAll(background, actor.display());

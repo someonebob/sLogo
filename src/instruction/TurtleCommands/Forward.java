@@ -4,11 +4,6 @@ import instruction.InstructionData;
 import interpreter.InstructionNode;
 
 public class Forward extends TurtleCommand{
-	private static final int NUM_ARGS = 1;
-	
-	public Forward(){
-		super(new InstructionData(), new InstructionNode());
-	}
 	
 	public Forward(InstructionData instructionData, InstructionNode root) {
 		super(instructionData, root);
@@ -16,13 +11,8 @@ public class Forward extends TurtleCommand{
 
 	@Override
 	public double execute() {
-		double distance = getArgument(0);
+		double distance = getArgumentDouble(0);
 		move(distance);
 		return distance;
-	}
-
-	@Override
-	public int getNumArgs() {
-		return NUM_ARGS;
 	}
 }

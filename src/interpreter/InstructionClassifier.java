@@ -9,20 +9,22 @@ import java.util.Map.Entry;
 import java.util.regex.Pattern;
 
 import instruction.*;
+import util.ResourceToList;
 
 /**
  * This class performs the reflection necessary to produce instances of each
  * command type without direct statement of the desired class type. This class
  * can translate a String into an instance of the intended class type.
  * 
+ * THERE IS A BUG IN THIS CLASS - NEED TO CHANGE
+ * 
  * @author maddiebriere
- *
  */
 
 public class InstructionClassifier {
 	public final String SYNTAX = "resources/languages/Syntax";
-	public final String LANGUAGE = "resources/languages/";
 	public final String PATHS = "resources/languages/JavaSpeak"; //Full class names matched to shortcuts
+	public final String LANGUAGE = "resources/languages/";
 
 	private String mySyntax;
 	private String myLanguage;
@@ -53,11 +55,11 @@ public class InstructionClassifier {
          */
         for (Entry<String, Pattern> e : mySyntaxList) {
             if (match(text, e.getValue())) {
-            	if(!e.getKey().equals("Instruction"))
+            	if(!e.getKey().equals("Instruction")){
             		return e.getKey();
+            	}
             	else
             		return classifyInstructionShortcut(text);
-            		
             }
         }
         return ERROR;
@@ -164,20 +166,11 @@ public class InstructionClassifier {
 		mySyntaxList = new ArrayList<Entry<String, Pattern>>();
 		myLanguageList = new ArrayList<Entry<String, Pattern>>();
 		myPathsList = new ArrayList<Entry<String,Pattern>>();
-		addTerms(mySyntax, mySyntaxList);
-		addTerms(myLanguage, myLanguageList);
-		addTerms(myPaths, myPathsList);
+		ResourceToList.addTerms(mySyntax, mySyntaxList);
+		ResourceToList.addTerms(myLanguage, myLanguageList);
+		ResourceToList.addTerms(myPaths, myPathsList);
 	}
 
-	public void addTerms(String resource, List<Entry<String, Pattern>> list) {
-		ResourceBundle resources = ResourceBundle.getBundle(resource);
-		Enumeration<String> iter = resources.getKeys();
-		while (iter.hasMoreElements()) {
-			String key = iter.nextElement();
-			String regex = resources.getString(key);
-			list.add(new SimpleEntry<>(key, Pattern.compile(regex, Pattern.CASE_INSENSITIVE)));
-		}
-	}
 
 	public String getMyLanguage() {
 		return myLanguage;
