@@ -8,6 +8,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import tool.AbstractButton;
 import tool.FileTool;
+import tool.HelpTool;
 import tool.SelectionBar;
 import tool.SettingsTool;
 import view.InputBox;
@@ -37,6 +38,7 @@ public class LogoController
 
 	private FileTool file;
 	private SettingsTool settings;
+	private HelpTool help;
 
 	public LogoController(Stage stage)
 	{
@@ -80,8 +82,8 @@ public class LogoController
 	{
 		file = new FileTool(stage);
 		settings = new SettingsTool(stage);
-		selectionBar.addAllTools(file, settings);
-		;
+		help = new HelpTool(stage);
+		selectionBar.addAllTools(file, settings, help);
 	}
 
 	private void initiateObservers()
