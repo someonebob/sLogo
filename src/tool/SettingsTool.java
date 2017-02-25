@@ -3,6 +3,7 @@ package tool;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.paint.Color;
@@ -51,22 +52,26 @@ public class SettingsTool extends Tool
 			MenuItem red = new MenuItem("red");
 			MenuItem yellow = new MenuItem("yellow");
 			((Menu) this.getItem()).getItems().addAll(blue, red, yellow);
-			blue.setOnAction(e -> {
-				System.out.println("hi");
-				this.color = Color.BLUE;
-				this.setChanged();
-				this.notifyObservers(color);
+			this.getItem().setOnAction(e -> {
+				final ColorPicker colorPicker = new ColorPicker();
+				colorPicker.setValue(Color.CORAL);
 			});
-			red.setOnAction(e -> {
-				this.color = Color.RED;
-				this.setChanged();
-				this.notifyObservers(color);
-			});
-			yellow.setOnAction(e -> {
-				this.color = Color.YELLOW;
-				this.setChanged();
-				this.notifyObservers(color);
-			});
+			// blue.setOnAction(e -> {
+			// System.out.println("hi");
+			// this.color = Color.BLUE;
+			// this.setChanged();
+			// this.notifyObservers(color);
+			// });
+			// red.setOnAction(e -> {
+			// this.color = Color.RED;
+			// this.setChanged();
+			// this.notifyObservers(color);
+			// });
+			// yellow.setOnAction(e -> {
+			// this.color = Color.YELLOW;
+			// this.setChanged();
+			// this.notifyObservers(color);
+			// });
 		}
 	}
 
