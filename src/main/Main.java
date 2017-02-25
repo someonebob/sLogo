@@ -9,6 +9,7 @@ public class Main extends Application
 	public void start(Stage stage) throws Exception
 	{
 		RunLogo runLogo = new RunLogo(stage);
+		stage.setMaximized(true);
 	}
 
 	public static void main(String[] args)

@@ -6,16 +6,19 @@ import java.util.List;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import tool.FileTool;
 import tool.SelectionBar;
 import tool.Tool;
 import view.InputBox;
 import view.PageView;
+import view.SavedCommandsView;
 import view.SimulationView;
+import view.WorkspaceView;
 
 /**
  * 
  * @author jimmy
- *
+ * @author Jesse
  */
 public class LogoController
 {
@@ -26,6 +29,8 @@ public class LogoController
 	private SimulationView simulation;
 	private SelectionBar selectionBar;
 	private InputBox inputBox;
+	private WorkspaceView workspace;
+	private SavedCommandsView userCommands;
 	private Stage stage;
 	private BorderPane pane;
 
@@ -35,9 +40,13 @@ public class LogoController
 		simulation = new SimulationView();
 		selectionBar = new SelectionBar();
 		inputBox = new InputBox();
+		workspace = new WorkspaceView();
+		userCommands = new SavedCommandsView();
+		
+		initiateObservers();
+		this.stage = stage;
 		stage.setTitle("SLogo");
 		stage.show();
-		this.stage = stage;
 		stage.setScene(makeScene());
 	}
 
@@ -46,6 +55,9 @@ public class LogoController
 		this.pane = new BorderPane();
 		pane.setBottom(inputBox.display());
 		pane.setTop(selectionBar.display());
+		pane.setLeft(workspace.display());
+		pane.setCenter(simulation.display());
+		pane.setRight(userCommands.display());
 		return new Scene(pane, DISPLAY_WIDTH, DISPLAY_HEIGHT);
 	}
 
@@ -62,6 +74,13 @@ public class LogoController
 	public void addTool(Tool tool)
 	{
 		selectionBar.addTool(tool);
+	}
+
+	private void initiateObservers(){
+		inputBox.addObserver(workspace);
+		FileTool file = new FileTool(stage);
+		file.addObserver(simulation);
+		selectionBar.addTool(file);
 	}
 
 }

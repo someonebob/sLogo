@@ -20,22 +20,22 @@ public abstract class TurtleCommand extends Instruction{
 	}
 	
 	protected void moveNewLocation(Point2D newLocation){
-		getInstructionData().getActiveActor().setLocation(newLocation);
+		getActiveActor().setLocation(newLocation);
 	}
 	
 	protected void move(double distance){
-		Point2D currentLocation = getInstructionData().getActiveActor().getLocation();
-		double currentHeading = getInstructionData().getActiveActor().getHeading();
+		Point2D currentLocation = getActiveActor().getLocation();
+		double currentHeading = getActiveActor().getHeading();
 		Point2D deltaVector = MathUtility.polarToRectangular(new PointPolar(distance, currentHeading));
 		moveNewLocation(currentLocation.add(deltaVector));
 	}
 	
 	protected void turnNewHeading(double newHeading){
-		getInstructionData().getActiveActor().setHeading(newHeading);
+		getActiveActor().setHeading(newHeading);
 	}
 	
 	protected void turn(double deltaHeading){
-		turnNewHeading(getInstructionData().getActiveActor().getHeading() + deltaHeading);
+		turnNewHeading(getActiveActor().getHeading() + deltaHeading);
 	}
 	
 	protected void togglePenState(){

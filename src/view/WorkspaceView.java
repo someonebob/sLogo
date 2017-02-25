@@ -1,28 +1,37 @@
 package view;
 
+import java.util.Observable;
+
 import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
-public class Workspace implements PageView{
+/**
+ * Workspace that stores all the variables
+ * @author Jesse
+ *
+ */
+public class WorkspaceView implements PageView{
 	private ScrollPane scroll;
 	private VBox variables;
 	
-	public Workspace(){
+	public WorkspaceView(){
 		initiateItems();
 	}
 
 	@Override
-	public void update(String instruction) {
+	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub
-		Text variable = new Text(instruction);
-		variables.getChildren().add(variable);
+		if (arg instanceof String){
+			Text variable = new Text((String) arg);
+			variables.getChildren().add(variable);
+		}
+		
 	}
-
+	
 	@Override
 	public Node display() {
-		// TODO Auto-generated method stub
 		return scroll;
 	}
 	
@@ -32,5 +41,7 @@ public class Workspace implements PageView{
 		variables.setPrefWidth(200);
 		scroll.setContent(variables);
 	}
+
+
 
 }

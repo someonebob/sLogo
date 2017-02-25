@@ -8,10 +8,10 @@ import tool.FileTool;
 import tool.SelectionBar;
 import tool.SettingsTool;
 
-public class TestMain extends Application{
+public class TestMain extends Application {
 	private BorderPane root;
 	private InputBox console;
-	private Workspace workspace;
+	private WorkspaceView workspace;
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -27,17 +27,18 @@ public class TestMain extends Application{
 
 		console = new InputBox();
 		root.setBottom(console.display());
-		
-		workspace = new Workspace();
+
+		workspace = new WorkspaceView();
 		root.setLeft(workspace.display());
+
 		
 		SelectionBar bar = new SelectionBar();
 		bar.addAllTools(new FileTool(window), new SettingsTool());
 		root.setTop(bar.display());
-		
+
 		window.setScene(scene);
 		window.setTitle("SLogo");
 		window.show();
 	}
-	
+
 }

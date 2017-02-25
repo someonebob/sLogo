@@ -9,7 +9,6 @@ public class Quotient extends MathOperation{
 	
 	public Quotient(){
 		super(new InstructionData(), new InstructionNode());
-		//TODO: check and complete
 	}
 	
 	public Quotient(InstructionData data, InstructionNode node) {
@@ -21,7 +20,7 @@ public class Quotient extends MathOperation{
 		if(getArguments().get(1) == 0){
 			throw new SLogoException("Error error error!!!");   //NEED TO MODIFY/REFINE EXCEPTION HANDLING WITH A SLOGO EXCEPTION HIERARCHY
 		}
-		return getArguments().get(0) / getArguments().get(1);
+		return getArgument(0) / getArgument(1);
 	}
 
 	@Override

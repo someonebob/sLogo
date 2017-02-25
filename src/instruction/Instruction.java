@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import interpreter.InstructionNode;
+import models.Actor;
 
 /**
  * This is a the root of the inheritance hierarchy whose concrete subclasses
@@ -18,7 +19,7 @@ public abstract class Instruction {
 	private InstructionData instructionData;
 	private InstructionNode root;
 	private String textRepresentation;
-	
+	private List<Double> arguments;
 	/*
 	public static void main(String[] args){
 		InstructionData data = new InstructionData();
@@ -32,12 +33,14 @@ public abstract class Instruction {
 		instructionData = new InstructionData();
 		root = new InstructionNode();
 		textRepresentation = "";
+		arguments = new ArrayList<>();
 	}
 	
 	public Instruction(InstructionData instructionData, InstructionNode root){
 		this.instructionData = instructionData;
-		this.textRepresentation = root.getMyText();
+		this.textRepresentation = root.getMyText(); //Fix problem
 		this.root = root;
+		this.arguments = convertTreeToArguments();
 	}
 	
 	/**
@@ -45,7 +48,7 @@ public abstract class Instruction {
 	 * 
 	 * @return
 	 */
-	public InstructionData getInstructionData(){
+	protected InstructionData getInstructionData(){
 		return instructionData;
 	}
 
@@ -55,7 +58,7 @@ public abstract class Instruction {
 	 * 
 	 * @param instructionData
 	 */
-	public void setInstructionData(InstructionData instructionData){
+	protected void setInstructionData(InstructionData instructionData){
 		this.instructionData = instructionData;
 	}
 
@@ -78,15 +81,27 @@ public abstract class Instruction {
 	
 	public abstract int getNumArgs();
 	
-	public InstructionNode getRoot(){
+	protected InstructionNode getRoot(){
 		return root;
 	}
 	
-	protected List<Double> getArguments(){
-		List<Double> arguments = new ArrayList<>();
+	private List<Double> convertTreeToArguments(){
+		List<Double> argumentsLocal = new ArrayList<>();
 		for(InstructionNode child : getRoot().getMyChildren()){
-			arguments.add(Double.parseDouble(child.getMyValue()));
+			argumentsLocal.add(Double.parseDouble(child.getMyValue()));
 		}
+		return argumentsLocal;
+	}
+	
+	protected List<Double> getArguments(){
 		return arguments;
+	}
+	
+	protected double getArgument(int index){
+		return arguments.get(index);
+	}
+	
+	protected Actor getActiveActor(){
+		return getInstructionData().getActiveActor();
 	}
 }
