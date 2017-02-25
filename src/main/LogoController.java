@@ -34,7 +34,7 @@ public class LogoController
 	private SavedCommandsView userCommands;
 	private Stage stage;
 	private BorderPane pane;
-	
+
 	private FileTool file;
 	private SettingsTool settings;
 
@@ -46,11 +46,11 @@ public class LogoController
 		inputBox = new InputBox();
 		workspace = new WorkspaceView();
 		userCommands = new SavedCommandsView();
-		
-		addTools();
-		initiateObservers();
+
 		this.stage = stage;
 		stage.setTitle("SLogo");
+		addTools();
+		initiateObservers();
 		stage.show();
 		stage.setScene(makeScene());
 	}
@@ -79,14 +79,15 @@ public class LogoController
 	public void addTools()
 	{
 		file = new FileTool(stage);
-		settings = new SettingsTool();
-		selectionBar.addAllTools(file, settings);;
+		settings = new SettingsTool(stage);
+		selectionBar.addAllTools(file, settings);
+		;
 	}
 
-	private void initiateObservers(){
+	private void initiateObservers()
+	{
 
-
-		for(AbstractButton ab : settings.getButtons()){
+		for (AbstractButton ab : settings.getButtons()) {
 			ab.addObserver(simulation);
 		}
 	}
