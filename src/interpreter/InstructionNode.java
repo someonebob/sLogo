@@ -3,9 +3,6 @@ package interpreter;
 import java.util.ArrayList;
 import java.util.List;
 
-import instruction.Instruction;
-import util.InstructionSplitter;
-
 /**
  * This class represents the nodes used in the parsed string tree. This tree
  * will hold the nodes (each representing its own individual word) in an order
@@ -16,36 +13,29 @@ import util.InstructionSplitter;
  */
 
 public class InstructionNode {
-	private String myText;
-	private String myValue;
-	private int myReturn;
+	
+	private String myClassification; // The String representing the type (Forward, Equal, Comment)
+	private String myValue; //String command
 	private List<InstructionNode> myChildren;
 
 	public InstructionNode() {
-		myText = "";
-		myValue = "";
-		myChildren = new ArrayList<InstructionNode>();
+		this("", "", new ArrayList<InstructionNode>());
+	}
+	
+	public InstructionNode(String clss, String text) {
+		this(clss, text, new ArrayList<InstructionNode>());
 	}
 
-	public InstructionNode(String text, List<InstructionNode> children) {
-		if (text.isEmpty()) {
+	public InstructionNode(String clss, String value, List<InstructionNode> children) {
+		if (value.isEmpty()) {
 			// TODO: Error checking
 		}
-		myText = text;
+		myClassification = clss;
+		myValue = value;
 		myChildren = children;
-		myValue = InstructionSplitter.getInstructionStrings(text).get(0);
 	}
 
 
-	/**
-	 * Total text return. Example: "forward forward 50" 1st node: "forward
-	 * forward 50" 2nd node: "forward 50" 3rd node: "50"
-	 * 
-	 * @return String of text representing current node
-	 */
-	public String getMyText() {
-		return myText;
-	}
 
 	/**
 	 * Return only the head value (current node)
@@ -66,15 +56,8 @@ public class InstructionNode {
 		return myChildren;
 	}
 
-	/**
-	 * This returns the number returned by this instruction. All Instructions
-	 * must return a value, regardless of their function. For instance, 'fd 50'
-	 * will return 50. Hence, the nodes fd and 50 will both have the return 50.
-	 * 
-	 * @return
-	 */
-	public int getMyReturn() {
-		return myReturn;
+	public String getMyClassification() {
+		return myClassification;
 	}
 
 }

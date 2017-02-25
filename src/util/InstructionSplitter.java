@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 import instruction.Instruction;
 import interpreter.InstructionClassifier;
+import interpreter.InstructionNode;
 
 /**
  * Purely a utility class, used for purposes of splitting an input line and
@@ -21,7 +22,9 @@ public class InstructionSplitter {
 
 	/**
 	 * Parses string into individual words, uses the given instruction
-	 * classifier to create corresponding instructions in list for return.
+	 * classifier to create corresponding InstructionNodes in list for return.
+	 * NOTE: THESE INSTRUCTION NODES WILL NOT HAVE ANY CHILDREN -- THIS MUST
+	 * BE COMPLETED BY TREE BUILDER.
 	 * 
 	 * @param toParse
 	 *            Input line to be parsed for instructions
@@ -29,13 +32,14 @@ public class InstructionSplitter {
 	 *            InstructionClassifier with knowledge of syntax/language and
 	 *            capabilities to generate an Instruction given a String name
 	 *            (reflection)
-	 * @return List of Instructions corresponding to the instructions input
+	 * @return List of InstructionNodes corresponding to the instructions input
 	 */
-	public static List<Instruction> getInstructions(String toParse, InstructionClassifier classifier) {
-		ArrayList<Instruction> toRet = new ArrayList<Instruction>();
+	public static List<InstructionNode> getInstructions(String toParse, InstructionClassifier classifier) {
+		ArrayList<InstructionNode> toRet = new ArrayList<InstructionNode>();
 		List<String> commands = getInstructionStrings(toParse);
-		for (String s : commands) {
-			toRet.add(classifier.generateInstruction(s));
+		for (String name : commands) {
+			String type = classifier.findShortcutKey(name);
+			toRet.add(new InstructionNode(type,name));
 		}
 		return toRet;
 	}

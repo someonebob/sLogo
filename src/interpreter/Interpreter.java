@@ -58,10 +58,8 @@ public class Interpreter {
 	 * @return Root node of the instruction, read from toParse
 	 */
 	private InstructionNode parse(String toParse) {
-		List<Instruction> splitCommands = InstructionSplitter.getInstructions(toParse, getMyClassifier());
-		InstructionNode head = TreeBuilder.buildTree(splitCommands); // generate
-																		// from
-																		// root
+		List<InstructionNode> splitCommands = InstructionSplitter.getInstructions(toParse, getMyClassifier());
+		InstructionNode head = TreeBuilder.buildTree(splitCommands); 
 		return head;
 	}
 
