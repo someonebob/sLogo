@@ -6,8 +6,13 @@ import javafx.scene.Node;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
+import javafx.scene.shape.Rectangle;
 import models.Simulation;
 import tool.FileTool;
+import tool.SettingsTool;
+import tool.SettingsTool.backgroundColorButton;
 
 /**
  * @author jimmy
@@ -18,6 +23,7 @@ public class SimulationView implements View
 {
 	private Simulation simulation;
 	private TabPane root;
+	private Rectangle background;
 
 	public SimulationView()
 	{
@@ -52,15 +58,26 @@ public class SimulationView implements View
 		if(o instanceof FileTool){
 			newTab();
 		}
+		
+		if(o instanceof backgroundColorButton){
+			if(arg instanceof Color){
+				background.setFill((Paint) arg);
+			}
+			
+		}
 	}
+	
+
 	
 	private void newTab(){
 		Tab newTab = new Tab();
 		ActorView actor = new ActorView();
 		StackPane layout = new StackPane();
+		background = new Rectangle(400, 400, Color.ALICEBLUE);
+		
 		newTab.setText("new tab");
 		newTab.setContent(layout);
-		layout.getChildren().add(actor.display());
+		layout.getChildren().addAll(actor.display(), background);
 		root.getTabs().add(newTab);
 	}
 }

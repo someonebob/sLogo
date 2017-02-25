@@ -6,6 +6,7 @@ import java.util.List;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
+import javafx.scene.paint.Color;
 
 /**
  * @author jimmy
@@ -15,6 +16,8 @@ import javafx.scene.control.SeparatorMenuItem;
 public class SettingsTool extends Tool
 {
 	public static final String name = "Settings";
+	
+	private List<AbstractButton> buttons;
 
 	public SettingsTool()
 	{
@@ -22,15 +25,33 @@ public class SettingsTool extends Tool
 	}
 
 	@Override
-	public List<MenuItem> makeMenuItems()
+	public void makeMenuItems()
 	{
-		List<MenuItem> menuItems = new ArrayList<MenuItem>();
-		menuItems.add(makeBkgdColorItem());
-		menuItems.add(makeActorColorItem());
-		menuItems.add(makePenColorItem());
-		menuItems.add(new SeparatorMenuItem());
-		menuItems.add(makeLanguageItem());
-		return menuItems;
+		buttons = new ArrayList<>();
+		buttons.add(new backgroundColorButton());
+		/*
+		buttons.add(makeActorColorItem());
+		buttons.add(makePenColorItem());
+		buttons.add(new SeparatorMenuItem());
+		buttons.add(makeLanguageItem());
+		*/
+	}
+	
+	public List<AbstractButton> getButtons(){
+		return buttons;
+
+	}
+	
+	public class backgroundColorButton extends AbstractButton
+	{
+		private Color color;
+		
+		public backgroundColorButton()
+		{
+			super(new MenuItem("Background Color"));
+			color = Color.BLACK;
+			this.setOnAction(color);
+		}
 	}
 
 	private MenuItem makeBkgdColorItem()
