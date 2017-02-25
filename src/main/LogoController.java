@@ -11,7 +11,7 @@ import tool.Tool;
 import view.InputBox;
 import view.PageView;
 import view.SimulationView;
-import view.Workspace;
+import view.WorkspaceView;
 
 /**
  * 
@@ -27,7 +27,7 @@ public class LogoController
 	private SimulationView simulation;
 	private SelectionBar selectionBar;
 	private InputBox inputBox;
-	private Workspace workspace;
+	private WorkspaceView workspace;
 	private Stage stage;
 	private BorderPane pane;
 
@@ -37,7 +37,9 @@ public class LogoController
 		simulation = new SimulationView();
 		selectionBar = new SelectionBar();
 		inputBox = new InputBox();
-		workspace = new Workspace();
+		workspace = new WorkspaceView();
+		
+		initiateObservers();
 		stage.setTitle("SLogo");
 		stage.show();
 		this.stage = stage;
@@ -68,6 +70,9 @@ public class LogoController
 		selectionBar.addTool(tool);
 	}
 
-
+	private void initiateObservers(){
+		inputBox.addObserver(workspace);
+		
+	}
 
 }

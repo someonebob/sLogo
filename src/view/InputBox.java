@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 
 /**
  * The view that displays the console, allows the user to input commands
@@ -21,8 +21,8 @@ public class InputBox extends Observable {
 	private TextField console;
 	private String input;
 	private VBox inputs;
-	private Text current;
-	private List<Text> previous;
+	private Label current;
+	private List<String> previous;
 	
 	/**
 	 * Generates all the nodes and defines their actions
@@ -38,6 +38,10 @@ public class InputBox extends Observable {
 	 */
 	public String getInput(){
 		return input;
+	}
+	
+	public List<String> getPastInputs(){
+		return previous;
 	}
 	
 	/**
@@ -66,16 +70,17 @@ public class InputBox extends Observable {
 		previous = new ArrayList<>();
 	}
 	
-	private void consoleAction(){
-		setChanged();
-		notifyObservers();
+	private void consoleAction(){	
 		input = console.getText();
+		previous.add(input);
 		console.clear();
-		current = new Text(input);
-		previous.add(current);
+		
+		current = new Label(input);	
 		current.setOnMouseClicked(e -> textAction());
 		inputs.getChildren().add(current);
 		
+		setChanged();
+		notifyObservers(/*input*/);
 	}
 	
 	private void textAction(){

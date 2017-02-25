@@ -8,27 +8,30 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
 /**
- * 
+ * Workspace that stores all the variables
  * @author Jesse
  *
  */
-public class Workspace implements View{
+public class WorkspaceView implements PageView{
 	private ScrollPane scroll;
 	private VBox variables;
 	
-	public Workspace(){
+	public WorkspaceView(){
 		initiateItems();
 	}
 
 	@Override
 	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub
+		if (arg instanceof String){
+			Text variable = new Text((String) arg);
+			variables.getChildren().add(variable);
+		}
 		
 	}
 	
 	@Override
 	public Node display() {
-		// TODO Auto-generated method stub
 		return scroll;
 	}
 	
