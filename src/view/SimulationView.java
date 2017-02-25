@@ -9,12 +9,15 @@ import javafx.scene.layout.StackPane;
 import models.Simulation;
 import tool.FileTool;
 
+/**
+ * @author jimmy
+ * @author Jesse
+ *
+ */
 public class SimulationView implements View
 {
 	private Simulation simulation;
 	private TabPane root;
-	private StackPane layout;
-	private ActorView actor;
 
 	public SimulationView()
 	{
@@ -53,11 +56,11 @@ public class SimulationView implements View
 	
 	private void newTab(){
 		Tab newTab = new Tab();
-		actor = new ActorView();
-		layout = new StackPane();
+		ActorView actor = new ActorView();
+		StackPane layout = new StackPane();
 		newTab.setText("new tab");
 		newTab.setContent(layout);
-		//layout.getChildren().add(actor.display());
+		layout.getChildren().add(actor.display());
 		root.getTabs().add(newTab);
 	}
 }
