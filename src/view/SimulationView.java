@@ -77,7 +77,7 @@ public class SimulationView implements View
 		
 		newTab.setText("new tab");
 		newTab.setContent(layout);
-		layout.getChildren().addAll(actor.display(), background);
+		layout.getChildren().addAll(background, actor.display());
 		root.getTabs().add(newTab);
 	}
 }
