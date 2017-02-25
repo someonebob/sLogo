@@ -18,13 +18,12 @@ import instruction.*;
  * THERE IS A BUG IN THIS CLASS - NEED TO CHANGE
  * 
  * @author maddiebriere
- *
  */
 
 public class InstructionClassifier {
 	public final String SYNTAX = "resources/languages/Syntax";
-	public final String LANGUAGE = "resources/languages/";
 	public final String PATHS = "resources/languages/JavaSpeak"; //Full class names matched to shortcuts
+	public final String LANGUAGE = "resources/languages/";
 
 	private String mySyntax;
 	private String myLanguage;
@@ -68,7 +67,10 @@ public class InstructionClassifier {
             	else{
             		System.out.println("Here 2");
             		return classifyInstructionShortcut(text);
+<<<<<<< HEAD
+=======
             	}
+>>>>>>> master
             }
         }
         return ERROR;
