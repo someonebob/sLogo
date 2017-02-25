@@ -30,10 +30,4 @@ public class ListStart extends Instruction {
 		return 0;
 	}
 
-	@Override
-	public int getNumArgs() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
 }

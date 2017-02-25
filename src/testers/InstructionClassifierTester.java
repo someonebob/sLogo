@@ -46,6 +46,8 @@ public class InstructionClassifierTester {
    	 * @param text Input examples
    	 */
     private static void parseText (InstructionClassifier classifier, String[] text) {
+    	System.out.println(classifier.findShortcutKey("#"));
+    	/*
         for (String s : text) {
             if (s.trim().length() > 0) {
             	String shorty = classifier.findShortcutKey(s);
@@ -62,6 +64,7 @@ public class InstructionClassifierTester {
             System.out.println();
         }
         System.out.println();
+        */
     }
 	
 	private static String[] generateExampleInput(){

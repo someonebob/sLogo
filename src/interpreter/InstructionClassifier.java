@@ -15,6 +15,8 @@ import instruction.*;
  * command type without direct statement of the desired class type. This class
  * can translate a String into an instance of the intended class type.
  * 
+ * THERE IS A BUG IN THIS CLASS - NEED TO CHANGE
+ * 
  * @author maddiebriere
  *
  */
@@ -52,13 +54,22 @@ public class InstructionClassifier {
         /**
          * Default to higher classifiers if only possibility
          */
+
+        System.out.println(mySyntaxList);
         for (Entry<String, Pattern> e : mySyntaxList) {
+        	//System.out.println("Here");
+        	System.out.println(e.getKey());
+        	System.out.println(e.getValue());
             if (match(text, e.getValue())) {
-            	if(!e.getKey().equals("Instruction"))
+            	System.out.println("Here 0");
+            	if(!e.getKey().equals("Instruction")){
+            		System.out.println("Here 1");
             		return e.getKey();
-            	else
+            	}
+            	else{
+            		System.out.println("Here 2");
             		return classifyInstructionShortcut(text);
-            		
+            	}
             }
         }
         return ERROR;
@@ -109,6 +120,7 @@ public class InstructionClassifier {
      * @return true if text and regex match, false otherwise
      */
     private boolean match (String text, Pattern regex) {
+    	System.out.println("BLABLAH");
         return regex.matcher(text).matches();
     }
     
@@ -120,6 +132,7 @@ public class InstructionClassifier {
      * @return true if text and regex match, false otherwise
      */
     private boolean match (String text, String regex) {
+    	System.out.println("BAD");
         return text.equals(regex);
     }
 
