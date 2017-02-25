@@ -20,6 +20,7 @@ public class FileTool extends Tool{
 	public static final String EXTENSION = "*.logo";
 	
 	private Stage window;
+	private List<AbstractButton> buttons;
 
 	public FileTool(Stage window) {
 		super(name);
@@ -29,6 +30,8 @@ public class FileTool extends Tool{
 	
 	@Override
 	public void makeMenuItems() {
+		buttons = new ArrayList <>();
+		
 		/*
 		List<MenuItem> menuItems = new ArrayList<MenuItem>();
 		menuItems.add(makeNewItem());
@@ -39,34 +42,51 @@ public class FileTool extends Tool{
 		*/
 	}
 	
-	private MenuItem makeNewItem(){
-		MenuItem noo = new MenuItem("New");
-		noo.setOnAction(e ->{
 
-		});
-		
-		return noo;		
+	@Override
+	public List<AbstractButton> getButtons() {
+		// TODO Auto-generated method stub
+		return buttons;
 	}
 	
-	private MenuItem makeOpenItem(){
-		MenuItem open = new MenuItem("Open");
-		open.setOnAction(e ->{
-			File selectedFile = setupFileChooser().showOpenDialog(window);
-			if(selectedFile != null){
-				//TODO: do something with the file
-			}
-		});
+	public class NewButton extends AbstractButton{
+
+		public NewButton() {
+			super(new MenuItem("New"));
+			//TODO action
+			this.setOnAction(null);
+		}
 		
-		return open;
 	}
 	
-	private MenuItem makeSaveItem(){
-		MenuItem save = new MenuItem("Save");
-		save.setOnAction(e ->{
-			
-		});
+	public class OpenButton extends AbstractButton{
+
+		public OpenButton() {
+			super(new MenuItem("Open"));
+			// TODO Auto-generated constructor stub
+			this.setOnAction(setupFileChooser().showOpenDialog(window));
+		}
 		
-		return save;
+	}
+	
+	public class SaveButton extends AbstractButton{
+
+		public SaveButton() {
+			super(new MenuItem("Save"));
+			// TODO Auto-generated constructor stub
+			this.setOnAction(null);
+		}
+		
+	}
+
+	public class SaveAsButton extends AbstractButton{
+
+		public SaveAsButton() {
+			super(new MenuItem("Save As"));
+			// TODO Auto-generated constructor stub
+			this.setOnAction(null);
+		}
+		
 	}
 	
 	
@@ -84,10 +104,5 @@ public class FileTool extends Tool{
 	}
 
 
-	@Override
-	public List<AbstractButton> getButtons() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 }
