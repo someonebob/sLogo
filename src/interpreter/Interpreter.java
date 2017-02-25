@@ -3,7 +3,6 @@ package interpreter;
 import java.util.List;
 
 import instruction.*;
-import util.InstructionSplitter;
 
 /**
  * This interface will use a variety of resource files to transform An input
@@ -38,12 +37,8 @@ public class Interpreter {
 		 * more control of execution in Instruction, Interpreter,
 		 * InstructionNode, etc.?
 		 */
-		
-		
-		//TODO: Decide if this might need to be a list
-		InstructionNode head = parse(instruction);
-		Instruction toExecute = myClassifier.generateInstruction(head.getMyValue());
-		toExecute.execute();
+		List<InstructionNode> head = parse(instruction);
+		//TODO: Create instruction for list of nodes
 	}
 
 	/**
@@ -57,10 +52,10 @@ public class Interpreter {
 	 *            The String command passed in by the front-end
 	 * @return Root node of the instruction, read from toParse
 	 */
-	private InstructionNode parse(String toParse) {
-		List<InstructionNode> splitCommands = InstructionSplitter.getInstructions(toParse, getMyClassifier());
-		InstructionNode head = TreeBuilder.buildTree(splitCommands); 
-		return head;
+	private List<InstructionNode> parse(String toParse) {
+		TreeBuilder builder = new TreeBuilder(toParse, getMyClassifier());
+		List<InstructionNode> headNodes = builder.buildTree();
+		return headNodes;
 	}
 
 	public InstructionClassifier getMyClassifier() {

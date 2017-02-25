@@ -9,6 +9,7 @@ import java.util.Map.Entry;
 import java.util.regex.Pattern;
 
 import instruction.*;
+import util.ResourceToList;
 
 /**
  * This class performs the reflection necessary to produce instances of each
@@ -52,25 +53,13 @@ public class InstructionClassifier {
         /**
          * Default to higher classifiers if only possibility
          */
-
-        System.out.println(mySyntaxList);
         for (Entry<String, Pattern> e : mySyntaxList) {
-        	//System.out.println("Here");
-        	System.out.println(e.getKey());
-        	System.out.println(e.getValue());
             if (match(text, e.getValue())) {
-            	System.out.println("Here 0");
             	if(!e.getKey().equals("Instruction")){
-            		System.out.println("Here 1");
             		return e.getKey();
             	}
-            	else{
-            		System.out.println("Here 2");
+            	else
             		return classifyInstructionShortcut(text);
-<<<<<<< HEAD
-=======
-            	}
->>>>>>> master
             }
         }
         return ERROR;
@@ -121,7 +110,6 @@ public class InstructionClassifier {
      * @return true if text and regex match, false otherwise
      */
     private boolean match (String text, Pattern regex) {
-    	System.out.println("BLABLAH");
         return regex.matcher(text).matches();
     }
     
@@ -133,7 +121,6 @@ public class InstructionClassifier {
      * @return true if text and regex match, false otherwise
      */
     private boolean match (String text, String regex) {
-    	System.out.println("BAD");
         return text.equals(regex);
     }
 
@@ -179,20 +166,11 @@ public class InstructionClassifier {
 		mySyntaxList = new ArrayList<Entry<String, Pattern>>();
 		myLanguageList = new ArrayList<Entry<String, Pattern>>();
 		myPathsList = new ArrayList<Entry<String,Pattern>>();
-		addTerms(mySyntax, mySyntaxList);
-		addTerms(myLanguage, myLanguageList);
-		addTerms(myPaths, myPathsList);
+		ResourceToList.addTerms(mySyntax, mySyntaxList);
+		ResourceToList.addTerms(myLanguage, myLanguageList);
+		ResourceToList.addTerms(myPaths, myPathsList);
 	}
 
-	public void addTerms(String resource, List<Entry<String, Pattern>> list) {
-		ResourceBundle resources = ResourceBundle.getBundle(resource);
-		Enumeration<String> iter = resources.getKeys();
-		while (iter.hasMoreElements()) {
-			String key = iter.nextElement();
-			String regex = resources.getString(key);
-			list.add(new SimpleEntry<>(key, Pattern.compile(regex, Pattern.CASE_INSENSITIVE)));
-		}
-	}
 
 	public String getMyLanguage() {
 		return myLanguage;

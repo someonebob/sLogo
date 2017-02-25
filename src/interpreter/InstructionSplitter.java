@@ -1,12 +1,8 @@
-package util;
+package interpreter;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-
-import instruction.Instruction;
-import interpreter.InstructionClassifier;
-import interpreter.InstructionNode;
 
 /**
  * Purely a utility class, used for purposes of splitting an input line and
@@ -62,6 +58,25 @@ public class InstructionSplitter {
 			toRet.add(scan.next());
 		}
 		scan.close();
+		return toRet;
+	}
+	
+	
+	/**
+	 * Removes the first instruction from the String
+	 * @param toParse String to remove item from
+	 * @return String with item removed
+	 */
+	public static String removeFirstItem(String toParse){
+		String toRet="";
+		List<String> parsed = getInstructionStrings(toParse);
+		if(parsed.size()<=1){
+			return toRet;
+		}
+		for(int i=1; i<parsed.size()-1; i++){
+			toRet+=parsed.get(i) + " ";
+		}
+		toRet+=parsed.get(parsed.size()-1);
 		return toRet;
 	}
 
