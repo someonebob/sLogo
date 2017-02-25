@@ -46,7 +46,7 @@ public class SimulationView implements View
 		return root;
 
 	}
-
+	
 	@Override
 	public void update(Observable o, Object arg)
 	{
@@ -67,6 +67,12 @@ public class SimulationView implements View
 		}
 	}
 
+	@Override
+	public void updateData(String arg) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	private void newTab()
 	{
 		Tab newTab = new Tab();
@@ -79,4 +85,7 @@ public class SimulationView implements View
 		layout.getChildren().addAll(background, actor.display());
 		root.getTabs().add(newTab);
 	}
+
+	
+
 }

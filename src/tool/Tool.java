@@ -1,7 +1,6 @@
 package tool;
 
 import java.util.List;
-import java.util.Observable;
 
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
@@ -13,7 +12,7 @@ import javafx.scene.control.MenuItem;
  * @author jimmy
  *
  */
-public abstract class Tool extends Observable {
+public abstract class Tool{
 	Menu menu;
 
 	public Tool(String menuName) {

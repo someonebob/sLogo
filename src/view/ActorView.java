@@ -27,10 +27,17 @@ public class ActorView implements View{
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void updateData(String arg) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	private void loadImage(){
 		Image image = new Image(getClass().getClassLoader().getResourceAsStream(SQUIRT));
 		actor = new ImageView(image);
 	}
+
 
 }
