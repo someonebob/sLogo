@@ -19,27 +19,13 @@ public abstract class Instruction {
 	private InstructionData instructionData;
 	private InstructionNode root;
 	private String textRepresentation;
-	private List<Double> arguments;
-	/*
-	public static void main(String[] args){
-		InstructionData data = new InstructionData();
-		Instruction forward = new Backward(data, new InstructionNode());
-		System.out.println(forward.execute());
-		System.out.println(data.getActiveActor().getLocation());
-	}
-	*/
-	public Instruction(){
-		instructionData = new InstructionData();
-		root = new InstructionNode();
-		textRepresentation = "";
-		arguments = new ArrayList<>();
-	}
+	private List<String> arguments;
 	
 	public Instruction(InstructionData instructionData, InstructionNode root){
 		this.instructionData = instructionData;
 		this.textRepresentation = root.getMyText();
 		this.root = root;
-		this.arguments = convertTreeToArguments();
+		this.arguments = getArgumentsFromTree();
 	}
 	
 	/**
@@ -78,25 +64,38 @@ public abstract class Instruction {
 		return textRepresentation;
 	}
 	
-	public abstract int getNumArgs();
-	
 	protected InstructionNode getRoot(){
 		return root;
 	}
 	
-	private List<Double> convertTreeToArguments(){
-		List<Double> argumentsLocal = new ArrayList<>();
-		for(InstructionNode child : getRoot().getMyChildren()){
-			argumentsLocal.add(Double.parseDouble(child.getMyValue()));
-		}
-		return argumentsLocal;
+	private List<String> getArgumentsFromTree(){
+		/*
+		 * 
+		 * MADDIE SHOULD ADD CODE HERE
+		 * This method should return a list of the arguments for this 
+		 * instruction as Doubles.
+		 * 
+		 */
+		return null;
 	}
 	
-	protected List<Double> getArguments(){
+	protected List<Double> getArgumentsDouble(){
+		List<Double> doubleList = new ArrayList<>();
+		for(String stringArgument : arguments){
+			doubleList.add(Double.parseDouble(stringArgument));
+		}
+		return doubleList;
+	}
+	
+	protected double getArgumentDouble(int index){
+		return Double.parseDouble(arguments.get(index));
+	}
+	
+	protected List<String> getArgumentsString(){
 		return arguments;
 	}
-	
-	protected double getArgument(int index){
+
+	protected String getArgumentString(int index){
 		return arguments.get(index);
 	}
 	
