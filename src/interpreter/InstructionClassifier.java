@@ -16,13 +16,12 @@ import instruction.*;
  * can translate a String into an instance of the intended class type.
  * 
  * @author maddiebriere
- *
  */
 
 public class InstructionClassifier {
 	public final String SYNTAX = "resources/languages/Syntax";
-	public final String LANGUAGE = "resources/languages/";
 	public final String PATHS = "resources/languages/JavaSpeak"; //Full class names matched to shortcuts
+	public final String LANGUAGE = "resources/languages/";
 
 	private String mySyntax;
 	private String myLanguage;
@@ -57,7 +56,6 @@ public class InstructionClassifier {
             		return e.getKey();
             	else
             		return classifyInstructionShortcut(text);
-            		
             }
         }
         return ERROR;

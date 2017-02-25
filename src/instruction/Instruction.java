@@ -18,6 +18,7 @@ public abstract class Instruction {
 	private InstructionData instructionData;
 	private InstructionNode root;
 	private String textRepresentation;
+	
 	/*
 	public static void main(String[] args){
 		InstructionData data = new InstructionData();
@@ -26,6 +27,7 @@ public abstract class Instruction {
 		System.out.println(data.getActiveActor().getLocation());
 	}
 	*/
+	
 	public Instruction(){
 		instructionData = new InstructionData();
 		root = new InstructionNode();
