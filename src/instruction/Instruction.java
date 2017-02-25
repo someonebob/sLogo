@@ -19,26 +19,7 @@ public abstract class Instruction {
 	private InstructionData instructionData;
 	private InstructionNode root;
 	private String textRepresentation;
-<<<<<<< HEAD
-	private List<Double> arguments;
-	/*
-	public static void main(String[] args){
-		InstructionData data = new InstructionData();
-		Instruction forward = new Backward(data, new InstructionNode());
-		System.out.println(forward.execute());
-		System.out.println(data.getActiveActor().getLocation());
-	}
-	*/
-	
-	public Instruction(){
-		instructionData = new InstructionData();
-		root = new InstructionNode();
-		textRepresentation = "";
-		arguments = new ArrayList<>();
-	}
-=======
 	private List<String> arguments;
->>>>>>> master
 	
 	public Instruction(InstructionData instructionData, InstructionNode root){
 		this.instructionData = instructionData;
