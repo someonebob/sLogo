@@ -14,11 +14,6 @@ public class SavedCommandsView implements PageView{
 		initiateItems();
 	}
 
-	@Override
-	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
 	public Node display() {
@@ -26,10 +21,24 @@ public class SavedCommandsView implements PageView{
 		return scroll;
 	}
 	
+	@Override
+	public void update(Observable o, Object arg) {
+		// TODO Auto-generated method stub
+		
+	}	
+
+	@Override
+	public void updateData(String arg) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	
 	private void initiateItems(){
 		scroll = new ScrollPane();
 		commands = new VBox(10);
 		scroll.setContent(commands);
 	}
+
 
 }

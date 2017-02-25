@@ -42,8 +42,7 @@ public class FileTool extends Tool{
 	private MenuItem makeNewItem(){
 		MenuItem noo = new MenuItem("New");
 		noo.setOnAction(e ->{
-			this.setChanged();
-			this.notifyObservers();
+
 		});
 		
 		return noo;		
