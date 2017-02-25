@@ -1,9 +1,13 @@
 package tool;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import javafx.scene.control.MenuItem;
+import javafx.scene.image.Image;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 
 /**
@@ -27,7 +31,7 @@ public class SettingsTool extends Tool
 	{
 		buttons = new ArrayList<>();
 		buttons.add(new BackgroundColorButton());
-		buttons.add(new ActorImageButton());
+		buttons.add(new TurtleImageButton());
 		buttons.add(new PenColorButton());
 		buttons.add(new LanguageButton());
 	}
@@ -39,6 +43,19 @@ public class SettingsTool extends Tool
 
 	}
 
+	private FileChooser setupFileChooser()
+	{
+		final String EXTENSION = "*.png";
+
+		FileChooser chooser = new FileChooser();
+		chooser.setTitle("New Image");
+		File defaultDirectory = new File(System.getProperty("user.dir") + "/images");
+		chooser.setInitialDirectory(defaultDirectory);
+		chooser.getExtensionFilters().setAll(new ExtensionFilter("IMAGE", EXTENSION));
+
+		return chooser;
+	}
+
 	public class BackgroundColorButton extends AbstractColorButton
 	{
 		public BackgroundColorButton()
@@ -47,11 +64,20 @@ public class SettingsTool extends Tool
 		}
 	}
 
-	public class ActorImageButton extends AbstractButton
+	public class TurtleImageButton extends AbstractButton
 	{
-		public ActorImageButton()
+		public TurtleImageButton()
 		{
-			super(new MenuItem("Actor Image"));
+			super(new MenuItem("Turtle Image"));
+			this.getItem().setOnAction(e -> {
+				Stage newWindow = new Stage();
+				File selectedFile = setupFileChooser().showOpenDialog(newWindow);
+				if (selectedFile != null) {
+					Image newImage = new Image(selectedFile.toURI().toString());
+					this.setChanged();
+					this.notifyObservers(newImage);
+				}
+			});
 		}
 	}
 
