@@ -1,19 +1,17 @@
 package instruction.TurtleQueries;
 
-import instruction.Instruction;
+import instruction.InstructionData;
+import interpreter.InstructionNode;
 
-public class Heading extends Instruction {
+public class Heading extends TurtleQuery {
 
-	@Override
-	public double execute() {
-		// TODO Auto-generated method stub
-		return 0;
+	public Heading(InstructionData instructionData, InstructionNode root) {
+		super(instructionData, root);
 	}
 
 	@Override
-	public int getNumArgs() {
-		// TODO Auto-generated method stub
-		return 0;
+	public double execute() {
+		return getInstructionData().getActiveActor().getHeading();
 	}
 
 }
