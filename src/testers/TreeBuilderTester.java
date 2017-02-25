@@ -1,5 +1,6 @@
 package testers;
 
+
 import java.util.List;
 
 import interpreter.InstructionClassifier;
@@ -16,10 +17,12 @@ import interpreter.TreeBuilder;
 public class TreeBuilderTester {
 
 	public static void main(String [] args){
-		TreeBuilder build = new TreeBuilder("fd fd fd 50", new InstructionClassifier("English"));
+		//problem with string value in tree
+		TreeBuilder build = new TreeBuilder("penup fd rt 50 fd 50 fd 30", new InstructionClassifier("English"));
 		List<InstructionNode> headNodes = build.buildTree();
 		for(InstructionNode curr: headNodes){
 			System.out.println(curr.getMyText());
 		}
+		
 	}
 }
