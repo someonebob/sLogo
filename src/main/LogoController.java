@@ -48,8 +48,6 @@ public class LogoController
 		
 		this.stage = stage;
 		stage.setTitle("SLogo");
-		addTools();
-		initiateObservers();
 		stage.show();
 		stage.setScene(makeScene());
 	}
@@ -94,6 +92,10 @@ public class LogoController
 
 	private void initiateObservers()
 	{
+		for(AbstractButton ab : file.getButtons()){
+			ab.addObserver(simulation);
+			ab.addObserver(inputBox);
+		}
 
 		for (AbstractButton ab : settings.getButtons()) {
 			ab.addObserver(simulation);

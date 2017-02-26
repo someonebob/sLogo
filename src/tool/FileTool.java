@@ -1,6 +1,7 @@
 package tool;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import javafx.scene.control.MenuItem;
@@ -19,12 +20,10 @@ public class FileTool extends Tool
 	public static final String name = "File";
 	public static final String EXTENSION = "*.logo";
 
-	private Stage window;
 	private List<AbstractButton> buttons;
 
-	public FileTool() {
-		super(name);
-		window = new Stage();
+	public FileTool(Stage window) {
+		super(name, window);
 	}
 
 	@Override
@@ -61,7 +60,7 @@ public class FileTool extends Tool
 			super(new MenuItem("Open"));
 			// TODO Auto-generated constructor stub
 			this.getItem().setOnAction(e -> {
-				File selectedFile = setupFileChooser().showOpenDialog(window);
+				File selectedFile = setupFileChooser().showOpenDialog(getStage());
 				if(selectedFile != null){
 					this.setChanged();
 					this.notifyObservers(selectedFile);
@@ -78,7 +77,7 @@ public class FileTool extends Tool
 			super(new MenuItem("Save"));
 			// TODO Make it save
 			this.getItem().setOnAction(e -> {
-				File save = setupFileChooser().showSaveDialog(window);
+				File save = setupFileChooser().showSaveDialog(getStage());
 				if(save != null){
 					this.setChanged();
 					this.notifyObservers(save);
