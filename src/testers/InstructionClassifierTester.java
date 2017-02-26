@@ -52,7 +52,7 @@ public class InstructionClassifierTester {
             	String shorty = classifier.findShortcutKey(s);
                 System.out.println(String.format("%s : %s", s, shorty));
                 System.out.println(String.format("%s : %s", shorty, classifier.findAddressKey(shorty)));
-               	Instruction generated = classifier.generateInstruction(s);
+               	Instruction generated = classifier.generateInstruction(s,null,null);
                	if(generated == null){
                		System.out.println(String.format("%s : %s", s + " Instruction", "NO INSTRUCTION MATCH"));
                	}else{

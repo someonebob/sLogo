@@ -1,6 +1,8 @@
 package interpreter;
 
 import java.util.List;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Map.Entry;
 import java.util.regex.Pattern;
@@ -126,9 +128,11 @@ public class InstructionClassifier {
 	 * 
 	 * @param command
 	 *            String representing instruction (e.g., fd)
+	 * @param args The arguments used to make the instruction
+	 * 
 	 * @return Instruction object corresponding to String
 	 */
-	public Instruction generateInstruction(String comm) {
+	public Instruction generateInstruction(String comm, InstructionData  data, List<String> args) {
 		
 		//TODO: Complete and figure out instruction address problem
 		//Piazza question
@@ -145,10 +149,24 @@ public class InstructionClassifier {
 		try {
 			String classPath = findAddressKey(classification);
 			clazz = Class.forName(classPath);
-			instructionHopeful = clazz.newInstance();
+			Constructor<?> ctor = clazz.getDeclaredConstructor(InstructionData.class, List.class);
+			instructionHopeful = ctor.newInstance(data, args);
 		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
 			// TODO Handle error --> non-valid class
 		} // This is probably wrong
+		catch (NoSuchMethodException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		try{
 			instruction = (Instruction) instructionHopeful;
