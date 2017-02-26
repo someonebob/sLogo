@@ -3,10 +3,13 @@ package view;
 import java.io.File;
 import java.util.Observable;
 
+import javafx.geometry.Bounds;
 import javafx.scene.Node;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.image.Image;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
@@ -27,7 +30,7 @@ public class SimulationView implements View
 	private Simulation simulation;
 	private TabPane root;
 	private ActorView actor;
-	private Rectangle background;
+	private Background background;
 
 	public SimulationView()
 	{
@@ -66,14 +69,27 @@ public class SimulationView implements View
 
 		if (o instanceof BackgroundColorButton) {
 			if (arg instanceof Color) {
-				background.setFill((Paint) arg);
+				
+				//Find which tab is active and change color of that tab
+				for(Tab t : root.getTabs()){
+					if(t.isSelected()){
+						((StackPane) t.getContent()).setBackground(new Background(new BackgroundFill((Paint) arg, null, null)));
+					}
+				}
 			}
 		}
 
-		System.out.println("HI");
-
 		if (o instanceof TurtleImageButton) {
 			if (arg instanceof Image) {
+				
+				for(Tab t : root.getTabs()){
+					if(t.isSelected()){
+						((StackPane) t.getContent()).getChildren().remove(0);
+						ActorView actor = new ActorView();
+						actor.setImage((Image) arg);
+						((StackPane) t.getContent()).getChildren().add(actor.display());
+					}
+				}
 				actor.setImage((Image) arg);
 			}
 		}
@@ -90,11 +106,12 @@ public class SimulationView implements View
 	{
 		Tab newTab = new Tab();
 		StackPane layout = new StackPane();
-		background = new Rectangle(400, 400, Color.ALICEBLUE);
-
+		ActorView actor = new ActorView();
+		layout.setBackground(new Background(new BackgroundFill(Color.WHITE, null, null)));
+		
 		newTab.setText("new tab");
 		newTab.setContent(layout);
-		layout.getChildren().addAll(background, actor.display());
+		layout.getChildren().add(actor.display());
 		root.getTabs().add(newTab);
 	}
 	
