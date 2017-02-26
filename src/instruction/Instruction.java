@@ -23,7 +23,7 @@ public abstract class Instruction {
 	
 	public Instruction(InstructionData instructionData, InstructionNode root){
 		this.instructionData = instructionData;
-		this.textRepresentation = root.getMyText(); //Fix problem
+		this.textRepresentation = root.getMyValue();
 		this.root = root;
 		this.arguments = getArgumentsFromTree();
 	}
