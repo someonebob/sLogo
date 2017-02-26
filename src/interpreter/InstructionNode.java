@@ -16,26 +16,42 @@ public class InstructionNode {
 	
 	private String myClassification; // The String representing the type (Forward, Equal, Comment)
 	private String myValue; //String command
-	private String myCurrentText; //Command text STARTING AT THIS NODE
 	private List<InstructionNode> myChildren;
 
 	public InstructionNode() {
-		this("", "",  new ArrayList<InstructionNode>());
+		this("", "", new ArrayList<InstructionNode>());
 	}
 	
-	public InstructionNode(String clss, String currText) {
-		this(clss, currText, new ArrayList<InstructionNode>());
+	public InstructionNode(String clss, String value) {
+		this(clss, value, new ArrayList<InstructionNode>());
 	}
 
-	public InstructionNode(String clss, String currText, List<InstructionNode> children) {
-		if (currText.isEmpty()) {
+	public InstructionNode(String clss, String value, List<InstructionNode> children) {
+		if (value.isEmpty()) {
 			// TODO: Error checking
 		}
 		myClassification = clss;
-		myValue = InstructionSplitter.getInstructionStrings(currText).get(0);
+		myValue = value;
 		myChildren = children;
 	}
 
+	/**
+	 * Pieces together a String from the current Node using the current Node
+	 * and all of its children.
+	 * @return String representing the entire Node
+	 */
+	public String getMyText() {
+		String inst = recursivePrint(this, "");
+		return inst.substring(0, inst.length()-1);//Exclude final space
+	}
+	
+	private String recursivePrint(InstructionNode node, String curr){
+		curr += node.getMyValue() + " ";
+		for(InstructionNode child: node.getMyChildren()){
+			curr = recursivePrint(child, curr);
+		}
+		return curr;
+	}
 
 
 	/**
@@ -59,14 +75,6 @@ public class InstructionNode {
 
 	public String getMyClassification() {
 		return myClassification;
-	}
-
-	public String getMyText() {
-		return myCurrentText;
-	}
-
-	public void setMyText(String myCurrentText) {
-		this.myCurrentText = myCurrentText;
 	}
 
 	public void setMyClassification(String myClassification) {
