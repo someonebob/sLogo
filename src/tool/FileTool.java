@@ -1,7 +1,6 @@
 package tool;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 
 import javafx.scene.control.MenuItem;
@@ -14,11 +13,12 @@ import javafx.stage.Stage;
  * @author Jesse
  *
  */
-public class FileTool extends Tool{
-	
+public class FileTool extends Tool
+{
+
 	public static final String name = "File";
 	public static final String EXTENSION = "*.logo";
-	
+
 	private Stage window;
 	private List<AbstractButton> buttons;
 
@@ -27,7 +27,6 @@ public class FileTool extends Tool{
 		window = new Stage();
 	}
 
-	
 	@Override
 	public void makeMenuItems() {
 		buttons = new ArrayList <>();
@@ -106,11 +105,11 @@ public class FileTool extends Tool{
 	
 	private FileChooser setupFileChooser(){
 		FileChooser chooser = new FileChooser();
-		chooser.setTitle("LOGO Programs");	
-		File defaultDirectory = new File(System.getProperty("user.dir")+"/data");
+		chooser.setTitle("LOGO Programs");
+		File defaultDirectory = new File(System.getProperty("user.dir") + "/data");
 		chooser.setInitialDirectory(defaultDirectory);
 		chooser.getExtensionFilters().setAll(new ExtensionFilter("LOGO", EXTENSION));
-		
+
 		return chooser;
 	}
 

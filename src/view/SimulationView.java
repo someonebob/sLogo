@@ -6,6 +6,7 @@ import java.util.Observable;
 import javafx.scene.Node;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
@@ -14,6 +15,7 @@ import models.Simulation;
 import tool.FileTool.NewButton;
 import tool.FileTool.OpenButton;
 import tool.SettingsTool.BackgroundColorButton;
+import tool.SettingsTool.TurtleImageButton;
 
 /**
  * @author jimmy
@@ -24,11 +26,13 @@ public class SimulationView implements View
 {
 	private Simulation simulation;
 	private TabPane root;
+	private ActorView actor;
 	private Rectangle background;
 
 	public SimulationView()
 	{
 		root = new TabPane();
+		actor = new ActorView();
 		newTab();
 	}
 
@@ -48,7 +52,7 @@ public class SimulationView implements View
 		return root;
 
 	}
-	
+
 	@Override
 	public void update(Observable o, Object arg)
 	{
@@ -64,20 +68,27 @@ public class SimulationView implements View
 			if (arg instanceof Color) {
 				background.setFill((Paint) arg);
 			}
+		}
 
+		System.out.println("HI");
+
+		if (o instanceof TurtleImageButton) {
+			if (arg instanceof Image) {
+				actor.setImage((Image) arg);
+			}
 		}
 	}
 
 	@Override
-	public void updateData(String arg) {
+	public void updateData(String arg)
+	{
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	private void newTab()
 	{
 		Tab newTab = new Tab();
-		ActorView actor = new ActorView();
 		StackPane layout = new StackPane();
 		background = new Rectangle(400, 400, Color.ALICEBLUE);
 
