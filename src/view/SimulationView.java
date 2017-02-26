@@ -1,5 +1,6 @@
 package view;
 
+import java.io.File;
 import java.util.Observable;
 
 import javafx.scene.Node;
@@ -11,6 +12,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import models.Simulation;
+import tool.FileTool.NewButton;
+import tool.FileTool.OpenButton;
 import tool.SettingsTool.BackgroundColorButton;
 import tool.SettingsTool.TurtleImageButton;
 
@@ -53,6 +56,13 @@ public class SimulationView implements View
 	@Override
 	public void update(Observable o, Object arg)
 	{
+		if (o instanceof NewButton){
+			newTab();
+		}
+		if (o instanceof OpenButton){
+			openFile((File) arg);
+		}
+		
 
 		if (o instanceof BackgroundColorButton) {
 			if (arg instanceof Color) {
@@ -87,5 +97,10 @@ public class SimulationView implements View
 		layout.getChildren().addAll(background, actor.display());
 		root.getTabs().add(newTab);
 	}
+	
+	private void openFile(File file){
+		
+	}
+
 
 }

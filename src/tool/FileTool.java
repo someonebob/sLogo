@@ -20,60 +20,90 @@ public class FileTool extends Tool
 	public static final String EXTENSION = "*.logo";
 
 	private Stage window;
+	private List<AbstractButton> buttons;
 
-	public FileTool(Stage window)
-	{
-		super(name, window);
-		this.window = window;
+	public FileTool() {
+		super(name);
+		window = new Stage();
 	}
 
 	@Override
-	public void makeMenuItems()
-	{
-		/*
-		 * List<MenuItem> menuItems = new ArrayList<MenuItem>();
-		 * menuItems.add(makeNewItem()); menuItems.add(makeOpenItem());
-		 * menuItems.add(makeSaveItem());
-		 * 
-		 * return menuItems;
-		 */
+	public void makeMenuItems() {
+		buttons = new ArrayList <>();
+		buttons.add(new NewButton());
+		buttons.add(new OpenButton());
+		buttons.add(new SaveButton());
+		buttons.add(new SaveAsButton());
+	}
+	
+
+	@Override
+	public List<AbstractButton> getButtons() {
+		return buttons;
+	}
+	
+	public class NewButton extends AbstractButton{
+
+		public NewButton() {
+			super(new MenuItem("New"));
+			//TODO action
+			this.getItem().setOnAction(e -> {
+				this.setChanged();
+				this.notifyObservers();
+			});
+		}
+		
+	}
+	
+	public class OpenButton extends AbstractButton{
+
+		public OpenButton() {
+			super(new MenuItem("Open"));
+			// TODO Auto-generated constructor stub
+			this.getItem().setOnAction(e -> {
+				File selectedFile = setupFileChooser().showOpenDialog(window);
+				if(selectedFile != null){
+					this.setChanged();
+					this.notifyObservers(selectedFile);
+				}
+				
+			});
+		}
+		
+	}
+	
+	public class SaveButton extends AbstractButton{
+
+		public SaveButton() {
+			super(new MenuItem("Save"));
+			// TODO Make it save
+			this.getItem().setOnAction(e -> {
+				File save = setupFileChooser().showSaveDialog(window);
+				if(save != null){
+					this.setChanged();
+					this.notifyObservers(save);
+				}
+				
+			});
+		}
+		
 	}
 
-	private MenuItem makeNewItem()
-	{
-		MenuItem noo = new MenuItem("New");
-		noo.setOnAction(e -> {
+	public class SaveAsButton extends AbstractButton{
 
-		});
-
-		return noo;
+		public SaveAsButton() {
+			super(new MenuItem("Save As"));
+			// TODO make it save
+			this.getItem().setOnAction(e -> {
+				this.setChanged();
+				this.notifyObservers();
+			});
+		}
+		
 	}
-
-	private MenuItem makeOpenItem()
-	{
-		MenuItem open = new MenuItem("Open");
-		open.setOnAction(e -> {
-			File selectedFile = setupFileChooser().showOpenDialog(window);
-			if (selectedFile != null) {
-				// TODO: do something with the file
-			}
-		});
-
-		return open;
-	}
-
-	private MenuItem makeSaveItem()
-	{
-		MenuItem save = new MenuItem("Save");
-		save.setOnAction(e -> {
-
-		});
-
-		return save;
-	}
-
-	private FileChooser setupFileChooser()
-	{
+	
+	
+	private FileChooser setupFileChooser(){
 		FileChooser chooser = new FileChooser();
 		chooser.setTitle("LOGO Programs");
 		File defaultDirectory = new File(System.getProperty("user.dir") + "/data");
@@ -83,11 +113,6 @@ public class FileTool extends Tool
 		return chooser;
 	}
 
-	@Override
-	public List<AbstractButton> getButtons()
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
+
 
 }

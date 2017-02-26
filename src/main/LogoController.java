@@ -42,13 +42,10 @@ public class LogoController
 
 	public LogoController(Stage stage)
 	{
-		pages = new ArrayList<PageView>();
-		simulation = new SimulationView();
-		selectionBar = new SelectionBar();
-		inputBox = new InputBox();
-		workspace = new WorkspaceView();
-		userCommands = new SavedCommandsView();
-
+		initiateViews();
+		addTools();
+		initiateObservers();
+		
 		this.stage = stage;
 		stage.setTitle("SLogo");
 		addTools();
@@ -77,8 +74,17 @@ public class LogoController
 	{
 		this.simulation = simulation;
 	}
-
-	public void addTools()
+	
+	private void initiateViews(){
+		pages = new ArrayList<PageView>();
+		simulation = new SimulationView();
+		selectionBar = new SelectionBar();
+		inputBox = new InputBox();
+		workspace = new WorkspaceView();
+		userCommands = new SavedCommandsView();
+	}
+	
+	private void addTools()
 	{
 		file = new FileTool(stage);
 		settings = new SettingsTool(stage);
