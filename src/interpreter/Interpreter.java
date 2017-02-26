@@ -15,9 +15,11 @@ import instruction.*;
 
 public class Interpreter {
 
+	private InstructionData myData;
 	private InstructionClassifier myClassifier;
 
-	public Interpreter(String language) {
+	public Interpreter(InstructionData data, String language) {
+		myData = data;
 		myClassifier = new InstructionClassifier(language);
 	}
 
@@ -32,13 +34,9 @@ public class Interpreter {
 	 *            InstructionData object representing current information
 	 */
 	public void parseAndRun(String instruction, InstructionData info) {
-		/**
-		 * TODO: Decide desired location of responsibilities.. should we put
-		 * more control of execution in Instruction, Interpreter,
-		 * InstructionNode, etc.?
-		 */
-		List<InstructionNode> head = parse(instruction);
-		//TODO: Create instruction for list of nodes
+		List<InstructionNode> headNodes = parse(instruction);
+		TreeExecuter executer = new TreeExecuter(getMyData(), getMyClassifier());
+		executeTree(executer, headNodes);
 	}
 
 	/**
@@ -57,6 +55,12 @@ public class Interpreter {
 		List<InstructionNode> headNodes = builder.buildTree();
 		return headNodes;
 	}
+	
+	private void executeTree(TreeExecuter executer, List<InstructionNode> headNodes){
+		for(InstructionNode node: headNodes){
+			executer.execute(node);
+		}
+	}
 
 	public InstructionClassifier getMyClassifier() {
 		return myClassifier;
@@ -65,5 +69,15 @@ public class Interpreter {
 	public void setMyClassifier(InstructionClassifier myClassifier) {
 		this.myClassifier = myClassifier;
 	}
+
+	public InstructionData getMyData() {
+		return myData;
+	}
+
+	public void setMyData(InstructionData myData) {
+		this.myData = myData;
+	}
+	
+	
 
 }
