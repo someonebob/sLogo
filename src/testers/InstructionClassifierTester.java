@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.regex.Pattern;
 
+import instruction.Instruction;
 import interpreter.InstructionClassifier;
 
 public class InstructionClassifierTester {
@@ -15,8 +16,8 @@ public class InstructionClassifierTester {
 	private static void testTerms(String language){
 		InstructionClassifier in = new InstructionClassifier(language);
 		String[] examples = generateExampleInput();
-		//parseText(in, examples);
-		//listTest(in);
+		parseText(in, examples);
+		listTest(in);
 		
 	}
 	
@@ -45,7 +46,7 @@ public class InstructionClassifierTester {
    	 * @param text Input examples
    	 */
     private static void parseText (InstructionClassifier classifier, String[] text) {
-    	/*
+ 
         for (String s : text) {
             if (s.trim().length() > 0) {
             	String shorty = classifier.findShortcutKey(s);
@@ -62,7 +63,7 @@ public class InstructionClassifierTester {
             System.out.println();
         }
         System.out.println();
-        */
+        
     }
 	
 	private static String[] generateExampleInput(){

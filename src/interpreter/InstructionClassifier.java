@@ -1,9 +1,6 @@
 package interpreter;
 
-import java.util.Enumeration;
 import java.util.List;
-import java.util.ResourceBundle;
-import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
 import java.util.Map.Entry;
 import java.util.regex.Pattern;
@@ -15,8 +12,6 @@ import util.ResourceToList;
  * This class performs the reflection necessary to produce instances of each
  * command type without direct statement of the desired class type. This class
  * can translate a String into an instance of the intended class type.
- * 
- * THERE IS A BUG IN THIS CLASS - NEED TO CHANGE
  * 
  * @author maddiebriere
  */
@@ -42,6 +37,8 @@ public class InstructionClassifier {
 	
     /**
      * Step before actually generating instruction
+     * 
+     *TODO: Bug, can't find comments???
      * 
      * Searches for text to match String to key
      * @author rcd
@@ -71,7 +68,7 @@ public class InstructionClassifier {
      * @return correct command
      */
     public String classifyInstructionShortcut(String text){
-    	final String ERROR = "NO MATCH";
+    	final String ERROR = "NO MATCH 2";
     	  /**
          * Check specific options first
          */
@@ -141,7 +138,7 @@ public class InstructionClassifier {
 		Object instructionHopeful = new Object();
 		
 		String classification = findShortcutKey(comm);
-		if(classification.equals("NO MATCH")){ //Break out if the command isn't an option
+		if(classification.equals("NO MATCH") || classification.equals("NO MATCH 2")){ //Break out if the command isn't an option
 			//TODO: Error handling of mismatch
 			return null;
 		}

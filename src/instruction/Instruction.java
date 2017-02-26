@@ -17,15 +17,11 @@ import models.Actor;
  */
 public abstract class Instruction {
 	private InstructionData instructionData;
-	private InstructionNode root;
-	private String textRepresentation;
 	private List<String> arguments;
 	
-	public Instruction(InstructionData instructionData, InstructionNode root){
+	public Instruction(InstructionData instructionData, List<String> args){
 		this.instructionData = instructionData;
-		this.textRepresentation = root.getMyValue();
-		this.root = root;
-		this.arguments = getArgumentsFromTree();
+		this.arguments = args;
 	}
 	
 	/**
@@ -54,30 +50,6 @@ public abstract class Instruction {
 	 */
 	public abstract double execute();
 
-	/**
-	 * Returns the text originally input for an instruction, such as "Forward
-	 * 50." It is used by the LogoController to display previously entered
-	 * commands. It can be used by future programmers if parsing a command's
-	 * text in a new Instruction becomes necessary.
-	 **/
-	public String getText(){
-		return textRepresentation;
-	}
-	
-	protected InstructionNode getRoot(){
-		return root;
-	}
-	
-	private List<String> getArgumentsFromTree(){
-		/*
-		 * 
-		 * MADDIE SHOULD ADD CODE HERE
-		 * This method should return a list of the arguments for this 
-		 * instruction as Doubles.
-		 * 
-		 */
-		return null;
-	}
 	
 	protected List<Double> getArgumentsDouble(){
 		List<Double> doubleList = new ArrayList<>();
