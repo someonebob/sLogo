@@ -55,13 +55,13 @@ public class TreeBuilder {
 	
 	
 	private InstructionNode buildSubTree(){
+		//TODO: Fix currenttext bug
 		if(getCurrentText().isEmpty()){
 			return null;
 		}
 		InstructionNode head = nodes.remove(0); //take node out of list to add to tree
 		String value = InstructionSplitter.getInstructionStrings(getCurrentText()).get(0);
 		head.setMyValue(value);
-		head.setMyText(getCurrentText());
 		setCurrentText(InstructionSplitter.removeFirstItem(getCurrentText()));//remove node from current text
 		int numArgs = ArgumentReader.getNumArgs(classifier.findShortcutKey(value));
 		for(int i=0; i<numArgs; i++){
