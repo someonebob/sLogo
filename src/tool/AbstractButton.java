@@ -11,7 +11,7 @@ import javafx.scene.control.MenuItem;
  * @author Jesse
  *
  */
-public class AbstractButton extends Observable
+public abstract class AbstractButton extends Observable
 {
 	private MenuItem myItem;
 	private List<AbstractButton> itemList;
