@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
+import java.util.Stack;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -18,10 +19,12 @@ import tool.FileTool.SaveButton;
 
 /**
  * The view that displays the console, allows the user to input commands
+ * 
  * @author Jesse
  *
  */
-public class InputBox implements View{
+public class InputBox implements View
+{
 	private BorderPane inputBox;
 	private ScrollPane scroll;
 	private TextField console;
@@ -29,98 +32,114 @@ public class InputBox implements View{
 	private VBox inputs;
 	private Label current;
 	private List<String> previous;
-	
+	private Stack<String> clickedCommands;
+
 	/**
 	 * Generates all the nodes and defines their actions
 	 */
-	public InputBox(){
+	public InputBox()
+	{
 		initiateItems();
 		console.setOnAction(e -> consoleAction());
 	}
-	
+
 	/**
 	 * Returns the the input of the console
+	 * 
 	 * @return
 	 */
-	public String getInput(){
+	public String getInput()
+	{
 		return input;
 	}
-	
-	public List<String> getPastInputs(){
+
+	public List<String> getPastInputs()
+	{
 		return previous;
 	}
-	
+
 	/**
 	 * Returns the group of nodes to be displayed
+	 * 
 	 * @return
 	 */
-	public BorderPane display(){
+	@Override
+	public BorderPane display()
+	{
 		return inputBox;
 	}
-	
+
 	@Override
-	public void update(Observable o, Object arg) {
-		if (o instanceof SaveButton){
+	public void update(Observable o, Object arg)
+	{
+		if (o instanceof SaveButton) {
 			saveFile((File) arg);
 		}
 	}
 
 	@Override
-	public void updateData(String arg) {
-		//Does nothing since the InputBox never needs to be updated	
+	public void updateData(String arg)
+	{
+		// Does nothing since the InputBox never needs to be updated
 	}
-	
-	private void initiateItems(){
+
+	private void initiateItems()
+	{
 		inputBox = new BorderPane();
 		scroll = new ScrollPane();
 		scroll.setPrefHeight(200);
 		scroll.setMaxHeight(200);
-		
+
 		inputs = new VBox();
 		scroll.setContent(inputs);
 		scroll.vvalueProperty().bind(inputs.heightProperty());
-		
+
 		console = new TextField();
 		console.setPromptText("Enter your code here...");
 		inputBox.setCenter(scroll);
 		inputBox.setBottom(console);
-		
+
 		previous = new ArrayList<>();
+		clickedCommands = new Stack<>();
 	}
-	
-	private void consoleAction(){	
+
+	private void consoleAction()
+	{
 		input = console.getText();
 		previous.add(input);
 		console.clear();
-		
-		current = new Label(input);	
-		current.setOnMouseClicked(e -> textAction());
+
+		Label current = new Label(input);
+		// commands.add(current);
+		current.setOnMouseClicked(e -> clickedCommands.add(current.getText()));
 		inputs.getChildren().add(current);
 
 	}
-	
-	private void textAction(){
-		System.out.println("poop");
-	}
 
-	private void saveFile(File file){
+	private void saveFile(File file)
+	{
 		FileWriter fw = null;
-		try{
+		try {
 			fw = new FileWriter(file);
 			fw.write(convertPrevious());
 			fw.close();
-		}catch(IOException e){
+		} catch (IOException e) {
 			Logger.getLogger(InputBox.class.getName()).log(Level.SEVERE, null, e);
 		}
 	}
-	
-	private String convertPrevious(){
+
+	public Stack<String> getClickedCommands()
+	{
+		return clickedCommands;
+	}
+
+	private String convertPrevious()
+	{
 		StringBuilder content = new StringBuilder();
-		for(String s : previous){
-			content.append(s +"\n");
+		for (String s : previous) {
+			content.append(s + "\n");
 		}
 		return content.toString();
 	}
-
 
 }

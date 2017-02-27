@@ -45,7 +45,7 @@ public class LogoController
 		initiateViews();
 		addTools();
 		initiateObservers();
-		
+
 		this.stage = stage;
 		stage.setTitle("SLogo");
 		stage.show();
@@ -60,7 +60,19 @@ public class LogoController
 		pane.setLeft(workspace.display());
 		pane.setCenter(simulation.display());
 		pane.setRight(userCommands.display());
+
+		inputBox.display().setOnMouseClicked(e -> {
+			executeClickedCommand();
+		});
+
 		return new Scene(pane, DISPLAY_WIDTH, DISPLAY_HEIGHT);
+	}
+
+	private void executeClickedCommand()
+	{
+		if (inputBox.getClickedCommands().size() > 0) {
+			System.out.println(inputBox.getClickedCommands().pop());
+		}
 	}
 
 	public void addPage(PageView page)
@@ -72,8 +84,9 @@ public class LogoController
 	{
 		this.simulation = simulation;
 	}
-	
-	private void initiateViews(){
+
+	private void initiateViews()
+	{
 		pages = new ArrayList<PageView>();
 		simulation = new SimulationView();
 		selectionBar = new SelectionBar();
@@ -81,7 +94,7 @@ public class LogoController
 		workspace = new WorkspaceView();
 		userCommands = new SavedCommandsView();
 	}
-	
+
 	private void addTools()
 	{
 		file = new FileTool(stage);
@@ -92,7 +105,7 @@ public class LogoController
 
 	private void initiateObservers()
 	{
-		for(AbstractButton ab : file.getButtons()){
+		for (AbstractButton ab : file.getButtons()) {
 			ab.addObserver(simulation);
 			ab.addObserver(inputBox);
 		}

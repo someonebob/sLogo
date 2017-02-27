@@ -26,7 +26,6 @@ public class TreeBuilderTester {
 		System.out.println("\nFull Node Print:");
 		fullNodePrint(headNodes);
 		
-		
 	}
 	
 	/**
