@@ -1,6 +1,7 @@
 package interpreter;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import instruction.Instruction;
 import instruction.InstructionData;
@@ -16,6 +17,7 @@ import instruction.InstructionData;
 
 public class TreeExecuter {
 	
+	
 	private InstructionData myData;
 	private InstructionClassifier myClass;
 	
@@ -23,7 +25,7 @@ public class TreeExecuter {
 		myData = data;
 		myClass = clzz;
 	}
-
+	
 	/**
 	 * Deconstruct a tree and execute using post-traversal
 	 * 
@@ -37,13 +39,35 @@ public class TreeExecuter {
 	public void execute(InstructionNode head){
 		ArrayList<String> args = new ArrayList<String>();
 		for(InstructionNode child: head.getMyChildren()){
-			if(!child.hasRun() /*&& child.getIsExecutable()*/){
-				execute(child);
-				args.add(child.getMyRunValue());
+			if(!child.hasRun()){
+				if(!isStart(child)){
+					execute(child);
+					args.add(child.getMyRunValue());
+				}
+				else{
+					args.add(buildInnerList(child));
+				}
 			}
 		}
 		Instruction i = myClass.generateInstruction(head.getMyValue(), myData, args);
 		i.execute();
 		head.setMyRunValue(""+i.execute()); //Will change with list, for now, just tacks on result
 	}
+	
+	/**
+	 * Construct an inner list (or grouping) when you want to have knowledge
+	 * of items in a list, but don't actually want to run them.
+	 * 
+	 * @param head
+	 */
+	private String buildInnerList(InstructionNode head){
+		//TODO: Complete
+		return null;
+	}
+	
+	private boolean isStart(InstructionNode child){
+		//TODO:Complete
+		return false;
+	}
+	
 }
