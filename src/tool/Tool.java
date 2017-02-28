@@ -3,7 +3,7 @@ package tool;
 import java.util.List;
 
 import javafx.scene.control.Menu;
-import javafx.scene.control.MenuItem;
+import javafx.stage.Stage;
 
 /**
  * Defines a clickable tab in the ToolBar Examples: Language, Line color,
@@ -14,12 +14,25 @@ import javafx.scene.control.MenuItem;
  */
 public abstract class Tool
 {
-	Menu menu;
+	private Menu menu;
+	private Stage stage;
 
-	public Tool(String menuName)
+	public Tool(String menuName, Stage stage)
 	{
 		menu = new Menu(menuName);
-		menu.getItems().addAll(makeMenuItems());
+		this.stage = stage;
+		makeMenuItems();
+		if (getButtons() != null) {
+
+			for (AbstractButton ab : getButtons()) {
+
+				for (AbstractButton ab2 : ab.getItemList()) {
+					menu.getItems().add(ab2.getItem());
+				}
+
+			}
+		}
+
 	}
 
 	public Menu getMenu()
@@ -27,5 +40,12 @@ public abstract class Tool
 		return menu;
 	}
 
-	public abstract List<MenuItem> makeMenuItems();
+	public Stage getStage()
+	{
+		return stage;
+	}
+
+	public abstract void makeMenuItems();
+
+	public abstract List<AbstractButton> getButtons();
 }

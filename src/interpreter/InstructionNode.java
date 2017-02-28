@@ -3,9 +3,6 @@ package interpreter;
 import java.util.ArrayList;
 import java.util.List;
 
-import instruction.Instruction;
-import util.InstructionSplitter;
-
 /**
  * This class represents the nodes used in the parsed string tree. This tree
  * will hold the nodes (each representing its own individual word) in an order
@@ -16,48 +13,73 @@ import util.InstructionSplitter;
  */
 
 public class InstructionNode {
-	private String myText;
-	private String myValue;
-	private int myReturn;
+	
+	private String myClassification; // The String representing the type (Forward, Equal, Comment)
+	private String myValue; //String command
 	private List<InstructionNode> myChildren;
-
+	private String myRunValue; //This is used for tree traversal, to check if a command has been excuted already
+	private boolean isExecutable; //Used for list/ group creation
+	
 	public InstructionNode() {
-		myText = "";
-		myValue = "";
-		myChildren = new ArrayList<InstructionNode>();
+		this("", "", new ArrayList<InstructionNode>());
+	}
+	
+	public InstructionNode(String clss, String value) {
+		this(clss, value, new ArrayList<InstructionNode>());
 	}
 
-	public InstructionNode(String text, List<InstructionNode> children) {
-		if (text.isEmpty()) {
+	public InstructionNode(String clss, String value, List<InstructionNode> children) {
+		if (value.isEmpty()) {
 			// TODO: Error checking
 		}
-		myText = text;
+		myClassification = clss;
+		myValue = value;
 		myChildren = children;
-		myValue = InstructionSplitter.getInstructionStrings(text).get(0);
+		myRunValue = "NO RUN"; //default
+		isExecutable = true;
 	}
 
 	/**
-	 * Generate the command corresponding to the current node.
-	 * 
-	 * This is tricky, but very important! This will generate ONLY the current
-	 * instruction, by
-	 * 
-	 * @return
-	 */
-	public Instruction generateCommand() {
-		// TODO: Complete
-		return null;
-	}
-
-	/**
-	 * Total text return. Example: "forward forward 50" 1st node: "forward
-	 * forward 50" 2nd node: "forward 50" 3rd node: "50"
-	 * 
-	 * @return String of text representing current node
+	 * Pieces together a String from the current Node using the current Node
+	 * and all of its children.
+	 * @return String representing the entire Node
 	 */
 	public String getMyText() {
-		return myText;
+		String inst = recursivePrint(this, "");
+		return inst.substring(0, inst.length()-1);//Exclude final space
 	}
+	
+	private String recursivePrint(InstructionNode node, String curr){
+		curr += node.getMyValue() + " ";
+		for(InstructionNode child: node.getMyChildren()){
+			curr = recursivePrint(child, curr);
+		}
+		return curr;
+	}
+	
+	/**
+	 * 
+	 * 
+	 * TODO
+	 * 
+	 * Pieces together a String from the current Node using the current Node
+	 * and all of its NON-EXECUTED children.
+	 * @return String representing the entire Node as nonexecuted instructions
+	 */
+	/**public String getMyRunText() {
+		String inst = recursiveRunPrint(this, "");
+		return inst.substring(0, inst.length()-1);//Exclude final space
+	}
+	
+	private String recursiveRunPrint(InstructionNode node, String curr){
+		if(!node.hasRun())
+			curr += node.getMyValue() + " ";
+		for(InstructionNode child: node.getMyChildren()){
+			curr = recursiveRunPrint(child, curr);
+		}
+		return curr;
+	}*/
+
 
 	/**
 	 * Return only the head value (current node)
@@ -78,15 +100,58 @@ public class InstructionNode {
 		return myChildren;
 	}
 
-	/**
-	 * This returns the number returned by this instruction. All Instructions
-	 * must return a value, regardless of their function. For instance, 'fd 50'
-	 * will return 50. Hence, the nodes fd and 50 will both have the return 50.
-	 * 
-	 * @return
-	 */
-	public int getMyReturn() {
-		return myReturn;
+	public String getMyClassification() {
+		return myClassification;
 	}
 
+	public void setMyClassification(String myClassification) {
+		this.myClassification = myClassification;
+	}
+
+	public void setMyValue(String myValue) {
+		this.myValue = myValue;
+	}
+
+	public void setMyChildren(List<InstructionNode> myChildren) {
+		this.myChildren = myChildren;
+	}
+
+
+	public String getMyRunValue() {
+		return myRunValue;
+	}
+
+	public void setMyRunValue(String myRunValue) {
+		this.myRunValue = myRunValue;
+	}
+	
+	/**
+	 * Check if this node has been evaluated
+	 * @return true if the run value is not equal to NO RUN (the default), which means the
+	 * instruction has been run, false otherwise
+	 */
+	public boolean hasRun(){
+		return !myRunValue.equals("NO RUN");
+	}
+
+	public boolean isExecutable() {
+		return isExecutable;
+	}
+
+	public void setExecutable(boolean isExecutable) {
+		this.isExecutable = isExecutable;
+	}
+	
+	/**
+	 * Retrieve the current run-value (if this node was executed)
+	 * OR retrieve a list holding
+	 * all of the non-executed InstructionNodes as a String for
+	 * later execution
+	 * @return
+	 */
+	/**public String getRunValueList(){
+		
+	}*/
+	
+	
 }

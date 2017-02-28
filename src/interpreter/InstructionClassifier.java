@@ -1,30 +1,27 @@
 package interpreter;
 
-import java.util.Enumeration;
 import java.util.List;
-import java.util.ResourceBundle;
-import java.util.AbstractMap.SimpleEntry;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Map.Entry;
 import java.util.regex.Pattern;
 
 import instruction.*;
+import util.ResourceToList;
 
 /**
  * This class performs the reflection necessary to produce instances of each
  * command type without direct statement of the desired class type. This class
  * can translate a String into an instance of the intended class type.
  * 
- * THERE IS A BUG IN THIS CLASS - NEED TO CHANGE
- * 
  * @author maddiebriere
- *
  */
 
 public class InstructionClassifier {
 	public final String SYNTAX = "resources/languages/Syntax";
-	public final String LANGUAGE = "resources/languages/";
 	public final String PATHS = "resources/languages/JavaSpeak"; //Full class names matched to shortcuts
+	public final String LANGUAGE = "resources/languages/";
 
 	private String mySyntax;
 	private String myLanguage;
@@ -43,6 +40,8 @@ public class InstructionClassifier {
     /**
      * Step before actually generating instruction
      * 
+     *TODO: Bug, can't find comments???
+     * 
      * Searches for text to match String to key
      * @author rcd
      * @param text
@@ -50,26 +49,16 @@ public class InstructionClassifier {
      */
     public String findShortcutKey(String text) {
         final String ERROR = "NO MATCH";
-        //Better 
         /**
          * Default to higher classifiers if only possibility
          */
-
-        System.out.println(mySyntaxList);
         for (Entry<String, Pattern> e : mySyntaxList) {
-        	//System.out.println("Here");
-        	System.out.println(e.getKey());
-        	System.out.println(e.getValue());
             if (match(text, e.getValue())) {
-            	System.out.println("Here 0");
             	if(!e.getKey().equals("Instruction")){
-            		System.out.println("Here 1");
             		return e.getKey();
             	}
-            	else{
-            		System.out.println("Here 2");
+            	else
             		return classifyInstructionShortcut(text);
-            	}
             }
         }
         return ERROR;
@@ -81,7 +70,7 @@ public class InstructionClassifier {
      * @return correct command
      */
     public String classifyInstructionShortcut(String text){
-    	final String ERROR = "NO MATCH";
+    	final String ERROR = "NO MATCH 2";
     	  /**
          * Check specific options first
          */
@@ -120,7 +109,6 @@ public class InstructionClassifier {
      * @return true if text and regex match, false otherwise
      */
     private boolean match (String text, Pattern regex) {
-    	System.out.println("BLABLAH");
         return regex.matcher(text).matches();
     }
     
@@ -132,7 +120,6 @@ public class InstructionClassifier {
      * @return true if text and regex match, false otherwise
      */
     private boolean match (String text, String regex) {
-    	System.out.println("BAD");
         return text.equals(regex);
     }
 
@@ -141,9 +128,11 @@ public class InstructionClassifier {
 	 * 
 	 * @param command
 	 *            String representing instruction (e.g., fd)
+	 * @param args The arguments used to make the instruction
+	 * 
 	 * @return Instruction object corresponding to String
 	 */
-	public Instruction generateInstruction(String comm) {
+	public Instruction generateInstruction(String comm, InstructionData  data, List<String> args) {
 		
 		//TODO: Complete and figure out instruction address problem
 		//Piazza question
@@ -153,17 +142,31 @@ public class InstructionClassifier {
 		Object instructionHopeful = new Object();
 		
 		String classification = findShortcutKey(comm);
-		if(classification.equals("NO MATCH")){ //Break out if the command isn't an option
+		if(classification.equals("NO MATCH") || classification.equals("NO MATCH 2")){ //Break out if the command isn't an option
 			//TODO: Error handling of mismatch
 			return null;
 		}
 		try {
 			String classPath = findAddressKey(classification);
 			clazz = Class.forName(classPath);
-			instructionHopeful = clazz.newInstance();
+			Constructor<?> ctor = clazz.getDeclaredConstructor(InstructionData.class, List.class);
+			instructionHopeful = ctor.newInstance(data, args);
 		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
 			// TODO Handle error --> non-valid class
 		} // This is probably wrong
+		catch (NoSuchMethodException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		try{
 			instruction = (Instruction) instructionHopeful;
@@ -178,20 +181,11 @@ public class InstructionClassifier {
 		mySyntaxList = new ArrayList<Entry<String, Pattern>>();
 		myLanguageList = new ArrayList<Entry<String, Pattern>>();
 		myPathsList = new ArrayList<Entry<String,Pattern>>();
-		addTerms(mySyntax, mySyntaxList);
-		addTerms(myLanguage, myLanguageList);
-		addTerms(myPaths, myPathsList);
+		ResourceToList.addTerms(mySyntax, mySyntaxList);
+		ResourceToList.addTerms(myLanguage, myLanguageList);
+		ResourceToList.addTerms(myPaths, myPathsList);
 	}
 
-	public void addTerms(String resource, List<Entry<String, Pattern>> list) {
-		ResourceBundle resources = ResourceBundle.getBundle(resource);
-		Enumeration<String> iter = resources.getKeys();
-		while (iter.hasMoreElements()) {
-			String key = iter.nextElement();
-			String regex = resources.getString(key);
-			list.add(new SimpleEntry<>(key, Pattern.compile(regex, Pattern.CASE_INSENSITIVE)));
-		}
-	}
 
 	public String getMyLanguage() {
 		return myLanguage;

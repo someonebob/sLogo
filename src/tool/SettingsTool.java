@@ -1,34 +1,100 @@
 package tool;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import javafx.scene.control.MenuItem;
+import javafx.scene.image.Image;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
+import javafx.stage.Stage;
 
+/**
+ * @author jimmy
+ * @author Jesse
+ *
+ */
 public class SettingsTool extends Tool
 {
 	public static final String name = "Settings";
 
-	public SettingsTool()
+	private List<AbstractButton> buttons;
+
+	public SettingsTool(Stage window)
 	{
-		super(name);
+		super(name, window);
 	}
 
 	@Override
-	public List<MenuItem> makeMenuItems()
+	public void makeMenuItems()
 	{
-		List<MenuItem> menuItems = new ArrayList<MenuItem>();
-		menuItems.add(makeBkgdColorItem());
-		return menuItems;
+		buttons = new ArrayList<>();
+		buttons.add(new BackgroundColorButton());
+		buttons.add(new TurtleImageButton());
+		buttons.add(new PenColorButton());
+		buttons.add(new LanguageButton());
 	}
 
-	private MenuItem makeBkgdColorItem()
+	@Override
+	public List<AbstractButton> getButtons()
 	{
-		MenuItem backgroundColor = new MenuItem("Set Background Color");
-		backgroundColor.setOnAction(e -> {
-			System.out.println("Nice color m'dude");
-		});
-		return backgroundColor;
+		return buttons;
+
+	}
+
+	private FileChooser setupFileChooser()
+	{
+		final String EXTENSION = "*.png";
+
+		FileChooser chooser = new FileChooser();
+		chooser.setTitle("New Image");
+		File defaultDirectory = new File(System.getProperty("user.dir") + "/images");
+		chooser.setInitialDirectory(defaultDirectory);
+		chooser.getExtensionFilters().setAll(new ExtensionFilter("IMAGE", EXTENSION));
+
+		return chooser;
+	}
+
+	public class BackgroundColorButton extends AbstractColorButton
+	{
+		public BackgroundColorButton()
+		{
+			super(new MenuItem("Background Color"));
+		}
+	}
+
+	public class TurtleImageButton extends AbstractButton
+	{
+		public TurtleImageButton()
+		{
+			super(new MenuItem("Turtle Image"));
+			this.getItem().setOnAction(e -> {
+				Stage newWindow = new Stage();
+				File selectedFile = setupFileChooser().showOpenDialog(newWindow);
+				if (selectedFile != null) {
+					Image newImage = new Image(selectedFile.toURI().toString());
+					this.setChanged();
+					this.notifyObservers(newImage);
+				}
+			});
+		}
+	}
+
+	public class PenColorButton extends AbstractColorButton
+	{
+		public PenColorButton()
+		{
+			super(new MenuItem("Pen Color"));
+		}
+	}
+
+	public class LanguageButton extends AbstractButton
+	{
+		public LanguageButton()
+		{
+			super(new MenuItem("Language"));
+		}
 	}
 
 }

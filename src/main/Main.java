@@ -8,7 +8,8 @@ public class Main extends Application
 	@Override
 	public void start(Stage stage) throws Exception
 	{
-		RunLogo runLogo = new RunLogo(stage);
+		LogoController controller = new LogoController(stage);
+		stage.setMaximized(true);
 	}
 
 	public static void main(String[] args)

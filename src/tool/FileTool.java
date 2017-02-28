@@ -14,71 +14,104 @@ import javafx.stage.Stage;
  * @author Jesse
  *
  */
-public class FileTool extends Tool{
-	
+public class FileTool extends Tool
+{
+
 	public static final String name = "File";
 	public static final String EXTENSION = "*.logo";
-	
-	private Stage window;
+
+	private List<AbstractButton> buttons;
 
 	public FileTool(Stage window) {
-		super(name);
-		this.window = window;
+		super(name, window);
 	}
-
 
 	@Override
-	public List<MenuItem> makeMenuItems() {
-		List<MenuItem> menuItems = new ArrayList<MenuItem>();
-		menuItems.add(makeNewItem());
-		menuItems.add(makeOpenItem());
-		menuItems.add(makeSaveItem());
+	public void makeMenuItems() {
+		buttons = new ArrayList <>();
+		buttons.add(new NewButton());
+		buttons.add(new OpenButton());
+		buttons.add(new SaveButton());
+		buttons.add(new SaveAsButton());
+	}
+	
 
-		return menuItems;
+	@Override
+	public List<AbstractButton> getButtons() {
+		return buttons;
 	}
 	
-	private MenuItem makeNewItem(){
-		MenuItem noo = new MenuItem("New");
-		noo.setOnAction(e ->{
-			
-		});
+	public class NewButton extends AbstractButton{
+
+		public NewButton() {
+			super(new MenuItem("New"));
+			//TODO action
+			this.getItem().setOnAction(e -> {
+				this.setChanged();
+				this.notifyObservers();
+			});
+		}
 		
-		return noo;		
 	}
 	
-	private MenuItem makeOpenItem(){
-		MenuItem open = new MenuItem("Open");
-		open.setOnAction(e ->{
-			File selectedFile = setupFileChooser().showOpenDialog(window);
-			if(selectedFile != null){
-				//TODO: do something with the file
-			}
-		});
+	public class OpenButton extends AbstractButton{
+
+		public OpenButton() {
+			super(new MenuItem("Open"));
+			// TODO Auto-generated constructor stub
+			this.getItem().setOnAction(e -> {
+				File selectedFile = setupFileChooser().showOpenDialog(getStage());
+				if(selectedFile != null){
+					this.setChanged();
+					this.notifyObservers(selectedFile);
+				}
+				
+			});
+		}
 		
-		return open;
 	}
 	
-	private MenuItem makeSaveItem(){
-		MenuItem save = new MenuItem("Save");
-		save.setOnAction(e ->{
-			
-		});
+	public class SaveButton extends AbstractButton{
+
+		public SaveButton() {
+			super(new MenuItem("Save"));
+			// TODO Make it save
+			this.getItem().setOnAction(e -> {
+				File save = setupFileChooser().showSaveDialog(getStage());
+				if(save != null){
+					this.setChanged();
+					this.notifyObservers(save);
+				}
+				
+			});
+		}
 		
-		return save;
 	}
-	
-	
-	
+
+	public class SaveAsButton extends AbstractButton{
+
+		public SaveAsButton() {
+			super(new MenuItem("Save As"));
+			// TODO make it save
+			this.getItem().setOnAction(e -> {
+				this.setChanged();
+				this.notifyObservers();
+			});
+		}
+		
+	}
 	
 	
 	private FileChooser setupFileChooser(){
 		FileChooser chooser = new FileChooser();
-		chooser.setTitle("LOGO Programs");	
-		File defaultDirectory = new File(System.getProperty("user.dir")+"/data");
+		chooser.setTitle("LOGO Programs");
+		File defaultDirectory = new File(System.getProperty("user.dir") + "/data");
 		chooser.setInitialDirectory(defaultDirectory);
 		chooser.getExtensionFilters().setAll(new ExtensionFilter("LOGO", EXTENSION));
-		
+
 		return chooser;
 	}
+
+
 
 }

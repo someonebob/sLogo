@@ -1,86 +1,145 @@
 package view;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
+import java.util.Stack;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
+import tool.FileTool.SaveButton;
 
 /**
  * The view that displays the console, allows the user to input commands
+ * 
  * @author Jesse
  *
  */
-public class InputBox extends Observable {
+public class InputBox implements View
+{
 	private BorderPane inputBox;
 	private ScrollPane scroll;
 	private TextField console;
 	private String input;
 	private VBox inputs;
-	private Text current;
-	private List<Text> previous;
-	
+	private Label current;
+	private List<String> previous;
+	private Stack<String> clickedCommands;
+
 	/**
 	 * Generates all the nodes and defines their actions
 	 */
-	public InputBox(){
+	public InputBox()
+	{
 		initiateItems();
 		console.setOnAction(e -> consoleAction());
 	}
-	
+
 	/**
 	 * Returns the the input of the console
+	 * 
 	 * @return
 	 */
-	public String getInput(){
+	public String getInput()
+	{
 		return input;
 	}
-	
+
+	public List<String> getPastInputs()
+	{
+		return previous;
+	}
+
 	/**
 	 * Returns the group of nodes to be displayed
+	 * 
 	 * @return
 	 */
-	public BorderPane display(){
+	@Override
+	public BorderPane display()
+	{
 		return inputBox;
 	}
-	
-	private void initiateItems(){
+
+	@Override
+	public void update(Observable o, Object arg)
+	{
+		if (o instanceof SaveButton) {
+			saveFile((File) arg);
+		}
+	}
+
+	@Override
+	public void updateData(String arg)
+	{
+		// Does nothing since the InputBox never needs to be updated
+	}
+
+	private void initiateItems()
+	{
 		inputBox = new BorderPane();
 		scroll = new ScrollPane();
 		scroll.setPrefHeight(200);
 		scroll.setMaxHeight(200);
-		
+
 		inputs = new VBox();
 		scroll.setContent(inputs);
 		scroll.vvalueProperty().bind(inputs.heightProperty());
-		
+
 		console = new TextField();
 		console.setPromptText("Enter your code here...");
 		inputBox.setCenter(scroll);
 		inputBox.setBottom(console);
-		
+
 		previous = new ArrayList<>();
-	}
-	
-	private void consoleAction(){
-		setChanged();
-		notifyObservers();
-		input = console.getText();
-		console.clear();
-		current = new Text(input);
-		previous.add(current);
-		current.setOnMouseClicked(e -> textAction());
-		inputs.getChildren().add(current);
-		
-	}
-	
-	private void textAction(){
-		System.out.println("poop");
+		clickedCommands = new Stack<>();
 	}
 
+	private void consoleAction()
+	{
+		input = console.getText();
+		previous.add(input);
+		console.clear();
+
+		Label current = new Label(input);
+		// commands.add(current);
+		current.setOnMouseClicked(e -> clickedCommands.add(current.getText()));
+		inputs.getChildren().add(current);
+
+	}
+
+	private void saveFile(File file)
+	{
+		FileWriter fw = null;
+		try {
+			fw = new FileWriter(file);
+			fw.write(convertPrevious());
+			fw.close();
+		} catch (IOException e) {
+			Logger.getLogger(InputBox.class.getName()).log(Level.SEVERE, null, e);
+		}
+	}
+
+	public Stack<String> getClickedCommands()
+	{
+		return clickedCommands;
+	}
+
+	private String convertPrevious()
+	{
+		StringBuilder content = new StringBuilder();
+		for (String s : previous) {
+			content.append(s + "\n");
+		}
+		return content.toString();
+	}
 
 }

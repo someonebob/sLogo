@@ -3,7 +3,6 @@ package interpreter;
 import java.util.List;
 
 import instruction.*;
-import util.InstructionSplitter;
 
 /**
  * This interface will use a variety of resource files to transform An input
@@ -16,9 +15,11 @@ import util.InstructionSplitter;
 
 public class Interpreter {
 
+	private InstructionData myData;
 	private InstructionClassifier myClassifier;
 
-	public Interpreter(String language) {
+	public Interpreter(InstructionData data, String language) {
+		myData = data;
 		myClassifier = new InstructionClassifier(language);
 	}
 
@@ -33,17 +34,9 @@ public class Interpreter {
 	 *            InstructionData object representing current information
 	 */
 	public void parseAndRun(String instruction, InstructionData info) {
-		/**
-		 * TODO: Decide desired location of responsibilities.. should we put
-		 * more control of execution in Instruction, Interpreter,
-		 * InstructionNode, etc.?
-		 */
-		
-		
-		//TODO: Decide if this might need to be a list
-		InstructionNode head = parse(instruction);
-		Instruction toExecute = myClassifier.generateInstruction(head.getMyValue());
-		toExecute.execute();
+		List<InstructionNode> headNodes = parse(instruction);
+		TreeExecuter executer = new TreeExecuter(getMyData(), getMyClassifier());
+		executeTree(executer, headNodes);
 	}
 
 	/**
@@ -57,12 +50,16 @@ public class Interpreter {
 	 *            The String command passed in by the front-end
 	 * @return Root node of the instruction, read from toParse
 	 */
-	private InstructionNode parse(String toParse) {
-		List<Instruction> splitCommands = InstructionSplitter.getInstructions(toParse, getMyClassifier());
-		InstructionNode head = TreeBuilder.buildTree(splitCommands); // generate
-																		// from
-																		// root
-		return head;
+	private List<InstructionNode> parse(String toParse) {
+		TreeBuilder builder = new TreeBuilder(toParse, getMyClassifier());
+		List<InstructionNode> headNodes = builder.buildTree();
+		return headNodes;
+	}
+	
+	private void executeTree(TreeExecuter executer, List<InstructionNode> headNodes){
+		for(InstructionNode node: headNodes){
+			executer.execute(node);
+		}
 	}
 
 	public InstructionClassifier getMyClassifier() {
@@ -72,5 +69,15 @@ public class Interpreter {
 	public void setMyClassifier(InstructionClassifier myClassifier) {
 		this.myClassifier = myClassifier;
 	}
+
+	public InstructionData getMyData() {
+		return myData;
+	}
+
+	public void setMyData(InstructionData myData) {
+		this.myData = myData;
+	}
+	
+	
 
 }
