@@ -18,7 +18,8 @@ public class InstructionNode {
 	private String myValue; //String command
 	private List<InstructionNode> myChildren;
 	private String myRunValue; //This is used for tree traversal, to check if a command has been excuted already
-
+	private boolean isExecutable; //Used for list/ group creation
+	
 	public InstructionNode() {
 		this("", "", new ArrayList<InstructionNode>());
 	}
@@ -35,6 +36,7 @@ public class InstructionNode {
 		myValue = value;
 		myChildren = children;
 		myRunValue = "NO RUN"; //default
+		isExecutable = true;
 	}
 
 	/**
@@ -113,22 +115,7 @@ public class InstructionNode {
 	public void setMyChildren(List<InstructionNode> myChildren) {
 		this.myChildren = myChildren;
 	}
-	
-	
-	/**
-	 * This method checks if this type of node should be executed on a single run
-	 * 
-	 * TODO: Clean up/ insert resource file
-	 * 
-	 * @return true if this Node can be executed when the tree is executed, false otherwise
-	 * (e.g., the argument in an if statement, won't be run all the time)
-	 */
-	public boolean getIsExecutable(){
-		if(this.getMyClassification().equals("ListStart")){
-			return false;
-		}
-		return true;
-	}
+
 
 	public String getMyRunValue() {
 		return myRunValue;
@@ -145,6 +132,14 @@ public class InstructionNode {
 	 */
 	public boolean hasRun(){
 		return !myRunValue.equals("NO RUN");
+	}
+
+	public boolean isExecutable() {
+		return isExecutable;
+	}
+
+	public void setExecutable(boolean isExecutable) {
+		this.isExecutable = isExecutable;
 	}
 	
 	/**
