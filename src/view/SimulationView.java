@@ -3,6 +3,7 @@ package view;
 import java.io.File;
 import java.util.Observable;
 
+import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.control.Tab;
@@ -96,6 +97,11 @@ public class SimulationView implements View
 				actor.setImage((Image) arg);
 			}
 		}
+	}
+
+	public Bounds getBounds()
+	{
+		return root.getBoundsInLocal();
 	}
 
 	@Override

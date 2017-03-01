@@ -9,7 +9,6 @@ import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import util.MathUtil;
 import util.PointPolar;
-import view.PageView;
 
 /**
  * This class is the abstract superclass for all Instructions which change a
@@ -19,20 +18,23 @@ import view.PageView;
  * @author Matthew Barbano
  *
  */
-public abstract class TurtleCommand extends Instruction {
+public abstract class TurtleCommand extends Instruction
+{
 	private static final String RESOURCE_NEGATIVE_PIXELS_NAME = "MoveNegativeMessage";
 	private static final String RESOURCE_BOUNDS_NAME = "MoveBoundsMessage";
 
-	public TurtleCommand(InstructionData instructionData, List<String> args) {
+	public TurtleCommand(InstructionData instructionData, List<String> args)
+	{
 		super(instructionData, args);
 	}
 
-	protected void move(double distance) {
+	protected void move(double distance)
+	{
 		if (MathUtil.doubleLessThan(distance, 0.0)) {
 			throw new NonsensicalArgumentException(RESOURCE_NEGATIVE_PIXELS_NAME);
 		}
-		Point2D currentLocation = getActiveActor().getLocation();
-		double currentHeading = getActiveActor().getHeading();
+		Point2D currentLocation = getActiveActor().getActor().getLocation();
+		double currentHeading = getActiveActor().getActor().getHeading();
 		Point2D deltaVector = MathUtil.polarToRectangular(new PointPolar(distance, currentHeading));
 
 		Point2D newLocation = currentLocation.add(deltaVector);
@@ -49,19 +51,23 @@ public abstract class TurtleCommand extends Instruction {
 											// animation
 	}
 
-	protected void turnNewHeading(double newHeading) {
+	protected void turnNewHeading(double newHeading)
+	{
 		getActiveActor().setHeading(newHeading);
 	}
 
-	protected void turn(double deltaHeading) {
+	protected void turn(double deltaHeading)
+	{
 		turnNewHeading(getActiveActor().getHeading() + deltaHeading);
 	}
 
-	protected void togglePenState() {
+	protected void togglePenState()
+	{
 		// TODO
 	}
 
-	protected void togglePenVisibility() {
+	protected void togglePenVisibility()
+	{
 		// TODO
 	}
 }
