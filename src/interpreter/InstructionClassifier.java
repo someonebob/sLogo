@@ -147,8 +147,8 @@ public class InstructionClassifier {
 		try {
 			String classPath = findAddressKey(classification);
 			clazz = Class.forName(classPath);
-			Constructor<?> ctor = clazz.getDeclaredConstructor(InstructionData.class, List.class);
-			instructionHopeful = ctor.newInstance(data, args);
+			Constructor<?> ctor = clazz.getDeclaredConstructor(InstructionData.class, List.class, String.class);
+			instructionHopeful = ctor.newInstance(data, args, comm);
 		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
 			// TODO Handle error --> non-valid class
 		} // This is probably wrong
