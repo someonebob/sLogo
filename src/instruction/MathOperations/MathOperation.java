@@ -1,12 +1,13 @@
 package instruction.MathOperations;
 
+import java.util.List;
+
 import instruction.Instruction;
 import instruction.InstructionData;
-import interpreter.InstructionNode;
 
 public abstract class MathOperation extends Instruction {
 	
-	public MathOperation(InstructionData data, InstructionNode node) {
-		super(data, node);
+	public MathOperation(InstructionData data,  List<String> args) {
+		super(data, args);
 	}
 }
