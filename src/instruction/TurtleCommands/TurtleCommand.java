@@ -1,16 +1,21 @@
 package instruction.TurtleCommands;
 
+import java.util.List;
+
+import exceptions.NonsensicalArgumentException;
 import instruction.Instruction;
 import instruction.InstructionData;
-import interpreter.InstructionNode;
+import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import util.MathUtil;
 import util.PointPolar;
+import view.PageView;
 
 /**
- * This class is the abstract superclass for all Instructions which change
- * a turtle's state on the simulation screen (for example, move forward, turn, etc.)
- * It contains helper methods used repeatedly by these Instructions.
+ * This class is the abstract superclass for all Instructions which change a
+ * turtle's state on the simulation screen (for example, move forward, turn,
+ * etc.) It contains helper methods used repeatedly by these Instructions.
+ * 
  * @author Matthew Barbano
  *
  */
@@ -43,20 +48,20 @@ public abstract class TurtleCommand extends Instruction {
 											// location field, and handles the
 											// animation
 	}
-	
-	protected void turnNewHeading(double newHeading){
+
+	protected void turnNewHeading(double newHeading) {
 		getActiveActor().setHeading(newHeading);
 	}
-	
-	protected void turn(double deltaHeading){
+
+	protected void turn(double deltaHeading) {
 		turnNewHeading(getActiveActor().getHeading() + deltaHeading);
 	}
-	
-	protected void togglePenState(){
-		//TODO
+
+	protected void togglePenState() {
+		// TODO
 	}
-	
-	protected void togglePenVisibility(){
-		//TODO
+
+	protected void togglePenVisibility() {
+		// TODO
 	}
 }
