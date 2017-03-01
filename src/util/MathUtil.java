@@ -67,11 +67,6 @@ public final class MathUtil
 	{
 		return doubleEquals(first, second) || first > second;
 	}
-<<<<<<< src/util/MathUtil.java
-	
-	public static boolean hasIntegerValue(double candidateDouble){
-		return MathUtil.doubleEquals(candidateDouble, Math.round(candidateDouble));
-=======
 
 	public static boolean hasIntegerValue(double candidateDouble)
 	{
@@ -81,6 +76,5 @@ public final class MathUtil
 	public static double distance(double x, double y)
 	{
 		return Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
->>>>>>> src/util/MathUtil.java
 	}
 }
