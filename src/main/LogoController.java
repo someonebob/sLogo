@@ -1,6 +1,13 @@
 package main;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import instruction.InstructionData;
 import interpreter.Interpreter;
@@ -14,6 +21,7 @@ import tool.FileTool;
 import tool.HelpTool;
 import tool.SelectionBar;
 import tool.SettingsTool;
+import tool.FileTool.OpenButton;
 import view.InputBox;
 import view.PageView;
 import view.SavedCommandsView;
@@ -25,7 +33,7 @@ import view.WorkspaceView;
  * @author jimmy
  * @author Jesse
  */
-public class LogoController
+public class LogoController implements Observer
 {
 	public final int DISPLAY_WIDTH = 600;
 	public final int DISPLAY_HEIGHT = 600;
@@ -152,6 +160,7 @@ public class LogoController
 		for (AbstractButton ab : file.getButtons()) {
 			ab.addObserver(simulation);
 			ab.addObserver(inputBox);
+			ab.addObserver(this);
 		}
 
 		for (AbstractButton ab : settings.getButtons()) {
@@ -159,6 +168,36 @@ public class LogoController
 		}
 		
 		
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		// TODO Auto-generated method stub
+		if (o instanceof OpenButton) {
+			openFile((File) arg);
+		}
+	}
+	
+	private void openFile(File file)
+	{
+		FileReader fr = null;
+		StringBuilder command = new StringBuilder();
+		String line = null;
+		try{
+			fr = new FileReader(file);
+			BufferedReader reader = new BufferedReader(fr);
+			while((line = reader.readLine()) != null){
+				command.append(line +"\n");
+			}
+			
+			runCommand(command.toString());
+			fr.close();
+			
+		}catch(FileNotFoundException e){
+			System.out.println("Unable to open file");
+		}catch(IOException e){
+			Logger.getLogger(InputBox.class.getName()).log(Level.SEVERE, null, e);
+		}
 	}
 
 }
