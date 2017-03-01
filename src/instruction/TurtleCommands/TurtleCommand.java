@@ -30,9 +30,6 @@ public abstract class TurtleCommand extends Instruction
 
 	protected void move(double distance)
 	{
-		if (MathUtil.doubleLessThan(distance, 0.0)) {
-			throw new NonsensicalArgumentException(RESOURCE_NEGATIVE_PIXELS_NAME);
-		}
 		Point2D currentLocation = getActiveActor().getActor().getLocation();
 		double currentHeading = getActiveActor().getActor().getHeading();
 		Point2D deltaVector = MathUtil.polarToRectangular(new PointPolar(distance, currentHeading));
@@ -88,5 +85,11 @@ public abstract class TurtleCommand extends Instruction
 	protected void togglePenVisibility()
 	{
 		// TODO
+	}
+	
+	protected void checkNegativeArgumentException(double distance){
+		if (MathUtil.doubleLessThan(distance, 0.0)) {
+			throw new NonsensicalArgumentException(RESOURCE_NEGATIVE_PIXELS_NAME);
+		}
 	}
 }
