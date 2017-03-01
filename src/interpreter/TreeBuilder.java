@@ -73,6 +73,7 @@ public class TreeBuilder {
 			return null;
 		}
 		
+		//TODO: Fix so that correct value is returned for a list (not just [)
 		InstructionNode head = nodes.remove(0); //take node out of list to add to tree
 		String value = InstructionSplitter.getInstructionStrings(getCurrentText()).get(0);
 		head.setMyValue(value);
