@@ -118,13 +118,7 @@ public class InstructionNode {
 	public boolean hasRun(){
 		return !myRunValue.equals("NO RUN");
 	}
-	public boolean isExecutable() {
-		return isExecutable;
-	}
-	public void setExecutable(boolean isExecutable) {
-		this.isExecutable = isExecutable;
-	}
-	
+
 	/**
 	 * Retrieve the current run-value (if this node was executed)
 	 * OR retrieve a list holding

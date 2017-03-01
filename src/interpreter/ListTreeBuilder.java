@@ -9,6 +9,7 @@ import util.Pair;
  *
  */
 public class ListTreeBuilder {
+	
 	public static String buildList(Pair brackets, List<InstructionNode> nodes, InstructionNode head, String current){
 		String value = "";
 		boolean endHit = false;
