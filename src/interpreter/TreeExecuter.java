@@ -13,6 +13,10 @@ import instruction.InstructionData;
  */
 public class TreeExecuter
 {
+	private static final String LIST_START = "ListStart";
+	private static final String LIST_END = "ListEnd";
+	private static final String GROUP_START = "GroupStart";
+	private static final String GROUP_END = "GroupEnd";
 
 	private InstructionData myData;
 	private InstructionClassifier myClass;
@@ -39,36 +43,14 @@ public class TreeExecuter
 		ArrayList<String> args = new ArrayList<String>();
 		for (InstructionNode child : head.getMyChildren()) {
 			if (!child.hasRun()) {
-				if (!isStart(child)) {
-					execute(child);
-					args.add(child.getMyRunValue());
-				} else {
-					args.add(buildInnerList(child));
-				}
+				execute(child);
 			}
+			args.add(child.getMyRunValue());
+			
 		}
 		Instruction i = myClass.generateInstruction(head.getMyValue(), myData, args);
-		System.out.println("HERE");
-		head.setMyRunValue("" + i.execute()); // Will change with list, for now,
-												// just tacks on result
+		head.setMyRunValue(""+i.execute()); //Will change with list, for now, just tacks on result
 	}
 
-	/**
-	 * Construct an inner list (or grouping) when you want to have knowledge of
-	 * items in a list, but don't actually want to run them.
-	 * 
-	 * @param head
-	 */
-	private String buildInnerList(InstructionNode head)
-	{
-		// TODO: Complete
-		return null;
-	}
-
-	private boolean isStart(InstructionNode child)
-	{
-		// TODO:Complete
-		return false;
-	}
 
 }

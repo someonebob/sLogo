@@ -19,12 +19,15 @@ import util.ResourceToList;
  */
 
 public class InstructionClassifier {
+	
 	public final String SYNTAX = "resources/languages/Syntax";
 	public final String PATHS = "resources/interpreter/JavaSpeak"; //Full class names matched to shortcuts
 	public final String LANGUAGE = "resources/languages/";
+	
 	private String mySyntax;
 	private String myLanguage;
 	private String myPaths;
+	
 	private List<Entry<String, Pattern>> mySyntaxList;
 	private List<Entry<String, Pattern>> myLanguageList;
 	private List<Entry<String, Pattern>> myPathsList;
