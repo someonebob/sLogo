@@ -6,6 +6,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import models.Actor;
 import models.Simulation;
+import view.SimulationView;
 
 /**
  * This acts as container for all of the data associated with the current state
@@ -17,13 +18,13 @@ import models.Simulation;
  *
  */
 public class InstructionData {
-	Simulation simulation;
+	SimulationView simulation;
 	
 	public InstructionData(){
 		//TODO: Implement default constructor
 	}
 	
-	public InstructionData(Simulation simulation){ //Add VariablePage here too
+	public InstructionData(SimulationView simulation){ //Add VariablePage here too
 		this.simulation = simulation;
 	}
 	
@@ -54,15 +55,6 @@ public class InstructionData {
 	}
 
 	/**
-	 * Returns the ImageView used for Turtles in the current simulation
-	 * 
-	 * @return
-	 */
-	public ImageView getTurtleImage(){
-		return simulation.getActiveActor().getTurtleImage();
-	}
-
-	/**
 	 * Sets the List of Actors in the current simulation to actorList
 	 * 
 	 * @param actorList
@@ -83,15 +75,4 @@ public class InstructionData {
 		simulation.setColor(color);
 	}
 
-	/**
-	 * Sets the ImageView used to display turtles to imageView. Note that the
-	 * implementation of this method not only updates the associated variable in
-	 * this class, but also modifies the associated variable in Simulation and
-	 * updates it.
-	 * 
-	 * @param imageView
-	 */
-	public void setTurtleImage(ImageView imageView){
-		simulation.getActiveActor().setTurtleImage(imageView);
-	}
 }

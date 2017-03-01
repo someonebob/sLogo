@@ -1,8 +1,9 @@
 package view;
 
-import java.io.File;
+import java.util.List;
 import java.util.Observable;
 
+import javafx.geometry.Bounds;
 import javafx.scene.Node;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -12,11 +13,10 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
+import models.Actor;
 import models.Simulation;
 import tool.FileTool.NewButton;
-import tool.FileTool.OpenButton;
-import tool.SettingsTool.BackgroundColorButton;
-import tool.SettingsTool.TurtleImageButton;
+import tool.SettingsTool.*;
 
 /**
  * @author jimmy
@@ -28,7 +28,6 @@ public class SimulationView implements View
 	private Simulation simulation;
 	private TabPane root;
 	private TurtleView actor;
-	private Background background;
 
 	public SimulationView()
 	{
@@ -59,9 +58,6 @@ public class SimulationView implements View
 	{
 		if (o instanceof NewButton) {
 			newTab();
-		}
-		if (o instanceof OpenButton) {
-			openFile((File) arg);
 		}
 
 		if (o instanceof BackgroundColorButton) {
@@ -99,6 +95,10 @@ public class SimulationView implements View
 		// TODO Auto-generated method stub
 
 	}
+	
+	public Bounds getBounds(){
+		return root.getBoundsInLocal();
+	}
 
 	private void newTab()
 	{
@@ -112,10 +112,26 @@ public class SimulationView implements View
 		layout.getChildren().add(actor.display());
 		root.getTabs().add(newTab);
 	}
-
-	private void openFile(File file)
-	{
-
+	
+	
+	
+	
+	//Added from simulation
+	public Color getColor() {
+		return null;
+	}
+	public void setColor(Color c) {
+	}
+	
+	public List<Actor> getActors() {
+		return null;
+	}
+	public void setActors(List<Actor> newActors) {
+	}
+	public Actor getActiveActor() {
+		return null;
+	}
+	public void setActiveActor(Actor newActor) {
 	}
 
 }
