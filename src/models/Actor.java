@@ -1,7 +1,6 @@
 package models;
 
 import javafx.geometry.Point2D;
-import javafx.scene.image.ImageView;
 
 /**
  * Interface represents any actor displayed during a simulation. A Turtle is an
@@ -15,25 +14,25 @@ import javafx.scene.image.ImageView;
  *
  */
 
-public class Actor {
+public class Actor
+{
 	/**
 	 * Variety of getters and setters used to access Information in actors, for
 	 * update and display
 	 **/
 	private Point2D location;
 	private double speed;
-	private double size;
 	private double heading;
-	private ImageView turtleImage;
-	private boolean visible;
 
-	public Actor(Point2D location, double speed, double size, double heading, ImageView turtleImage, boolean visible) {
+	public Actor()
+	{
+		this(new Point2D(100, 100), 0);
+	}
+
+	public Actor(Point2D location, double speed)
+	{
 		this.location = location;
 		this.speed = speed;
-		this.size = size;
-		this.heading = heading;
-		this.turtleImage = turtleImage;
-		this.visible = visible;
 	}
 
 	/**
@@ -41,11 +40,13 @@ public class Actor {
 	 * 
 	 * @return Point location
 	 */
-	public Point2D getLocation() {
+	public Point2D getLocation()
+	{
 		return location;
 	}
 
-	public void setLocation(Point2D p) {
+	public void setLocation(Point2D p)
+	{
 		location = p;
 	}
 
@@ -54,61 +55,38 @@ public class Actor {
 	 * 
 	 * @return
 	 */
-	public double getSpeed() {
+	public double getSpeed()
+	{
 		return speed;
 	}
 
-	public void setSpeed(double s) {
+	public void setSpeed(double s)
+	{
 		speed = s;
 	}
 
-	public double getSize() {
-		return size;
-	}
-
-	public void setSize(double d) {
-		size = d;
-	}
-
-	public double getHeading() {
+	public double getHeading()
+	{
 		return heading;
 	}
 
-	public void setHeading(double d) {
-		heading = d;
-	}
-
-	public ImageView getTurtleImage() {
-		return turtleImage;
-	}
-
-	public void setTurtleImage(ImageView newImage) {
-		turtleImage = newImage;
-	}
-
-	/**
-	 * Visibility of actor on screen
-	 * 
-	 * @return boolean visibility
-	 */
-	public boolean getVisible() {
-		return visible;
-	}
-
-	public void setVisible(boolean b) {
-		visible = b;
+	public void setHeading(double heading)
+	{
+		this.heading = heading;
 	}
 
 	/**
 	 * Steps represent the remaining movement of the actor EX: If steps = 20,
 	 * the actor has to take 20 steps
 	 */
-	public int getSteps() {
+	public int getSteps()
+	{
 		// TODO
 		return -1;
 	}
 
-	public void setSteps(int i) {
+	public void setSteps(int i)
+	{
 		// TODO
 	}
 }
