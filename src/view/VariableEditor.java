@@ -7,7 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-import models.Variable;
+import user_structures.Variable;
 
 /**
  * Window used to edit variables from the workspace
