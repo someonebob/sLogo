@@ -3,10 +3,9 @@ package instruction;
 import java.util.List;
 
 import javafx.geometry.Bounds;
-import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import models.Actor;
-import models.Simulation;
+import view.SimulationView;
 
 /**
  * This acts as container for all of the data associated with the current state
@@ -18,13 +17,13 @@ import models.Simulation;
  *
  */
 public class InstructionData {
-	Simulation simulation;
+	SimulationView simulation;
 	
 	public InstructionData(){
 		//TODO: Implement default constructor
 	}
 	
-	public InstructionData(Simulation simulation){ //Add VariablePage here too
+	public InstructionData(SimulationView simulation){ //Add VariablePage here too
 		this.simulation = simulation;
 	}
 	
