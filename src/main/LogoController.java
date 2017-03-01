@@ -61,6 +61,11 @@ public class LogoController
 		pane.setCenter(simulation.display());
 		pane.setRight(userCommands.display());
 
+		inputBox.getField().setOnAction(e -> {
+			executeCommand();
+			inputBox.getField().clear();	
+		});
+
 		inputBox.display().setOnMouseClicked(e -> {
 			executeClickedCommand();
 		});
@@ -68,8 +73,20 @@ public class LogoController
 		return new Scene(pane, DISPLAY_WIDTH, DISPLAY_HEIGHT);
 	}
 
-	private void executeClickedCommand()
-	{
+	private void executeCommand() {
+		InstructionData data = new InstructionData(simulation);
+		// TODO: make function to get language
+		interpret = new Interpreter(data, "English");
+		String input = inputBox.getField().getText();
+		
+		if (input != null) {
+			interpret.parseAndRun(inputBox.getField().getText());
+			inputBox.addPrevious(input);
+		}
+
+	}
+
+	private void executeClickedCommand() {
 		if (inputBox.getClickedCommands().size() > 0) {
 			System.out.println(inputBox.getClickedCommands().pop());
 		}

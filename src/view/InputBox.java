@@ -40,7 +40,6 @@ public class InputBox implements View
 	public InputBox()
 	{
 		initiateItems();
-		console.setOnAction(e -> consoleAction());
 	}
 
 	/**
@@ -103,14 +102,8 @@ public class InputBox implements View
 		clickedCommands = new Stack<>();
 	}
 
-	private void consoleAction()
-	{
-		input = console.getText();
-		previous.add(input);
-		console.clear();
-
-		Label current = new Label(input);
-		// commands.add(current);
+	public void addPrevious(String prev){
+		Label current = new Label(prev);
 		current.setOnMouseClicked(e -> clickedCommands.add(current.getText()));
 		inputs.getChildren().add(current);
 
