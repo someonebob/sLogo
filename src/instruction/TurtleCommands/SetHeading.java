@@ -4,10 +4,15 @@ import java.util.List;
 
 import instruction.InstructionData;
 
-public class Right extends TurtleCommand
+/**
+ * 
+ * @author jimmy
+ *
+ */
+public class SetHeading extends TurtleCommand
 {
 
-	public Right(InstructionData instructionData, List<String> args, String myText)
+	public SetHeading(InstructionData instructionData, List<String> args, String myText)
 	{
 		super(instructionData, args, myText);
 	}
@@ -16,7 +21,7 @@ public class Right extends TurtleCommand
 	public double execute()
 	{
 		double degree = getArgumentDouble(0);
-		turn(-degree);
+		setHeading(degree);
 		return degree;
 	}
 }

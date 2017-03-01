@@ -26,7 +26,7 @@ public class Actor
 
 	public Actor()
 	{
-		this(new Point2D(100, 100), 0);
+		this(new Point2D(0, 0), 0);
 	}
 
 	public Actor(Point2D location, double speed)

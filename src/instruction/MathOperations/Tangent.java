@@ -15,9 +15,10 @@ public class Tangent extends MathOperation{
 
 	@Override
 	public double execute() {
-		if(MathUtil.hasIntegerValue(getArgumentDouble(0)/ (Math.PI / 2))){
+		double angleInRadians = Math.toRadians(getArgumentDouble(0));
+		if(MathUtil.hasIntegerValue((angleInRadians/Math.PI) - 0.5)){
 			throw new MathException(RESOURCE_TANGENT_NAME);
 		}
-		return Math.tan(getArgumentDouble(0));
+		return Math.tan(angleInRadians);
 	}
 }
