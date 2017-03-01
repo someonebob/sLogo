@@ -6,8 +6,8 @@ import instruction.InstructionData;
 
 public class Backward extends TurtleCommand{
 	
-	public Backward(InstructionData instructionData, List<String> args) {
-		super(instructionData, args);
+	public Backward(InstructionData instructionData, List<String> args, String myText) {
+		super(instructionData, args, myText);
 	}
 
 	@Override

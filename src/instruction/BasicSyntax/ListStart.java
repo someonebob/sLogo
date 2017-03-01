@@ -24,8 +24,8 @@ import interpreter.InstructionNode;
 public class ListStart extends Instruction {
 
 
-	public ListStart(InstructionData data,  List<String> args){
-		super(data,  args);
+	public ListStart(InstructionData data,  List<String> args, String myText){
+		super(data, args, myText);
 
 		//TODO: check and complete
 	}

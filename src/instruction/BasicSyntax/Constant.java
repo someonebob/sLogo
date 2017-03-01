@@ -7,13 +7,13 @@ import instruction.InstructionData;
 
 public class Constant extends Instruction {
 
-	public Constant(InstructionData instructionData, List<String> args) {
-		super(instructionData, args);
+	public Constant(InstructionData instructionData, List<String> args, String myText) {
+		super(instructionData, args, myText);
 	}
 
 	@Override
 	public double execute() {
-		return 0;
+		return Double.parseDouble(getMyText());
 	}
 
 }

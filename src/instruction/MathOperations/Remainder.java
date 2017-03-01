@@ -9,8 +9,8 @@ import util.MathUtil;
 public class Remainder extends MathOperation{
 	private static final String RESOURCE_NOT_INTEGER_NAME = "RemainderMessage";
 	
-	public Remainder(InstructionData data,  List<String> args) {
-		super(data, args);
+	public Remainder(InstructionData data,  List<String> args, String myText) {
+		super(data, args, myText);
 	}
 	
 	@Override
