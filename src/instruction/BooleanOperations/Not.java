@@ -1,16 +1,14 @@
 package instruction.BooleanOperations;
 
-import java.util.List;
-
 import instruction.InstructionData;
-import util.MathUtility;
+import util.MathUtil;
 
 public class Not extends BooleanOperation{
-	public Not(InstructionData data,  List<String> args){
-		super(data, args);
+	public Not(InstructionData data, InstructionNode node){
+		super(data, node);
 	}
 	@Override
 	public double execute() {
-		return MathUtility.doubleEquals(getArgumentDouble(0), 0) ? 1 : 0;
+		return MathUtil.doubleEquals(getArgumentDouble(0), 0) ? 1 : 0;
 	}
 }

@@ -1,12 +1,11 @@
 package instruction.MathOperations;
 
-import java.util.List;
-
 import instruction.InstructionData;
+import interpreter.InstructionNode;
 
 public class Sum extends MathOperation{
-	public Sum(InstructionData data,  List<String> args) {
-		super(data, args);
+	public Sum(InstructionData data, InstructionNode node) {
+		super(data, node);
 	}
 	
 	@Override

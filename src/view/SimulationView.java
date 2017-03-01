@@ -3,6 +3,7 @@ package view;
 import java.io.File;
 import java.util.Observable;
 
+import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -33,7 +34,6 @@ public class SimulationView implements View
 	public SimulationView()
 	{
 		root = new TabPane();
-		actor = new TurtleView();
 		newTab();
 	}
 
@@ -52,6 +52,11 @@ public class SimulationView implements View
 	{
 		return root;
 
+	}
+
+	public TurtleView getTurtle()
+	{
+		return actor;
 	}
 
 	@Override
@@ -104,13 +109,19 @@ public class SimulationView implements View
 	{
 		Tab newTab = new Tab();
 		StackPane layout = new StackPane();
-		ActorView actor = new TurtleView();
+		actor = new TurtleView();
 		layout.setBackground(new Background(new BackgroundFill(Color.WHITE, null, null)));
-
 		newTab.setText("new tab");
 		newTab.setContent(layout);
 		layout.getChildren().add(actor.display());
+
+		// this.move(new Point2D(100, 100));
 		root.getTabs().add(newTab);
+	}
+
+	public void move(Point2D deltaLocation)
+	{
+		actor.move(deltaLocation);
 	}
 
 	private void openFile(File file)
