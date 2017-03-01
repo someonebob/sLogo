@@ -37,5 +37,6 @@ public class SLogoException extends RuntimeException{
 
 	public void displayAlert(){
 		//TODO
+		System.out.println("This message will be replaced by a popup error window eventually.");
 	}
 }
