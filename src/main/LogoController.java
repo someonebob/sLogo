@@ -62,12 +62,11 @@ public class LogoController {
 		pane.setRight(userCommands.display());
 
 		inputBox.getField().setOnAction(e -> {
-			System.out.println("yo");
 			executeCommand();
+			inputBox.getField().clear();	
 		});
 
 		inputBox.display().setOnMouseClicked(e -> {
-			System.out.println("poop");
 			executeClickedCommand();
 		});
 
@@ -75,15 +74,14 @@ public class LogoController {
 	}
 
 	private void executeCommand() {
-
 		InstructionData data = new InstructionData(simulation);
 		// TODO: make function to get language
 		interpret = new Interpreter(data, "English");
-		if (inputBox.getInput() != null) {
-			System.out.println("hi");
-			interpret.parseAndRun(inputBox.getInput());
-
-			inputBox.addPrevious(inputBox.getInput());
+		String input = inputBox.getField().getText();
+		
+		if (input != null) {
+			interpret.parseAndRun(inputBox.getField().getText());
+			inputBox.addPrevious(input);
 		}
 
 	}

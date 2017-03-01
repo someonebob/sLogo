@@ -10,11 +10,11 @@ import java.util.Stack;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import tool.FileTool.OpenButton;
 import tool.FileTool.SaveButton;
 
@@ -40,7 +40,6 @@ public class InputBox implements View
 	public InputBox()
 	{
 		initiateItems();
-		console.setOnAction(e -> consoleAction());
 	}
 
 	/**
@@ -110,14 +109,8 @@ public class InputBox implements View
 		clickedCommands = new Stack<>();
 	}
 
-	private void consoleAction()
-	{
-		input = console.getText();
-		console.clear();
-		
-	}
 	public void addPrevious(String prev){
-		Label current = new Label(prev);
+		Text current = new Text(prev);
 		current.setOnMouseClicked(e -> clickedCommands.add(current.getText()));
 		inputs.getChildren().add(current);
 	}
