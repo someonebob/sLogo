@@ -74,19 +74,4 @@ public class Actor
 	{
 		this.heading = heading;
 	}
-
-	/**
-	 * Steps represent the remaining movement of the actor EX: If steps = 20,
-	 * the actor has to take 20 steps
-	 */
-	public int getSteps()
-	{
-		// TODO
-		return -1;
-	}
-
-	public void setSteps(int i)
-	{
-		// TODO
-	}
 }

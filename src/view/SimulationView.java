@@ -1,9 +1,10 @@
 package view;
 
-import java.util.List;
+import java.io.File;
 import java.util.Observable;
 
 import javafx.geometry.Bounds;
+import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -13,10 +14,11 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
-import models.Actor;
 import models.Simulation;
 import tool.FileTool.NewButton;
-import tool.SettingsTool.*;
+import tool.FileTool.OpenButton;
+import tool.SettingsTool.BackgroundColorButton;
+import tool.SettingsTool.TurtleImageButton;
 
 /**
  * @author jimmy
@@ -28,11 +30,11 @@ public class SimulationView implements View
 	private Simulation simulation;
 	private TabPane root;
 	private TurtleView actor;
+	private Background background;
 
 	public SimulationView()
 	{
 		root = new TabPane();
-		actor = new TurtleView();
 		newTab();
 	}
 
@@ -53,11 +55,19 @@ public class SimulationView implements View
 
 	}
 
+	public TurtleView getTurtle()
+	{
+		return actor;
+	}
+
 	@Override
 	public void update(Observable o, Object arg)
 	{
 		if (o instanceof NewButton) {
 			newTab();
+		}
+		if (o instanceof OpenButton) {
+			openFile((File) arg);
 		}
 
 		if (o instanceof BackgroundColorButton) {
@@ -89,49 +99,40 @@ public class SimulationView implements View
 		}
 	}
 
+	public Bounds getBounds()
+	{
+		return root.getBoundsInLocal();
+	}
+
 	@Override
 	public void updateData(String arg)
 	{
 		// TODO Auto-generated method stub
 
 	}
-	
-	public Bounds getBounds(){
-		return root.getBoundsInLocal();
-	}
 
 	private void newTab()
 	{
 		Tab newTab = new Tab();
 		StackPane layout = new StackPane();
-		ActorView actor = new TurtleView();
+		actor = new TurtleView();
 		layout.setBackground(new Background(new BackgroundFill(Color.WHITE, null, null)));
-
 		newTab.setText("new tab");
 		newTab.setContent(layout);
 		layout.getChildren().add(actor.display());
+
+		// this.move(new Point2D(100, 100));
 		root.getTabs().add(newTab);
 	}
-	
-	
-	
-	
-	//Added from simulation
-	public Color getColor() {
-		return null;
+
+	public void move(Point2D deltaLocation)
+	{
+		actor.move(deltaLocation);
 	}
-	public void setColor(Color c) {
-	}
-	
-	public List<Actor> getActors() {
-		return null;
-	}
-	public void setActors(List<Actor> newActors) {
-	}
-	public Actor getActiveActor() {
-		return null;
-	}
-	public void setActiveActor(Actor newActor) {
+
+	private void openFile(File file)
+	{
+
 	}
 
 }

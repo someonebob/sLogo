@@ -7,9 +7,8 @@ import instruction.Instruction;
 import instruction.InstructionData;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
-import util.MathUtility;
+import util.MathUtil;
 import util.PointPolar;
-import view.PageView;
 
 /**
  * This class is the abstract superclass for all Instructions which change a
@@ -19,51 +18,56 @@ import view.PageView;
  * @author Matthew Barbano
  *
  */
-public abstract class TurtleCommand extends Instruction {
+public abstract class TurtleCommand extends Instruction
+{
 	private static final String RESOURCE_NEGATIVE_PIXELS_NAME = "MoveNegativeMessage";
 	private static final String RESOURCE_BOUNDS_NAME = "MoveBoundsMessage";
-	
-	public TurtleCommand(InstructionData instructionData, List<String> args) {
+
+	public TurtleCommand(InstructionData instructionData, List<String> args)
+	{
 		super(instructionData, args);
 	}
 
-	protected void moveNewLocation(Point2D newLocation) { // TODO ask Jimmy
-															// about PageView
-															// syntax
-		Bounds bounds = getInstructionData().getSimulationBounds();
-		if (MathUtility.doubleLessThan(newLocation.getX(), bounds.getMinX()) 
-				|| MathUtility.doubleLessThan(newLocation.getY(), bounds.getMinY())
-				|| MathUtility.doubleGreaterThan(newLocation.getX(), bounds.getMaxX())
-				|| MathUtility.doubleGreaterThan(newLocation.getY(), bounds.getMaxY())) {
-			throw new NonsensicalArgumentException(RESOURCE_BOUNDS_NAME);
-		}
-		getActiveActor().setLocation(newLocation);
-	}
-
-	protected void move(double distance) {
-		if (MathUtility.doubleLessThan(distance, 0.0)) {
+	protected void move(double distance)
+	{
+		if (MathUtil.doubleLessThan(distance, 0.0)) {
 			throw new NonsensicalArgumentException(RESOURCE_NEGATIVE_PIXELS_NAME);
 		}
-		Point2D currentLocation = getActiveActor().getLocation();
-		double currentHeading = getActiveActor().getHeading();
-		Point2D deltaVector = MathUtility.polarToRectangular(new PointPolar(distance, currentHeading));
-		moveNewLocation(currentLocation.add(deltaVector));
+		Point2D currentLocation = getActiveActor().getActor().getLocation();
+		double currentHeading = getActiveActor().getActor().getHeading();
+		Point2D deltaVector = MathUtil.polarToRectangular(new PointPolar(distance, currentHeading));
 
+		Point2D newLocation = currentLocation.add(deltaVector);
+		Bounds bounds = getInstructionData().getSimulationBounds();
+		if (MathUtil.doubleLessThan(newLocation.getX(), bounds.getMinX())
+				|| MathUtil.doubleLessThan(newLocation.getY(), bounds.getMinY())
+				|| MathUtil.doubleGreaterThan(newLocation.getX(), bounds.getMaxX())
+				|| MathUtil.doubleGreaterThan(newLocation.getY(), bounds.getMaxY())) {
+			throw new NonsensicalArgumentException(RESOURCE_BOUNDS_NAME);
+		}
+
+		getActiveActor().move(deltaVector); // This method sets this actor's
+											// location field, and handles the
+											// animation
 	}
 
-	protected void turnNewHeading(double newHeading) {
+	protected void turnNewHeading(double newHeading)
+	{
 		getActiveActor().setHeading(newHeading);
 	}
 
-	protected void turn(double deltaHeading) {
+	protected void turn(double deltaHeading)
+	{
 		turnNewHeading(getActiveActor().getHeading() + deltaHeading);
 	}
 
-	protected void togglePenState() {
+	protected void togglePenState()
+	{
 		// TODO
 	}
 
-	protected void togglePenVisibility() {
+	protected void togglePenVisibility()
+	{
 		// TODO
 	}
 }

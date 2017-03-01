@@ -33,7 +33,7 @@ public class Interpreter {
 	 * @param info
 	 *            InstructionData object representing current information
 	 */
-	public void parseAndRun(String instruction) {
+	public void parseAndRun(String instruction, InstructionData info) {
 		List<InstructionNode> headNodes = parse(instruction);
 		TreeExecuter executer = new TreeExecuter(getMyData(), getMyClassifier());
 		executeTree(executer, headNodes);
