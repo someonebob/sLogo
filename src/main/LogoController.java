@@ -88,8 +88,12 @@ public class LogoController
 		String input = inputBox.getField().getText();
 
 		if (input != null) {
-			runCommand(inputBox.getField().getText());
-			inputBox.addPrevious(input);
+			runCommand(input);
+			
+			//Do if command is valid
+			inputBox.updateData(input);
+				//Do if a variable is created
+				workspace.updateData(input);
 
 		}
 
