@@ -28,8 +28,7 @@ public class ListTreeBuilder {
 		if(!endHit){
 			//TODO: Error handling
 		}
-		head.setMyValue(value);
-		head.setExecutable(false); // make sure no one tries to execute this node
+		head.setMyRunValue(value);
 		return current;
 	}
 	

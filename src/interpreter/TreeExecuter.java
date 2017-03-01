@@ -43,13 +43,10 @@ public class TreeExecuter
 		ArrayList<String> args = new ArrayList<String>();
 		for (InstructionNode child : head.getMyChildren()) {
 			if (!child.hasRun()) {
-				if (child.isExecutable()) {
-					execute(child);
-					args.add(child.getMyRunValue());
-				} else {
-					args.add(child.getMyValue());
-				}
+				execute(child);
 			}
+			args.add(child.getMyRunValue());
+			
 		}
 		Instruction i = myClass.generateInstruction(head.getMyValue(), myData, args);
 		head.setMyRunValue(""+i.execute()); //Will change with list, for now, just tacks on result

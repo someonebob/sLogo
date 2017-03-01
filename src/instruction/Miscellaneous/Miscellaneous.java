@@ -4,7 +4,6 @@ import java.util.List;
 
 import instruction.Instruction;
 import instruction.InstructionData;
-import interpreter.InstructionSplitter;
 import interpreter.Interpreter;
 
 public abstract class Miscellaneous extends Instruction {
@@ -16,7 +15,6 @@ public abstract class Miscellaneous extends Instruction {
 	protected double runListCommands(int argumentNumber) {
 		Interpreter listInterpreter = new Interpreter(getInstructionData(), "English");    //Need to change when decide on way to set language
 		//Temporary:
-		System.out.println(getArgumentString(argumentNumber));
 		listInterpreter.parseAndRun(getArgumentString(argumentNumber));
 		return 1;
 		//Possibly final:
