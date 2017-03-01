@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import javafx.geometry.Bounds;
+import models.Variable;
 import view.ActorView;
 import view.SimulationView;
 
@@ -25,7 +26,7 @@ public class InstructionData
 		// TODO: Implement default constructor
 	}
 
-	public InstructionData(SimulationView simulation)
+	public InstructionData(SimulationView simulation, List<Variable> variables)
 	{ // Add VariablePage here too
 		this.simulation = simulation;
 	}

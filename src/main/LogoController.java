@@ -8,6 +8,7 @@ import javafx.collections.*;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import models.Variable;
 import tool.AbstractButton;
 import tool.FileTool;
 import tool.HelpTool;
@@ -38,7 +39,7 @@ public class LogoController
 	private Stage stage;
 	private BorderPane pane;
 	private Interpreter interpret;
-	private ObservableMap<String, Double> variables;
+	private ObservableList<Variable> variables;
 
 	private FileTool file;
 	private SettingsTool settings;
@@ -49,9 +50,14 @@ public class LogoController
 		initiateViews();
 		addTools();
 		initiateObservers();
-		Map<String, Double> map = new HashMap<>();
-		variables = FXCollections.observableMap(map);
-		
+		List<Variable> list = new ArrayList<>();
+		variables = FXCollections.observableList(list);
+		//Testing
+		Variable variable = new Variable();
+		variable.setName("poop");
+		variable.setValue(100);
+		variables.add(variable);
+		workspace.setItems(variables);
 
 		this.stage = stage;
 		stage.setTitle("SLogo");
@@ -82,9 +88,7 @@ public class LogoController
 
 	private void executeCommand()
 	{
-		InstructionData data = new InstructionData(simulation);
-		// TODO: make function to get language
-		interpret = new Interpreter(data, "English");
+		
 		String input = inputBox.getField().getText();
 
 		if (input != null) {
@@ -93,7 +97,8 @@ public class LogoController
 			//Do if command is valid
 			inputBox.updateData(input);
 				//Do if a variable is created
-				workspace.updateData(input);
+				//workspace.setItems(variables);
+				
 
 		}
 
@@ -108,6 +113,9 @@ public class LogoController
 
 	private void runCommand(String command)
 	{
+		InstructionData data = new InstructionData(simulation, variables);
+		// TODO: make function to get language
+		interpret = new Interpreter(data, "English");
 		interpret.parseAndRun(command);
 	}
 
@@ -149,6 +157,8 @@ public class LogoController
 		for (AbstractButton ab : settings.getButtons()) {
 			ab.addObserver(simulation);
 		}
+		
+		
 	}
 
 }
