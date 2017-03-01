@@ -1,9 +1,6 @@
 package interpreter;
-
 import java.util.List;
-
 import instruction.*;
-
 /**
  * This interface will use a variety of resource files to transform An input
  * string into a useable command (we call it an Instruction). By returning an
@@ -12,17 +9,13 @@ import instruction.*;
  * 
  * @maddiebriere
  **/
-
 public class Interpreter {
-
 	private InstructionData myData;
 	private InstructionClassifier myClassifier;
-
 	public Interpreter(InstructionData data, String language) {
 		myData = data;
 		myClassifier = new InstructionClassifier(language);
 	}
-
 	/**
 	 * Parse the instruction (Defined by s) and give Instructions access to
 	 * information about current state through InstructionData. Once parsed,
@@ -38,7 +31,6 @@ public class Interpreter {
 		TreeExecuter executer = new TreeExecuter(getMyData(), getMyClassifier());
 		executeTree(executer, headNodes);
 	}
-
 	/**
 	 * Takes a String and converts it into a tree, with an InstructionNode at
 	 * the root node, with any number of children (also InstructionNodes).
@@ -61,23 +53,18 @@ public class Interpreter {
 			executer.execute(node);
 		}
 	}
-
 	public InstructionClassifier getMyClassifier() {
 		return myClassifier;
 	}
-
 	public void setMyClassifier(InstructionClassifier myClassifier) {
 		this.myClassifier = myClassifier;
 	}
-
 	public InstructionData getMyData() {
 		return myData;
 	}
-
 	public void setMyData(InstructionData myData) {
 		this.myData = myData;
 	}
 	
 	
-
 }

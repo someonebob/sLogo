@@ -1,11 +1,8 @@
 package interpreter;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import instruction.Instruction;
 import instruction.InstructionData;
-
 /**
  * Class used to traverse tree and produce 
  * runnable instructions. Carries out the instructions
@@ -14,7 +11,6 @@ import instruction.InstructionData;
  * @author maddiebriere
  *
  */
-
 public class TreeExecuter {
 	
 	

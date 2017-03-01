@@ -1,15 +1,12 @@
 package interpreter;
-
 import java.util.List;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Map.Entry;
 import java.util.regex.Pattern;
-
 import instruction.*;
 import util.ResourceToList;
-
 /**
  * This class performs the reflection necessary to produce instances of each
  * command type without direct statement of the desired class type. This class
@@ -17,19 +14,16 @@ import util.ResourceToList;
  * 
  * @author maddiebriere
  */
-
 public class InstructionClassifier {
 	public final String SYNTAX = "resources/languages/Syntax";
-	public final String PATHS = "resources/languages/JavaSpeak"; //Full class names matched to shortcuts
+	public final String PATHS = "resources/interpreter/JavaSpeak"; //Full class names matched to shortcuts
 	public final String LANGUAGE = "resources/languages/";
-
 	private String mySyntax;
 	private String myLanguage;
 	private String myPaths;
 	private List<Entry<String, Pattern>> mySyntaxList;
 	private List<Entry<String, Pattern>> myLanguageList;
 	private List<Entry<String, Pattern>> myPathsList;
-
 	public InstructionClassifier(String s) {
 		myLanguage = LANGUAGE + s;
 		mySyntax = SYNTAX;
@@ -122,7 +116,6 @@ public class InstructionClassifier {
     private boolean match (String text, String regex) {
         return text.equals(regex);
     }
-
 	/**
 	 * Main avenue of reflection
 	 * 
@@ -167,7 +160,6 @@ public class InstructionClassifier {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 		try{
 			instruction = (Instruction) instructionHopeful;
 		}
@@ -176,7 +168,6 @@ public class InstructionClassifier {
 		}
 		return instruction;
 	}
-
 	public void generateTerms() {
 		mySyntaxList = new ArrayList<Entry<String, Pattern>>();
 		myLanguageList = new ArrayList<Entry<String, Pattern>>();
@@ -185,54 +176,40 @@ public class InstructionClassifier {
 		ResourceToList.addTerms(myLanguage, myLanguageList);
 		ResourceToList.addTerms(myPaths, myPathsList);
 	}
-
-
 	public String getMyLanguage() {
 		return myLanguage;
 	}
-
 	public void setMyLanguage(String myLanguage) {
 		this.myLanguage = myLanguage;
 	}
-
 	public String getMySyntax() {
 		return mySyntax;
 	}
-
 	public void setMySyntax(String mySyntax) {
 		this.mySyntax = mySyntax;
 	}
-
 	public List<Entry<String, Pattern>> getMySyntaxList() {
 		return mySyntaxList;
 	}
-
 	public void setMySyntaxList(List<Entry<String, Pattern>> mySyntaxList) {
 		this.mySyntaxList = mySyntaxList;
 	}
-
 	public List<Entry<String, Pattern>> getMyLanguageList() {
 		return myLanguageList;
 	}
-
 	public void setMyLanguageList(List<Entry<String, Pattern>> myLanguageList) {
 		this.myLanguageList = myLanguageList;
 	}
-
 	public String getMyPaths() {
 		return myPaths;
 	}
-
 	public void setMyPaths(String myPaths) {
 		this.myPaths = myPaths;
 	}
-
 	public List<Entry<String, Pattern>> getMyPathsList() {
 		return myPathsList;
 	}
-
 	public void setMyPathsList(List<Entry<String, Pattern>> myPathsList) {
 		this.myPathsList = myPathsList;
 	}
-
 }
