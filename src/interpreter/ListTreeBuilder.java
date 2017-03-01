@@ -9,6 +9,7 @@ import util.Pair;
  *
  */
 public class ListTreeBuilder {
+	
 	public static String buildList(Pair brackets, List<InstructionNode> nodes, InstructionNode head, String current){
 		String value = "";
 		boolean endHit = false;
@@ -27,7 +28,8 @@ public class ListTreeBuilder {
 		if(!endHit){
 			//TODO: Error handling
 		}
-		head.setMyRunValue(value);
+		head.setMyValue(value);
+		head.setExecutable(false); // make sure no one tries to execute this node
 		return current;
 	}
 	
