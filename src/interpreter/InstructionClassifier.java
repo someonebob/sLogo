@@ -69,7 +69,7 @@ public class InstructionClassifier {
      * @return correct command
      */
     public String classifyInstructionShortcut(String text){
-    	final String ERROR = "NO MATCH 2";
+    	final String ERROR = "NO MATCH";
     	  /**
          * Check specific options first
          */
@@ -135,13 +135,12 @@ public class InstructionClassifier {
 		
 		//TODO: Complete and figure out instruction address problem
 		//Piazza question
-		
 		Class<?> clazz;
 		Instruction instruction = null;
 		Object instructionHopeful = new Object();
 		
 		String classification = findShortcutKey(comm);
-		if(classification.equals("NO MATCH") || classification.equals("NO MATCH 2")){ //Break out if the command isn't an option
+		if(classification.equals("NO MATCH")){ //Break out if the command isn't an option
 			//TODO: Error handling of mismatch
 			return null;
 		}
