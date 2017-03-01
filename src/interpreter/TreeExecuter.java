@@ -46,6 +46,7 @@ public class TreeExecuter {
 			}
 		}
 		Instruction i = myClass.generateInstruction(head.getMyValue(), myData, args);
+		System.out.println("HERE");
 		i.execute();
 		head.setMyRunValue(""+i.execute()); //Will change with list, for now, just tacks on result
 	}
