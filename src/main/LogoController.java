@@ -84,7 +84,7 @@ public class LogoController
 		String input = inputBox.getField().getText();
 
 		if (input != null) {
-			interpret.parseAndRun(inputBox.getField().getText());
+			runCommand(inputBox.getField().getText());
 			inputBox.addPrevious(input);
 		}
 
@@ -93,8 +93,13 @@ public class LogoController
 	private void executeClickedCommand()
 	{
 		if (inputBox.getClickedCommands().size() > 0) {
-			interpret.parseAndRun(inputBox.getClickedCommands().pop());
+			runCommand(inputBox.getClickedCommands().pop());
 		}
+	}
+
+	private void runCommand(String command)
+	{
+		interpret.parseAndRun(command);
 	}
 
 	public void addPage(PageView page)
