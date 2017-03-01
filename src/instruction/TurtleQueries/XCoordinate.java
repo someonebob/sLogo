@@ -1,15 +1,13 @@
 package instruction.TurtleQueries;
 
+import java.util.List;
+
 import instruction.InstructionData;
-import interpreter.InstructionNode;
 
 public class XCoordinate extends TurtleQuery{
 	
-	public XCoordinate(){
-		super(new InstructionData(), new InstructionNode());
-	}
-	public XCoordinate(InstructionData instructionData, InstructionNode root) {
-		super(instructionData, root);
+	public XCoordinate(InstructionData instructionData,  List<String> args) {
+		super(instructionData, args);
 	}
 
 	@Override

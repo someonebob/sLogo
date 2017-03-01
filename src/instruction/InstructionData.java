@@ -2,6 +2,7 @@ package instruction;
 
 import java.util.List;
 
+import javafx.geometry.Bounds;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import models.Actor;
@@ -75,4 +76,19 @@ public class InstructionData {
 		simulation.setColor(color);
 	}
 
+	/**
+	 * Sets the ImageView used to display turtles to imageView. Note that the
+	 * implementation of this method not only updates the associated variable in
+	 * this class, but also modifies the associated variable in Simulation and
+	 * updates it.
+	 * 
+	 * @param imageView
+	 */
+	public void setTurtleImage(ImageView imageView){
+		simulation.getActiveActor().setTurtleImage(imageView);
+	}
+	
+	public Bounds getSimulationBounds(){
+		return simulation.getBounds();
+	}
 }
