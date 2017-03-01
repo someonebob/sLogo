@@ -6,7 +6,6 @@ import java.util.List;
 
 import instruction.Instruction;
 import instruction.InstructionData;
-import interpreter.InstructionNode;
 
 /**
  * Represents character starting a List of commands

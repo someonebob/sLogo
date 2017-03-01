@@ -1,10 +1,10 @@
 package main;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import instruction.InstructionData;
 import interpreter.Interpreter;
+import javafx.collections.*;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -37,6 +37,7 @@ public class LogoController {
 	private Stage stage;
 	private BorderPane pane;
 	private Interpreter interpret;
+	private ObservableMap<String, Double> variables;
 
 	private FileTool file;
 	private SettingsTool settings;
@@ -46,6 +47,9 @@ public class LogoController {
 		initiateViews();
 		addTools();
 		initiateObservers();
+		Map<String, Double> map = new HashMap<>();
+		variables = FXCollections.observableMap(map);
+		
 
 		this.stage = stage;
 		stage.setTitle("SLogo");
@@ -81,7 +85,11 @@ public class LogoController {
 		
 		if (input != null) {
 			interpret.parseAndRun(inputBox.getField().getText());
-			inputBox.addPrevious(input);
+			
+			//Do if command is valid
+			inputBox.updateData(input);
+				//Do if a variable is created
+				workspace.updateData(input);
 		}
 
 	}
