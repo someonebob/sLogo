@@ -33,8 +33,12 @@ public abstract class TurtleCommand extends Instruction
 		Point2D currentLocation = getActiveActor().getActor().getLocation();
 		double currentHeading = getActiveActor().getActor().getHeading();
 		Point2D deltaVector = MathUtil.polarToRectangular(new PointPolar(distance, currentHeading));
-
 		Point2D newLocation = currentLocation.add(deltaVector);
+		move(newLocation);
+	}
+
+	protected void move(Point2D newLocation)
+	{
 		Bounds bounds = getInstructionData().getSimulationBounds();
 		if (MathUtil.doubleLessThan(newLocation.getX(), bounds.getMinX())
 				|| MathUtil.doubleLessThan(newLocation.getY(), bounds.getMinY())
@@ -42,10 +46,15 @@ public abstract class TurtleCommand extends Instruction
 				|| MathUtil.doubleGreaterThan(newLocation.getY(), bounds.getMaxY())) {
 			throw new NonsensicalArgumentException(RESOURCE_BOUNDS_NAME);
 		}
-
-		getActiveActor().move(deltaVector); // This method sets this actor's
+		System.out.println("ASDFAFSAFD");
+		getActiveActor().move(newLocation); // This method sets this actor's
 											// location field, and handles the
 											// animation
+	}
+
+	protected void setHeading(double newHeading)
+	{
+		getActiveActor().setHeading(newHeading);
 	}
 
 	protected void turnNewHeading(double newHeading)
@@ -56,6 +65,16 @@ public abstract class TurtleCommand extends Instruction
 	protected void turn(double deltaHeading)
 	{
 		turnNewHeading(getActiveActor().getHeading() + deltaHeading);
+	}
+
+	protected void setPosition(double x, double y)
+	{
+		move(new Point2D(x, y));
+	}
+
+	protected Point2D getPosition()
+	{
+		return getActiveActor().getActor().getLocation();
 	}
 
 	protected void togglePenState()

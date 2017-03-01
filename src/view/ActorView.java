@@ -84,16 +84,20 @@ public abstract class ActorView implements View
 		this.setImage(image);
 	}
 
-	public void move(Point2D deltaLocation)
+	public void move(Point2D newLocation)
 	{
 		final Timeline timeline = new Timeline();
 		timeline.setCycleCount(1);
+		Point2D deltaLocation = newLocation.subtract(this.getActor().getLocation());
+		System.out.println(this.getActor().getLocation());
+		System.out.println(newLocation);
+		System.out.println(deltaLocation);
 		final KeyValue xkv = new KeyValue(image.translateXProperty(), image.getTranslateX() + deltaLocation.getX());
 		final KeyValue ykv = new KeyValue(image.translateYProperty(), image.getTranslateY() + deltaLocation.getY());
 		final KeyFrame kf = new KeyFrame(Duration.millis(500), xkv, ykv);
 		timeline.getKeyFrames().add(kf);
 		timeline.play();
-		actor.setLocation(actor.getLocation().add(deltaLocation));
+		actor.setLocation(newLocation);
 	}
 
 	public void setHeading(double newHeading)
