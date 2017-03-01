@@ -8,12 +8,13 @@ import javafx.collections.*;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import models.Variable;
 import tool.AbstractButton;
 import tool.FileTool;
 import tool.HelpTool;
 import tool.SelectionBar;
 import tool.SettingsTool;
+import user_structures.Function;
+import user_structures.Variable;
 import view.InputBox;
 import view.PageView;
 import view.SavedCommandsView;
@@ -40,6 +41,7 @@ public class LogoController
 	private BorderPane pane;
 	private Interpreter interpret;
 	private ObservableList<Variable> variables;
+	private ObservableList<Function> functions;
 
 	private FileTool file;
 	private SettingsTool settings;
@@ -50,15 +52,16 @@ public class LogoController
 		initiateViews();
 		addTools();
 		initiateObservers();
-		List<Variable> list = new ArrayList<>();
-		variables = FXCollections.observableList(list);
-		//Testing
-		Variable variable = new Variable();
-		variable.setName("poop");
-		variable.setValue(100);
-		variables.add(variable);
+		
+		List<Variable> varList = new ArrayList<>();
+		variables = FXCollections.observableList(varList);
+		
+		List<Function> funcList = new ArrayList<>();
+		functions = FXCollections.observableList(funcList);
+		
 		workspace.setItems(variables);
-
+		//TODO: Add functions to the workspace
+		
 		this.stage = stage;
 		stage.setTitle("SLogo");
 		stage.show();
@@ -113,7 +116,7 @@ public class LogoController
 
 	private void runCommand(String command)
 	{
-		InstructionData data = new InstructionData(simulation, variables);
+		InstructionData data = new InstructionData(simulation, variables, functions);
 		// TODO: make function to get language
 		interpret = new Interpreter(data, "English");
 		interpret.parseAndRun(command);
