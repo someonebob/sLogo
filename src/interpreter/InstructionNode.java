@@ -1,8 +1,6 @@
 package interpreter;
-
 import java.util.ArrayList;
 import java.util.List;
-
 /**
  * This class represents the nodes used in the parsed string tree. This tree
  * will hold the nodes (each representing its own individual word) in an order
@@ -11,7 +9,6 @@ import java.util.List;
  * @author maddiebriere
  *
  */
-
 public class InstructionNode {
 	
 	private String myClassification; // The String representing the type (Forward, Equal, Comment)
@@ -27,7 +24,6 @@ public class InstructionNode {
 	public InstructionNode(String clss, String value) {
 		this(clss, value, new ArrayList<InstructionNode>());
 	}
-
 	public InstructionNode(String clss, String value, List<InstructionNode> children) {
 		if (value.isEmpty()) {
 			// TODO: Error checking
@@ -38,7 +34,6 @@ public class InstructionNode {
 		myRunValue = "NO RUN"; //default
 		isExecutable = true;
 	}
-
 	/**
 	 * Pieces together a String from the current Node using the current Node
 	 * and all of its children.
@@ -79,8 +74,6 @@ public class InstructionNode {
 		}
 		return curr;
 	}*/
-
-
 	/**
 	 * Return only the head value (current node)
 	 * 
@@ -89,7 +82,6 @@ public class InstructionNode {
 	public String getMyValue() {
 		return myValue;
 	}
-
 	/**
 	 * Get all of the nodes attached to the current InstructionNode. Allows for
 	 * traversal of the InstructionNode tree
@@ -99,28 +91,21 @@ public class InstructionNode {
 	public List<InstructionNode> getMyChildren() {
 		return myChildren;
 	}
-
 	public String getMyClassification() {
 		return myClassification;
 	}
-
 	public void setMyClassification(String myClassification) {
 		this.myClassification = myClassification;
 	}
-
 	public void setMyValue(String myValue) {
 		this.myValue = myValue;
 	}
-
 	public void setMyChildren(List<InstructionNode> myChildren) {
 		this.myChildren = myChildren;
 	}
-
-
 	public String getMyRunValue() {
 		return myRunValue;
 	}
-
 	public void setMyRunValue(String myRunValue) {
 		this.myRunValue = myRunValue;
 	}
@@ -133,11 +118,9 @@ public class InstructionNode {
 	public boolean hasRun(){
 		return !myRunValue.equals("NO RUN");
 	}
-
 	public boolean isExecutable() {
 		return isExecutable;
 	}
-
 	public void setExecutable(boolean isExecutable) {
 		this.isExecutable = isExecutable;
 	}

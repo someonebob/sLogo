@@ -14,10 +14,8 @@ import instruction.*;
  **/
 
 public class Interpreter {
-
 	private InstructionData myData;
 	private InstructionClassifier myClassifier;
-
 	public Interpreter(InstructionData data, String language) {
 		myData = data;
 		myClassifier = new InstructionClassifier(language);
@@ -30,8 +28,6 @@ public class Interpreter {
 	 * 
 	 * @param instruction
 	 *            Input line from user
-	 * @param info
-	 *            InstructionData object representing current information
 	 */
 	public void parseAndRun(String instruction) {
 		List<InstructionNode> headNodes = parse(instruction);
