@@ -80,8 +80,10 @@ public class TreeBuilder {
 		String value = InstructionSplitter.getInstructionStrings(getCurrentText()).get(0);
 		head.setMyValue(value);
 		setCurrentText(InstructionSplitter.removeFirstItem(getCurrentText()));//remove node from current text
-		Pair brackets = getBrackets(value);
+		String classification = classifier.findShortcutKey(value);
+		Pair brackets = getBrackets(classification);
 		
+
 		if(brackets==null){
 			int numArgs = ArgumentReader.getNumArgs(classifier.findShortcutKey(value));
 			for(int i=0; i<numArgs; i++){
@@ -89,9 +91,9 @@ public class TreeBuilder {
 			}
 		}
 		else{
-			
+			String newCurrent = ListTreeBuilder.buildList(brackets, nodes, head, getCurrentText());
+			setCurrentText(newCurrent);
 		}
-		
 		return head;
 	}
 	
