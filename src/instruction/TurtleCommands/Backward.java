@@ -1,13 +1,12 @@
 package instruction.TurtleCommands;
 
-import java.util.List;
-
 import instruction.InstructionData;
+import interpreter.InstructionNode;
 
 public class Backward extends TurtleCommand{
 	
-	public Backward(InstructionData instructionData, List<String> args) {
-		super(instructionData, args);
+	public Backward(InstructionData instructionData, InstructionNode root) {
+		super(instructionData, root);
 	}
 
 	@Override

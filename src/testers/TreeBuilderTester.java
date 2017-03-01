@@ -19,7 +19,7 @@ public class TreeBuilderTester {
 	public static void main(String [] args){
 		//problem with string value in tree
 		//change in node so that no string need be saved
-		TreeBuilder build = new TreeBuilder("[ fd rt 50 fd 50 fd 30 ] fd rt 50", new InstructionClassifier("English"));
+		TreeBuilder build = new TreeBuilder("penup fd rt 50 fd 50 fd 30", new InstructionClassifier("English"));
 		List<InstructionNode> headNodes = build.buildTree();
 		System.out.println("Single Node, Level-labelled Print:");
 		labelledNodePrint(headNodes, 0);
@@ -49,7 +49,7 @@ public class TreeBuilderTester {
 	 */
 	private static void fullNodePrint(List<InstructionNode> headNodes){
 		for(InstructionNode curr: headNodes){
-			System.out.println(String.format("Value: %s  Return: %s", curr.getMyText(), curr.getMyRunValue()));
+			System.out.println(String.format(curr.getMyText()));
 		}
 		
 	}

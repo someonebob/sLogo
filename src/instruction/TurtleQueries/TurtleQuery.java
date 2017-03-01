@@ -1,13 +1,12 @@
 package instruction.TurtleQueries;
 
-import java.util.List;
-
 import instruction.Instruction;
 import instruction.InstructionData;
+import interpreter.InstructionNode;
 
 public abstract class TurtleQuery extends Instruction{
 	
-	public TurtleQuery(InstructionData instructionData, List<String> args){
-		super(instructionData, args);
+	public TurtleQuery(InstructionData instructionData, InstructionNode root){
+		super(instructionData, root);
 	}
 }

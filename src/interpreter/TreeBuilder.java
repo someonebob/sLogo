@@ -1,9 +1,7 @@
 package interpreter;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import util.ArgumentReader;
 import util.Pair;
@@ -24,7 +22,8 @@ public class TreeBuilder {
 	private String currentText;
 	private InstructionClassifier classifier;
 	private List <InstructionNode> nodes;
-	private Set<Pair> myBrackets;
+	private Pair myList;
+	private Pair myGroup;
 	
 	public TreeBuilder(String text, InstructionClassifier c){
 		currentText = text;
@@ -33,15 +32,9 @@ public class TreeBuilder {
 			nodes = InstructionSplitter.getInstructions(text, c);
 		else
 			nodes = new ArrayList<InstructionNode>();
-		populateBrackets();
+		myList = new Pair(LIST_START, LIST_END);
+		myGroup = new Pair(GROUP_START, GROUP_END);
 	}
-	
-	private void populateBrackets(){
-		myBrackets = new HashSet<Pair>();
-		myBrackets.add(new Pair(LIST_START, LIST_END));
-		myBrackets.add(new Pair(GROUP_START, GROUP_END));
-	}
-	
 	/**
 	 * This builds a tree of InstructioNodes given a list of Instructions 
 	 * (The utility of having Instruction type is to have access
@@ -76,36 +69,19 @@ public class TreeBuilder {
 			return null;
 		}
 		
+		//TODO: Construct Lists differently (resource file needed?)
 		InstructionNode head = nodes.remove(0); //take node out of list to add to tree
 		String value = InstructionSplitter.getInstructionStrings(getCurrentText()).get(0);
 		head.setMyValue(value);
 		setCurrentText(InstructionSplitter.removeFirstItem(getCurrentText()));//remove node from current text
-		String classification = classifier.findShortcutKey(value);
-		Pair brackets = getBrackets(classification);
+		int numArgs = ArgumentReader.getNumArgs(classifier.findShortcutKey(value));
 		
-
-		if(brackets==null){
-			int numArgs = ArgumentReader.getNumArgs(classifier.findShortcutKey(value));
-			for(int i=0; i<numArgs; i++){
-				head.getMyChildren().add(buildSubTree());
-			}
+		for(int i=0; i<numArgs; i++){
+			head.getMyChildren().add(buildSubTree());
 		}
-		else{
-			String newCurrent = ListTreeBuilder.buildList(brackets, nodes, head, getCurrentText());
-			setCurrentText(newCurrent);
-		}
+		
 		return head;
 	}
-	
-	private Pair getBrackets(String value){
-		for(Pair pair: myBrackets){
-			if(pair.getMyA().equals(value)){
-				return pair;
-			}
-		}
-		return null;
-	}
-	
 	public String getCurrentText() {
 		return currentText;
 	}
