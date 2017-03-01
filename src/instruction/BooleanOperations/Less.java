@@ -1,7 +1,7 @@
 package instruction.BooleanOperations;
 
 import instruction.InstructionData;
-import interpreter.InstructionNode;
+import util.MathUtil;
 
 public class Less extends BooleanOperation{
 	
@@ -11,7 +11,7 @@ public class Less extends BooleanOperation{
 	
 	@Override
 	public double execute() {
-		return (getArgumentDouble(0) < getArgumentDouble(1)) ? 1 : 0;
+		return MathUtil.doubleLessThan(getArgumentDouble(0), getArgumentDouble(1)) ? 1 : 0;
 	}
 
 }

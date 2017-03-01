@@ -2,7 +2,7 @@ package instruction.MathOperations;
 
 import exceptions.SLogoException;
 import instruction.InstructionData;
-import interpreter.InstructionNode;
+import util.MathUtil;
 
 public class Quotient extends MathOperation{
 	
@@ -12,8 +12,8 @@ public class Quotient extends MathOperation{
 
 	@Override
 	public double execute() {
-		if(getArgumentsDouble().get(1) == 0){
-			throw new SLogoException("Error error error!!!");   //NEED TO MODIFY/REFINE EXCEPTION HANDLING WITH A SLOGO EXCEPTION HIERARCHY
+		if(MathUtil.doubleEquals(getArgumentsDouble().get(1), 0.0)){
+			throw new MathException(RESOURCE_QUOTIENT_NAME);
 		}
 		return getArgumentDouble(0) / getArgumentDouble(1);
 	}

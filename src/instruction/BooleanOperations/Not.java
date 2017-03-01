@@ -1,7 +1,7 @@
 package instruction.BooleanOperations;
 
 import instruction.InstructionData;
-import interpreter.InstructionNode;
+import util.MathUtil;
 
 public class Not extends BooleanOperation{
 	public Not(InstructionData data, InstructionNode node){
@@ -9,6 +9,6 @@ public class Not extends BooleanOperation{
 	}
 	@Override
 	public double execute() {
-		return getArgumentDouble(0) == 0 ? 1 : 0;
+		return MathUtil.doubleEquals(getArgumentDouble(0), 0) ? 1 : 0;
 	}
 }

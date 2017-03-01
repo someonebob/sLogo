@@ -13,5 +13,12 @@ public class SLogoException extends RuntimeException{
 	
 	public SLogoException(String errorReport, Throwable cause){
 		super(errorReport, cause);
+		resources = ResourceBundle.getBundle(RESOURCES_NAME);
+		instructionSpecificText = "";
+	}
+
+	public void displayAlert(){
+		//TODO
+		System.out.println("This message will be replaced by a popup error window eventually.");
 	}
 }

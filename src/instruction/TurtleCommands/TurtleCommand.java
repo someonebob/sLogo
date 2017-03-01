@@ -4,7 +4,7 @@ import instruction.Instruction;
 import instruction.InstructionData;
 import interpreter.InstructionNode;
 import javafx.geometry.Point2D;
-import util.MathUtility;
+import util.MathUtil;
 import util.PointPolar;
 
 /**
@@ -14,20 +14,34 @@ import util.PointPolar;
  * @author Matthew Barbano
  *
  */
-public abstract class TurtleCommand extends Instruction{
-	public TurtleCommand(InstructionData instructionData, InstructionNode root){
-		super(instructionData, root);
+public abstract class TurtleCommand extends Instruction {
+	private static final String RESOURCE_NEGATIVE_PIXELS_NAME = "MoveNegativeMessage";
+	private static final String RESOURCE_BOUNDS_NAME = "MoveBoundsMessage";
+
+	public TurtleCommand(InstructionData instructionData, List<String> args) {
+		super(instructionData, args);
 	}
-	
-	protected void moveNewLocation(Point2D newLocation){
-		getActiveActor().setLocation(newLocation);
-	}
-	
-	protected void move(double distance){
+
+	protected void move(double distance) {
+		if (MathUtil.doubleLessThan(distance, 0.0)) {
+			throw new NonsensicalArgumentException(RESOURCE_NEGATIVE_PIXELS_NAME);
+		}
 		Point2D currentLocation = getActiveActor().getLocation();
 		double currentHeading = getActiveActor().getHeading();
-		Point2D deltaVector = MathUtility.polarToRectangular(new PointPolar(distance, currentHeading));
-		moveNewLocation(currentLocation.add(deltaVector));
+		Point2D deltaVector = MathUtil.polarToRectangular(new PointPolar(distance, currentHeading));
+
+		Point2D newLocation = currentLocation.add(deltaVector);
+		Bounds bounds = getInstructionData().getSimulationBounds();
+		if (MathUtil.doubleLessThan(newLocation.getX(), bounds.getMinX())
+				|| MathUtil.doubleLessThan(newLocation.getY(), bounds.getMinY())
+				|| MathUtil.doubleGreaterThan(newLocation.getX(), bounds.getMaxX())
+				|| MathUtil.doubleGreaterThan(newLocation.getY(), bounds.getMaxY())) {
+			throw new NonsensicalArgumentException(RESOURCE_BOUNDS_NAME);
+		}
+
+		getActiveActor().move(deltaVector); // This method sets this actor's
+											// location field, and handles the
+											// animation
 	}
 	
 	protected void turnNewHeading(double newHeading){
