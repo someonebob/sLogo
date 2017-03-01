@@ -1,9 +1,12 @@
 package interpreter;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import util.ArgumentReader;
+import util.Pair;
 /**
  * Builds a tree of InstructionNodes for
  * use in execution of an Instruction
@@ -13,10 +16,15 @@ import util.ArgumentReader;
  */
 
 public class TreeBuilder {
+	private static final String LIST_START = "ListStart";
+	private static final String LIST_END = "ListEnd";
+	private static final String GROUP_START = "GroupStart";
+	private static final String GROUP_END = "GroupEnd";
 	
 	private String currentText;
 	private InstructionClassifier classifier;
 	private List <InstructionNode> nodes;
+	private Set<Pair> myBrackets;
 	
 	public TreeBuilder(String text, InstructionClassifier c){
 		currentText = text;
@@ -25,7 +33,15 @@ public class TreeBuilder {
 			nodes = InstructionSplitter.getInstructions(text, c);
 		else
 			nodes = new ArrayList<InstructionNode>();
+		populateBrackets();
 	}
+	
+	private void populateBrackets(){
+		myBrackets = new HashSet<Pair>();
+		myBrackets.add(new Pair(LIST_START, LIST_END));
+		myBrackets.add(new Pair(GROUP_START, GROUP_END));
+	}
+	
 	/**
 	 * This builds a tree of InstructioNodes given a list of Instructions 
 	 * (The utility of having Instruction type is to have access
@@ -55,19 +71,37 @@ public class TreeBuilder {
 	
 	
 	private InstructionNode buildSubTree(){
-		//TODO: Fix currenttext bug
+		//TODO: Fix current text bug
 		if(getCurrentText().isEmpty()){
 			return null;
 		}
+		
 		InstructionNode head = nodes.remove(0); //take node out of list to add to tree
 		String value = InstructionSplitter.getInstructionStrings(getCurrentText()).get(0);
 		head.setMyValue(value);
 		setCurrentText(InstructionSplitter.removeFirstItem(getCurrentText()));//remove node from current text
-		int numArgs = ArgumentReader.getNumArgs(classifier.findShortcutKey(value));
-		for(int i=0; i<numArgs; i++){
-			head.getMyChildren().add(buildSubTree());
+		Pair brackets = getBrackets(value);
+		
+		if(brackets==null){
+			int numArgs = ArgumentReader.getNumArgs(classifier.findShortcutKey(value));
+			for(int i=0; i<numArgs; i++){
+				head.getMyChildren().add(buildSubTree());
+			}
 		}
+		else{
+			
+		}
+		
 		return head;
+	}
+	
+	private Pair getBrackets(String value){
+		for(Pair pair: myBrackets){
+			if(pair.getMyA().equals(value)){
+				return pair;
+			}
+		}
+		return null;
 	}
 	
 	public String getCurrentText() {

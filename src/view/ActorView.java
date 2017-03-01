@@ -5,28 +5,34 @@ import java.util.Observable;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import models.Actor;
 
-public class ActorView implements View
+/**
+ * 
+ * @author jimmy
+ * @author Jesse
+ *
+ */
+public abstract class ActorView implements View
 {
+	private Actor actor;
+	private ImageView image;
 
-	public static final String DEFAULT_IMAGE = "Squirt.png";
-
-	private ImageView actor;
-
-	public ActorView()
+	public ActorView(String imageString)
 	{
-		actor = new ImageView();
+		image = new ImageView();
 		// scale the image
-		actor.setFitHeight(50);
-		actor.setPreserveRatio(true);
-		loadImage();
+		image.setFitHeight(50);
+		image.setPreserveRatio(true);
+		actor = new Actor();
+		loadImage(imageString);
 	}
 
 	@Override
 	public Node display()
 	{
 		// TODO Auto-generated method stub
-		return actor;
+		return image;
 	}
 
 	@Override
@@ -42,14 +48,32 @@ public class ActorView implements View
 
 	}
 
-	public void setImage(Image image)
+	public Actor getActor()
 	{
-		actor.setImage(image);
+		return actor;
 	}
 
-	private void loadImage()
+	public void setActor(Actor actor)
 	{
-		Image image = new Image(getClass().getClassLoader().getResourceAsStream(DEFAULT_IMAGE));
+		this.actor = actor;
+	}
+
+	public void setImage(Image image)
+	{
+		ImageView view = new ImageView(image);
+		view.setFitHeight(50);
+		view.setPreserveRatio(true);
+		this.image = view;
+	}
+
+	public ImageView getImage()
+	{
+		return image;
+	}
+
+	private void loadImage(String stringImage)
+	{
+		Image image = new Image(getClass().getClassLoader().getResourceAsStream(stringImage));
 		this.setImage(image);
 	}
 
