@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Map.Entry;
 import java.util.regex.Pattern;
 
+import exceptions.InvalidCommandException;
+import exceptions.SyntaxException;
 import instruction.*;
 import util.ResourceToList;
 
@@ -144,8 +146,7 @@ public class InstructionClassifier {
 		
 		String classification = findShortcutKey(comm);
 		if(classification.equals("NO MATCH")){ //Break out if the command isn't an option
-			//TODO: Error handling of mismatch
-			return null;
+			throw new InvalidCommandException("InvalidCommand");
 		}
 		try {
 			String classPath = findAddressKey(classification);
@@ -154,8 +155,7 @@ public class InstructionClassifier {
 			instructionHopeful = ctor.newInstance(data, args, comm);
 		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
 			// TODO Handle error --> non-valid class
-		} // This is probably wrong
-		catch (NoSuchMethodException e) {
+		} catch (NoSuchMethodException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SecurityException e) {

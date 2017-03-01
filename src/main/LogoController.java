@@ -1,6 +1,13 @@
 package main;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import instruction.InstructionData;
 import interpreter.Interpreter;
@@ -8,12 +15,14 @@ import javafx.collections.*;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import models.Variable;
 import tool.AbstractButton;
 import tool.FileTool;
 import tool.HelpTool;
 import tool.SelectionBar;
 import tool.SettingsTool;
+import tool.FileTool.OpenButton;
+import user_structures.Function;
+import user_structures.Variable;
 import view.InputBox;
 import view.PageView;
 import view.SavedCommandsView;
@@ -25,7 +34,7 @@ import view.WorkspaceView;
  * @author jimmy
  * @author Jesse
  */
-public class LogoController
+public class LogoController implements Observer
 {
 	public final int DISPLAY_WIDTH = 600;
 	public final int DISPLAY_HEIGHT = 600;
@@ -40,6 +49,7 @@ public class LogoController
 	private BorderPane pane;
 	private Interpreter interpret;
 	private ObservableList<Variable> variables;
+	private ObservableList<Function> functions;
 
 	private FileTool file;
 	private SettingsTool settings;
@@ -50,15 +60,16 @@ public class LogoController
 		initiateViews();
 		addTools();
 		initiateObservers();
-		List<Variable> list = new ArrayList<>();
-		variables = FXCollections.observableList(list);
-		//Testing
-		Variable variable = new Variable();
-		variable.setName("poop");
-		variable.setValue(100);
-		variables.add(variable);
+		
+		List<Variable> varList = new ArrayList<>();
+		variables = FXCollections.observableList(varList);
+		
+		List<Function> funcList = new ArrayList<>();
+		functions = FXCollections.observableList(funcList);
+		
 		workspace.setItems(variables);
-
+		//TODO: Add functions to the workspace
+		
 		this.stage = stage;
 		stage.setTitle("SLogo");
 		stage.show();
@@ -113,7 +124,7 @@ public class LogoController
 
 	private void runCommand(String command)
 	{
-		InstructionData data = new InstructionData(simulation, variables);
+		InstructionData data = new InstructionData(simulation, variables, functions);
 		// TODO: make function to get language
 		interpret = new Interpreter(data, "English");
 		interpret.parseAndRun(command);
@@ -152,6 +163,7 @@ public class LogoController
 		for (AbstractButton ab : file.getButtons()) {
 			ab.addObserver(simulation);
 			ab.addObserver(inputBox);
+			ab.addObserver(this);
 		}
 
 		for (AbstractButton ab : settings.getButtons()) {
@@ -159,6 +171,36 @@ public class LogoController
 		}
 		
 		
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		// TODO Auto-generated method stub
+		if (o instanceof OpenButton) {
+			openFile((File) arg);
+		}
+	}
+	
+	private void openFile(File file)
+	{
+		FileReader fr = null;
+		StringBuilder command = new StringBuilder();
+		String line = null;
+		try{
+			fr = new FileReader(file);
+			BufferedReader reader = new BufferedReader(fr);
+			while((line = reader.readLine()) != null){
+				command.append(line +"\n");
+			}
+			
+			runCommand(command.toString());
+			fr.close();
+			
+		}catch(FileNotFoundException e){
+			System.out.println("Unable to open file");
+		}catch(IOException e){
+			Logger.getLogger(InputBox.class.getName()).log(Level.SEVERE, null, e);
+		}
 	}
 
 }
