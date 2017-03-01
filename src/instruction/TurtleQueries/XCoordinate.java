@@ -1,19 +1,20 @@
 package instruction.TurtleQueries;
 
-import instruction.InstructionData;
-import interpreter.InstructionNode;
+import java.util.List;
 
-public class XCoordinate extends TurtleQuery{
-	
-	public XCoordinate(){
-		super(new InstructionData(), new InstructionNode());
-	}
-	public XCoordinate(InstructionData instructionData, InstructionNode root) {
-		super(instructionData, root);
+import instruction.InstructionData;
+
+public class XCoordinate extends TurtleQuery
+{
+
+	public XCoordinate(InstructionData instructionData, List<String> args)
+	{
+		super(instructionData, args);
 	}
 
 	@Override
-	public double execute() {
-		return getActiveActor().getLocation().getX();
+	public double execute()
+	{
+		return getActiveActor().getActor().getLocation().getX();
 	}
 }

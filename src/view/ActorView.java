@@ -96,4 +96,15 @@ public abstract class ActorView implements View
 		actor.setLocation(actor.getLocation().add(deltaLocation));
 	}
 
+	public void setHeading(double newHeading)
+	{
+		image.setRotate(newHeading);
+		actor.setHeading(newHeading);
+	}
+
+	public double getHeading()
+	{
+		return actor.getHeading();
+	}
+
 }

@@ -1,13 +1,17 @@
 package instruction.MathOperations;
 
-import exceptions.SLogoException;
+import java.util.List;
+
+import exceptions.MathException;
 import instruction.InstructionData;
 import util.MathUtil;
 
 public class Quotient extends MathOperation{
 	
-	public Quotient(InstructionData data, InstructionNode node) {
-		super(data, node);
+	private static final String RESOURCE_QUOTIENT_NAME = "QuotientMessage";
+
+	public Quotient(InstructionData data,  List<String> args) {
+		super(data, args);
 	}
 
 	@Override

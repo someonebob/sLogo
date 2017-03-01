@@ -1,20 +1,21 @@
 package instruction.TurtleQueries;
 
-import instruction.InstructionData;
-import interpreter.InstructionNode;
+import java.util.List;
 
-public class YCoordinate extends TurtleQuery{
-	
-	public YCoordinate(){
-		super(new InstructionData(), new InstructionNode());
-	}
-	public YCoordinate(InstructionData instructionData, InstructionNode root) {
-		super(instructionData, root);
+import instruction.InstructionData;
+
+public class YCoordinate extends TurtleQuery
+{
+
+	public YCoordinate(InstructionData instructionData, List<String> args)
+	{
+		super(instructionData, args);
 	}
 
 	@Override
-	public double execute() {
-		return getActiveActor().getLocation().getY();
+	public double execute()
+	{
+		return getActiveActor().getActor().getLocation().getY();
 	}
-	
+
 }
