@@ -7,7 +7,7 @@ import instruction.InstructionData;
 
 public abstract class TurtleQuery extends Instruction{
 	
-	public TurtleQuery(InstructionData instructionData, List<String> args){
-		super(instructionData, args);
+	public TurtleQuery(InstructionData instructionData, List<String> args, String myText){
+		super(instructionData, args, myText);
 	}
 }

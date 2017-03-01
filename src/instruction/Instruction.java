@@ -18,11 +18,13 @@ public abstract class Instruction
 {
 	private InstructionData instructionData;
 	private List<String> arguments;
+	private String myText;
 
-	public Instruction(InstructionData instructionData, List<String> args)
+	public Instruction(InstructionData instructionData, List<String> args, String myText)
 	{
 		this.instructionData = instructionData;
 		this.arguments = args;
+		this.myText = myText;
 	}
 
 	/**
@@ -80,5 +82,9 @@ public abstract class Instruction
 	protected ActorView getActiveActor()
 	{
 		return getInstructionData().getActiveActor();
+	}
+	
+	protected String getMyText(){
+		return myText;
 	}
 }

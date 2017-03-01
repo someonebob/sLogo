@@ -6,8 +6,8 @@ import instruction.InstructionData;
 
 public class If extends Miscellaneous {
 	
-	public If(InstructionData instructionData,  List<String> args) {
-		super(instructionData, args);
+	public If(InstructionData instructionData,  List<String> args, String myText) {
+		super(instructionData, args, myText);
 	}
 
 	@Override

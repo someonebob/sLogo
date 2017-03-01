@@ -10,8 +10,8 @@ public class Quotient extends MathOperation{
 	
 	private static final String RESOURCE_QUOTIENT_NAME = "QuotientMessage";
 
-	public Quotient(InstructionData data,  List<String> args) {
-		super(data, args);
+	public Quotient(InstructionData data,  List<String> args, String myText) {
+		super(data, args, myText);
 	}
 
 	@Override

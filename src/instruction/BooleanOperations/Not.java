@@ -6,8 +6,8 @@ import instruction.InstructionData;
 import util.MathUtil;
 
 public class Not extends BooleanOperation{
-	public Not(InstructionData data,  List<String> args){
-		super(data, args);
+	public Not(InstructionData data,  List<String> args, String myText){
+		super(data, args, myText);
 	}
 	@Override
 	public double execute() {
