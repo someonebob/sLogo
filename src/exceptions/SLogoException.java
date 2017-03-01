@@ -2,6 +2,9 @@ package exceptions;
 
 import java.util.ResourceBundle;
 
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+
 /**
  * This exception class generates custom exceptions to the SLogo project. It is
  * at the root of an inheritance hierarchy representing all possible exceptions
@@ -12,13 +15,15 @@ import java.util.ResourceBundle;
 public class SLogoException extends RuntimeException{
 	private static final long serialVersionUID = 1L;
 	private static final String RESOURCES_NAME = "resources/languages/Exception";
+	private static final String EXCEPTION_NAME = "Exception";
+	private static final String PLEASE_NAME = "PleasePrompt";
 	
 	private ResourceBundle resources;
 	private String instructionSpecificText;
 	
 	//This one is the preferred constructor to use
 	public SLogoException(String instructionSpecificErrorName){
-		//super(ResourceBundle.getBundle(RESOURCES_NAME).getString(instructionSpecificErrorName));
+		super(ResourceBundle.getBundle(RESOURCES_NAME).getString(instructionSpecificErrorName));
 		resources = ResourceBundle.getBundle(RESOURCES_NAME);
 		instructionSpecificText = resources.getString(instructionSpecificErrorName);
 	}
@@ -36,7 +41,8 @@ public class SLogoException extends RuntimeException{
 	}
 
 	public void displayAlert(){
-		//displayMessage = 
-		//Alert alert = new Alert(AlertType.ERROR, displayMessage);
+		String displayMessage = resources.getString(EXCEPTION_NAME) + ": " + instructionSpecificText + "\n" + resources.getString(PLEASE_NAME); 
+		Alert alert = new Alert(AlertType.ERROR, instructionSpecificText);
+		alert.showAndWait();
 	}
 }
