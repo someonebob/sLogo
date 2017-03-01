@@ -1,5 +1,7 @@
 package instruction.BasicSyntax;
 
+import java.util.List;
+
 import instruction.Instruction;
 import instruction.InstructionData;
 import interpreter.InstructionNode;
@@ -19,8 +21,8 @@ import interpreter.InstructionNode;
 
 public class ListStart extends Instruction {
 
-	public ListStart(){
-		super(new InstructionData(), new InstructionNode());
+	public ListStart(InstructionData data,  List<String> args){
+		super(data,  args);
 		//TODO: check and complete
 	}
 	

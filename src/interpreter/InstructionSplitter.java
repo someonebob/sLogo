@@ -1,9 +1,7 @@
 package interpreter;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-
 /**
  * Purely a utility class, used for purposes of splitting an input line and
  * returning strings or Instructions from input
@@ -13,9 +11,7 @@ import java.util.Scanner;
  * @author maddiebriere
  *
  */
-
 public class InstructionSplitter {
-
 	/**
 	 * Parses string into individual words, uses the given instruction
 	 * classifier to create corresponding InstructionNodes in list for return.
@@ -39,12 +35,10 @@ public class InstructionSplitter {
 		}
 		return toRet;
 	}
-
 	public static List<String> getInstructionStrings(String toParse) {
 		// TODO: Error check for empty string
 		return splitString(toParse);
 	}
-
 	/**
 	 * Split String by whitespace to get relevant words
 	 * 
@@ -79,5 +73,4 @@ public class InstructionSplitter {
 		toRet+=parsed.get(parsed.size()-1);
 		return toRet;
 	}
-
 }
