@@ -9,7 +9,7 @@ package util;
  */
 
 public class ArgumentReader {
-	public static String NUM_ARGS = "resources/languages/NumArgs";
+	public static String NUM_ARGS = "resources/interpreter/NumArgs";
 	
 	public static int getNumArgs(String instructionType){
 		//TODO: Error handling

@@ -15,6 +15,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import tool.FileTool.OpenButton;
 import tool.FileTool.SaveButton;
 
 /**
@@ -28,10 +29,9 @@ public class InputBox implements View
 	private BorderPane inputBox;
 	private ScrollPane scroll;
 	private TextField console;
-	private String input;
 	private VBox inputs;
-	private Label current;
 	private List<String> previous;
+	private String input;
 	private Stack<String> clickedCommands;
 
 	/**
@@ -40,7 +40,6 @@ public class InputBox implements View
 	public InputBox()
 	{
 		initiateItems();
-		console.setOnAction(e -> consoleAction());
 	}
 
 	/**
@@ -51,6 +50,10 @@ public class InputBox implements View
 	public String getInput()
 	{
 		return input;
+	}
+	
+	public TextField getField(){
+		return console;
 	}
 
 	public List<String> getPastInputs()
@@ -74,6 +77,9 @@ public class InputBox implements View
 	{
 		if (o instanceof SaveButton) {
 			saveFile((File) arg);
+		}
+		if (o instanceof OpenButton) {
+			openFile((File) arg);
 		}
 	}
 
@@ -103,17 +109,10 @@ public class InputBox implements View
 		clickedCommands = new Stack<>();
 	}
 
-	private void consoleAction()
-	{
-		input = console.getText();
-		previous.add(input);
-		console.clear();
-
-		Label current = new Label(input);
-		// commands.add(current);
+	public void addPrevious(String prev){
+		Label current = new Label(prev);
 		current.setOnMouseClicked(e -> clickedCommands.add(current.getText()));
 		inputs.getChildren().add(current);
-
 	}
 
 	private void saveFile(File file)
@@ -126,6 +125,11 @@ public class InputBox implements View
 		} catch (IOException e) {
 			Logger.getLogger(InputBox.class.getName()).log(Level.SEVERE, null, e);
 		}
+	}
+
+	private void openFile(File file)
+	{
+
 	}
 
 	public Stack<String> getClickedCommands()
