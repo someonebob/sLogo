@@ -23,10 +23,8 @@ public class Interpreter {
 	 * 
 	 * @param instruction
 	 *            Input line from user
-	 * @param info
-	 *            InstructionData object representing current information
 	 */
-	public void parseAndRun(String instruction, InstructionData info) {
+	public void parseAndRun(String instruction) {
 		List<InstructionNode> headNodes = parse(instruction);
 		TreeExecuter executer = new TreeExecuter(getMyData(), getMyClassifier());
 		executeTree(executer, headNodes);
