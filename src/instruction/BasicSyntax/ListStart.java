@@ -1,5 +1,7 @@
 package instruction.BasicSyntax;
 
+import java.util.ArrayList;
+
 import instruction.Instruction;
 import instruction.InstructionData;
 import interpreter.InstructionNode;
@@ -18,11 +20,12 @@ import interpreter.InstructionNode;
  */
 
 public class ListStart extends Instruction {
-
+	
 	public ListStart(){
-		super(new InstructionData(), new InstructionNode());
+		super(new InstructionData(), new ArrayList<>());
 		//TODO: check and complete
 	}
+	
 	
 	@Override
 	public double execute() {
