@@ -1,7 +1,6 @@
 package interpreter;
 
 import java.util.ArrayList;
-
 import instruction.Instruction;
 import instruction.InstructionData;
 

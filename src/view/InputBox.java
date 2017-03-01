@@ -86,7 +86,9 @@ public class InputBox implements View
 	@Override
 	public void updateData(String arg)
 	{
-		// Does nothing since the InputBox never needs to be updated
+		Label current = new Label(arg);
+		current.setOnMouseClicked(e -> clickedCommands.add(current.getText()));
+		inputs.getChildren().add(current);
 	}
 
 	private void initiateItems()
@@ -109,11 +111,6 @@ public class InputBox implements View
 		clickedCommands = new Stack<>();
 	}
 
-	public void addPrevious(String prev){
-		Label current = new Label(prev);
-		current.setOnMouseClicked(e -> clickedCommands.add(current.getText()));
-		inputs.getChildren().add(current);
-	}
 
 	private void saveFile(File file)
 	{
