@@ -8,8 +8,8 @@ import interpreter.Interpreter;
 
 public abstract class Miscellaneous extends Instruction {
 	
-	public Miscellaneous(InstructionData instructionData, List<String> args) {
-		super(instructionData, args);
+	public Miscellaneous(InstructionData instructionData, List<String> args, String myText) {
+		super(instructionData, args, myText);
 	}
 	
 	protected double runListCommands(int argumentNumber) {

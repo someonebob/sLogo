@@ -6,8 +6,8 @@ import instruction.InstructionData;
 
 public class IfElse extends Miscellaneous{
 
-	public IfElse(InstructionData instructionData,  List<String> args) {
-		super(instructionData, args);
+	public IfElse(InstructionData instructionData,  List<String> args, String myText) {
+		super(instructionData, args, myText);
 	}
 	
 	public double execute(){

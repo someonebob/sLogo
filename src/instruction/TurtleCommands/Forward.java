@@ -6,8 +6,8 @@ import instruction.InstructionData;
 
 public class Forward extends TurtleCommand{
 	
-	public Forward(InstructionData instructionData, List<String> args) {
-		super(instructionData, args);
+	public Forward(InstructionData instructionData, List<String> args, String myText) {
+		super(instructionData, args, myText);
 	}
 
 	@Override

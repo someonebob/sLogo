@@ -24,7 +24,8 @@ import view.WorkspaceView;
  * @author jimmy
  * @author Jesse
  */
-public class LogoController {
+public class LogoController
+{
 	public final int DISPLAY_WIDTH = 600;
 	public final int DISPLAY_HEIGHT = 600;
 
@@ -43,7 +44,8 @@ public class LogoController {
 	private SettingsTool settings;
 	private HelpTool help;
 
-	public LogoController(Stage stage) {
+	public LogoController(Stage stage)
+	{
 		initiateViews();
 		addTools();
 		initiateObservers();
@@ -57,7 +59,8 @@ public class LogoController {
 		stage.setScene(makeScene());
 	}
 
-	private Scene makeScene() {
+	private Scene makeScene()
+	{
 		this.pane = new BorderPane();
 		pane.setBottom(inputBox.display());
 		pane.setTop(selectionBar.display());
@@ -67,7 +70,7 @@ public class LogoController {
 
 		inputBox.getField().setOnAction(e -> {
 			executeCommand();
-			inputBox.getField().clear();	
+			inputBox.getField().clear();
 		});
 
 		inputBox.display().setOnMouseClicked(e -> {
@@ -77,41 +80,45 @@ public class LogoController {
 		return new Scene(pane, DISPLAY_WIDTH, DISPLAY_HEIGHT);
 	}
 
-	private void executeCommand() {
+	private void executeCommand()
+	{
 		InstructionData data = new InstructionData(simulation);
 		// TODO: make function to get language
 		interpret = new Interpreter(data, "English");
 		String input = inputBox.getField().getText();
-		
+
 		if (input != null) {
-			interpret.parseAndRun(inputBox.getField().getText());
-			
-			//Do if command is valid
-			inputBox.updateData(input);
-				//Do if a variable is created
-				workspace.updateData(input);
+			runCommand(inputBox.getField().getText());
+			inputBox.addPrevious(input);
+
 		}
 
 	}
 
-	private void executeClickedCommand() {
+	private void executeClickedCommand()
+	{
 		if (inputBox.getClickedCommands().size() > 0) {
-			System.out.println(inputBox.getClickedCommands().pop());
-			System.out.println(simulation.display().getBoundsInLocal().getHeight());
-			System.out.println(simulation.display().getBoundsInLocal().getWidth());
-
+			runCommand(inputBox.getClickedCommands().pop());
 		}
 	}
 
-	public void addPage(PageView page) {
+	private void runCommand(String command)
+	{
+		interpret.parseAndRun(command);
+	}
+
+	public void addPage(PageView page)
+	{
 		this.pages.add(page);
 	}
 
-	public void setSimulation(SimulationView simulation) {
+	public void setSimulation(SimulationView simulation)
+	{
 		this.simulation = simulation;
 	}
 
-	private void initiateViews() {
+	private void initiateViews()
+	{
 		pages = new ArrayList<PageView>();
 		simulation = new SimulationView();
 		selectionBar = new SelectionBar();
@@ -120,14 +127,16 @@ public class LogoController {
 		userCommands = new SavedCommandsView();
 	}
 
-	private void addTools() {
+	private void addTools()
+	{
 		file = new FileTool(stage);
 		settings = new SettingsTool(stage);
 		help = new HelpTool(stage);
 		selectionBar.addAllTools(file, settings, help);
 	}
 
-	private void initiateObservers() {
+	private void initiateObservers()
+	{
 		for (AbstractButton ab : file.getButtons()) {
 			ab.addObserver(simulation);
 			ab.addObserver(inputBox);

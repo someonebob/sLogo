@@ -6,8 +6,8 @@ import instruction.InstructionData;
 
 public class Heading extends TurtleQuery {
 
-	public Heading(InstructionData instructionData, List<String> args) {
-		super(instructionData, args);
+	public Heading(InstructionData instructionData, List<String> args, String myText) {
+		super(instructionData, args, myText);
 	}
 
 	@Override

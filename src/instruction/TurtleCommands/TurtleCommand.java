@@ -23,9 +23,9 @@ public abstract class TurtleCommand extends Instruction
 	private static final String RESOURCE_NEGATIVE_PIXELS_NAME = "MoveNegativeMessage";
 	private static final String RESOURCE_BOUNDS_NAME = "MoveBoundsMessage";
 
-	public TurtleCommand(InstructionData instructionData, List<String> args)
+	public TurtleCommand(InstructionData instructionData, List<String> args, String myText)
 	{
-		super(instructionData, args);
+		super(instructionData, args, myText);
 	}
 
 	protected void move(double distance)

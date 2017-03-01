@@ -7,8 +7,8 @@ import util.MathUtil;
 
 public class Less extends BooleanOperation{
 	
-	public Less(InstructionData data,  List<String> args){
-		super(data, args);
+	public Less(InstructionData data,  List<String> args, String myText){
+		super(data, args, myText);
 	}
 	
 	@Override

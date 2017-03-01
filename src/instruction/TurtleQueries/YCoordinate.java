@@ -7,9 +7,9 @@ import instruction.InstructionData;
 public class YCoordinate extends TurtleQuery
 {
 
-	public YCoordinate(InstructionData instructionData, List<String> args)
+	public YCoordinate(InstructionData instructionData, List<String> args, String myText)
 	{
-		super(instructionData, args);
+		super(instructionData, args, myText);
 	}
 
 	@Override
