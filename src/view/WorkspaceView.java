@@ -3,9 +3,9 @@ package view;
 import java.util.Observable;
 
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 
 /**
  * Workspace that stores all the variables
@@ -28,17 +28,22 @@ public class WorkspaceView implements PageView{
 	@Override
 	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub
-		if (arg instanceof String){
-			Text variable = new Text((String) arg);
-			variables.getChildren().add(variable);
-		}
-		
+
 	}
 	
 	@Override
 	public void updateData(String arg) {
-		// TODO Auto-generated method stub
+		Label variable = new Label(arg);
+		variable.setOnMouseClicked(e -> {
+			//TODO: let variables be editable
+		});
+		variables.getChildren().add(variable);
+
 		
+	}
+	
+	public VBox getVariables(){
+		return variables;
 	}
 
 	private void initiateItems(){
