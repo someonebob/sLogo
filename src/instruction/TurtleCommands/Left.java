@@ -21,7 +21,7 @@ public class Left extends TurtleCommand
 	public double execute()
 	{
 		double degree = getArgumentDouble(0);
-		turn(degree);
+		turn(-1 * degree);
 		return degree;
 	}
 }
