@@ -14,8 +14,10 @@ import instruction.*;
  **/
 
 public class Interpreter {
+	
 	private InstructionData myData;
 	private InstructionClassifier myClassifier;
+	
 	public Interpreter(InstructionData data, String language) {
 		myData = data;
 		myClassifier = new InstructionClassifier(language);

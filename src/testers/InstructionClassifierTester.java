@@ -18,7 +18,6 @@ public class InstructionClassifierTester {
 		String[] examples = generateExampleInput();
 		parseText(in, examples);
 		listTest(in);
-		
 	}
 	
 	
