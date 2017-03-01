@@ -16,7 +16,7 @@ public class Right extends TurtleCommand
 	public double execute()
 	{
 		double degree = getArgumentDouble(0);
-		turn(degree);
+		turn(-degree);
 		return degree;
 	}
 }

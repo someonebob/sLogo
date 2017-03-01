@@ -11,7 +11,7 @@ public class ArcTangent extends MathOperation{
 	
 	@Override
 	public double execute() {
-		return Math.atan(getArgumentDouble(0));
+		return Math.toDegrees(Math.atan(getArgumentDouble(0)));
 	}
 
 }
