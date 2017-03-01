@@ -1,19 +1,22 @@
 package instruction.MathOperations;
 
-import exceptions.SLogoException;
+import java.util.List;
+
+import exceptions.MathException;
 import instruction.InstructionData;
-import interpreter.InstructionNode;
 
 public class Quotient extends MathOperation{
 	
-	public Quotient(InstructionData data, InstructionNode node) {
-		super(data, node);
+	private static final String RESOURCE_QUOTIENT_NAME = "QuotientMessage";
+
+	public Quotient(InstructionData data,  List<String> args) {
+		super(data, args);
 	}
 
 	@Override
 	public double execute() {
 		if(getArgumentsDouble().get(1) == 0){
-			throw new SLogoException("Error error error!!!");   //NEED TO MODIFY/REFINE EXCEPTION HANDLING WITH A SLOGO EXCEPTION HIERARCHY
+			throw new MathException(RESOURCE_QUOTIENT_NAME);
 		}
 		return getArgumentDouble(0) / getArgumentDouble(1);
 	}

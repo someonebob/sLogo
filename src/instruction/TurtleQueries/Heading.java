@@ -1,14 +1,13 @@
 package instruction.TurtleQueries;
 
+import java.util.List;
+
 import instruction.InstructionData;
-import interpreter.InstructionNode;
 
 public class Heading extends TurtleQuery {
-	public Heading(){
-		super(new InstructionData(), new InstructionNode());
-	}
-	public Heading(InstructionData instructionData, InstructionNode root) {
-		super(instructionData, root);
+
+	public Heading(InstructionData instructionData, List<String> args) {
+		super(instructionData, args);
 	}
 
 	@Override

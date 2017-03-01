@@ -1,12 +1,13 @@
 package instruction.BooleanOperations;
 
+import java.util.List;
+
 import instruction.InstructionData;
-import interpreter.InstructionNode;
 
 public class Less extends BooleanOperation{
 	
-	public Less(InstructionData data, InstructionNode node){
-		super(data, node);
+	public Less(InstructionData data,  List<String> args){
+		super(data, args);
 	}
 	
 	@Override
