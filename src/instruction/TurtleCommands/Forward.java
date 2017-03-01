@@ -13,6 +13,7 @@ public class Forward extends TurtleCommand{
 	@Override
 	public double execute() {
 		double distance = getArgumentDouble(0);
+		checkNegativeArgumentException(distance);
 		move(distance);
 		return distance;
 	}

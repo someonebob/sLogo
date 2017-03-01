@@ -58,6 +58,6 @@ public final class MathUtil {
 	}
 	
 	public static boolean hasIntegerValue(double candidateDouble){
-		return MathUtil.doubleEquals(candidateDouble, (int)candidateDouble);
+		return MathUtil.doubleEquals(candidateDouble, Math.round(candidateDouble));
 	}
 }

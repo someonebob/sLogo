@@ -15,7 +15,7 @@ public class Tangent extends MathOperation{
 
 	@Override
 	public double execute() {
-		if(MathUtil.hasIntegerValue(getArgumentDouble(0)/ (Math.PI / 2))){
+		if(MathUtil.hasIntegerValue((getArgumentDouble(0)/Math.PI) - 0.5)){
 			throw new MathException(RESOURCE_TANGENT_NAME);
 		}
 		return Math.tan(getArgumentDouble(0));
