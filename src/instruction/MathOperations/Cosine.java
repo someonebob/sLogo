@@ -11,7 +11,7 @@ public class Cosine extends MathOperation{
 	
 	@Override
 	public double execute() {
-		return Math.cos(getArgumentDouble(0));
+		return Math.cos(Math.toRadians(getArgumentDouble(0)));
 	}
 
 }

@@ -11,7 +11,7 @@ public class Sine extends MathOperation{
 	
 	@Override
 	public double execute() {
-		return Math.sin(getArgumentDouble(0));
+		return Math.sin(Math.toRadians(getArgumentDouble(0)));
 	}
 
 }

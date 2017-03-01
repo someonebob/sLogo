@@ -5,15 +5,15 @@ import java.util.List;
 import instruction.InstructionData;
 import util.MathUtil;
 
-public class Less extends BooleanOperation{
+public class Equal extends BooleanOperation{
 	
-	public Less(InstructionData data,  List<String> args, String myText){
+	public Equal(InstructionData data,  List<String> args, String myText){
 		super(data, args, myText);
 	}
 	
 	@Override
 	public double execute() {
-		return MathUtil.doubleLessThan(getArgumentDouble(0), getArgumentDouble(1)) ? 1 : 0;
+		return MathUtil.doubleEquals(getArgumentDouble(0), getArgumentDouble(1)) ? 1 : 0;
 	}
 
 }

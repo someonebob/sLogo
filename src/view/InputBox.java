@@ -104,6 +104,8 @@ public class InputBox implements View
 
 		console = new TextField();
 		console.setPromptText("Enter your code here...");
+		console.setFocusTraversable(false);
+		
 		inputBox.setCenter(scroll);
 		inputBox.setBottom(console);
 

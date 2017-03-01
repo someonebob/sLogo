@@ -40,6 +40,7 @@ public abstract class TurtleCommand extends Instruction
 	protected void move(Point2D newLocation)
 	{
 		Bounds bounds = getInstructionData().getSimulationBounds();
+		System.out.println(bounds);
 		if (MathUtil.doubleLessThan(newLocation.getX(), bounds.getMinX())
 				|| MathUtil.doubleLessThan(newLocation.getY(), bounds.getMinY())
 				|| MathUtil.doubleGreaterThan(newLocation.getX(), bounds.getMaxX())
