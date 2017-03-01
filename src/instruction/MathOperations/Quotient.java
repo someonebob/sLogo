@@ -4,6 +4,7 @@ import java.util.List;
 
 import exceptions.MathException;
 import instruction.InstructionData;
+import util.MathUtility;
 
 public class Quotient extends MathOperation{
 	
@@ -15,7 +16,7 @@ public class Quotient extends MathOperation{
 
 	@Override
 	public double execute() {
-		if(getArgumentsDouble().get(1) == 0){
+		if(MathUtility.doubleEquals(getArgumentsDouble().get(1), 0.0)){
 			throw new MathException(RESOURCE_QUOTIENT_NAME);
 		}
 		return getArgumentDouble(0) / getArgumentDouble(1);

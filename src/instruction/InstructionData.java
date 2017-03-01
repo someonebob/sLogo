@@ -2,6 +2,7 @@ package instruction;
 
 import java.util.List;
 
+import javafx.geometry.Bounds;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import models.Actor;
@@ -93,5 +94,9 @@ public class InstructionData {
 	 */
 	public void setTurtleImage(ImageView imageView){
 		simulation.getActiveActor().setTurtleImage(imageView);
+	}
+	
+	public Bounds getSimulationBounds(){
+		return simulation.getBounds();
 	}
 }

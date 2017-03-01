@@ -5,6 +5,7 @@ import java.util.List;
 import exceptions.NonsensicalArgumentException;
 import instruction.Instruction;
 import instruction.InstructionData;
+import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import util.MathUtility;
 import util.PointPolar;
@@ -29,10 +30,11 @@ public abstract class TurtleCommand extends Instruction {
 	protected void moveNewLocation(Point2D newLocation) { // TODO ask Jimmy
 															// about PageView
 															// syntax
-		if (MathUtility.doubleLessThan(newLocation.getX(), 0.0) 
-				|| MathUtility.doubleLessThan(newLocation.getY(), 0.0)
-				|| MathUtility.doubleGreaterThan(newLocation.getX(), PageView.WIDTH)
-				|| MathUtility.doubleGreaterThan(newLocation.getY(), PageView.HEIGHT)) {
+		Bounds bounds = getInstructionData().getSimulationBounds();
+		if (MathUtility.doubleLessThan(newLocation.getX(), bounds.getMinX()) 
+				|| MathUtility.doubleLessThan(newLocation.getY(), bounds.getMinY())
+				|| MathUtility.doubleGreaterThan(newLocation.getX(), bounds.getMaxX())
+				|| MathUtility.doubleGreaterThan(newLocation.getY(), bounds.getMaxY())) {
 			throw new NonsensicalArgumentException(RESOURCE_BOUNDS_NAME);
 		}
 		getActiveActor().setLocation(newLocation);

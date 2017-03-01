@@ -3,6 +3,7 @@ package instruction.BooleanOperations;
 import java.util.List;
 
 import instruction.InstructionData;
+import util.MathUtility;
 
 public class Less extends BooleanOperation{
 	
@@ -12,7 +13,7 @@ public class Less extends BooleanOperation{
 	
 	@Override
 	public double execute() {
-		return (getArgumentDouble(0) < getArgumentDouble(1)) ? 1 : 0;
+		return MathUtility.doubleLessThan(getArgumentDouble(0), getArgumentDouble(1)) ? 1 : 0;
 	}
 
 }
