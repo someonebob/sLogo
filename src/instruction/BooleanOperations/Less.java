@@ -1,17 +1,19 @@
 package instruction.BooleanOperations;
 
+import java.util.List;
+
 import instruction.InstructionData;
-import interpreter.InstructionNode;
+import util.MathUtility;
 
 public class Less extends BooleanOperation{
 	
-	public Less(InstructionData data, InstructionNode node){
-		super(data, node);
+	public Less(InstructionData data,  List<String> args){
+		super(data, args);
 	}
 	
 	@Override
 	public double execute() {
-		return (getArgumentDouble(0) < getArgumentDouble(1)) ? 1 : 0;
+		return MathUtility.doubleLessThan(getArgumentDouble(0), getArgumentDouble(1)) ? 1 : 0;
 	}
 
 }
