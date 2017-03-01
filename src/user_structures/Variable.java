@@ -1,15 +1,21 @@
-package models;
+package user_structures;
 
 import javafx.beans.property.*;
 
 /**
  * Variable that holds String and double value
  * @author Jesse
+ * @author maddiebriere
  *
  */
 public class Variable {
 	private StringProperty name;
 	private DoubleProperty value;
+	
+	public Variable(String name, double value){
+		setName(name);
+		setValue(value);
+	}
 	
 	public StringProperty nameProperty(){
 		if(name == null){
