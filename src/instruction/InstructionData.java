@@ -55,15 +55,6 @@ public class InstructionData {
 	}
 
 	/**
-	 * Returns the ImageView used for Turtles in the current simulation
-	 * 
-	 * @return
-	 */
-	public ImageView getTurtleImage(){
-		return simulation.getActiveActor().getTurtleImage();
-	}
-
-	/**
 	 * Sets the List of Actors in the current simulation to actorList
 	 * 
 	 * @param actorList
@@ -82,18 +73,6 @@ public class InstructionData {
 	 */
 	public void setColor(Color color){
 		simulation.setColor(color);
-	}
-
-	/**
-	 * Sets the ImageView used to display turtles to imageView. Note that the
-	 * implementation of this method not only updates the associated variable in
-	 * this class, but also modifies the associated variable in Simulation and
-	 * updates it.
-	 * 
-	 * @param imageView
-	 */
-	public void setTurtleImage(ImageView imageView){
-		simulation.getActiveActor().setTurtleImage(imageView);
 	}
 	
 	public Bounds getSimulationBounds(){
