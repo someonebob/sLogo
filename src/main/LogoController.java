@@ -5,25 +5,28 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import com.sun.org.apache.xpath.internal.operations.Variable;
 
 import instruction.InstructionData;
 import interpreter.Interpreter;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableMap;
+import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import tool.AbstractButton;
 import tool.FileTool;
+import tool.FileTool.OpenButton;
 import tool.HelpTool;
 import tool.SelectionBar;
 import tool.SettingsTool;
-import tool.FileTool.OpenButton;
-import user_structures.Function;
-import user_structures.Variable;
 import view.InputBox;
 import view.PageView;
 import view.SavedCommandsView;
@@ -61,16 +64,16 @@ public class LogoController implements Observer
 		initiateViews();
 		addTools();
 		initiateObservers();
-		
+
 		List<Variable> varList = new ArrayList<>();
 		variables = FXCollections.observableList(varList);
-		
+
 		List<Function> funcList = new ArrayList<>();
 		functions = FXCollections.observableList(funcList);
-		
+
 		workspace.setItems(variables);
-		//TODO: Add functions to the workspace
-		
+		// TODO: Add functions to the workspace
+
 		this.stage = stage;
 		stage.setTitle("SLogo");
 		stage.show();
@@ -100,7 +103,7 @@ public class LogoController implements Observer
 
 	private void executeCommand()
 	{
-		
+
 		String input = inputBox.getField().getText();
 
 		if (input != null) {
@@ -108,9 +111,8 @@ public class LogoController implements Observer
 
 			// Do if command is valid
 			inputBox.updateData(input);
-				//Do if a variable is created
-				//workspace.setItems(variables);
-				
+			// Do if a variable is created
+			// workspace.setItems(variables);
 
 		}
 
@@ -170,36 +172,36 @@ public class LogoController implements Observer
 		for (AbstractButton ab : settings.getButtons()) {
 			ab.addObserver(simulation);
 		}
-		
-		
+
 	}
 
 	@Override
-	public void update(Observable o, Object arg) {
+	public void update(Observable o, Object arg)
+	{
 		// TODO Auto-generated method stub
 		if (o instanceof OpenButton) {
 			openFile((File) arg);
 		}
 	}
-	
+
 	private void openFile(File file)
 	{
 		FileReader fr = null;
 		StringBuilder command = new StringBuilder();
 		String line = null;
-		try{
+		try {
 			fr = new FileReader(file);
 			BufferedReader reader = new BufferedReader(fr);
-			while((line = reader.readLine()) != null){
-				command.append(line +"\n");
+			while ((line = reader.readLine()) != null) {
+				command.append(line + "\n");
 			}
-			
+
 			runCommand(command.toString());
 			fr.close();
-			
-		}catch(FileNotFoundException e){
+
+		} catch (FileNotFoundException e) {
 			System.out.println("Unable to open file");
-		}catch(IOException e){
+		} catch (IOException e) {
 			Logger.getLogger(InputBox.class.getName()).log(Level.SEVERE, null, e);
 		}
 	}
