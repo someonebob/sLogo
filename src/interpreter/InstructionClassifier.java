@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Map.Entry;
 import java.util.regex.Pattern;
 
+import exceptions.InvalidCommandException;
+import exceptions.SyntaxException;
 import instruction.*;
 import util.ResourceToList;
 
@@ -67,6 +69,26 @@ public class InstructionClassifier {
     }
     
     /**
+     * Find any fit with the current String, of type:
+     * 1) Command
+     * 2) Function
+     * 3) Variables
+     * @param text String text to search for
+     * @param data InstructionData object holding functions and variables known to workspace
+     * @return String key for variable, function or command in question.
+     */
+    public String findAnyKey(String comm, InstructionData data){
+    	String classification = findShortcutKey(comm);
+		if(classification.equals("NO MATCH")){ //Break out if the command isn't an option
+			classification = classifyFunction(classification, data);
+		}
+		if(classification.equals("NO MATCH")){
+			classification = classifyVariable(classification, data);
+		}
+		return classification;
+    }
+    
+    /**
      * Classify an instruction as a specific instruction type (e.g., forward)
      * @param text String to be parsed
      * @return correct command
@@ -124,7 +146,24 @@ public class InstructionClassifier {
     private boolean match (String text, String regex) {
         return text.equals(regex);
     }
-
+    
+    
+   private String classifyFunction(String comm, InstructionData data){
+	   if(data.containsFunction(comm)!=null){
+		   return "Instruction";
+	   }
+	   else
+		   return "NO MATCH";
+   }
+   
+   private String classifyVariable(String comm, InstructionData data){
+	   if(data.containsVariable(comm)!=null){
+		   return "Constant";
+	   }
+	   else
+		   return "NO MATCH";
+   }
+   
 	/**
 	 * Main avenue of reflection
 	 * 
@@ -136,26 +175,32 @@ public class InstructionClassifier {
 	 */
 	public Instruction generateInstruction(String comm, InstructionData  data, List<String> args) {
 		
-		//TODO: Complete and figure out instruction address problem
-		//Piazza question
-		Class<?> clazz;
+		String classification = findShortcutKey(comm);
+		String classPath;
+		if(classification.equals("NO MATCH")){ //Break out if the command isn't an option
+			classification = classifyFunction(classification, data);
+		}
+		if(classification.equals("NO MATCH")){
+			classification = classifyVariable(classification, data);
+			comm = "" + data.getVariableValue(comm);
+		}
+		classPath = findAddressKey(classification);
+		return buildObject(classPath, comm, data, args);
+	}
+	
+	private Instruction buildObject(String classPath, String comm, InstructionData data, List<String> args){
 		Instruction instruction = null;
+		Class<?> clazz;
 		Object instructionHopeful = new Object();
 		
-		String classification = findShortcutKey(comm);
-		if(classification.equals("NO MATCH")){ //Break out if the command isn't an option
-			//TODO: Error handling of mismatch
-			return null;
-		}
 		try {
-			String classPath = findAddressKey(classification);
+			
 			clazz = Class.forName(classPath);
 			Constructor<?> ctor = clazz.getDeclaredConstructor(InstructionData.class, List.class, String.class);
 			instructionHopeful = ctor.newInstance(data, args, comm);
 		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
 			// TODO Handle error --> non-valid class
-		} // This is probably wrong
-		catch (NoSuchMethodException e) {
+		} catch (NoSuchMethodException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SecurityException e) {

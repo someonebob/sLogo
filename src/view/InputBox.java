@@ -16,7 +16,6 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
-import tool.FileTool.OpenButton;
 import tool.FileTool.SaveButton;
 
 /**
@@ -80,15 +79,14 @@ public class InputBox implements View
 		if (o instanceof SaveButton) {
 			saveFile((File) arg);
 		}
-		if (o instanceof OpenButton) {
-			openFile((File) arg);
-		}
+		
 	}
 
 	@Override
 	public void updateData(String arg)
 	{
 		Label current = new Label(arg);
+		previous.add(arg);
 		current.setOnMouseClicked(e -> clickedCommands.add(current.getText()));
 		inputs.getChildren().add(current);
 	}
@@ -106,6 +104,8 @@ public class InputBox implements View
 
 		console = new TextField();
 		console.setPromptText("Enter your code here...");
+		console.setFocusTraversable(false);
+		
 		inputBox.setCenter(scroll);
 		inputBox.setBottom(console);
 
@@ -123,11 +123,6 @@ public class InputBox implements View
 		} catch (IOException e) {
 			Logger.getLogger(InputBox.class.getName()).log(Level.SEVERE, null, e);
 		}
-	}
-
-	private void openFile(File file)
-	{
-
 	}
 
 	public Stack<String> getClickedCommands()

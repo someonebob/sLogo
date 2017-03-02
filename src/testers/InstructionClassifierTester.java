@@ -67,7 +67,7 @@ public class InstructionClassifierTester {
 	
 	private static String[] generateExampleInput(){
 		String[] examples = {
-	            "",
+	            "make",
 	            "# foo",
 	            "foo #",
 	            "#",

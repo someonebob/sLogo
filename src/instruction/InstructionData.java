@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import javafx.geometry.Bounds;
+import user_structures.Function;
+import user_structures.Variable;
 import view.ActorView;
 import view.SimulationView;
 
@@ -14,20 +16,25 @@ import view.SimulationView;
  * and headings.
  * 
  * @author Matthew Barbano
+ * @author maddiebriere
  *
  */
 public class InstructionData
 {
 	SimulationView simulation;
+	List<Variable> variables;
+	List<Function> functions;
 
 	public InstructionData()
 	{
 		// TODO: Implement default constructor
 	}
 
-	public InstructionData(SimulationView simulation)
-	{ // Add VariablePage here too
+	public InstructionData(SimulationView simulation, List<Variable> variables, List<Function> functions)
+	{ 
 		this.simulation = simulation;
+		this.variables = variables;
+		this.functions = functions;
 	}
 
 	public ActorView getActiveActor()
@@ -48,5 +55,71 @@ public class InstructionData
 	public Bounds getSimulationBounds()
 	{
 		return simulation.getBounds();
+	}
+	
+	public List<Variable> getVariables(){
+		return variables;
+	}
+	
+	public List<Function> getFunctions(){
+		return functions;
+	}
+	
+	/**
+	 * Checks if the current workspace contains a variable of the 
+	 * name given and returns that variable if it does
+	 * 
+	 * @param variableName The potential variable name
+	 * @return Variable matching to the current name, otherwise null
+	 */
+	public Variable containsVariable(String variableName){
+		for(Variable v: variables){
+			if(v.getName().equals(variableName)){
+				return v;
+			}
+		}
+		return null;
+	}
+	
+	/**
+	 * Checks if the current workspace contains a function of the 
+	 * name given and returns that function if it does
+	 * 
+	 * @param functionName The potential function name
+	 * @return Function matching to the current name, otherwise null
+	 */
+	public Function containsFunction(String functionName){
+		for(Function f:functions){
+			if(f.getName().equals(functionName)){
+				return f;
+			}
+		}
+		return null;
+	}
+	
+	public double getVariableValue(String variableName){
+		for(Variable v: variables){
+			if(v.getName().equals(variableName)){
+				return v.getValue();
+			}
+		}
+		return 0;
+	}
+	
+	public String getFunctionValue(String functionName){
+		for(Function f:functions){
+			if(f.getName().equals(functionName)){
+				return f.getCommands();
+			}
+		}
+		return null;
+	}
+	
+	public void addVariable(Variable v){
+		variables.add(v);
+	}
+	
+	public void addFunction(Function f){
+		functions.add(f);
 	}
 }
