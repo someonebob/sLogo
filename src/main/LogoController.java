@@ -26,8 +26,8 @@ import tool.FileTool.OpenButton;
 import tool.HelpTool;
 import tool.SelectionBar;
 import tool.SettingsTool;
-import user_structures.Function;
-import user_structures.Variable;
+import user_structures.FunctionData;
+import user_structures.VariableData;
 import view.InputBox;
 import view.PageView;
 import view.SavedCommandsView;
@@ -53,8 +53,8 @@ public class LogoController implements Observer
 	private Stage stage;
 	private BorderPane pane;
 	private Interpreter interpret;
-	private ObservableList<Variable> variables;
-	private ObservableList<Function> functions;
+	private ObservableList<VariableData> variables;
+	private ObservableList<FunctionData> functions;
 
 	private FileTool file;
 	private SettingsTool settings;
@@ -66,10 +66,10 @@ public class LogoController implements Observer
 		addTools();
 		initiateObservers();
 
-		List<Variable> varList = new ArrayList<>();
+		List<VariableData> varList = new ArrayList<>();
 		variables = FXCollections.observableList(varList);
 
-		List<Function> funcList = new ArrayList<>();
+		List<FunctionData> funcList = new ArrayList<>();
 		functions = FXCollections.observableList(funcList);
 
 		workspace.setItems(variables);

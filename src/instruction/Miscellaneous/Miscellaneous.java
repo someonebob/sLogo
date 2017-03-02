@@ -5,7 +5,7 @@ import java.util.List;
 import instruction.Instruction;
 import instruction.InstructionData;
 import interpreter.Interpreter;
-import user_structures.Variable;
+import user_structures.VariableData;
 import util.MathUtil;
 
 public abstract class Miscellaneous extends Instruction {
@@ -27,7 +27,7 @@ public abstract class Miscellaneous extends Instruction {
 	 * @param increment
 	 * @return
 	 */
-	protected double iterateThroughLoop(Variable counter, double limit, double increment){
+	protected double iterateThroughLoop(VariableData counter, double limit, double increment){
 		double lastReturnedValue = 0.0;
 		while(MathUtil.doubleLessThanEquals(counter.getValue(), limit)){
 			lastReturnedValue = runListCommands(1);
@@ -36,10 +36,10 @@ public abstract class Miscellaneous extends Instruction {
 		return lastReturnedValue;
 	}
 	
-	protected Variable initializeVariable(String name, double value){
-		Variable variable = getInstructionData().containsVariable(name);
+	protected VariableData initializeVariable(String name, double value){
+		VariableData variable = getInstructionData().containsVariable(name);
 		if(variable == null){
-			variable = new Variable(name, value);
+			variable = new VariableData(name, value);
 			getInstructionData().getVariables().add(variable);
 		}
 		else{

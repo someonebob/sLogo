@@ -3,7 +3,7 @@ package instruction.Miscellaneous;
 import java.util.List;
 
 import instruction.InstructionData;
-import user_structures.Variable;
+import user_structures.VariableData;
 
 public class Repeat extends Miscellaneous {
 	private static final String COUNTER_NAME = "repcount";
@@ -14,7 +14,7 @@ public class Repeat extends Miscellaneous {
 
 	@Override
 	public double execute(){
-		Variable repcount = initializeVariable(COUNTER_NAME, 1.0);
+		VariableData repcount = initializeVariable(COUNTER_NAME, 1.0);
 		return iterateThroughLoop(repcount, getArgumentDouble(0), 1.0);
 	}
 }

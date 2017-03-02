@@ -29,6 +29,7 @@ public final class ResourceToListUtil {
 	}
 	
 	public static int getNumericalTerm(String resource, String key){
+
 		ResourceBundle resources = ResourceBundle.getBundle(resource);
 		Object target;
 		try{

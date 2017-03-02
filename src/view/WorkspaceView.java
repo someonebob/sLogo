@@ -9,7 +9,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
-import user_structures.Variable;
+import user_structures.VariableData;
 
 /**
  * Workspace that stores all the variables
@@ -20,9 +20,9 @@ import user_structures.Variable;
 public class WorkspaceView implements PageView
 {
 	private BorderPane pane;
-	private TableView<Variable> table;
-	private TableColumn<Variable, String> variables;
-	private TableColumn<Variable, Double> values;
+	private TableView<VariableData> table;
+	private TableColumn<VariableData, String> variables;
+	private TableColumn<VariableData, Double> values;
 	private Button edit;
 
 	public WorkspaceView()
@@ -52,7 +52,7 @@ public class WorkspaceView implements PageView
 
 	}
 
-	public void setItems(ObservableList<Variable> data)
+	public void setItems(ObservableList<VariableData> data)
 	{
 		table.setItems(data);
 	}
@@ -82,7 +82,7 @@ public class WorkspaceView implements PageView
 	private void buttonAction()
 	{
 		if (table.getSelectionModel().getSelectedItem() != null) {
-			Variable variable = table.getSelectionModel().getSelectedItem();
+			VariableData variable = table.getSelectionModel().getSelectedItem();
 			VariableEditor editor = new VariableEditor(variable);
 			table.getItems().set(table.getSelectionModel().getSelectedIndex(), editor.getChangedVariable());
 		}

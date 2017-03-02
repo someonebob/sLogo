@@ -48,7 +48,7 @@ public class InstructionClassifierTester {
  
         for (String s : text) {
             if (s.trim().length() > 0) {
-            	String shorty = classifier.findShortcutKey(s);
+            	String shorty ="";// = classifier.findShortcutKey(s);
                 System.out.println(String.format("%s : %s", s, shorty));
                 System.out.println(String.format("%s : %s", shorty, classifier.findAddressKey(shorty)));
                	Instruction generated = classifier.generateInstruction(s,null,null);

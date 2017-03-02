@@ -4,7 +4,7 @@ import java.util.List;
 
 import instruction.InstructionData;
 import interpreter.InstructionSplitter;
-import user_structures.Function;
+import user_structures.FunctionData;
 
 /**
  * 
@@ -25,7 +25,10 @@ public class MakeUserInstruction extends Miscellaneous {
 	public double execute() {
 		// TODO Auto-generated method stub
 		List <String> args = InstructionSplitter.getInstructionStrings(getArgumentString(1));
-		Function function = new Function(getArgumentString(0), getArgumentString(2), args);
+		for(int i=0; i< args.size(); i++){
+			args.set(i, args.get(i).substring(1));
+		}
+		FunctionData function = new FunctionData(getArgumentString(0), getArgumentString(2), args);
 		getInstructionData().addFunction(function);
 
 		
