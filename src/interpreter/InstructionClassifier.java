@@ -1,17 +1,12 @@
 package interpreter;
-
 import java.util.List;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Map.Entry;
 import java.util.regex.Pattern;
-
-import exceptions.InvalidCommandException;
-import exceptions.SyntaxException;
 import instruction.*;
 import util.ResourceToList;
-
 /**
  * This class performs the reflection necessary to produce instances of each
  * command type without direct statement of the desired class type. This class
@@ -19,7 +14,6 @@ import util.ResourceToList;
  * 
  * @author maddiebriere
  */
-
 public class InstructionClassifier {
 	
 	public final String SYNTAX = "resources/languages/Syntax";
@@ -33,7 +27,6 @@ public class InstructionClassifier {
 	private List<Entry<String, Pattern>> mySyntaxList;
 	private List<Entry<String, Pattern>> myLanguageList;
 	private List<Entry<String, Pattern>> myPathsList;
-
 	public InstructionClassifier(String s) {
 		myLanguage = LANGUAGE + s;
 		mySyntax = SYNTAX;
@@ -71,6 +64,7 @@ public class InstructionClassifier {
     /**
      * Find any fit with the current String, of type:
      * 1) Command
+     * 
      * 2) Function
      * 3) Variables
      * @param text String text to search for
@@ -79,11 +73,11 @@ public class InstructionClassifier {
      */
     public String findAnyKey(String comm, InstructionData data){
     	String classification = findShortcutKey(comm);
-		if(classification.equals("NO MATCH")){ //Break out if the command isn't an option
-			classification = classifyFunction(classification, data);
+		if(classification.equals("NO MATCH") || classification.equals("Instruction")){ //Break out if the command isn't an option
+			classification = classifyFunction(comm, data);
 		}
 		if(classification.equals("NO MATCH")){
-			classification = classifyVariable(classification, data);
+			classification = "" + data.getVariableValue(comm);
 		}
 		return classification;
     }
@@ -149,8 +143,13 @@ public class InstructionClassifier {
     
     
    private String classifyFunction(String comm, InstructionData data){
+	   int size = data.getFunctions().size();
+	   System.out.println(size);
+	   if(size!=0){
+		   System.out.println(data.getFunctions().get(0).getName());
+	   }
 	   if(data.containsFunction(comm)!=null){
-		   return "Instruction";
+		   return "UserInstruction";
 	   }
 	   else
 		   return "NO MATCH";
@@ -213,7 +212,6 @@ public class InstructionClassifier {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 		try{
 			instruction = (Instruction) instructionHopeful;
 		}
@@ -222,7 +220,6 @@ public class InstructionClassifier {
 		}
 		return instruction;
 	}
-
 	public void generateTerms() {
 		mySyntaxList = new ArrayList<Entry<String, Pattern>>();
 		myLanguageList = new ArrayList<Entry<String, Pattern>>();
@@ -231,54 +228,40 @@ public class InstructionClassifier {
 		ResourceToList.addTerms(myLanguage, myLanguageList);
 		ResourceToList.addTerms(myPaths, myPathsList);
 	}
-
-
 	public String getMyLanguage() {
 		return myLanguage;
 	}
-
 	public void setMyLanguage(String myLanguage) {
 		this.myLanguage = myLanguage;
 	}
-
 	public String getMySyntax() {
 		return mySyntax;
 	}
-
 	public void setMySyntax(String mySyntax) {
 		this.mySyntax = mySyntax;
 	}
-
 	public List<Entry<String, Pattern>> getMySyntaxList() {
 		return mySyntaxList;
 	}
-
 	public void setMySyntaxList(List<Entry<String, Pattern>> mySyntaxList) {
 		this.mySyntaxList = mySyntaxList;
 	}
-
 	public List<Entry<String, Pattern>> getMyLanguageList() {
 		return myLanguageList;
 	}
-
 	public void setMyLanguageList(List<Entry<String, Pattern>> myLanguageList) {
 		this.myLanguageList = myLanguageList;
 	}
-
 	public String getMyPaths() {
 		return myPaths;
 	}
-
 	public void setMyPaths(String myPaths) {
 		this.myPaths = myPaths;
 	}
-
 	public List<Entry<String, Pattern>> getMyPathsList() {
 		return myPathsList;
 	}
-
 	public void setMyPathsList(List<Entry<String, Pattern>> myPathsList) {
 		this.myPathsList = myPathsList;
 	}
-
 }
