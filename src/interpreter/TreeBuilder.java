@@ -72,7 +72,13 @@ public class TreeBuilder {
 		return headNodes;
 	}
 	
-	
+	/**
+	 * One of the more important method in the backend -- produces a sub-tree from the
+	 * current text by iterating until the head node is satisfied. 
+	 * 
+	 * @return The head node, now linked to the correct child nodes and set with the
+	 * correct values.
+	 */
 	private InstructionNode buildSubTree(){
 		if(getCurrentText().isEmpty()){
 			return null;

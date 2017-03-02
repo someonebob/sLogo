@@ -6,7 +6,9 @@ import instruction.InstructionData;
 import user_structures.VariableData;
 
 /**
- * Instruction for a for statement
+ * Instruction for a for statement, takes two arguments:
+ * 1) The conditions [ variable start end inc]
+ * 2) The commands [ commands ]
  * 
  * @author maddiebriere
  *
