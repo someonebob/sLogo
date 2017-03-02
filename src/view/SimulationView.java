@@ -44,6 +44,11 @@ public class SimulationView implements View
 
 	}
 
+	public void step()
+	{
+		actors.get(this.getCurrentTab()).step();
+	}
+
 	@Override
 	public Node display()
 	{
