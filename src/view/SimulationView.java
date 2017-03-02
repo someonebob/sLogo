@@ -1,6 +1,8 @@
 package view;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Observable;
 
 import javafx.geometry.Bounds;
@@ -14,7 +16,6 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
-import models.Simulation;
 import tool.FileTool.NewButton;
 import tool.FileTool.OpenButton;
 import tool.SettingsTool.BackgroundColorButton;
@@ -27,25 +28,20 @@ import tool.SettingsTool.TurtleImageButton;
  */
 public class SimulationView implements View
 {
-	private Simulation simulation;
 	private TabPane root;
-	private TurtleView actor;
 	private Background background;
+	private Map<Tab, ActorView> actors;
 
 	public SimulationView()
 	{
 		root = new TabPane();
+		actors = new HashMap<>();
 		newTab();
 	}
 
 	public void addTab()
 	{
 
-	}
-
-	public Simulation getModel()
-	{
-		return simulation;
 	}
 
 	@Override
@@ -56,7 +52,7 @@ public class SimulationView implements View
 
 	public TurtleView getTurtle()
 	{
-		return actor;
+		return (TurtleView) actors.get(this.getCurrentTab());
 	}
 
 	@Override
@@ -84,17 +80,15 @@ public class SimulationView implements View
 
 		if (o instanceof TurtleImageButton) {
 			if (arg instanceof Image) {
-
 				for (Tab t : root.getTabs()) {
 					if (t.isSelected()) {
-						((StackPane) t.getContent()).getChildren().remove(0);
-						ActorView actor = new TurtleView();
-						actor.setImage((Image) arg);
-						((StackPane) t.getContent()).getChildren().add(actor.display());
-						
+						actors.get(this.getCurrentTab()).setImage((Image) arg);
+						((StackPane) this.getCurrentTab().getContent()).getChildren().clear();
+						((StackPane) this.getCurrentTab().getContent()).getChildren().addAll(
+								actors.get(this.getCurrentTab()).getImage(),
+								((TurtleView) actors.get(this.getCurrentTab())).getPen().getCanvas());
 					}
 				}
-				actor.setImage((Image) arg);
 			}
 		}
 	}
@@ -116,7 +110,7 @@ public class SimulationView implements View
 		Tab newTab = new Tab();
 		StackPane layout = new StackPane();
 
-		actor = new TurtleView();
+		TurtleView actor = new TurtleView();
 		layout.setBackground(new Background(new BackgroundFill(Color.WHITE, null, null)));
 		newTab.setText("new tab");
 		newTab.setContent(layout);
@@ -127,11 +121,22 @@ public class SimulationView implements View
 		actor.getPen().getCanvas().widthProperty().bind(layout.widthProperty());
 		actor.getPen().getCanvas().heightProperty().bind(layout.heightProperty());
 
+		actors.put(newTab, actor);
 	}
 
 	public void move(Point2D deltaLocation)
 	{
-		actor.move(deltaLocation);
+		actors.get(getCurrentTab()).move(deltaLocation);
+	}
+
+	public Tab getCurrentTab()
+	{
+		for (Tab t : root.getTabs()) {
+			if (t.isSelected()) {
+				return t;
+			}
+		}
+		return null;
 	}
 
 	private void openFile(File file)
