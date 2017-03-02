@@ -23,8 +23,7 @@ public class For extends Miscellaneous {
 	@Override
 	public double execute() {
 		String[] args = getArgumentString(0).split(" ");
-		Variable counter = new Variable(args[0], Integer.parseInt(args[1]));
-		getInstructionData().addVariable(counter);
+		Variable counter = initializeVariable(args[0], Double.parseDouble(args[1]));
 		return iterateThroughLoop(counter, Double.parseDouble(args[2]), Double.parseDouble(args[3]));
 	}
 }

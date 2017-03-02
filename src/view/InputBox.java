@@ -51,8 +51,9 @@ public class InputBox implements View
 	{
 		return input;
 	}
-	
-	public TextField getField(){
+
+	public TextField getField()
+	{
 		return console;
 	}
 
@@ -111,7 +112,6 @@ public class InputBox implements View
 		previous = new ArrayList<>();
 		clickedCommands = new Stack<>();
 	}
-
 
 	private void saveFile(File file)
 	{

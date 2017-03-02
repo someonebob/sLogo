@@ -4,49 +4,65 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javafx.beans.property.*;
+import java.util.List;
+
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 
 /**
- * A user-defined function that holds a name, and
- * a String representing the block of code
- * stored in this function
+ * A user-defined function that holds a name, and a String representing the
+ * block of code stored in this function
  * 
  * @author maddiebriere
  *
  */
-public class Function {
+public class Function
+{
 	private StringProperty name;
 	private StringProperty commands;
 	private List<String> args; 
 	
 	public Function(String name, String commands, List<String> args){
+
 		setName(name);
 		setCommands(commands);
 		setArgs(args);
 	}
-	
-	public StringProperty nameProperty(){
-		if(name == null){
+
+	public StringProperty nameProperty()
+	{
+		if (name == null) {
 			name = new SimpleStringProperty(this, "variable");
 		}
 		return name;
 	}
-	public void setName(String value){
+
+	public void setName(String value)
+	{
 		nameProperty().set(value);
 	}
-	public String getName(){
+
+	public String getName()
+	{
 		return nameProperty().get();
 	}
-	
-	public StringProperty commandsProperty(){
-		if(commands == null){
+
+	public StringProperty commandsProperty()
+	{
+		if (commands == null) {
 			commands = new SimpleStringProperty("");
 		}
 		return commands;
 	}
-	public void setCommands(String commands){
+
+	public void setCommands(String commands)
+	{
 		commandsProperty().set(commands);
 	}
-	public String getCommands(){
+
+	public String getCommands()
+	{
 		return commandsProperty().get();
 	}
 	

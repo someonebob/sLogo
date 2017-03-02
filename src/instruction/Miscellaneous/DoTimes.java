@@ -27,8 +27,7 @@ public class DoTimes extends Miscellaneous {
 	@Override
 	public double execute() {
 		String[] args = getArgumentString(0).split(" ");
-		Variable counter = new Variable(args[0], 1.0);
-		getInstructionData().addVariable(counter);
+		Variable counter = initializeVariable(args[0], Double.parseDouble(args[1]));
 		return iterateThroughLoop(counter, Double.parseDouble(args[1]), 1.0);
 	}
 
