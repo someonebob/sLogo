@@ -96,4 +96,30 @@ public class InstructionData
 		}
 		return null;
 	}
+	
+	public double getVariableValue(String variableName){
+		for(Variable v: variables){
+			if(v.getName().equals(variableName)){
+				return v.getValue();
+			}
+		}
+		return 0;
+	}
+	
+	public String getFunctionValue(String functionName){
+		for(Function f:functions){
+			if(f.getName().equals(functionName)){
+				return f.getCommands();
+			}
+		}
+		return null;
+	}
+	
+	public void addVariable(Variable v){
+		variables.add(v);
+	}
+	
+	public void addFunction(Function f){
+		functions.add(f);
+	}
 }

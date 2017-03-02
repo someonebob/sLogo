@@ -3,6 +3,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import instruction.InstructionData;
 import util.ArgumentReader;
 import util.Pair;
 /**
@@ -22,8 +24,9 @@ public class TreeBuilder {
 	private InstructionClassifier classifier;
 	private List <InstructionNode> nodes;
 	private Set<Pair> myBrackets;
+	private InstructionData data;
 	
-	public TreeBuilder(String text, InstructionClassifier c){
+	public TreeBuilder(String text, InstructionClassifier c, InstructionData d){
 		currentText = text;
 		classifier = c;
 		if(!(text.isEmpty())&& !(c == null))
@@ -31,6 +34,7 @@ public class TreeBuilder {
 		else
 			nodes = new ArrayList<InstructionNode>();
 		populateBrackets();
+		data=d;
 	}
 	
 	private void populateBrackets(){
@@ -52,9 +56,11 @@ public class TreeBuilder {
 		if(getClassifier() == null){
 			//TODO: Error check
 		}
+		
 		if(getCurrentText().isEmpty()){
 			return new ArrayList<InstructionNode>();
 		}
+		
 		ArrayList<InstructionNode> headNodes = new ArrayList<InstructionNode>();
 		/**
 		 * While there is still text left, continue to iterate through tree and build new node
@@ -68,7 +74,6 @@ public class TreeBuilder {
 	
 	
 	private InstructionNode buildSubTree(){
-		//TODO: Fix current text bug
 		if(getCurrentText().isEmpty()){
 			return null;
 		}
@@ -77,11 +82,14 @@ public class TreeBuilder {
 		String value = InstructionSplitter.getInstructionStrings(getCurrentText()).get(0);
 		head.setMyValue(value);
 		setCurrentText(InstructionSplitter.removeFirstItem(getCurrentText()));//remove node from current text
-		String classification = classifier.findShortcutKey(value);
+		String classification = classifier.findAnyKey(value, data);
 		Pair brackets = getBrackets(classification);
 		
 		if(brackets==null){
-			int numArgs = ArgumentReader.getNumArgs(classifier.findShortcutKey(value));
+			int numArgs = 0; // default
+			if(!classification.equals("NO MATCH")){
+				numArgs = ArgumentReader.getNumArgs(classification);
+			}
 			for(int i=0; i<numArgs; i++){
 				head.getMyChildren().add(buildSubTree());
 			}
@@ -114,4 +122,14 @@ public class TreeBuilder {
 	public void setClassifier(InstructionClassifier classifier) {
 		this.classifier = classifier;
 	}
+
+	public InstructionData getData() {
+		return data;
+	}
+
+	public void setData(InstructionData data) {
+		this.data = data;
+	}
+	
+	
 }

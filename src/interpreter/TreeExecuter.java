@@ -38,7 +38,7 @@ public class TreeExecuter
 	 * @param head
 	 *            Head node of Instruction tree
 	 */
-	public void execute(InstructionNode head)
+	public double execute(InstructionNode head)
 	{
 		ArrayList<String> args = new ArrayList<String>();
 		for (InstructionNode child : head.getMyChildren()) {
@@ -48,8 +48,21 @@ public class TreeExecuter
 			args.add(child.getMyRunValue());
 			
 		}
-		Instruction i = myClass.generateInstruction(head.getMyValue(), myData, args);
-		head.setMyRunValue(""+i.execute()); //Will change with list, for now, just tacks on result
+		if(!myClass.findAnyKey(head.getMyValue(), myData).equals("NO MATCH")){
+			//TODO: ERROR CATCHING
+			Instruction i = myClass.generateInstruction(head.getMyValue(), myData, args);
+			head.setMyRunValue(""+i.execute()); //Will change with list, for now, just tacks on result
+		}
+		else{
+			head.setMyRunValue(head.getMyValue());
+		}
+		
+		try{
+			return Double.parseDouble(head.getMyRunValue());
+		}
+		catch(NumberFormatException e){
+			return 0.0;
+		}
 	}
 
 
