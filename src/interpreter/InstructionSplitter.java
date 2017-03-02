@@ -2,6 +2,8 @@ package interpreter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
+import instruction.InstructionData;
 /**
  * Purely a utility class, used for purposes of splitting an input line and
  * returning strings or Instructions from input
@@ -26,11 +28,11 @@ public class InstructionSplitter {
 	 *            (reflection)
 	 * @return List of InstructionNodes corresponding to the instructions input
 	 */
-	public static List<InstructionNode> getInstructions(String toParse, InstructionClassifier classifier) {
+	public static List<InstructionNode> getInstructions(String toParse, InstructionClassifier classifier, InstructionData data) {
 		ArrayList<InstructionNode> toRet = new ArrayList<InstructionNode>();
 		List<String> commands = getInstructionStrings(toParse);
 		for (String name : commands) {
-			String type = classifier.findShortcutKey(name);
+			String type = classifier.findShortcutKey(name, data);
 			toRet.add(new InstructionNode(type,name));
 		}
 		return toRet;
