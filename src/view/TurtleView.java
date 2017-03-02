@@ -29,8 +29,7 @@ public class TurtleView extends ActorView
 	@Override
 	public void move(Point2D newLocation)
 	{
+		pen.move(this.getActor().getLocation(), newLocation);
 		super.move(newLocation);
-		pen.move(newLocation);
 	}
-
 }
