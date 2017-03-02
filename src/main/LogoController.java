@@ -26,6 +26,7 @@ import tool.FileTool.OpenButton;
 import tool.HelpTool;
 import tool.SelectionBar;
 import tool.SettingsTool;
+import tool.SettingsTool.LanguageButton;
 import user_structures.FunctionData;
 import user_structures.VariableData;
 import view.InputBox;
@@ -55,6 +56,7 @@ public class LogoController implements Observer
 	private Interpreter interpret;
 	private ObservableList<VariableData> variables;
 	private ObservableList<FunctionData> functions;
+	private String language;
 
 	private FileTool file;
 	private SettingsTool settings;
@@ -65,6 +67,8 @@ public class LogoController implements Observer
 		initiateViews();
 		addTools();
 		initiateObservers();
+		
+		language = "English";
 
 		List<VariableData> varList = new ArrayList<>();
 		variables = FXCollections.observableList(varList);
@@ -129,7 +133,7 @@ public class LogoController implements Observer
 		InstructionData data = new InstructionData(simulation, variables, functions);
 		// TODO: make function to get language
 		try{
-		interpret = new Interpreter(data, "English");
+		interpret = new Interpreter(data, language);
 		interpret.parseAndRun(command);
 		}
 		catch(SLogoException exception){
@@ -175,6 +179,7 @@ public class LogoController implements Observer
 
 		for (AbstractButton ab : settings.getButtons()) {
 			ab.addObserver(simulation);
+			ab.addObserver(this);
 		}
 
 	}
@@ -185,6 +190,10 @@ public class LogoController implements Observer
 		// TODO Auto-generated method stub
 		if (o instanceof OpenButton) {
 			openFile((File) arg);
+		}
+		
+		if(o instanceof LanguageButton){
+			language = (String) arg;
 		}
 	}
 

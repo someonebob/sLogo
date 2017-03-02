@@ -89,11 +89,12 @@ public class SettingsTool extends Tool
 		}
 	}
 
-	public class LanguageButton extends AbstractButton
+	public class LanguageButton extends AbstractLanguageButton
 	{
 		public LanguageButton()
 		{
 			super(new MenuItem("Language"));
+
 		}
 	}
 
