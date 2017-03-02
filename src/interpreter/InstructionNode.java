@@ -1,6 +1,8 @@
 package interpreter;
 import java.util.ArrayList;
 import java.util.List;
+
+import exceptions.WrongArgumentNumberException;
 /**
  * This class represents the nodes used in the parsed string tree. This tree
  * will hold the nodes (each representing its own individual word) in an order
@@ -11,11 +13,14 @@ import java.util.List;
  */
 public class InstructionNode {
 	
+	private static final String RESOURCE_ARGUMENTS_NAME = "WrongArgumentNumberMessage";
+	
 	private String myClassification; // The String representing the type (Forward, Equal, Comment)
 	private String myValue; //String command
 	private List<InstructionNode> myChildren;
 	private String myRunValue; //This is used for tree traversal, to check if a command has been excuted already
 	private boolean isExecutable; //Used for list/ group creation
+	private int properNumArgs = -1;
 	
 	public InstructionNode() {
 		this("", "", new ArrayList<InstructionNode>());
@@ -26,7 +31,7 @@ public class InstructionNode {
 	}
 	public InstructionNode(String clss, String value, List<InstructionNode> children) {
 		if (value.isEmpty()) {
-			// TODO: Error checking
+			throw new WrongArgumentNumberException(RESOURCE_ARGUMENTS_NAME);
 		}
 		myClassification = clss;
 		myValue = value;
@@ -130,5 +135,12 @@ public class InstructionNode {
 		
 	}*/
 	
+	public void setProperNumArgs(int properNumber){
+		properNumArgs = properNumber;
+	}
+	
+	public int getProperNumArgs(){
+		return properNumArgs;
+	}
 	
 }

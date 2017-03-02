@@ -100,6 +100,13 @@ public abstract class ActorView implements View
 		actor.setLocation(newLocation);
 	}
 
+	public void moveWithoutDrawing(Point2D newLocation)
+	{
+		image.translateXProperty().set(0);
+		image.translateYProperty().set(0);
+		actor.setLocation(newLocation);
+	}
+
 	public void setHeading(double newHeading)
 	{
 		image.setRotate(newHeading);
