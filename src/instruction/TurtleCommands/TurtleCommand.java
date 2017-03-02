@@ -41,17 +41,13 @@ public abstract class TurtleCommand extends Instruction
 	protected void move(Point2D newLocation)
 	{
 		Bounds bounds = getInstructionData().getSimulationBounds();
-		System.out.println(bounds);
 		if (MathUtil.doubleLessThan(newLocation.getX(), -bounds.getMaxX() / 2)
 				|| MathUtil.doubleLessThan(newLocation.getY(), -bounds.getMaxY() / 2)
 				|| MathUtil.doubleGreaterThan(newLocation.getX(), bounds.getMaxX() / 2)
 				|| MathUtil.doubleGreaterThan(newLocation.getY(), bounds.getMaxY() / 2)) {
 			throw new NonsensicalArgumentException(RESOURCE_BOUNDS_NAME);
 		}
-		System.out.println("ASDFAFSAFD");
-		getActiveActor().move(newLocation); // This method sets this actor's
-											// location field, and handles the
-											// animation
+		getActiveActor().move(newLocation);
 	}
 
 	protected void setHeading(double newHeading)
