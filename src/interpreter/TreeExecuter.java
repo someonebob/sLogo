@@ -41,12 +41,18 @@ public class TreeExecuter
 	public double execute(InstructionNode head)
 	{
 		ArrayList<String> args = new ArrayList<String>();
+		System.out.println(head.getMyValue());
 		for (InstructionNode child : head.getMyChildren()) {
 			if (!child.hasRun()) {
 				execute(child);
 			}
 			args.add(child.getMyRunValue());
 			
+		}
+		
+		//TODO: Make this not terrible & fix bug (sum variables)
+		if(head.getMyClassification().equals("MakeVariable")){
+			args.set(0, head.getMyChildren().get(0).getMyValue());
 		}
 		if(!myClass.findShortcutKey(head.getMyValue(), myData).equals("NO MATCH")){
 			//TODO: ERROR CATCHING

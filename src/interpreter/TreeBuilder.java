@@ -89,23 +89,12 @@ public class TreeBuilder {
 			int numArgs = 0;
 			if(!classification.equals("NO MATCH")){
 				numArgs = ArgumentReader.getNumArgs(classification, data);
-			}
-			if(classification.equals("Variable")){
-				
+				if(numArgs == -1){ //if nothing, be more specific
+					numArgs = ArgumentReader.getNumArgs(value, data);
+				}
+				System.out.println(classification + " " + numArgs);
 			}
 			
-			if(!classification.equals("NO MATCH")){
-				//TODO: Remove assumption of constant default
-				numArgs = ArgumentReader.getNumArgs(classification, data);
-				if(numArgs == -1){
-					try{
-						numArgs = 0;
-						head.setMyValue(data.getVariableValue(value));
-					} catch(Exception e){
-						//TODO: Error handling
-					}
-				}
-			}
 			for(int i=0; i<numArgs; i++){
 				head.getMyChildren().add(buildSubTree());
 			}

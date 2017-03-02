@@ -13,13 +13,13 @@ import javafx.beans.property.StringProperty;
  * @author maddiebriere
  *
  */
-public class Function
+public class FunctionData
 {
 	private StringProperty name;
 	private StringProperty commands;
 	private List<String> args; 
 	
-	public Function(String name, String commands, List<String> args){
+	public FunctionData(String name, String commands, List<String> args){
 
 		setName(name);
 		setCommands(commands);
