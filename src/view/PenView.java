@@ -11,7 +11,6 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.FillRule;
 import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
@@ -24,18 +23,20 @@ import javafx.util.Duration;
  */
 public class PenView implements View
 {
+	public final Color DEFAULT_COLOR = Color.BLACK;
+
 	// private Path myPath;
 	private Canvas canvas;
 	private double thickness;
+	private Color color;
 
 	public PenView()
 	{
 		thickness = 2;
+		color = DEFAULT_COLOR;
 		// myPath = new Path();
 		canvas = new Canvas();
-		canvas.getGraphicsContext2D().setFill(Color.AQUA);
-		MoveTo initialPosition = new MoveTo(0, 0);
-		// myPath.getElements().add(initialPosition);
+		this.setColor(DEFAULT_COLOR);
 	}
 
 	public void move(Point2D currLocation, Point2D newLocation)
@@ -45,9 +46,6 @@ public class PenView implements View
 		LineTo lineTo = new LineTo();
 		lineTo.setX(newLocation.getX());
 		lineTo.setY(newLocation.getY());
-		myPath.setStroke(Color.BLACK);
-		myPath.setStrokeWidth(thickness);
-		myPath.setFillRule(FillRule.EVEN_ODD);
 		myPath.getElements().add(initialPosition);
 		myPath.getElements().add(lineTo);
 
@@ -81,9 +79,7 @@ public class PenView implements View
 					return;
 				}
 				// draw line
-				gc.setStroke(Color.BLUE);
-				gc.setFill(Color.YELLOW);
-				gc.setLineWidth(4);
+				gc.setLineWidth(thickness);
 				gc.strokeLine(oldLocation.getX(), oldLocation.getY(), x + canvas.getWidth() / 2,
 						y + canvas.getHeight() / 2);
 
@@ -94,10 +90,27 @@ public class PenView implements View
 		pathTransition.play();
 	}
 
+	public void setColor(Color color)
+	{
+		canvas.getGraphicsContext2D().setFill(color);
+		canvas.getGraphicsContext2D().setStroke(color);
+		this.color = color;
+	}
+
 	@Override
 	public void update(Observable o, Object arg)
 	{
-		// TODO Auto-generated method stub
+
+	}
+
+	public void penUp()
+	{
+		this.setColor(Color.TRANSPARENT);
+	}
+
+	public void penDown()
+	{
+		this.setColor(color);
 	}
 
 	@Override

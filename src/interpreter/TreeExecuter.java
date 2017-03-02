@@ -65,6 +65,10 @@ public class TreeExecuter
 			
 		}
 		
+		//TODO: Make this not terrible & fix bug (sum variables)
+		if(head.getMyClassification().equals("MakeVariable")){
+			args.set(0, head.getMyChildren().get(0).getMyValue());
+		}
 		if(!myClass.findShortcutKey(head.getMyValue(), myData).equals("NO MATCH")){
 			Instruction i = myClass.generateInstruction(head.getMyValue(), myData, args);
 			head.setMyRunValue(""+i.execute()); //Will change with list, for now, just tacks on result

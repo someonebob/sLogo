@@ -3,7 +3,7 @@ package instruction.Miscellaneous;
 import java.util.List;
 
 import instruction.InstructionData;
-import user_structures.Variable;
+import user_structures.VariableData;
 
 /**
  * Class to perform a certain action
@@ -27,7 +27,7 @@ public class DoTimes extends Miscellaneous {
 	@Override
 	public double execute() {
 		String[] args = getArgumentString(0).split(" ");
-		Variable counter = initializeVariable(args[0], 1.0);
+		VariableData counter = initializeVariable(args[0], 1.0);
 		return iterateThroughLoop(counter, Double.parseDouble(args[1]), 1.0);
 	}
 

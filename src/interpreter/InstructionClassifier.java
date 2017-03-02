@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 
 import exceptions.ReflectionException;
 import instruction.*;
-import util.ResourceToList;
+import util.ResourceToListUtil;
 /**
  * This class performs the reflection necessary to produce instances of each
  * command type without direct statement of the desired class type. This class
@@ -82,11 +82,7 @@ public class InstructionClassifier {
 	  	 if(data.containsFunction(key)!=null){
 	  		   return "UserInstruction";
 	  	 }
-	  	 
-	  	 /**Variable**/
-	  	if(data.containsVariable(key)!=null){
-			   return "Constant";
-	  	}
+
 	  	return ERROR;
     }
 
@@ -140,12 +136,8 @@ public class InstructionClassifier {
 	 * @return Instruction object corresponding to String
 	 */
 	public Instruction generateInstruction(String comm, InstructionData  data, List<String> args) {
-		
 		String classification = findShortcutKey(comm, data);
 		String classPath;
-		if(data.containsVariable(comm)!=null){
-			comm = "" + data.getVariableValue(comm);
-		}
 		classPath = findAddressKey(classification);
 		return buildObject(classPath, comm, data, args);
 	}
@@ -174,9 +166,9 @@ public class InstructionClassifier {
 		mySyntaxList = new ArrayList<Entry<String, Pattern>>();
 		myLanguageList = new ArrayList<Entry<String, Pattern>>();
 		myPathsList = new ArrayList<Entry<String,Pattern>>();
-		ResourceToList.addTerms(mySyntax, mySyntaxList);
-		ResourceToList.addTerms(myLanguage, myLanguageList);
-		ResourceToList.addTerms(myPaths, myPathsList);
+		ResourceToListUtil.addTerms(mySyntax, mySyntaxList);
+		ResourceToListUtil.addTerms(myLanguage, myLanguageList);
+		ResourceToListUtil.addTerms(myPaths, myPathsList);
 	}
 	public String getMyLanguage() {
 		return myLanguage;

@@ -8,11 +8,11 @@ import javafx.beans.property.*;
  * @author maddiebriere
  *
  */
-public class Variable {
+public class VariableData {
 	private StringProperty name;
 	private DoubleProperty value;
 	
-	public Variable(String name, double value){
+	public VariableData(String name, double value){
 		setName(name);
 		setValue(value);
 	}
