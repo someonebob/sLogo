@@ -19,6 +19,7 @@ import javafx.scene.paint.Paint;
 import tool.FileTool.NewButton;
 import tool.FileTool.OpenButton;
 import tool.SettingsTool.BackgroundColorButton;
+import tool.SettingsTool.PenColorButton;
 import tool.SettingsTool.TurtleImageButton;
 
 /**
@@ -90,6 +91,12 @@ public class SimulationView implements View
 						actors.get(this.getCurrentTab()).setImage((Image) arg);
 					}
 				}
+			}
+		}
+
+		if (o instanceof PenColorButton) {
+			if (arg instanceof Color) {
+				((TurtleView) actors.get(this.getCurrentTab())).getPen().setColor((Color) arg);
 			}
 		}
 	}
