@@ -67,7 +67,7 @@ public class LogoController implements Observer
 		initiateViews();
 		addTools();
 		initiateObservers();
-		
+
 		language = "English";
 
 		List<VariableData> varList = new ArrayList<>();
@@ -132,11 +132,11 @@ public class LogoController implements Observer
 	{
 		InstructionData data = new InstructionData(simulation, variables, functions);
 		// TODO: make function to get language
-		try{
-		interpret = new Interpreter(data, language);
-		interpret.parseAndRun(command);
-		}
-		catch(SLogoException exception){
+		try {
+			interpret = new Interpreter(data, language);
+			interpret.parseAndRun(command);
+			simulation.step();
+		} catch (SLogoException exception) {
 			exception.displayAlert();
 		}
 	}
@@ -191,8 +191,8 @@ public class LogoController implements Observer
 		if (o instanceof OpenButton) {
 			openFile((File) arg);
 		}
-		
-		if(o instanceof LanguageButton){
+
+		if (o instanceof LanguageButton) {
 			language = (String) arg;
 		}
 	}

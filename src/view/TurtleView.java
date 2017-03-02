@@ -16,6 +16,13 @@ public class TurtleView extends ActorView
 	}
 
 	@Override
+	public void step()
+	{
+		super.step();
+		this.getPen().step();
+	}
+
+	@Override
 	public Node display()
 	{
 		return this.getImage();

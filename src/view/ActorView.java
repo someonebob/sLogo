@@ -2,9 +2,8 @@ package view;
 
 import java.util.Observable;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
+import javafx.animation.SequentialTransition;
+import javafx.animation.TranslateTransition;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
@@ -27,17 +26,25 @@ public abstract class ActorView implements View
 
 	private Actor actor;
 	private ImageView image;
+	private SequentialTransition actorMove;
 
 	public ActorView(String imageString)
 	{
 		actor = new Actor();
 		image = new ImageView();
+		actorMove = new SequentialTransition();
+		actorMove.setNode(this.getImage());
 		// scale the image
 		image.setFitHeight(ACTOR_HEIGHT);
 		image.setPreserveRatio(true);
 		loadImage(imageString);
 		// start facing up
 		this.setHeading(STARTING_HEADING);
+	}
+
+	public void step()
+	{
+		actorMove.play();
 	}
 
 	@Override
@@ -91,14 +98,17 @@ public abstract class ActorView implements View
 
 	public void move(Point2D newLocation)
 	{
-		final Timeline timeline = new Timeline();
-		timeline.setCycleCount(1);
-		Point2D deltaLocation = newLocation.subtract(this.getActor().getLocation());
-		final KeyValue xkv = new KeyValue(image.translateXProperty(), image.getTranslateX() + deltaLocation.getX());
-		final KeyValue ykv = new KeyValue(image.translateYProperty(), image.getTranslateY() + deltaLocation.getY());
-		final KeyFrame kf = new KeyFrame(Duration.millis(500), xkv, ykv);
-		timeline.getKeyFrames().add(kf);
-		timeline.play();
+		TranslateTransition move = new TranslateTransition(Duration.millis(500));
+		move.setFromX(actor.getLocation().getX());
+		move.setToX(newLocation.getX());
+		move.setFromY(actor.getLocation().getY());
+		move.setToY(newLocation.getY());
+		move.setCycleCount(1);
+		move.setOnFinished(e -> {
+			actorMove.getChildren().remove(move);
+		});
+
+		actorMove.getChildren().add(move);
 		actor.setLocation(newLocation);
 	}
 

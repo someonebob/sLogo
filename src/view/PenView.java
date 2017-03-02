@@ -3,6 +3,7 @@ package view;
 import java.util.Observable;
 
 import javafx.animation.PathTransition;
+import javafx.animation.SequentialTransition;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Point2D;
@@ -30,15 +31,21 @@ public class PenView implements View
 	private double thickness;
 	private Color color;
 	private boolean isUp;
+	private SequentialTransition actorMove;
 
 	public PenView()
 	{
 		isUp = false;
 		thickness = 2;
 		color = DEFAULT_COLOR;
-		// myPath = new Path();
 		canvas = new Canvas();
 		this.setColor(DEFAULT_COLOR);
+		actorMove = new SequentialTransition();
+	}
+
+	public void step()
+	{
+		actorMove.play();
 	}
 
 	public void move(Point2D currLocation, Point2D newLocation)
@@ -89,7 +96,10 @@ public class PenView implements View
 				oldLocation = new Point2D(x + canvas.getWidth() / 2, y + canvas.getHeight() / 2);
 			}
 		});
-		pathTransition.play();
+		actorMove.getChildren().add(pathTransition);
+		pathTransition.setOnFinished(e -> {
+			actorMove.getChildren().remove(pathTransition);
+		});
 	}
 
 	public void setColor(Color color)
