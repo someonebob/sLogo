@@ -10,6 +10,7 @@ import java.util.Stack;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
@@ -51,8 +52,9 @@ public class InputBox implements View
 	{
 		return input;
 	}
-	
-	public TextField getField(){
+
+	public TextField getField()
+	{
 		return console;
 	}
 
@@ -67,7 +69,7 @@ public class InputBox implements View
 	 * @return
 	 */
 	@Override
-	public BorderPane display()
+	public Node display()
 	{
 		return inputBox;
 	}
@@ -110,7 +112,6 @@ public class InputBox implements View
 		previous = new ArrayList<>();
 		clickedCommands = new Stack<>();
 	}
-
 
 	private void saveFile(File file)
 	{

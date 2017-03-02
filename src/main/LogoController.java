@@ -1,10 +1,14 @@
 package main;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import instruction.InstructionData;
 import interpreter.Interpreter;
-import javafx.collections.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableMap;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -51,7 +55,6 @@ public class LogoController
 		initiateObservers();
 		Map<String, Double> map = new HashMap<>();
 		variables = FXCollections.observableMap(map);
-		
 
 		this.stage = stage;
 		stage.setTitle("SLogo");
@@ -89,11 +92,11 @@ public class LogoController
 
 		if (input != null) {
 			runCommand(input);
-			
-			//Do if command is valid
+
+			// Do if command is valid
 			inputBox.updateData(input);
-				//Do if a variable is created
-				workspace.updateData(input);
+			// Do if a variable is created
+			workspace.updateData(input);
 
 		}
 

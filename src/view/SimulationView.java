@@ -52,7 +52,6 @@ public class SimulationView implements View
 	public Node display()
 	{
 		return root;
-
 	}
 
 	public TurtleView getTurtle()
@@ -119,10 +118,27 @@ public class SimulationView implements View
 		layout.setBackground(new Background(new BackgroundFill(Color.WHITE, null, null)));
 		newTab.setText("new tab");
 		newTab.setContent(layout);
-		layout.getChildren().add(actor.display());
-
-		// this.move(new Point2D(100, 100));
 		root.getTabs().add(newTab);
+		layout.getChildren().add(actor.display());
+		layout.getChildren().add(actor.getPen().display());
+
+		actor.getPen().display().layoutXProperty().set(100);
+		actor.getPen().display().layoutYProperty().set(100);
+
+		// StackPane.setAlignment(actor.display(), Pos.BOTTOM_CENTER);
+		// StackPane.setAlignment(actor.getPen().display(), Pos.BOTTOM_CENTER);
+		// AnchorPane.setTopAnchor(actor.display(),
+		// getBounds().getHeight() / 2 -
+		// actor.display().getBoundsInLocal().getWidth() / 2);
+		// AnchorPane.setLeftAnchor(actor.display(),
+		// getBounds().getWidth() / 2 -
+		// actor.display().getBoundsInLocal().getWidth() / 2);
+		// AnchorPane.setTopAnchor(actor.getPen().display(),
+		// getBounds().getHeight() / 2 -
+		// actor.getPen().display().getBoundsInLocal().getWidth() / 2);
+		// AnchorPane.setLeftAnchor(actor.getPen().display(),
+		// getBounds().getWidth() / 2 -
+		// actor.getPen().display().getBoundsInLocal().getWidth() / 2);
 	}
 
 	public void move(Point2D deltaLocation)
