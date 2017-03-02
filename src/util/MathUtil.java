@@ -77,4 +77,13 @@ public final class MathUtil
 	{
 		return Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
 	}
+	
+	public static double angleRelativeXToY(double relativeXAngle){
+		Point2D relativeXVector = polarToRectangular(new PointPolar(1.0, relativeXAngle));
+		double relativeYAngle = relativeXVector.angle(UNIT_Y_VECTOR);
+		if(relativeXVector.getX() < 0.0){
+			relativeYAngle *= -1;
+		}
+		return relativeYAngle;
+	}
 }

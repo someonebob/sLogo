@@ -11,6 +11,7 @@ import util.Pair;
 public class ListTreeBuilder {
 	
 	public static String buildList(Pair brackets, List<InstructionNode> nodes, InstructionNode head, String current){
+
 		String value = "";
 		boolean endHit = false;
 		while(!nodes.isEmpty())
@@ -29,6 +30,7 @@ public class ListTreeBuilder {
 			//TODO: Error handling
 		}
 		head.setMyRunValue(value);
+		nodes.remove(0); //remove final bracket (closing)
 		return current;
 	}
 	
