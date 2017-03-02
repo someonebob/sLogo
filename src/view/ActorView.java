@@ -20,6 +20,9 @@ import models.Actor;
  */
 public abstract class ActorView implements View
 {
+	public static final int ACTOR_HEIGHT = 75;
+	public static final int STARTING_HEADING = -90;
+
 	private Actor actor;
 	private ImageView image;
 
@@ -28,17 +31,16 @@ public abstract class ActorView implements View
 		actor = new Actor();
 		image = new ImageView();
 		// scale the image
-		image.setFitHeight(50);
+		image.setFitHeight(ACTOR_HEIGHT);
 		image.setPreserveRatio(true);
 		loadImage(imageString);
-		// image.setX(actor.getLocation().getX());
-		// image.setY(actor.getLocation().getY());
+		// start facing up
+		this.setHeading(STARTING_HEADING);
 	}
 
 	@Override
 	public Node display()
 	{
-		// TODO Auto-generated method stub
 		return image;
 	}
 
@@ -68,9 +70,10 @@ public abstract class ActorView implements View
 	public void setImage(Image image)
 	{
 		ImageView view = new ImageView(image);
-		view.setFitHeight(50);
+		view.setFitHeight(ACTOR_HEIGHT);
 		view.setPreserveRatio(true);
 		this.image = view;
+		this.setHeading(STARTING_HEADING);
 	}
 
 	public ImageView getImage()
@@ -89,9 +92,6 @@ public abstract class ActorView implements View
 		final Timeline timeline = new Timeline();
 		timeline.setCycleCount(1);
 		Point2D deltaLocation = newLocation.subtract(this.getActor().getLocation());
-		System.out.println(this.getActor().getLocation());
-		System.out.println(newLocation);
-		System.out.println(deltaLocation);
 		final KeyValue xkv = new KeyValue(image.translateXProperty(), image.getTranslateX() + deltaLocation.getX());
 		final KeyValue ykv = new KeyValue(image.translateYProperty(), image.getTranslateY() + deltaLocation.getY());
 		final KeyFrame kf = new KeyFrame(Duration.millis(500), xkv, ykv);
