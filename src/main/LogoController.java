@@ -12,8 +12,6 @@ import java.util.Observer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.sun.org.apache.xpath.internal.operations.Variable;
-
 import instruction.InstructionData;
 import interpreter.Interpreter;
 import javafx.collections.FXCollections;
@@ -27,6 +25,8 @@ import tool.FileTool.OpenButton;
 import tool.HelpTool;
 import tool.SelectionBar;
 import tool.SettingsTool;
+import user_structures.Function;
+import user_structures.Variable;
 import view.InputBox;
 import view.PageView;
 import view.SavedCommandsView;
