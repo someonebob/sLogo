@@ -56,7 +56,13 @@ public class TreeExecuter
 		else{
 			head.setMyRunValue(head.getMyValue());
 		}
-		return Double.parseDouble(head.getMyRunValue());
+		
+		try{
+			return Double.parseDouble(head.getMyRunValue());
+		}
+		catch(NumberFormatException e){
+			return 0.0;
+		}
 	}
 
 
