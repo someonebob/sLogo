@@ -16,6 +16,7 @@ import util.ResourceToList;
  * @author maddiebriere
  */
 public class InstructionClassifier {
+	private final String ERROR = "NO MATCH";
 	
 	public final String SYNTAX = "resources/languages/Syntax";
 	public final String PATHS = "resources/interpreter/JavaSpeak"; //Full class names matched to shortcuts
@@ -45,8 +46,7 @@ public class InstructionClassifier {
      * @param text
      * @return matching Key
      */
-    public String findShortcutKey(String text) {
-        final String ERROR = "NO MATCH";
+    public String findShortcutKey(String text, InstructionData data) {
         /**
          * Default to higher classifiers if only possibility
          */
@@ -56,52 +56,38 @@ public class InstructionClassifier {
             		return e.getKey();
             	}
             	else
-            		return classifyInstructionShortcut(text);
+            		return findLetteredKey(text, data);
             }
         }
         return ERROR;
     }
     
     /**
-     * Find any fit with the current String, of type:
-     * 1) Command
      * 
-     * 2) Function
-     * 3) Variables
-     * @param text String text to search for
-     * @param data InstructionData object holding functions and variables known to workspace
-     * @return String key for variable, function or command in question.
+     * @param key
+     * @param data
+     * @return
      */
-    public String findAnyKey(String comm, InstructionData data){
-    	String classification = findShortcutKey(comm);
-		if(classification.equals("NO MATCH") || classification.equals("Instruction")){ //Break out if the command isn't an option
-			classification = classifyFunction(comm, data);
-		}
-		if(classification.equals("NO MATCH")){
-			classification = "" + data.getVariableValue(comm);
-		}
-		return classification;
+    private String findLetteredKey(String key, InstructionData data){
+    	/**Specific instruction key**/
+    	 for (Entry<String, Pattern> e : myLanguageList) {
+             if (match(key, e.getValue())) {
+                 return e.getKey();
+             }
+         }
+  	   
+    	 /**User instruction**/
+	  	 if(data.containsFunction(key)!=null){
+	  		   return "UserInstruction";
+	  	 }
+	  	 
+	  	 /**Variable**/
+	  	if(data.containsVariable(key)!=null){
+			   return "Constant";
+	  	}
+	  	return ERROR;
     }
-    
-    /**
-     * Classify an instruction as a specific instruction type (e.g., forward)
-     * @param text String to be parsed
-     * @return correct command
-     */
-    public String classifyInstructionShortcut(String text){
-    	final String ERROR = "NO MATCH";
-    	  /**
-         * Check specific options first
-         */
-        for (Entry<String, Pattern> e : myLanguageList) {
-            if (match(text, e.getValue())) {
-                return e.getKey();
-            }
-        }
-        
-        return ERROR;
-    }
-    
+
     
     /**
      * Searches for the specific address (Down to the correct package)
@@ -141,28 +127,6 @@ public class InstructionClassifier {
     private boolean match (String text, String regex) {
         return text.equals(regex);
     }
-    
-    
-   private String classifyFunction(String comm, InstructionData data){
-	   int size = data.getFunctions().size();
-	   System.out.println(size);
-	   if(size!=0){
-		   System.out.println(data.getFunctions().get(0).getName());
-	   }
-	   if(data.containsFunction(comm)!=null){
-		   return "UserInstruction";
-	   }
-	   else
-		   return "NO MATCH";
-   }
-   
-   private String classifyVariable(String comm, InstructionData data){
-	   if(data.containsVariable(comm)!=null){
-		   return "Constant";
-	   }
-	   else
-		   return "NO MATCH";
-   }
    
 	/**
 	 * Main avenue of reflection
@@ -175,13 +139,9 @@ public class InstructionClassifier {
 	 */
 	public Instruction generateInstruction(String comm, InstructionData  data, List<String> args) {
 		
-		String classification = findShortcutKey(comm);
+		String classification = findShortcutKey(comm, data);
 		String classPath;
-		if(classification.equals("NO MATCH")){ //Break out if the command isn't an option
-			classification = classifyFunction(classification, data);
-		}
-		if(classification.equals("NO MATCH")){
-			classification = classifyVariable(classification, data);
+		if(data.containsVariable(comm)!=null){
 			comm = "" + data.getVariableValue(comm);
 		}
 		classPath = findAddressKey(classification);
@@ -194,7 +154,6 @@ public class InstructionClassifier {
 		Object instructionHopeful = new Object();
 		
 		try {
-			
 			clazz = Class.forName(classPath);
 			Constructor<?> ctor = clazz.getDeclaredConstructor(InstructionData.class, List.class, String.class);
 			instructionHopeful = ctor.newInstance(data, args, comm);

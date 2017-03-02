@@ -48,7 +48,7 @@ public class TreeExecuter
 			args.add(child.getMyRunValue());
 			
 		}
-		if(!myClass.findAnyKey(head.getMyValue(), myData).equals("NO MATCH")){
+		if(!myClass.findShortcutKey(head.getMyValue(), myData).equals("NO MATCH")){
 			//TODO: ERROR CATCHING
 			Instruction i = myClass.generateInstruction(head.getMyValue(), myData, args);
 			head.setMyRunValue(""+i.execute()); //Will change with list, for now, just tacks on result
