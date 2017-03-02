@@ -34,6 +34,15 @@ public class TurtleView extends ActorView
 	}
 
 	@Override
+	public void setHeading(double newHeading)
+	{
+		super.setHeading(newHeading);
+		if (pen != null) {
+			pen.waitTransition(200);
+		}
+	}
+
+	@Override
 	public void move(Point2D newLocation)
 	{
 		pen.move(this.getActor().getLocation(), newLocation);

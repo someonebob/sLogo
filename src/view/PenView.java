@@ -2,6 +2,7 @@ package view;
 
 import java.util.Observable;
 
+import javafx.animation.FadeTransition;
 import javafx.animation.PathTransition;
 import javafx.animation.SequentialTransition;
 import javafx.beans.value.ChangeListener;
@@ -15,6 +16,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
+import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
 /**
@@ -46,6 +48,15 @@ public class PenView implements View
 	public void step()
 	{
 		actorMove.play();
+	}
+
+	public void waitTransition(double waitTime)
+	{
+		FadeTransition delayTransition = new FadeTransition(Duration.millis(waitTime), new Rectangle());
+		actorMove.getChildren().add(delayTransition);
+		delayTransition.setOnFinished(e -> {
+			actorMove.getChildren().remove(delayTransition);
+		});
 	}
 
 	public void move(Point2D currLocation, Point2D newLocation)

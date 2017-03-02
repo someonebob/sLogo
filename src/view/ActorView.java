@@ -2,6 +2,7 @@ package view;
 
 import java.util.Observable;
 
+import javafx.animation.RotateTransition;
 import javafx.animation.SequentialTransition;
 import javafx.animation.TranslateTransition;
 import javafx.geometry.Point2D;
@@ -40,6 +41,8 @@ public abstract class ActorView implements View
 		loadImage(imageString);
 		// start facing up
 		this.setHeading(STARTING_HEADING);
+		// initial rotation
+		actorMove.play();
 	}
 
 	public void step()
@@ -121,7 +124,14 @@ public abstract class ActorView implements View
 
 	public void setHeading(double newHeading)
 	{
-		image.setRotate(newHeading);
+		RotateTransition rotate = new RotateTransition(Duration.millis(200));
+		rotate.setFromAngle(this.actor.getHeading());
+		rotate.setToAngle(newHeading);
+		rotate.setCycleCount(1);
+		rotate.setOnFinished(e -> {
+			actorMove.getChildren().remove(rotate);
+		});
+		actorMove.getChildren().add(rotate);
 		actor.setHeading(newHeading);
 	}
 
