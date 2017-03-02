@@ -11,7 +11,8 @@ import java.util.logging.Logger;
 
 import instruction.InstructionData;
 import interpreter.Interpreter;
-import javafx.collections.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableMap;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -104,8 +105,8 @@ public class LogoController implements Observer
 
 		if (input != null) {
 			runCommand(input);
-			
-			//Do if command is valid
+
+			// Do if command is valid
 			inputBox.updateData(input);
 				//Do if a variable is created
 				//workspace.setItems(variables);

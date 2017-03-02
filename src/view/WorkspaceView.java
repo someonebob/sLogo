@@ -13,6 +13,7 @@ import user_structures.Variable;
 
 /**
  * Workspace that stores all the variables
+ * 
  * @author Jesse
  *
  */
@@ -29,18 +30,19 @@ public class WorkspaceView implements PageView{
 		edit.setOnAction(e -> buttonAction());
 
 	}
-	
+
 	@Override
 	public Node display() {
 		return pane;
 	}
-	
+
 	@Override
-	public void update(Observable o, Object arg) {
+	public void update(Observable o, Object arg)
+	{
 		// TODO Auto-generated method stub
 
 	}
-	
+
 	@Override
 	public void updateData(String arg) {
 		

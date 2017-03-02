@@ -9,6 +9,7 @@ import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import util.MathUtil;
 import util.PointPolar;
+import view.ActorView;
 
 /**
  * This class is the abstract superclass for all Instructions which change a
@@ -41,10 +42,10 @@ public abstract class TurtleCommand extends Instruction
 	{
 		Bounds bounds = getInstructionData().getSimulationBounds();
 		System.out.println(bounds);
-		if (MathUtil.doubleLessThan(newLocation.getX(), bounds.getMinX())
-				|| MathUtil.doubleLessThan(newLocation.getY(), bounds.getMinY())
-				|| MathUtil.doubleGreaterThan(newLocation.getX(), bounds.getMaxX())
-				|| MathUtil.doubleGreaterThan(newLocation.getY(), bounds.getMaxY())) {
+		if (MathUtil.doubleLessThan(newLocation.getX(), -bounds.getMaxX() / 2)
+				|| MathUtil.doubleLessThan(newLocation.getY(), -bounds.getMaxY() / 2)
+				|| MathUtil.doubleGreaterThan(newLocation.getX(), bounds.getMaxX() / 2)
+				|| MathUtil.doubleGreaterThan(newLocation.getY(), bounds.getMaxY() / 2)) {
 			throw new NonsensicalArgumentException(RESOURCE_BOUNDS_NAME);
 		}
 		System.out.println("ASDFAFSAFD");
@@ -55,7 +56,7 @@ public abstract class TurtleCommand extends Instruction
 
 	protected void setHeading(double newHeading)
 	{
-		getActiveActor().setHeading(newHeading);
+		getActiveActor().setHeading(ActorView.STARTING_HEADING + newHeading);
 	}
 
 	protected void turnNewHeading(double newHeading)
@@ -87,8 +88,9 @@ public abstract class TurtleCommand extends Instruction
 	{
 		// TODO
 	}
-	
-	protected void checkNegativeArgumentException(double distance){
+
+	protected void checkNegativeArgumentException(double distance)
+	{
 		if (MathUtil.doubleLessThan(distance, 0.0)) {
 			throw new NonsensicalArgumentException(RESOURCE_NEGATIVE_PIXELS_NAME);
 		}
