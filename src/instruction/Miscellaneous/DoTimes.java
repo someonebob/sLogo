@@ -34,6 +34,7 @@ public class DoTimes extends Miscellaneous {
 		while(counter.getValue()<=limit){
 			executed=1; //at least one loop executed
 			runListCommands(1);
+			counter.setValue(counter.getValue()+1);
 		}
 		return executed;
 	}
