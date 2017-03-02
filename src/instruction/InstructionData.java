@@ -114,4 +114,12 @@ public class InstructionData
 		}
 		return null;
 	}
+	
+	public void addVariable(Variable v){
+		variables.add(v);
+	}
+	
+	public void addFunction(Function f){
+		functions.add(f);
+	}
 }
