@@ -16,8 +16,7 @@ public abstract class Miscellaneous extends Instruction {
 	
 	protected double runListCommands(int argumentNumber) {
 		//TODO Need to change when decide on way to set language (possibly through InstructionData)
-		Interpreter listInterpreter = new Interpreter(getInstructionData(), "English");  
-		System.out.println("here");
+		Interpreter listInterpreter = new Interpreter(getInstructionData(), "English");
 		return listInterpreter.parseAndRun(getArgumentString(argumentNumber));
 	}
 	
@@ -30,11 +29,9 @@ public abstract class Miscellaneous extends Instruction {
 	 */
 	protected double iterateThroughLoop(Variable counter, double limit, double increment){
 		double lastReturnedValue = 0.0;
-		System.out.println("Limit = " + limit);
 		while(MathUtil.doubleLessThanEquals(counter.getValue(), limit)){
 			lastReturnedValue = runListCommands(1);
 			counter.setValue(counter.getValue() + increment);
-			System.out.println(counter.getValue());
 		}
 		return lastReturnedValue;
 	}

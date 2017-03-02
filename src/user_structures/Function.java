@@ -1,9 +1,10 @@
 package user_structures;
 
+import java.util.ArrayList;
 import java.util.List;
-
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+
 
 /**
  * A user-defined function that holds a name, and a String representing the
@@ -16,12 +17,13 @@ public class Function
 {
 	private StringProperty name;
 	private StringProperty commands;
-	private List<StringProperty> args; // TODO: Implement
+	private List<String> args; 
+	
+	public Function(String name, String commands, List<String> args){
 
-	public Function(String name, String commands)
-	{
 		setName(name);
 		setCommands(commands);
+		setArgs(args);
 	}
 
 	public StringProperty nameProperty()
@@ -58,6 +60,21 @@ public class Function
 	public String getCommands()
 	{
 		return commandsProperty().get();
+	}
+	
+	//TODO: Make observable
+	public List<String> argsProperty(){
+		if(args == null){
+			args = new ArrayList<String>();
+		}
+		return args;
+	}
+	public void setArgs(List<String> args){
+		argsProperty().addAll(args);
+	}
+	
+	public List<String> getArgs(){
+		return argsProperty();
 	}
 
 }

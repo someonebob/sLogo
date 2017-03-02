@@ -1,3 +1,6 @@
+
+
+
 package interpreter;
 
 import java.util.List;
@@ -57,7 +60,7 @@ public class Interpreter {
 	}
 	
 	private double executeTree(TreeExecuter executer, List<InstructionNode> headNodes){
-		double toRet =0;
+		double toRet = 0;
 		for(InstructionNode node: headNodes){
 			toRet = executer.execute(node);
 		}
