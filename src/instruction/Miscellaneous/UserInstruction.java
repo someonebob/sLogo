@@ -9,7 +9,9 @@ import user_structures.VariableData;
 
 /**
  * Separate class to take care of the parsing
- * required when you run a new Instruction.
+ * required when you run a new Instruction. This class
+ * parses a given String into Instructions and re-runs
+ * the defined command.
  * 
  * @author maddiebriere
  *
