@@ -29,9 +29,11 @@ public class PenView implements View
 	private Canvas canvas;
 	private double thickness;
 	private Color color;
+	private boolean isUp;
 
 	public PenView()
 	{
+		isUp = false;
 		thickness = 2;
 		color = DEFAULT_COLOR;
 		// myPath = new Path();
@@ -106,11 +108,23 @@ public class PenView implements View
 	public void penUp()
 	{
 		this.setColor(Color.TRANSPARENT);
+		this.isUp = true;
 	}
 
 	public void penDown()
 	{
-		this.setColor(color);
+		this.setColor(DEFAULT_COLOR);
+		this.isUp = false;
+	}
+
+	public boolean isUp()
+	{
+		return isUp;
+	}
+
+	public void clear()
+	{
+		canvas.getGraphicsContext2D().clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 	}
 
 	@Override
