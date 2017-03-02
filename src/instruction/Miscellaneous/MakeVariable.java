@@ -3,7 +3,6 @@ package instruction.Miscellaneous;
 import java.util.List;
 
 import instruction.InstructionData;
-import user_structures.Variable;
 
 public class MakeVariable extends Miscellaneous {
 	
@@ -13,15 +12,7 @@ public class MakeVariable extends Miscellaneous {
 
 	@Override
 	public double execute(){
-		Variable variable = getInstructionData().containsVariable(getArgumentString(0));
-		if(variable == null){
-			variable = new Variable(getArgumentString(0), getArgumentDouble(1));
-		}
-		else{
-			variable.setValue(getArgumentDouble(1));
-		}
-		getInstructionData().getVariables().add(variable);
-		return getArgumentDouble(1);
+		return initializeVariable(getArgumentString(0), getArgumentDouble(1)).getValue();
 	}
 
 	
