@@ -1,5 +1,6 @@
 package user_structures;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javafx.beans.property.*;
@@ -15,7 +16,7 @@ import javafx.beans.property.*;
 public class Function {
 	private StringProperty name;
 	private StringProperty commands;
-	private ListProperty<String> args; 
+	private List<String> args; 
 	
 	public Function(String name, String commands, List<String> args){
 		setName(name);
@@ -49,9 +50,10 @@ public class Function {
 		return commandsProperty().get();
 	}
 	
-	public ListProperty<String> argsProperty(){
+	//TODO: Make observable
+	public List<String> argsProperty(){
 		if(args == null){
-			args = new SimpleListProperty<String>();
+			args = new ArrayList<String>();
 		}
 		return args;
 	}
@@ -60,7 +62,7 @@ public class Function {
 	}
 	
 	public List<String> getArgs(){
-		return argsProperty().get();
+		return argsProperty();
 	}
 
 }

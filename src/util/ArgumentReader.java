@@ -17,6 +17,7 @@ public class ArgumentReader
 	public static int getNumArgs(String instructionType, InstructionData data){
 		// TODO: Error handling
 		if(data.containsFunction(instructionType) != null){ //user-defined function
+			System.out.println("HERE: " + data.containsFunction(instructionType).getArgs().size());
 			return data.containsFunction(instructionType).getArgs().size();
 		}
 		int numArgs = ResourceToList.getNumericalTerm(NUM_ARGS, instructionType);

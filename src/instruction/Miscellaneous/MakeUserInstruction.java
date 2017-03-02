@@ -27,6 +27,8 @@ public class MakeUserInstruction extends Miscellaneous {
 		List <String> args = InstructionSplitter.getInstructionStrings(getArgumentString(1));
 		Function function = new Function(getArgumentString(0), getArgumentString(2), args);
 		getInstructionData().addFunction(function);
+		System.out.println(getInstructionData().getFunctions().size());
+		
 		return 0;//TODO: What to return?
 	}
 
