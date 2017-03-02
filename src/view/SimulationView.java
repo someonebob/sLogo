@@ -18,7 +18,6 @@ import models.Simulation;
 import tool.FileTool.NewButton;
 import tool.FileTool.OpenButton;
 import tool.SettingsTool.BackgroundColorButton;
-import tool.SettingsTool.PenColorButton;
 import tool.SettingsTool.TurtleImageButton;
 
 /**
@@ -92,18 +91,12 @@ public class SimulationView implements View
 						ActorView actor = new TurtleView();
 						actor.setImage((Image) arg);
 						((StackPane) t.getContent()).getChildren().add(actor.display());
+						
 					}
 				}
 				actor.setImage((Image) arg);
 			}
 		}
-
-		if (o instanceof PenColorButton) {
-			if (arg instanceof Color) {
-				actor.getPen().setColor((Color) arg);
-			}
-		}
-
 	}
 
 	public Bounds getBounds()
@@ -134,24 +127,6 @@ public class SimulationView implements View
 		actor.getPen().getCanvas().widthProperty().bind(layout.widthProperty());
 		actor.getPen().getCanvas().heightProperty().bind(layout.heightProperty());
 
-		System.out.println("~~~~~~" + actor.getPen().display().layoutXProperty().get());
-
-		// StackPane.setAlignment(actor.display(), Pos.BOTTOM_CENTER);
-		// StackPane.setAlignment(actor.getPen().display(), Pos.BOTTOM_CENTER);
-		// AnchorPane.setTopAnchor(actor.display(),
-		// getBounds().getHeight() / 2 -
-		// actor.display().getBoundsInLocal().getWidth() / 2);
-		// AnchorPane.setLeftAnchor(actor.display(),
-		// getBounds().getWidth() / 2 -
-		// actor.display().getBoundsInLocal().getWidth() / 2);
-		// // AnchorPane.setTopAnchor(actor.getPen().display(),
-		// // getBounds().getHeight() / 2 -
-		// // actor.getPen().display().getBoundsInLocal().getWidth() / 2);
-		// // AnchorPane.setLeftAnchor(actor.getPen().display(),
-		// // getBounds().getWidth() / 2 -
-		// // actor.getPen().display().getBoundsInLocal().getWidth() / 2);
-		// AnchorPane.setTopAnchor(actor.getPen().display(), 0.0);
-		// AnchorPane.setLeftAnchor(actor.getPen().display(), 0.0);
 	}
 
 	public void move(Point2D deltaLocation)
