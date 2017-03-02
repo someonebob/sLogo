@@ -15,7 +15,8 @@ import java.util.regex.Pattern;
  *
  */
 
-public class ResourceToList {
+public final class ResourceToListUtil {
+	private ResourceToListUtil(){}
 
 	public static void addTerms(String resource, List<Entry<String, Pattern>> list) {
 		ResourceBundle resources = ResourceBundle.getBundle(resource);
