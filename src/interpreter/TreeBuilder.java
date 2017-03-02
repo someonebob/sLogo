@@ -88,7 +88,7 @@ public class TreeBuilder {
 		if(brackets==null){
 			int numArgs = 0; // default
 			if(!classification.equals("NO MATCH")){
-				numArgs = ArgumentReader.getNumArgs(classification);
+				numArgs = ArgumentReader.getNumArgs(classification, data);
 			}
 			for(int i=0; i<numArgs; i++){
 				head.getMyChildren().add(buildSubTree());

@@ -1,5 +1,7 @@
 package user_structures;
 
+import java.util.List;
+
 import javafx.beans.property.*;
 
 /**
@@ -13,11 +15,12 @@ import javafx.beans.property.*;
 public class Function {
 	private StringProperty name;
 	private StringProperty commands;
-	private List<StringProperty> args; //TODO: Implement
+	private ListProperty<String> args; 
 	
-	public Function(String name, String commands){
+	public Function(String name, String commands, List<String> args){
 		setName(name);
 		setCommands(commands);
+		setArgs(args);
 	}
 	
 	public StringProperty nameProperty(){
@@ -44,6 +47,20 @@ public class Function {
 	}
 	public String getCommands(){
 		return commandsProperty().get();
+	}
+	
+	public ListProperty<String> argsProperty(){
+		if(args == null){
+			args = new SimpleListProperty<String>();
+		}
+		return args;
+	}
+	public void setArgs(List<String> args){
+		argsProperty().setAll(args);
+	}
+	
+	public List<String> getArgs(){
+		return argsProperty().get();
 	}
 
 }

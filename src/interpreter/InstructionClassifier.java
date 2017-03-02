@@ -150,7 +150,7 @@ public class InstructionClassifier {
     
    private String classifyFunction(String comm, InstructionData data){
 	   if(data.containsFunction(comm)!=null){
-		   return "Instruction";
+		   return "UserInstruction";
 	   }
 	   else
 		   return "NO MATCH";

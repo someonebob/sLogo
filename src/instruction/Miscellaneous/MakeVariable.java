@@ -5,6 +5,14 @@ import java.util.List;
 import instruction.InstructionData;
 import user_structures.Variable;
 
+/**
+ * Class to construct a variable, adding its name
+ * to the workspace and changing/setting its value
+ * 
+ * @author maddiebriere
+ *
+ */
+
 public class MakeVariable extends Miscellaneous {
 	
 	public MakeVariable(InstructionData instructionData,  List<String> args, String myText) {
