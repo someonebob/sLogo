@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import instruction.InstructionData;
-import util.ArgumentReader;
+import util.ArgumentReaderUtil;
 import util.Pair;
 /**
  * Builds a tree of InstructionNodes for
@@ -88,9 +88,9 @@ public class TreeBuilder {
 		if(brackets==null){
 			int numArgs = 0;
 			if(!classification.equals("NO MATCH")){
-				numArgs = ArgumentReader.getNumArgs(classification, data);
+				numArgs = ArgumentReaderUtil.getNumArgs(classification, data);
 				if(numArgs == -1){ //if nothing, be more specific
-					numArgs = ArgumentReader.getNumArgs(value, data);
+					numArgs = ArgumentReaderUtil.getNumArgs(value, data);
 				}
 				System.out.println(classification + " " + numArgs);
 			}

@@ -10,8 +10,9 @@ import instruction.InstructionData;
  *
  */
 
-public class ArgumentReader
+public final class ArgumentReaderUtil
 {
+	private ArgumentReaderUtil(){}
 	public static String NUM_ARGS = "resources/interpreter/NumArgs";
 
 	public static int getNumArgs(String instructionType, InstructionData data){
@@ -19,7 +20,7 @@ public class ArgumentReader
 		if(data.containsFunction(instructionType) != null){ //user-defined function
 			return data.containsFunction(instructionType).getArgs().size();
 		}
-		int numArgs = ResourceToList.getNumericalTerm(NUM_ARGS, instructionType);
+		int numArgs = ResourceToListUtil.getNumericalTerm(NUM_ARGS, instructionType);
 		return numArgs;
 	}
 
