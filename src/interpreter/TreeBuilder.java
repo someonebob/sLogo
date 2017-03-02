@@ -88,7 +88,16 @@ public class TreeBuilder {
 		if(brackets==null){
 			int numArgs = 0; // default
 			if(!classification.equals("NO MATCH")){
-				numArgs = ArgumentReader.getNumArgs(classification);
+				//TODO: Remove assumption of constant default
+				numArgs = ArgumentReader.getNumArgs(classification, data);
+				if(numArgs == -1){
+					try{
+						numArgs = 0;
+						head.setMyValue(data.getVariableValue(value));
+					} catch(Exception e){
+						//TODO: Error handling
+					}
+				}
 			}
 			for(int i=0; i<numArgs; i++){
 				head.getMyChildren().add(buildSubTree());

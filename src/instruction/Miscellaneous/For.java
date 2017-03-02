@@ -5,6 +5,13 @@ import java.util.List;
 import instruction.InstructionData;
 import user_structures.Variable;
 
+/**
+ * Instruction for a for statement
+ * 
+ * @author maddiebriere
+ *
+ */
+
 public class For extends Miscellaneous {
 	
 	public For(InstructionData instructionData, List<String> args, String myText) {

@@ -1,9 +1,11 @@
 package instruction;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import javafx.geometry.Bounds;
+import models.Simulation;
 import user_structures.Function;
 import user_structures.Variable;
 import view.ActorView;
@@ -27,7 +29,9 @@ public class InstructionData
 
 	public InstructionData()
 	{
-		// TODO: Implement default constructor
+		this.simulation = new SimulationView();
+		this.variables = new ArrayList<Variable>();
+		this.functions = new ArrayList<Function>();
 	}
 
 	public InstructionData(SimulationView simulation, List<Variable> variables, List<Function> functions)
@@ -97,13 +101,13 @@ public class InstructionData
 		return null;
 	}
 	
-	public double getVariableValue(String variableName){
+	public String getVariableValue(String variableName){
 		for(Variable v: variables){
 			if(v.getName().equals(variableName)){
-				return v.getValue();
+				return ""+v.getValue();
 			}
 		}
-		return 0;
+		return "NO MATCH";
 	}
 	
 	public String getFunctionValue(String functionName){
@@ -112,7 +116,7 @@ public class InstructionData
 				return f.getCommands();
 			}
 		}
-		return null;
+		return "NO MATCH";
 	}
 	
 	public void addVariable(Variable v){
