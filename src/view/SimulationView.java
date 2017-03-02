@@ -18,6 +18,7 @@ import models.Simulation;
 import tool.FileTool.NewButton;
 import tool.FileTool.OpenButton;
 import tool.SettingsTool.BackgroundColorButton;
+import tool.SettingsTool.PenColorButton;
 import tool.SettingsTool.TurtleImageButton;
 
 /**
@@ -96,6 +97,13 @@ public class SimulationView implements View
 				actor.setImage((Image) arg);
 			}
 		}
+
+		if (o instanceof PenColorButton) {
+			if (arg instanceof Color) {
+				actor.getPen().setColor((Color) arg);
+			}
+		}
+
 	}
 
 	public Bounds getBounds()
@@ -114,16 +122,19 @@ public class SimulationView implements View
 	{
 		Tab newTab = new Tab();
 		StackPane layout = new StackPane();
+
 		actor = new TurtleView();
 		layout.setBackground(new Background(new BackgroundFill(Color.WHITE, null, null)));
 		newTab.setText("new tab");
 		newTab.setContent(layout);
 		root.getTabs().add(newTab);
 		layout.getChildren().add(actor.display());
-		layout.getChildren().add(actor.getPen().display());
+		layout.getChildren().add(actor.getPen().getCanvas());
+		actor.getPen().getCanvas().toBack();
+		actor.getPen().getCanvas().widthProperty().bind(layout.widthProperty());
+		actor.getPen().getCanvas().heightProperty().bind(layout.heightProperty());
 
-		actor.getPen().display().layoutXProperty().set(100);
-		actor.getPen().display().layoutYProperty().set(100);
+		System.out.println("~~~~~~" + actor.getPen().display().layoutXProperty().get());
 
 		// StackPane.setAlignment(actor.display(), Pos.BOTTOM_CENTER);
 		// StackPane.setAlignment(actor.getPen().display(), Pos.BOTTOM_CENTER);
@@ -133,12 +144,14 @@ public class SimulationView implements View
 		// AnchorPane.setLeftAnchor(actor.display(),
 		// getBounds().getWidth() / 2 -
 		// actor.display().getBoundsInLocal().getWidth() / 2);
-		// AnchorPane.setTopAnchor(actor.getPen().display(),
-		// getBounds().getHeight() / 2 -
-		// actor.getPen().display().getBoundsInLocal().getWidth() / 2);
-		// AnchorPane.setLeftAnchor(actor.getPen().display(),
-		// getBounds().getWidth() / 2 -
-		// actor.getPen().display().getBoundsInLocal().getWidth() / 2);
+		// // AnchorPane.setTopAnchor(actor.getPen().display(),
+		// // getBounds().getHeight() / 2 -
+		// // actor.getPen().display().getBoundsInLocal().getWidth() / 2);
+		// // AnchorPane.setLeftAnchor(actor.getPen().display(),
+		// // getBounds().getWidth() / 2 -
+		// // actor.getPen().display().getBoundsInLocal().getWidth() / 2);
+		// AnchorPane.setTopAnchor(actor.getPen().display(), 0.0);
+		// AnchorPane.setLeftAnchor(actor.getPen().display(), 0.0);
 	}
 
 	public void move(Point2D deltaLocation)

@@ -24,7 +24,6 @@ public class VariableEditor {
 	
 	public VariableEditor(VariableData variable){
 		initiateItems(variable.getName(), variable.getValue());
-		changedVariable = variable;
 		save.setOnAction(e -> buttonAction());
 	}
 	
@@ -35,8 +34,8 @@ public class VariableEditor {
 	private void initiateItems(String defaultName, double defaultValue){
 		window = new Stage();
 		grid = new GridPane();
-		changedVariable = new VariableData();
-		
+		changedVariable = new VariableData(defaultName, defaultValue);
+	
 		Label variable = new Label("Variable");
 		Label value = new Label("Value");
 		
