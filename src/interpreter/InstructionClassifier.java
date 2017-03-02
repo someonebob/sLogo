@@ -69,6 +69,26 @@ public class InstructionClassifier {
     }
     
     /**
+     * Find any fit with the current String, of type:
+     * 1) Command
+     * 2) Function
+     * 3) Variables
+     * @param text String text to search for
+     * @param data InstructionData object holding functions and variables known to workspace
+     * @return String key for variable, function or command in question.
+     */
+    public String findAnyKey(String comm, InstructionData data){
+    	String classification = findShortcutKey(comm);
+		if(classification.equals("NO MATCH")){ //Break out if the command isn't an option
+			classification = classifyFunction(classification, data);
+		}
+		if(classification.equals("NO MATCH")){
+			classification = classifyVariable(classification, data);
+		}
+		return classification;
+    }
+    
+    /**
      * Classify an instruction as a specific instruction type (e.g., forward)
      * @param text String to be parsed
      * @return correct command
