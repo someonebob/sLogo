@@ -2,8 +2,6 @@ package view;
 
 import java.util.Observable;
 
-import com.sun.org.apache.xpath.internal.operations.Variable;
-
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -11,6 +9,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
+import user_structures.Variable;
 
 /**
  * Workspace that stores all the variables
