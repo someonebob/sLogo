@@ -22,22 +22,14 @@ public class DoTimes extends Miscellaneous {
 		super(instructionData, args, myText);
 	}
 
+	//Assumption made that limit is constant
+	//TODO: Error throwing
 	@Override
 	public double execute() {
-		int executed=0;
-		//Assumption made that limit is constant
-		String [] args = getArgumentString(0).split(" ");
-		Variable counter = new Variable(args[0], 1);
-		//TODO: Error throwing
+		String[] args = getArgumentString(0).split(" ");
+		Variable counter = new Variable(args[0], 1.0);
 		getInstructionData().addVariable(counter);
-		double limit = Integer.parseInt(args[1]);
-		if(limit <=0) {return executed;}
-		while(counter.getValue()<=limit){
-			executed=1; //at least one loop executed
-			runListCommands(1);
-			counter.setValue(counter.getValue()+1);
-		}
-		return executed;
+		return iterateThroughLoop(counter, Double.parseDouble(args[1]), 1.0);
 	}
 
 }

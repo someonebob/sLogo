@@ -5,6 +5,8 @@ import java.util.List;
 import instruction.Instruction;
 import instruction.InstructionData;
 import interpreter.Interpreter;
+import user_structures.Variable;
+import util.MathUtil;
 
 public abstract class Miscellaneous extends Instruction {
 	
@@ -13,11 +15,29 @@ public abstract class Miscellaneous extends Instruction {
 	}
 	
 	protected double runListCommands(int argumentNumber) {
-		Interpreter listInterpreter = new Interpreter(getInstructionData(), "English");    //Need to change when decide on way to set language
-		listInterpreter.parseAndRun(getArgumentString(argumentNumber));
-		return 1;
-		//Possibly final:
-		//return listInterpreter.parseAndRun(getArgumentString(1), getInstructionData());
-		//Somehow return the value of last executed command in list - need Maddie to decide how she gives this to me
+		//TODO Need to change when decide on way to set language (possibly through InstructionData)
+		Interpreter listInterpreter = new Interpreter(getInstructionData(), "English");    
+		return listInterpreter.parseAndRun(getArgumentString(argumentNumber));
+	}
+	
+	protected double iterateThroughLoop(Variable counter, double limit, double increment){
+		double lastReturnedValue = 0.0;
+		while(MathUtil.doubleLessThanEquals(counter.getValue(), limit)){
+			lastReturnedValue = runListCommands(1);
+			counter.setValue(counter.getValue() + increment);
+		}
+		return lastReturnedValue;
+	}
+	
+	protected Variable initializeVariable(String name, double value){
+		Variable variable = getInstructionData().containsVariable(name);
+		if(variable == null){
+			variable = new Variable(name, value);
+			getInstructionData().getVariables().add(variable);
+		}
+		else{
+			variable.setValue(value);
+		}
+		return variable;
 	}
 }
