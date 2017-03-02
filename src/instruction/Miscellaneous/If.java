@@ -4,7 +4,10 @@ import java.util.List;
 
 import instruction.InstructionData;
 /**
- * Instruction for if statement
+ * Instruction for if statement, takes two
+ * arguments:
+ * 1) The conditional (e.g., 1)
+ * 2) The conditional result (e.g, [ fd 50 ])
  * 
  * @author maddiebriere
  *

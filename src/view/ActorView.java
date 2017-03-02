@@ -22,6 +22,8 @@ public abstract class ActorView implements View
 {
 	public static final int ACTOR_HEIGHT = 75;
 	public static final int STARTING_HEADING = -90;
+	// TODO: Make stack of animations to run, and run them 1 at a time.
+	// TODO: Update image so that it
 
 	private Actor actor;
 	private ImageView image;
@@ -69,11 +71,11 @@ public abstract class ActorView implements View
 
 	public void setImage(Image image)
 	{
-		ImageView view = new ImageView(image);
-		view.setFitHeight(ACTOR_HEIGHT);
-		view.setPreserveRatio(true);
-		this.image = view;
-		this.setHeading(STARTING_HEADING);
+		// ImageView view = new ImageView(image);
+		// view.setFitHeight(ACTOR_HEIGHT);
+		// view.setPreserveRatio(true);
+		// this.setHeading(STARTING_HEADING);
+		this.image.setImage(image);
 	}
 
 	public ImageView getImage()

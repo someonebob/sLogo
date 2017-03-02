@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
 import exceptions.ReflectionException;
 import instruction.*;
 import util.ResourceToListUtil;
+
 /**
  * This class performs the reflection necessary to produce instances of each
  * command type without direct statement of the desired class type. This class
@@ -16,6 +17,7 @@ import util.ResourceToListUtil;
  * 
  * @author maddiebriere
  */
+
 public class InstructionClassifier {
 	private final String ERROR = "NO MATCH";
 	
@@ -65,10 +67,13 @@ public class InstructionClassifier {
     }
     
     /**
+     * This method searches for different types of keys that
+     * are formated ONLY with characters (e.g., instructions, variables -- not
+     * comments, list starts, etc.).
      * 
-     * @param key
-     * @param data
-     * @return
+     * @param key The String for which to search
+     * @param data The InstructionData object that holds current variables and commands
+     * @return The String of the value stored with this key
      */
     private String findLetteredKey(String key, InstructionData data){
     	/**Specific instruction key**/

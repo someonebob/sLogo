@@ -8,6 +8,14 @@ import interpreter.Interpreter;
 import user_structures.VariableData;
 import util.MathUtil;
 
+/**
+ * Superclass of all Miscellaneous Instructions, corresponding to the
+ * variables/control structures/user-defined commands table. Maddie and I
+ * authored all subclasses.
+ * @author Matthew Barbano
+ * @author Maddie Briere
+ *
+ */
 public abstract class Miscellaneous extends Instruction {
 	
 	public Miscellaneous(InstructionData instructionData, List<String> args, String myText) {
