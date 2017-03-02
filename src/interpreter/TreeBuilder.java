@@ -30,7 +30,7 @@ public class TreeBuilder {
 		currentText = text;
 		classifier = c;
 		if(!(text.isEmpty())&& !(c == null))
-			nodes = InstructionSplitter.getInstructions(text, c);
+			nodes = InstructionSplitter.getInstructions(text, c, d);
 		else
 			nodes = new ArrayList<InstructionNode>();
 		populateBrackets();
@@ -82,13 +82,29 @@ public class TreeBuilder {
 		String value = InstructionSplitter.getInstructionStrings(getCurrentText()).get(0);
 		head.setMyValue(value);
 		setCurrentText(InstructionSplitter.removeFirstItem(getCurrentText()));//remove node from current text
-		String classification = classifier.findAnyKey(value, data);
+		String classification = classifier.findShortcutKey(value, data);
 		Pair brackets = getBrackets(classification);
 		
 		if(brackets==null){
-			int numArgs = 0; // default
+			int numArgs = 0;
 			if(!classification.equals("NO MATCH")){
-				numArgs = ArgumentReader.getNumArgs(classification);
+				numArgs = ArgumentReader.getNumArgs(classification, data);
+			}
+			if(classification.equals("Variable")){
+				
+			}
+			
+			if(!classification.equals("NO MATCH")){
+				//TODO: Remove assumption of constant default
+				numArgs = ArgumentReader.getNumArgs(classification, data);
+				if(numArgs == -1){
+					try{
+						numArgs = 0;
+						head.setMyValue(data.getVariableValue(value));
+					} catch(Exception e){
+						//TODO: Error handling
+					}
+				}
 			}
 			for(int i=0; i<numArgs; i++){
 				head.getMyChildren().add(buildSubTree());

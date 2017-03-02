@@ -12,6 +12,7 @@ import java.util.Observer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import exceptions.SLogoException;
 import instruction.InstructionData;
 import interpreter.Interpreter;
 import javafx.collections.FXCollections;
@@ -136,8 +137,13 @@ public class LogoController implements Observer
 	{
 		InstructionData data = new InstructionData(simulation, variables, functions);
 		// TODO: make function to get language
+		try{
 		interpret = new Interpreter(data, "English");
 		interpret.parseAndRun(command);
+		}
+		catch(SLogoException exception){
+			exception.displayAlert();
+		}
 	}
 
 	public void addPage(PageView page)

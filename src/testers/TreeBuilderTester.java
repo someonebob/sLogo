@@ -3,6 +3,7 @@ package testers;
 
 import java.util.List;
 
+import instruction.InstructionData;
 import interpreter.InstructionClassifier;
 import interpreter.InstructionNode;
 import interpreter.TreeBuilder;
@@ -19,7 +20,7 @@ public class TreeBuilderTester {
 	public static void main(String [] args){
 		//problem with string value in tree
 		//change in node so that no string need be saved
-		TreeBuilder build = new TreeBuilder("make x 50", new InstructionClassifier("English"));
+		TreeBuilder build = new TreeBuilder("make x 50", new InstructionClassifier("English"), new InstructionData());
 		List<InstructionNode> headNodes = build.buildTree();
 		System.out.println("Single Node, Level-labelled Print:");
 		labelledNodePrint(headNodes, 0);
