@@ -2,10 +2,6 @@ package user_structures;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import javafx.beans.property.*;
-import java.util.List;
-
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 

@@ -101,13 +101,13 @@ public class InstructionData
 		return null;
 	}
 	
-	public double getVariableValue(String variableName){
+	public String getVariableValue(String variableName){
 		for(Variable v: variables){
 			if(v.getName().equals(variableName)){
-				return v.getValue();
+				return ""+v.getValue();
 			}
 		}
-		return 0;
+		return "NO MATCH";
 	}
 	
 	public String getFunctionValue(String functionName){
@@ -116,7 +116,7 @@ public class InstructionData
 				return f.getCommands();
 			}
 		}
-		return null;
+		return "NO MATCH";
 	}
 	
 	public void addVariable(Variable v){

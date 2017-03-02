@@ -29,13 +29,18 @@ public class ResourceToList {
 	
 	public static int getNumericalTerm(String resource, String key){
 		ResourceBundle resources = ResourceBundle.getBundle(resource);
-		Object target = resources.getObject(key);
+		Object target;
+		try{
+			target = resources.getObject(key);
+		} catch (Exception e){
+			return -1;
+		}
 		try{
 			return Integer.parseInt((String)target);
 		}
 		catch(Exception e){
 			//TODO: Error handling
-			return 0;
+			return -1;
 		}
 	}
 }
