@@ -106,9 +106,13 @@ public class TreeBuilder {
 					}
 				}
 			}
+			
+			head.setProperNumArgs(numArgs);
+			
 			for(int i=0; i<numArgs; i++){
 				head.getMyChildren().add(buildSubTree());
 			}
+			
 		}
 		else{
 			String newCurrent = ListTreeBuilder.buildList(brackets, nodes, head, getCurrentText());

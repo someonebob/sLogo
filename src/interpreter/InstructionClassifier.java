@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Map.Entry;
 import java.util.regex.Pattern;
 
+import exceptions.ReflectionException;
 import instruction.*;
 import util.ResourceToList;
 /**
@@ -21,6 +22,7 @@ public class InstructionClassifier {
 	public final String SYNTAX = "resources/languages/Syntax";
 	public final String PATHS = "resources/interpreter/JavaSpeak"; //Full class names matched to shortcuts
 	public final String LANGUAGE = "resources/languages/";
+	public final String RESOURCE_REFLECTION_NAME = "ReflectionMessage";
 	
 	private String mySyntax;
 	private String myLanguage;
@@ -157,26 +159,14 @@ public class InstructionClassifier {
 			clazz = Class.forName(classPath);
 			Constructor<?> ctor = clazz.getDeclaredConstructor(InstructionData.class, List.class, String.class);
 			instructionHopeful = ctor.newInstance(data, args, comm);
-		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
-			// TODO Handle error --> non-valid class
-		} catch (NoSuchMethodException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SecurityException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | NoSuchMethodException | SecurityException | IllegalArgumentException | InvocationTargetException e) {
+			throw new ReflectionException(RESOURCE_REFLECTION_NAME);
 		}
 		try{
 			instruction = (Instruction) instructionHopeful;
 		}
 		catch(Exception e){
-			//TODO Handle error of non-instruction input
+			throw new ReflectionException(RESOURCE_REFLECTION_NAME);
 		}
 		return instruction;
 	}

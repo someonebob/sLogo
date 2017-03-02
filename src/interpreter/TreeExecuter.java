@@ -1,6 +1,9 @@
 package interpreter;
 
 import java.util.ArrayList;
+
+import exceptions.InvalidCommandException;
+import exceptions.WrongArgumentNumberException;
 import instruction.Instruction;
 import instruction.InstructionData;
 
@@ -17,7 +20,9 @@ public class TreeExecuter
 	private static final String LIST_END = "ListEnd";
 	private static final String GROUP_START = "GroupStart";
 	private static final String GROUP_END = "GroupEnd";
-
+	private static final String RESOURCE_INVALID_COMMAND_NAME = "InvalidCommandMessage";
+	private static final String RESOURCE_ARGUMENT_NAME = "WrongArgumentNumberMessage";
+	
 	private InstructionData myData;
 	private InstructionClassifier myClass;
 
@@ -41,6 +46,17 @@ public class TreeExecuter
 	public double execute(InstructionNode head)
 	{
 		ArrayList<String> args = new ArrayList<String>();
+		
+		int numberNonNullChildren = 0;
+		for(InstructionNode child : head.getMyChildren()){
+			if(child != null)
+				numberNonNullChildren++;
+		}
+		
+		if(numberNonNullChildren != head.getProperNumArgs()){
+			throw new WrongArgumentNumberException(RESOURCE_ARGUMENT_NAME);
+		}
+		
 		for (InstructionNode child : head.getMyChildren()) {
 			if (!child.hasRun()) {
 				execute(child);
@@ -48,13 +64,14 @@ public class TreeExecuter
 			args.add(child.getMyRunValue());
 			
 		}
+		
 		if(!myClass.findShortcutKey(head.getMyValue(), myData).equals("NO MATCH")){
-			//TODO: ERROR CATCHING
 			Instruction i = myClass.generateInstruction(head.getMyValue(), myData, args);
 			head.setMyRunValue(""+i.execute()); //Will change with list, for now, just tacks on result
 		}
 		else{
-			head.setMyRunValue(head.getMyValue());
+			throw new InvalidCommandException(RESOURCE_INVALID_COMMAND_NAME);
+			//head.setMyRunValue(head.getMyValue());
 		}
 		
 		try{
