@@ -18,20 +18,13 @@ public class For extends Miscellaneous {
 		super(instructionData, args, myText);
 	}
 
+	//Assumption made that limit is constant
+	//TODO: Error throwing
 	@Override
 	public double execute() {
-		int executed=0;
-		//Assumption made that limit is constant
-		String [] args = getArgumentString(0).split(" ");
+		String[] args = getArgumentString(0).split(" ");
 		Variable counter = new Variable(args[0], Integer.parseInt(args[1]));
-		//TODO: Error throwing
 		getInstructionData().addVariable(counter);
-		double limit = Integer.parseInt(args[2]);
-		while(counter.getValue()<limit){
-			executed=1; //at least one loop executed
-			runListCommands(1);
-			counter.setValue(counter.getValue()+Integer.parseInt(args[3]));
-		}
-		return executed;
+		return iterateThroughLoop(counter, Double.parseDouble(args[2]), Double.parseDouble(args[3]));
 	}
 }
