@@ -34,8 +34,8 @@ public class VariableEditor {
 	private void initiateItems(String defaultName, double defaultValue){
 		window = new Stage();
 		grid = new GridPane();
+
 		changedVariable = new VariableData(defaultName, defaultValue);
-	
 		Label variable = new Label("Variable");
 		Label value = new Label("Value");
 		
