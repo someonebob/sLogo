@@ -70,14 +70,12 @@ public class LogoController implements Observer
 
 		List<Function> funcList = new ArrayList<>();
 		functions = FXCollections.observableList(funcList);
-<<<<<<< HEAD
+
 		//Try this if workspace doesn't update
 //		SimpleObjectProperty<ObservableList<Variable>> vars = new SimpleObjectProperty<>(variables);
 //		((TableView<Variable>) ((BorderPane) workspace.display()).getCenter()).itemsProperty().bind(vars);
 		
-=======
 
->>>>>>> master
 		workspace.setItems(variables);
 		// TODO: Add functions to the workspace
 
@@ -118,13 +116,10 @@ public class LogoController implements Observer
 
 			// Do if command is valid
 			inputBox.updateData(input);
-<<<<<<< HEAD
-			
-				
-=======
+
 			// Do if a variable is created
 			// workspace.setItems(variables);
->>>>>>> master
+
 
 		}
 
