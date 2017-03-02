@@ -31,10 +31,12 @@ public class Interpreter {
 	 * @param instruction
 	 *            Input line from user
 	 */
-	public void parseAndRun(String instruction) {
+	public double parseAndRun(String instruction) {
+		double toRet =0;
 		List<InstructionNode> headNodes = parse(instruction);
 		TreeExecuter executer = new TreeExecuter(getMyData(), getMyClassifier());
-		executeTree(executer, headNodes);
+		toRet = executeTree(executer, headNodes);
+		return toRet;
 	}
 
 	/**
@@ -49,15 +51,17 @@ public class Interpreter {
 	 * @return Root node of the instruction, read from toParse
 	 */
 	private List<InstructionNode> parse(String toParse) {
-		TreeBuilder builder = new TreeBuilder(toParse, getMyClassifier());
+		TreeBuilder builder = new TreeBuilder(toParse, getMyClassifier(), getMyData());
 		List<InstructionNode> headNodes = builder.buildTree();
 		return headNodes;
 	}
 	
-	private void executeTree(TreeExecuter executer, List<InstructionNode> headNodes){
+	private double executeTree(TreeExecuter executer, List<InstructionNode> headNodes){
+		double toRet =0;
 		for(InstructionNode node: headNodes){
-			executer.execute(node);
+			toRet = executer.execute(node);
 		}
+		return toRet;
 	}
 
 	public InstructionClassifier getMyClassifier() {
