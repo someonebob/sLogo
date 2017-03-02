@@ -3,6 +3,12 @@ package instruction.Miscellaneous;
 import java.util.List;
 
 import instruction.InstructionData;
+/**
+ * Instruction for if statement
+ * 
+ * @author maddiebriere
+ *
+ */
 
 public class If extends Miscellaneous {
 	

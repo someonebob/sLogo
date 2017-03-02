@@ -7,8 +7,6 @@ import java.util.ArrayList;
 import java.util.Map.Entry;
 import java.util.regex.Pattern;
 
-import exceptions.InvalidCommandException;
-import exceptions.SyntaxException;
 import instruction.*;
 import util.ResourceToList;
 
@@ -71,6 +69,7 @@ public class InstructionClassifier {
     /**
      * Find any fit with the current String, of type:
      * 1) Command
+     * 
      * 2) Function
      * 3) Variables
      * @param text String text to search for
@@ -79,11 +78,11 @@ public class InstructionClassifier {
      */
     public String findAnyKey(String comm, InstructionData data){
     	String classification = findShortcutKey(comm);
-		if(classification.equals("NO MATCH")){ //Break out if the command isn't an option
-			classification = classifyFunction(classification, data);
+		if(classification.equals("NO MATCH") || classification.equals("Instruction")){ //Break out if the command isn't an option
+			classification = classifyFunction(comm, data);
 		}
 		if(classification.equals("NO MATCH")){
-			classification = classifyVariable(classification, data);
+			classification = "" + data.getVariableValue(comm);
 		}
 		return classification;
     }
@@ -149,8 +148,13 @@ public class InstructionClassifier {
     
     
    private String classifyFunction(String comm, InstructionData data){
+	   int size = data.getFunctions().size();
+	   System.out.println(size);
+	   if(size!=0){
+		   System.out.println(data.getFunctions().get(0).getName());
+	   }
 	   if(data.containsFunction(comm)!=null){
-		   return "Instruction";
+		   return "UserInstruction";
 	   }
 	   else
 		   return "NO MATCH";
