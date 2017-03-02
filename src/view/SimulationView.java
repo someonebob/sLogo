@@ -83,10 +83,6 @@ public class SimulationView implements View
 				for (Tab t : root.getTabs()) {
 					if (t.isSelected()) {
 						actors.get(this.getCurrentTab()).setImage((Image) arg);
-						((StackPane) this.getCurrentTab().getContent()).getChildren().clear();
-						((StackPane) this.getCurrentTab().getContent()).getChildren().addAll(
-								actors.get(this.getCurrentTab()).getImage(),
-								((TurtleView) actors.get(this.getCurrentTab())).getPen().getCanvas());
 					}
 				}
 			}
