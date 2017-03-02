@@ -7,7 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-import user_structures.Variable;
+import user_structures.VariableData;
 
 /**
  * Window used to edit variables from the workspace
@@ -20,22 +20,22 @@ public class VariableEditor {
 	private TextField variableEntry;
 	private TextField valueEntry;
 	private Button save;
-	private Variable changedVariable;
+	private VariableData changedVariable;
 	
-	public VariableEditor(Variable variable){
+	public VariableEditor(VariableData variable){
 		initiateItems(variable.getName(), variable.getValue());
 		save.setOnAction(e -> buttonAction());
 	}
 	
-	public Variable getChangedVariable(){
+	public VariableData getChangedVariable(){
 		return changedVariable;
 	}
 	
 	private void initiateItems(String defaultName, double defaultValue){
 		window = new Stage();
 		grid = new GridPane();
-		changedVariable = new Variable(defaultName, defaultValue);
-		
+
+		changedVariable = new VariableData(defaultName, defaultValue);
 		Label variable = new Label("Variable");
 		Label value = new Label("Value");
 		

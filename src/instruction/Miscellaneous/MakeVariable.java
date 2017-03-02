@@ -20,7 +20,8 @@ public class MakeVariable extends Miscellaneous {
 
 	@Override
 	public double execute(){
-		return initializeVariable(getArgumentString(0), getArgumentDouble(1)).getValue();
+		return initializeVariable(getArgumentString(0).substring(1), 
+				getArgumentDouble(1)).getValue();
 	}
 
 	

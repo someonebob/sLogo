@@ -80,11 +80,7 @@ public class InstructionClassifier {
 	  	 if(data.containsFunction(key)!=null){
 	  		   return "UserInstruction";
 	  	 }
-	  	 
-	  	 /**Variable**/
-	  	if(data.containsVariable(key)!=null){
-			   return "Constant";
-	  	}
+
 	  	return ERROR;
     }
 
@@ -138,12 +134,8 @@ public class InstructionClassifier {
 	 * @return Instruction object corresponding to String
 	 */
 	public Instruction generateInstruction(String comm, InstructionData  data, List<String> args) {
-		
 		String classification = findShortcutKey(comm, data);
 		String classPath;
-		if(data.containsVariable(comm)!=null){
-			comm = "" + data.getVariableValue(comm);
-		}
 		classPath = findAddressKey(classification);
 		return buildObject(classPath, comm, data, args);
 	}

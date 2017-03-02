@@ -4,8 +4,8 @@ import java.util.List;
 
 import instruction.InstructionData;
 import interpreter.Interpreter;
-import user_structures.Function;
-import user_structures.Variable;
+import user_structures.FunctionData;
+import user_structures.VariableData;
 
 /**
  * Separate class to take care of the parsing
@@ -23,13 +23,13 @@ public class UserInstruction extends Miscellaneous {
 
 	@Override
 	public double execute() {
-		Function function = getInstructionData().containsFunction(getMyText());
+		FunctionData function = getInstructionData().containsFunction(getMyText());
 		if(function == null){
 			//TODO: Error-handling
 			return 0;
 		}
 		for(int i=0; i<function.getArgs().size(); i++){
-			getInstructionData().addVariable(new Variable(function.getArgs().get(i),
+			getInstructionData().addVariable(new VariableData(function.getArgs().get(i),
 					getArgumentDouble(i)));
 			//TODO: Error-handling
 		}

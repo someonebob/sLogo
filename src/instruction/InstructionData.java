@@ -6,8 +6,8 @@ import java.util.List;
 
 import javafx.geometry.Bounds;
 import models.Simulation;
-import user_structures.Function;
-import user_structures.Variable;
+import user_structures.FunctionData;
+import user_structures.VariableData;
 import view.ActorView;
 import view.SimulationView;
 
@@ -24,17 +24,17 @@ import view.SimulationView;
 public class InstructionData
 {
 	SimulationView simulation;
-	List<Variable> variables;
-	List<Function> functions;
+	List<VariableData> variables;
+	List<FunctionData> functions;
 
 	public InstructionData()
 	{
 		this.simulation = new SimulationView();
-		this.variables = new ArrayList<Variable>();
-		this.functions = new ArrayList<Function>();
+		this.variables = new ArrayList<VariableData>();
+		this.functions = new ArrayList<FunctionData>();
 	}
 
-	public InstructionData(SimulationView simulation, List<Variable> variables, List<Function> functions)
+	public InstructionData(SimulationView simulation, List<VariableData> variables, List<FunctionData> functions)
 	{ 
 		this.simulation = simulation;
 		this.variables = variables;
@@ -61,11 +61,11 @@ public class InstructionData
 		return simulation.getBounds();
 	}
 	
-	public List<Variable> getVariables(){
+	public List<VariableData> getVariables(){
 		return variables;
 	}
 	
-	public List<Function> getFunctions(){
+	public List<FunctionData> getFunctions(){
 		return functions;
 	}
 	
@@ -76,8 +76,8 @@ public class InstructionData
 	 * @param variableName The potential variable name
 	 * @return Variable matching to the current name, otherwise null
 	 */
-	public Variable containsVariable(String variableName){
-		for(Variable v: variables){
+	public VariableData containsVariable(String variableName){
+		for(VariableData v: variables){
 			if(v.getName().equals(variableName)){
 				return v;
 			}
@@ -92,8 +92,8 @@ public class InstructionData
 	 * @param functionName The potential function name
 	 * @return Function matching to the current name, otherwise null
 	 */
-	public Function containsFunction(String functionName){
-		for(Function f:functions){
+	public FunctionData containsFunction(String functionName){
+		for(FunctionData f:functions){
 			if(f.getName().equals(functionName)){
 				return f;
 			}
@@ -102,7 +102,7 @@ public class InstructionData
 	}
 	
 	public String getVariableValue(String variableName){
-		for(Variable v: variables){
+		for(VariableData v: variables){
 			if(v.getName().equals(variableName)){
 				return ""+v.getValue();
 			}
@@ -111,7 +111,7 @@ public class InstructionData
 	}
 	
 	public String getFunctionValue(String functionName){
-		for(Function f:functions){
+		for(FunctionData f:functions){
 			if(f.getName().equals(functionName)){
 				return f.getCommands();
 			}
@@ -119,11 +119,11 @@ public class InstructionData
 		return "NO MATCH";
 	}
 	
-	public void addVariable(Variable v){
+	public void addVariable(VariableData v){
 		variables.add(v);
 	}
 	
-	public void addFunction(Function f){
+	public void addFunction(FunctionData f){
 		functions.add(f);
 	}
 }
