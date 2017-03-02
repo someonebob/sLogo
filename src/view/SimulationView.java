@@ -18,6 +18,7 @@ import models.Simulation;
 import tool.FileTool.NewButton;
 import tool.FileTool.OpenButton;
 import tool.SettingsTool.BackgroundColorButton;
+import tool.SettingsTool.PenColorButton;
 import tool.SettingsTool.TurtleImageButton;
 
 /**
@@ -96,6 +97,13 @@ public class SimulationView implements View
 				actor.setImage((Image) arg);
 			}
 		}
+
+		if (o instanceof PenColorButton) {
+			if (arg instanceof Color) {
+				actor.getPen().setColor((Color) arg);
+			}
+		}
+
 	}
 
 	public Bounds getBounds()
