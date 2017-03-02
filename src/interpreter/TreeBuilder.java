@@ -52,9 +52,11 @@ public class TreeBuilder {
 		if(getClassifier() == null){
 			//TODO: Error check
 		}
+		
 		if(getCurrentText().isEmpty()){
 			return new ArrayList<InstructionNode>();
 		}
+		
 		ArrayList<InstructionNode> headNodes = new ArrayList<InstructionNode>();
 		/**
 		 * While there is still text left, continue to iterate through tree and build new node
@@ -68,7 +70,6 @@ public class TreeBuilder {
 	
 	
 	private InstructionNode buildSubTree(){
-		//TODO: Fix current text bug
 		if(getCurrentText().isEmpty()){
 			return null;
 		}

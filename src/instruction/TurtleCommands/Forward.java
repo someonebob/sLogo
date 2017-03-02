@@ -15,7 +15,6 @@ public class Forward extends TurtleCommand{
 		double distance = getArgumentDouble(0);
 		checkNegativeArgumentException(distance);
 		move(distance);
-		System.out.println("I am here");
 		return distance;
 	}
 }
