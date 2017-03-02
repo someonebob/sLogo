@@ -20,7 +20,7 @@ public class For extends Miscellaneous {
 		//TODO: Error throwing
 		getInstructionData().addVariable(counter);
 		double limit = Integer.parseInt(args[2]);
-		while(counter.getValue()<=limit){
+		while(counter.getValue()<limit){
 			executed=1; //at least one loop executed
 			runListCommands(1);
 			counter.setValue(counter.getValue()+Integer.parseInt(args[3]));

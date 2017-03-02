@@ -31,6 +31,7 @@ public class DoTimes extends Miscellaneous {
 		//TODO: Error throwing
 		getInstructionData().addVariable(counter);
 		double limit = Integer.parseInt(args[1]);
+		if(limit <=0) {return executed;}
 		while(counter.getValue()<=limit){
 			executed=1; //at least one loop executed
 			runListCommands(1);
