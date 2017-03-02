@@ -13,6 +13,7 @@ import javafx.beans.property.*;
 public class Function {
 	private StringProperty name;
 	private StringProperty commands;
+	private List<StringProperty> args; //TODO: Implement
 	
 	public Function(String name, String commands){
 		setName(name);
