@@ -48,6 +48,7 @@ public class TreeExecuter
 			args.add(child.getMyRunValue());
 			
 		}
+		System.out.println(head.getMyValue() + " " + head.getMyChildren().size());
 		if(!myClass.findAnyKey(head.getMyValue(), myData).equals("NO MATCH")){
 			//TODO: ERROR CATCHING
 			Instruction i = myClass.generateInstruction(head.getMyValue(), myData, args);

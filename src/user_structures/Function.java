@@ -56,7 +56,7 @@ public class Function {
 		return args;
 	}
 	public void setArgs(List<String> args){
-		argsProperty().setAll(args);
+		argsProperty().addAll(args);
 	}
 	
 	public List<String> getArgs(){

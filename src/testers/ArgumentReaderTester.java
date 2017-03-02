@@ -18,7 +18,7 @@ public class ArgumentReaderTester {
 	}
 	
 	private static void printNumArgs(String type){
-		System.out.println(type + " " + ArgumentReader.getNumArgs(type));
+		//System.out.println(type + " " + ArgumentReader.getNumArgs(type));
 
 	}
 }
