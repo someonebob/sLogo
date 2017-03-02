@@ -17,6 +17,7 @@ import view.ActorView;
  * etc.) It contains helper methods used repeatedly by these Instructions.
  * 
  * @author Matthew Barbano
+ * @author jimmy
  *
  */
 public abstract class TurtleCommand extends Instruction

@@ -1,5 +1,12 @@
 package exceptions;
 
+/**
+ * Subclass of ExecuteException thrown when command is encountered
+ * with inappropriately-valued arguments (such as a negative argument for
+ * forward).
+ * @author Matthew Barbano
+ *
+ */
 public class NonsensicalArgumentException extends ExecuteException{
 	private static final long serialVersionUID = 1L;
 
