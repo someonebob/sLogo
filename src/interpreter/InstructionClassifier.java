@@ -7,7 +7,7 @@ import java.util.Map.Entry;
 import java.util.regex.Pattern;
 
 import instruction.*;
-import util.ResourceToList;
+import util.ResourceToListUtil;
 /**
  * This class performs the reflection necessary to produce instances of each
  * command type without direct statement of the desired class type. This class
@@ -184,9 +184,9 @@ public class InstructionClassifier {
 		mySyntaxList = new ArrayList<Entry<String, Pattern>>();
 		myLanguageList = new ArrayList<Entry<String, Pattern>>();
 		myPathsList = new ArrayList<Entry<String,Pattern>>();
-		ResourceToList.addTerms(mySyntax, mySyntaxList);
-		ResourceToList.addTerms(myLanguage, myLanguageList);
-		ResourceToList.addTerms(myPaths, myPathsList);
+		ResourceToListUtil.addTerms(mySyntax, mySyntaxList);
+		ResourceToListUtil.addTerms(myLanguage, myLanguageList);
+		ResourceToListUtil.addTerms(myPaths, myPathsList);
 	}
 	public String getMyLanguage() {
 		return myLanguage;

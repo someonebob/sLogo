@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import instruction.InstructionData;
-import util.ArgumentReader;
+import util.ArgumentReaderUtil;
 import util.Pair;
 /**
  * Builds a tree of InstructionNodes for
@@ -88,7 +88,7 @@ public class TreeBuilder {
 		if(brackets==null){
 			int numArgs = 0;
 			if(!classification.equals("NO MATCH")){
-				numArgs = ArgumentReader.getNumArgs(classification, data);
+				numArgs = ArgumentReaderUtil.getNumArgs(classification, data);
 			}
 			if(classification.equals("Variable")){
 				
@@ -96,7 +96,7 @@ public class TreeBuilder {
 			
 			if(!classification.equals("NO MATCH")){
 				//TODO: Remove assumption of constant default
-				numArgs = ArgumentReader.getNumArgs(classification, data);
+				numArgs = ArgumentReaderUtil.getNumArgs(classification, data);
 				if(numArgs == -1){
 					try{
 						numArgs = 0;
