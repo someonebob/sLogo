@@ -82,11 +82,13 @@ public class LogoController implements Observer {
 
 		this.stage = stage;
 		stage.setTitle("SLogo");
-		stage.show();
 		stage.setScene(makeScene());
+		stage.setMaximized(true);
+		stage.show();
+		
 	}
 
-	private Scene makeScene() {
+	public Scene makeScene() {
 		this.pane = new BorderPane();
 		pane.setBottom(inputBox.display());
 		pane.setTop(selectionBar.display());

@@ -9,9 +9,9 @@ public class TurtleView extends ActorView
 
 	private PenView pen;
 
-	public TurtleView()
+	public TurtleView(int id)
 	{
-		super(DEFAULT_IMAGE);
+		super(DEFAULT_IMAGE, id);
 		pen = new PenView();
 	}
 
