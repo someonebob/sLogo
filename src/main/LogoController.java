@@ -1,10 +1,10 @@
 package main;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
@@ -31,7 +31,6 @@ import tool.SettingsTool;
 import tool.SettingsTool.LanguageButton;
 import user_structures.FunctionData;
 import user_structures.VariableData;
-import view.InputBox;
 import view.InputBox;
 import view.PageView;
 import view.SavedCommandsView;
@@ -126,7 +125,7 @@ public class LogoController implements Observer {
 	}
 
 	private void executeClickedCommand() {
-		runCommand(inputBox.getPrevious().getSelectionModel().getSelectedItem());
+		inputBox.getConsole().appendText(inputBox.getPrevious().getSelectionModel().getSelectedItem());
 	}
 
 	private void runCommand(String command) {
@@ -193,19 +192,13 @@ public class LogoController implements Observer {
 	}
 
 	private void openFile(File file) {
-		FileReader fr = null;
-		StringBuilder command = new StringBuilder();
-		String line = null;
-		try {
-			fr = new FileReader(file);
-			BufferedReader reader = new BufferedReader(fr);
-			while ((line = reader.readLine()) != null) {
-				command.append(line + "\n");
-				command.delete(command.length()-1, command.length());
-			}
 
-			runCommand(command.toString());
-			fr.close();
+		try {
+
+			String command = new String(Files.readAllBytes(Paths.get(file.getPath())));
+
+			runCommand(command);
+
 
 		} catch (FileNotFoundException e) {
 			System.out.println("Unable to open file");
