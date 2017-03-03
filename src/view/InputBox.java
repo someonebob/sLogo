@@ -3,12 +3,9 @@ package view;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Observable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
@@ -25,7 +22,6 @@ public class InputBox implements View {
 	private TextArea console;
 	private VBox box;
 	private ListView<String> previous;
-	private List<String> history;
 	private int historyIndex = 0;
 	private String preamble = "slogo_team07$ ";
 
@@ -46,7 +42,6 @@ public class InputBox implements View {
 	@Override
 	public void updateData(String arg) {
 		previous.getItems().add(arg);
-		history.add(arg);
 	}
 
 
@@ -76,10 +71,10 @@ public class InputBox implements View {
 		historyIndex = 0;
 	}
 	public void upAction(KeyEvent e) {
-		if (historyIndex <= history.size() - 1) {
+		if (historyIndex <= previous.getItems().size() - 1) {
 			append();
 		}
-		if (historyIndex < history.size() - 1) {
+		if (historyIndex < previous.getItems().size() - 1) {
 			historyIndex++;
 		}
 		e.consume();
@@ -103,7 +98,7 @@ public class InputBox implements View {
 	}
 	private void append() {
 		clearCommand();
-		console.appendText(history.get(history.size() - 1 - historyIndex));
+		console.appendText(previous.getItems().get(previous.getItems().size() - 1 - historyIndex));
 	}
 
 	public InputBox() {
@@ -116,7 +111,6 @@ public class InputBox implements View {
 		console.setOnMouseClicked(e -> console.positionCaret(console.getText().length()));
 		box = new VBox();
 		previous = new ListView<>();
-		history = new ArrayList<>();
 		Label heading = new Label("Previous Commands");
 		
 		heading.setStyle("-fx-font-weight: bold");
@@ -151,9 +145,10 @@ public class InputBox implements View {
 
 	private String convertPrevious() {
 		StringBuilder content = new StringBuilder();
-		for (String s : history) {
+		for (String s : previous.getItems()) {
 			content.append(s + "\n");
 		}
+		content.delete(content.length()-1, content.length());
 		return content.toString();
 	}
 
