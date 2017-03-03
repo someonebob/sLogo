@@ -18,6 +18,8 @@ import interpreter.Interpreter;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import tool.AbstractButton;
@@ -30,6 +32,7 @@ import tool.SettingsTool.LanguageButton;
 import user_structures.FunctionData;
 import user_structures.VariableData;
 import view.InputBox;
+import view.InputBox;
 import view.PageView;
 import view.SavedCommandsView;
 import view.SimulationView;
@@ -40,8 +43,7 @@ import view.WorkspaceView;
  * @author jimmy
  * @author Jesse
  */
-public class LogoController implements Observer
-{
+public class LogoController implements Observer {
 	public final int DISPLAY_WIDTH = 600;
 	public final int DISPLAY_HEIGHT = 600;
 
@@ -61,9 +63,9 @@ public class LogoController implements Observer
 	private FileTool file;
 	private SettingsTool settings;
 	private HelpTool help;
+	private double value;
 
-	public LogoController(Stage stage)
-	{
+	public LogoController(Stage stage) {
 		initiateViews();
 		addTools();
 		initiateObservers();
@@ -85,8 +87,7 @@ public class LogoController implements Observer
 		stage.setScene(makeScene());
 	}
 
-	private Scene makeScene()
-	{
+	private Scene makeScene() {
 		this.pane = new BorderPane();
 		pane.setBottom(inputBox.display());
 		pane.setTop(selectionBar.display());
@@ -94,65 +95,62 @@ public class LogoController implements Observer
 		pane.setCenter(simulation.display());
 		pane.setRight(userCommands.display());
 
-		inputBox.getField().setOnAction(e -> {
-			executeCommand();
-			inputBox.getField().clear();
-		});
+		inputBox.getConsole().setOnKeyPressed(e -> executeCommand(e));
 
-		inputBox.display().setOnMouseClicked(e -> {
-			executeClickedCommand();
-		});
+		inputBox.getPrevious().setOnMouseClicked(e -> executeClickedCommand());
 
 		return new Scene(pane, DISPLAY_WIDTH, DISPLAY_HEIGHT);
 	}
 
-	private void executeCommand()
-	{
+	private void executeCommand(KeyEvent e) {
+		if (e.getCode() == KeyCode.ENTER) {
+			inputBox.enterAction(e);
 
-		String input = inputBox.getField().getText();
+			if (inputBox.getCurrentCommand() != null) {
+				runCommand(inputBox.getCurrentCommand());
 
-		if (input != null) {
-			runCommand(input);
-
-			// Do if command is valid
-			inputBox.updateData(input);
-
+			}
+			inputBox.getConsole().appendText("\n" + Double.toString(value));
+			inputBox.getConsole().appendText("\n" + inputBox.getPreamble());
+		}
+		if (e.getCode() == KeyCode.UP) {
+			inputBox.upAction(e);
+		}
+		if (e.getCode() == KeyCode.DOWN) {
+			inputBox.downAction(e);
+		}
+		if (e.getCode() == KeyCode.LEFT || e.getCode() == KeyCode.BACK_SPACE) {
+			inputBox.protectPreamble(e);
 		}
 
 	}
 
-	private void executeClickedCommand()
-	{
-		if (inputBox.getClickedCommands().size() > 0) {
-			runCommand(inputBox.getClickedCommands().pop());
-		}
+	private void executeClickedCommand() {
+		runCommand(inputBox.getPrevious().getSelectionModel().getSelectedItem());
 	}
 
-	private void runCommand(String command)
-	{
+	private void runCommand(String command) {
 		InstructionData data = new InstructionData(simulation, variables, functions);
 		// TODO: make function to get language
 		try {
 			interpret = new Interpreter(data, language);
-			interpret.parseAndRun(command);
+			value = interpret.parseAndRun(command);
 			simulation.step();
+			inputBox.updateData(command);
 		} catch (SLogoException exception) {
 			exception.displayAlert();
 		}
 	}
 
-	public void addPage(PageView page)
-	{
+	public void addPage(PageView page) {
 		this.pages.add(page);
 	}
 
-	public void setSimulation(SimulationView simulation)
-	{
+	public void setSimulation(SimulationView simulation) {
 		this.simulation = simulation;
 	}
 
-	private void initiateViews()
-	{
+	private void initiateViews() {
 		pages = new ArrayList<PageView>();
 		simulation = new SimulationView();
 		selectionBar = new SelectionBar();
@@ -161,16 +159,14 @@ public class LogoController implements Observer
 		userCommands = new SavedCommandsView();
 	}
 
-	private void addTools()
-	{
+	private void addTools() {
 		file = new FileTool(stage);
 		settings = new SettingsTool(stage);
 		help = new HelpTool(stage);
 		selectionBar.addAllTools(file, settings, help);
 	}
 
-	private void initiateObservers()
-	{
+	private void initiateObservers() {
 		for (AbstractButton ab : file.getButtons()) {
 			ab.addObserver(simulation);
 			ab.addObserver(inputBox);
@@ -185,8 +181,7 @@ public class LogoController implements Observer
 	}
 
 	@Override
-	public void update(Observable o, Object arg)
-	{
+	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub
 		if (o instanceof OpenButton) {
 			openFile((File) arg);
@@ -197,8 +192,7 @@ public class LogoController implements Observer
 		}
 	}
 
-	private void openFile(File file)
-	{
+	private void openFile(File file) {
 		FileReader fr = null;
 		StringBuilder command = new StringBuilder();
 		String line = null;
@@ -207,6 +201,7 @@ public class LogoController implements Observer
 			BufferedReader reader = new BufferedReader(fr);
 			while ((line = reader.readLine()) != null) {
 				command.append(line + "\n");
+				inputBox.updateData(line);
 			}
 
 			runCommand(command.toString());
