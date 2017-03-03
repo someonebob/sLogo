@@ -201,7 +201,7 @@ public class LogoController implements Observer {
 			BufferedReader reader = new BufferedReader(fr);
 			while ((line = reader.readLine()) != null) {
 				command.append(line + "\n");
-				inputBox.updateData(line);
+				command.delete(command.length()-1, command.length());
 			}
 
 			runCommand(command.toString());

@@ -29,86 +29,6 @@ public class InputBox implements View {
 	private int historyIndex = 0;
 	private String preamble = "slogo_team07$ ";
 
-	public InputBox() {
-		initiateItems();
-	}
-
-	public TextArea getConsole() {
-		return console;
-	}
-
-	public String getPreamble() {
-		return preamble;
-	}
-
-	public String getCurrentCommand() {
-		// returns text between last instance of preamble and end
-		return console.getText(console.getText().lastIndexOf(preamble) + preamble.length(), console.getText().length());
-	}
-
-	public ListView<String> getPrevious() {
-		return previous;
-	}
-
-	private void append() {
-		clearCommand();
-		console.appendText(history.get(history.size() - 1 - historyIndex));
-	}
-
-	public void upAction(KeyEvent e) {
-		if (historyIndex <= history.size() - 1) {
-			append();
-		}
-		if (historyIndex < history.size() - 1) {
-			historyIndex++;
-		}
-		e.consume();
-	}
-
-	public void downAction(KeyEvent e) {
-		if (historyIndex == 0) {
-			clearCommand();
-			return;
-		}
-		historyIndex--;
-		append();
-		e.consume();
-	}
-
-	public void enterAction(KeyEvent e) {
-		e.consume();
-		historyIndex = 0;
-	}
-
-	public void protectPreamble(KeyEvent e) {
-		int pos = console.getText().lastIndexOf(preamble) + preamble.length();
-		if (console.getSelectedText().length() != 0 || pos == console.getCaretPosition()) {
-			e.consume();
-		}
-	}
-
-	private void initiateItems() {
-		root = new BorderPane();
-		console = new TextArea();
-		console.setOnMouseClicked(e -> console.positionCaret(console.getText().length()));
-		box = new VBox();
-		previous = new ListView<>();
-		history = new ArrayList<>();
-		Label heading = new Label("Previous Commands");
-		heading.setStyle("-fx-font-weight: bold");
-		box.setAlignment(Pos.CENTER);
-		box.getChildren().addAll(heading, previous);
-
-		console.appendText(preamble);
-		console.setFont(Font.font("Courier new"));
-		previous.setPrefWidth(200);
-		previous.setFocusTraversable(false);
-		root.setMaxHeight(200);
-
-		root.setLeft(box);
-		root.setCenter(console);
-	}
-
 	@Override
 	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub
@@ -129,8 +49,88 @@ public class InputBox implements View {
 		history.add(arg);
 	}
 
+
+	public TextArea getConsole() {
+		return console;
+	}
+	
+	public ListView<String> getPrevious() {
+		return previous;
+	}
+	
+	public String getPreamble() {
+		return preamble;
+	}
+
+	public String getCurrentCommand() {
+		// returns text between last instance of preamble and end
+		return console.getText(console.getText().lastIndexOf(preamble) + preamble.length(), console.getText().length());
+	}
+
 	public void clear() {
 		console.setText(preamble);
+	}
+	
+	public void enterAction(KeyEvent e) {
+		e.consume();
+		historyIndex = 0;
+	}
+	public void upAction(KeyEvent e) {
+		if (historyIndex <= history.size() - 1) {
+			append();
+		}
+		if (historyIndex < history.size() - 1) {
+			historyIndex++;
+		}
+		e.consume();
+	}
+
+	public void downAction(KeyEvent e) {
+		if (historyIndex == 0) {
+			clearCommand();
+			return;
+		}
+		historyIndex--;
+		append();
+		e.consume();
+	}
+
+	public void protectPreamble(KeyEvent e) {
+		int pos = console.getText().lastIndexOf(preamble) + preamble.length();
+		if (console.getSelectedText().length() != 0 || pos == console.getCaretPosition()) {
+			e.consume();
+		}
+	}
+	private void append() {
+		clearCommand();
+		console.appendText(history.get(history.size() - 1 - historyIndex));
+	}
+
+	public InputBox() {
+		initiateItems();
+	}
+
+	private void initiateItems() {
+		root = new BorderPane();
+		console = new TextArea();
+		console.setOnMouseClicked(e -> console.positionCaret(console.getText().length()));
+		box = new VBox();
+		previous = new ListView<>();
+		history = new ArrayList<>();
+		Label heading = new Label("Previous Commands");
+		
+		heading.setStyle("-fx-font-weight: bold");
+		box.setAlignment(Pos.CENTER);
+		box.getChildren().addAll(heading, previous);
+
+		console.appendText(preamble);
+		console.setFont(Font.font("Courier new"));
+		previous.setPrefWidth(200);
+		previous.setFocusTraversable(false);
+		root.setMaxHeight(200);
+
+		root.setLeft(box);
+		root.setCenter(console);
 	}
 
 	private void clearCommand() {
@@ -151,7 +151,7 @@ public class InputBox implements View {
 
 	private String convertPrevious() {
 		StringBuilder content = new StringBuilder();
-		for (String s : previous.getItems()) {
+		for (String s : history) {
 			content.append(s + "\n");
 		}
 		return content.toString();
