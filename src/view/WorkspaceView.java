@@ -72,8 +72,6 @@ public class WorkspaceView implements PageView
 		table.getColumns().setAll(variables, values);
 
 		edit = new Button("Edit");
-		// magic number to make it line up with tabs
-		edit.setPrefHeight(38);
 		pane.setTop(edit);
 		pane.setCenter(table);
 

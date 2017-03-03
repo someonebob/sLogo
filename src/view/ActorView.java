@@ -7,10 +7,12 @@ import javafx.animation.SequentialTransition;
 import javafx.animation.TranslateTransition;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
+import javafx.scene.control.SelectionModel;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 import models.Actor;
+import user_structures.ID;
 
 /**
  * 
@@ -28,11 +30,14 @@ public abstract class ActorView implements View
 	private Actor actor;
 	private ImageView image;
 	private SequentialTransition actorMove;
+	private ID id;
 
-	public ActorView(String imageString)
+	public ActorView(String imageString, int id)
 	{
 		actor = new Actor();
 		image = new ImageView();
+		this.id = new ID(id);
+
 		actorMove = new SequentialTransition();
 		actorMove.setNode(this.getImage());
 		// scale the image
@@ -43,6 +48,10 @@ public abstract class ActorView implements View
 		this.setHeading(STARTING_HEADING);
 		// initial rotation
 		actorMove.play();
+	}
+	
+	public ID getID(){
+		return id;
 	}
 
 	public void step()
@@ -92,7 +101,7 @@ public abstract class ActorView implements View
 	{
 		return image;
 	}
-
+	
 	private void loadImage(String stringImage)
 	{
 		Image image = new Image(getClass().getClassLoader().getResourceAsStream(stringImage));

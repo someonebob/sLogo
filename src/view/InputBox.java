@@ -6,6 +6,9 @@ import java.io.IOException;
 import java.util.Observable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
@@ -66,6 +69,10 @@ public class InputBox implements View {
 		console.setText(preamble);
 	}
 	
+	public void setFocus(){
+		console.requestFocus();
+	}
+	
 	public void enterAction(KeyEvent e) {
 		e.consume();
 		historyIndex = 0;
@@ -109,6 +116,14 @@ public class InputBox implements View {
 		root = new BorderPane();
 		console = new TextArea();
 		console.setOnMouseClicked(e -> console.positionCaret(console.getText().length()));
+		console.setWrapText(true);
+		console.textProperty().addListener(new ChangeListener<Object>() {
+		    @Override
+		    public void changed(ObservableValue<?> observable, Object oldValue, Object newValue) {
+		    	//scroll to bottom
+		        console.setScrollTop(Double.MAX_VALUE);
+		    }
+		});
 		box = new VBox();
 		previous = new ListView<>();
 		Label heading = new Label("Previous Commands");
