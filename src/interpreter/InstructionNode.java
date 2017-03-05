@@ -16,7 +16,7 @@ public class InstructionNode {
 	private static final String RESOURCE_ARGUMENTS_NAME = "WrongArgumentNumberMessage";
 	
 	private String myClassification; // The String representing the type (Forward, Equal, Comment)
-	private String myValue; //String command
+	private String myCommand; //String command
 	private List<InstructionNode> myChildren;
 	private String myRunValue; //This is used for tree traversal, to check if a command has been excuted already
 	private boolean isExecutable; //Used for list/ group creation
@@ -34,7 +34,7 @@ public class InstructionNode {
 			throw new WrongArgumentNumberException(RESOURCE_ARGUMENTS_NAME);
 		}
 		myClassification = clss;
-		myValue = value;
+		myCommand = value;
 		myChildren = children;
 		myRunValue = "NO RUN"; //default
 		isExecutable = true;
@@ -50,42 +50,19 @@ public class InstructionNode {
 	}
 	
 	private String recursivePrint(InstructionNode node, String curr){
-		curr += node.getMyValue() + " ";
+		curr += node.getMyCommand() + " ";
 		for(InstructionNode child: node.getMyChildren()){
 			curr = recursivePrint(child, curr);
 		}
 		return curr;
 	}
-	
-	/**
-	 * 
-	 * 
-	 * TODO
-	 * 
-	 * Pieces together a String from the current Node using the current Node
-	 * and all of its NON-EXECUTED children.
-	 * @return String representing the entire Node as nonexecuted instructions
-	 */
-	/**public String getMyRunText() {
-		String inst = recursiveRunPrint(this, "");
-		return inst.substring(0, inst.length()-1);//Exclude final space
-	}
-	
-	private String recursiveRunPrint(InstructionNode node, String curr){
-		if(!node.hasRun())
-			curr += node.getMyValue() + " ";
-		for(InstructionNode child: node.getMyChildren()){
-			curr = recursiveRunPrint(child, curr);
-		}
-		return curr;
-	}*/
-	/**
-	 * Return only the head value (current node)
+
+	 /** Return only the head value (current node)
 	 * 
 	 * @return The word contained in this node (e.g., 50, fd, back)
 	 */
-	public String getMyValue() {
-		return myValue;
+	public String getMyCommand() {
+		return myCommand;
 	}
 	/**
 	 * Get all of the nodes attached to the current InstructionNode. Allows for
@@ -102,8 +79,8 @@ public class InstructionNode {
 	public void setMyClassification(String myClassification) {
 		this.myClassification = myClassification;
 	}
-	public void setMyValue(String myValue) {
-		this.myValue = myValue;
+	public void setMyCommand(String myValue) {
+		this.myCommand = myValue;
 	}
 	public void setMyChildren(List<InstructionNode> myChildren) {
 		this.myChildren = myChildren;
@@ -141,6 +118,14 @@ public class InstructionNode {
 	
 	public int getProperNumArgs(){
 		return properNumArgs;
+	}
+	
+	public void setExecutable(boolean e){
+		isExecutable = e;
+	}
+	
+	public boolean getExecutable(){
+		return isExecutable;
 	}
 	
 }
