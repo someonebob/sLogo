@@ -6,6 +6,10 @@ package interpreter;
 import java.util.List;
 
 import instruction.*;
+import interpreter.builders.TreeBuilder;
+import interpreter.classification.InstructionClassifier;
+import interpreter.execute.TreeExecuter;
+import interpreter.misc.InstructionNode;
 
 /**
  * This interface will use a variety of resource files to transform An input
@@ -21,9 +25,9 @@ public class Interpreter {
 	private InstructionData myData;
 	private InstructionClassifier myClassifier;
 	
-	public Interpreter(InstructionData data, String language) {
+	public Interpreter(InstructionData data) {
 		myData = data;
-		myClassifier = new InstructionClassifier(language);
+		myClassifier = new InstructionClassifier(data.getLanguage());
 	}
 
 	/**
@@ -35,12 +39,23 @@ public class Interpreter {
 	 *            Input line from user
 	 */
 	public double parseAndRun(String instruction) {
-		double toRet =0;
 		List<InstructionNode> headNodes = parse(instruction);
+		return run(headNodes);
+	}
+	
+
+	/**
+	 * Just execution functionality, separated from parsing
+	 * @param headNodes
+	 * @return
+	 */
+	public double run(List<InstructionNode> headNodes) {
+		double toRet =0;
 		TreeExecuter executer = new TreeExecuter(getMyData(), getMyClassifier());
 		toRet = executeTree(executer, headNodes);
 		return toRet;
 	}
+
 
 	/**
 	 * Takes a String and converts it into a tree, with an InstructionNode at
@@ -53,7 +68,7 @@ public class Interpreter {
 	 *            The String command passed in by the front-end
 	 * @return Root node of the instruction, read from toParse
 	 */
-	private List<InstructionNode> parse(String toParse) {
+	public List<InstructionNode> parse(String toParse) {
 		TreeBuilder builder = new TreeBuilder(toParse, getMyClassifier(), getMyData());
 		List<InstructionNode> headNodes = builder.buildTree();
 		return headNodes;

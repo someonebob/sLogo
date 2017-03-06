@@ -1,5 +1,8 @@
-package interpreter;
+package interpreter.builders;
 import java.util.List;
+
+import interpreter.clean.InstructionSplitter;
+import interpreter.misc.InstructionNode;
 import util.Pair;
 /**
  * This is a class dedicated to the creation of 
@@ -8,27 +11,23 @@ import util.Pair;
  * @author maddiebriere
  *
  */
-public class ListTreeBuilder {
+public class ListBuilderUtil {
+	private final static String END = "ListEnd";
+	private final static String START = "ListStart";
 	
-	public static String buildList(Pair brackets, List<InstructionNode> nodes, InstructionNode head, String current){
+	public static String construct(List<InstructionNode> nodes, InstructionNode head, String current) {
 
 		String value = "";
-		boolean endHit = false;
 		while(!nodes.isEmpty())
 		{
 			String name = nodes.get(0).getMyClassification();
-			String end = brackets.getMyB();
 			current = InstructionSplitter.removeFirstItem(current);
-			if(name.equals(end)){
-				endHit = true;
+			if(name.equals(END)){
 				break;
 			}
-			value += nodes.remove(0).getMyValue() + " ";
+			value += nodes.remove(0).getMyCommand() + " ";
 		}
 		value = removeSpace(value);
-		if(!endHit){
-			//TODO: Error handling
-		}
 		head.setMyRunValue(value);
 		nodes.remove(0); //remove final bracket (closing)
 		return current;
@@ -40,4 +39,14 @@ public class ListTreeBuilder {
 		}
 		return value;
 	}
+
+	public static String getStartBracket() {
+		return START;
+	}
+
+	public static String getEndBracket() {
+		return END;
+	}
+
+
 }

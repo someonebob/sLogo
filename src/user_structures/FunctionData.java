@@ -13,7 +13,7 @@ import javafx.beans.property.StringProperty;
  * @author maddiebriere
  *
  */
-public class FunctionData
+public class FunctionData implements Comparable<FunctionData>
 {
 	private StringProperty name;
 	private StringProperty commands;
@@ -62,7 +62,6 @@ public class FunctionData
 		return commandsProperty().get();
 	}
 	
-	//TODO: Make observable
 	public List<String> argsProperty(){
 		if(args == null){
 			args = new ArrayList<String>();
@@ -75,6 +74,26 @@ public class FunctionData
 	
 	public List<String> getArgs(){
 		return argsProperty();
+	}
+
+	@Override
+	public int compareTo(FunctionData o) {
+		if(this == o){
+			return 0;
+		}
+		return this.getName().compareTo(o.getName());
+	}
+	
+	@Override
+	public boolean equals(Object o){
+		if (!(o instanceof FunctionData)){
+			return false;
+			//TODO: Error handling
+		}
+		if(this == o){
+			return true;
+		}
+		return this.getName().equals(((FunctionData)o).getName());
 	}
 
 }

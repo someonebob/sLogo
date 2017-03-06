@@ -205,9 +205,10 @@ public class Controller implements Observer {
 	}
 	
 	private void runCommand(InputBox inputBox, String command){
-		InstructionData data = new InstructionData(simulationMap.get(currentTab.get()), variableMap.get(currentTab.get()), functionMap.get(currentTab.get()));
+		InstructionData data = new InstructionData(simulationMap.get(currentTab.get()), variableMap.get(currentTab.get()), 
+				functionMap.get(currentTab.get()), language);
 		try {
-			interpreter = new Interpreter(data, language);
+			interpreter = new Interpreter(data);
 			printValue = interpreter.parseAndRun(command);
 			simulationMap.get(currentTab.get()).step();
 			inputBox.updateData(command);

@@ -1,4 +1,4 @@
-package interpreter;
+package interpreter.classification;
 import java.util.List;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 
 import exceptions.ReflectionException;
 import instruction.*;
-import util.ResourceToListUtil;
+import interpreter.util.ResourceToListUtil;
 
 /**
  * This class performs the reflection necessary to produce instances of each
@@ -50,7 +50,7 @@ public class InstructionClassifier {
      * @param text
      * @return matching Key
      */
-    public String findShortcutKey(String text, InstructionData data) {
+    public String getInstructionType(String text, InstructionData data) {
         /**
          * Default to higher classifiers if only possibility
          */
@@ -141,7 +141,7 @@ public class InstructionClassifier {
 	 * @return Instruction object corresponding to String
 	 */
 	public Instruction generateInstruction(String comm, InstructionData  data, List<String> args) {
-		String classification = findShortcutKey(comm, data);
+		String classification = getInstructionType(comm, data);
 		String classPath;
 		classPath = findAddressKey(classification);
 		return buildObject(classPath, comm, data, args);
