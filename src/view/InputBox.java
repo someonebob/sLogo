@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
@@ -47,17 +48,12 @@ public class InputBox implements View {
 		previous.getItems().add(arg);
 	}
 
-
-	public TextArea getConsole() {
-		return console;
+	public void assignOnEnterCommand(EventHandler<? super KeyEvent> e){
+		console.setOnKeyPressed(e);
 	}
 	
-	public ListView<String> getPrevious() {
-		return previous;
-	}
-	
-	public String getPreamble() {
-		return preamble;
+	public void appendPreamble(){
+		appendText("\n" + preamble);
 	}
 
 	public String getCurrentCommand() {
@@ -73,13 +69,17 @@ public class InputBox implements View {
 		console.requestFocus();
 	}
 	
+	public void appendText(String s){
+		console.appendText(s);
+	}
+	
 	public void enterAction(KeyEvent e) {
 		e.consume();
 		historyIndex = 0;
 	}
 	public void upAction(KeyEvent e) {
 		if (historyIndex <= previous.getItems().size() - 1) {
-			append();
+			appendPastCommand();
 		}
 		if (historyIndex < previous.getItems().size() - 1) {
 			historyIndex++;
@@ -93,7 +93,7 @@ public class InputBox implements View {
 			return;
 		}
 		historyIndex--;
-		append();
+		appendPastCommand();
 		e.consume();
 	}
 
@@ -103,7 +103,7 @@ public class InputBox implements View {
 			e.consume();
 		}
 	}
-	private void append() {
+	private void appendPastCommand() {
 		clearCommand();
 		console.appendText(previous.getItems().get(previous.getItems().size() - 1 - historyIndex));
 	}
@@ -136,8 +136,9 @@ public class InputBox implements View {
 		console.setFont(Font.font("Courier new"));
 		previous.setPrefWidth(200);
 		previous.setFocusTraversable(false);
+		previous.setOnMouseClicked(e -> appendText(previous.getSelectionModel().getSelectedItem()));
+		
 		root.setMaxHeight(200);
-
 		root.setLeft(box);
 		root.setCenter(console);
 	}

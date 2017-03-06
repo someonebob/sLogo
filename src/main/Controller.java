@@ -13,7 +13,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.ResourceBundle;
 
 import exceptions.SLogoException;
 import instruction.InstructionData;
@@ -44,10 +43,7 @@ import view.SavedCommandsView;
 import view.SimulationView;
 import view.WorkspaceView;
 
-public class Controller implements Observer {
-	
-	//public static final ResourceBundle RESOURCES = ResourceBundle.getBundle("resources/userinterface/default");
-	
+public class Controller implements Observer {	
 	private TabPane root;
 	private ObjectProperty<Tab> currentTab;
 	private Map<Tab, SelectionBar> selectionBarMap;
@@ -61,11 +57,14 @@ public class Controller implements Observer {
 	
 	private Interpreter interpreter;
 	private Stage stage;
-	private String language = "English"; //RESOURCES.getString("language");
 	private double printValue;
+	private Defaults defaults;
+	private String language;
 	
-	public Controller(Stage stage){
+	public Controller(Stage stage, Defaults defaults){
 		this.stage = stage;
+		this.defaults = defaults;
+		language = defaults.language();
 		setupItems();
 		newTab();
 		//currentTab is always the one selected
@@ -79,7 +78,6 @@ public class Controller implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
 		if(o instanceof NewButton){
 			newTab();
 		}
@@ -111,7 +109,7 @@ public class Controller implements Observer {
 		root.getSelectionModel().select(tab);;
 		tab.setText("untitled.logo");
 		BorderPane pane = new BorderPane();
-		SimulationView simulation = new SimulationView();
+		SimulationView simulation = new SimulationView(defaults);
 		InputBox inputBox = new InputBox();
 		inputBox.setFocus();
 		WorkspaceView workspace = new WorkspaceView();
@@ -173,8 +171,7 @@ public class Controller implements Observer {
 	}
 	
 	private void setupCommands(InputBox inputBox){
-		inputBox.getConsole().setOnKeyPressed(e -> executeCommand(e, inputBox));
-		inputBox.getPrevious().setOnMouseClicked(e -> executeClickedCommand(inputBox));
+		inputBox.assignOnEnterCommand(e -> executeCommand(e, inputBox));
 	}
 	
 	private void executeCommand(KeyEvent e, InputBox inputBox){
@@ -185,8 +182,8 @@ public class Controller implements Observer {
 				runCommand(inputBox, inputBox.getCurrentCommand());
 
 			}
-			inputBox.getConsole().appendText("\n" + Double.toString(printValue));
-			inputBox.getConsole().appendText("\n" + inputBox.getPreamble());
+			inputBox.appendText("\n" + Double.toString(printValue));
+			inputBox.appendPreamble();
 		}
 		if (e.getCode() == KeyCode.UP) {
 			inputBox.upAction(e);
@@ -198,12 +195,7 @@ public class Controller implements Observer {
 			inputBox.protectPreamble(e);
 		}
 	}
-	
-	private void executeClickedCommand(InputBox inputBox){
-		inputBox.getConsole().appendText(inputBox.getPrevious().getSelectionModel().getSelectedItem());
 
-	}
-	
 	private void runCommand(InputBox inputBox, String command){
 		InstructionData data = new InstructionData(simulationMap.get(currentTab.get()), variableMap.get(currentTab.get()), functionMap.get(currentTab.get()));
 		try {

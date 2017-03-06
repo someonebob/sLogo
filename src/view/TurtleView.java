@@ -5,13 +5,12 @@ import javafx.scene.Node;
 
 public class TurtleView extends ActorView
 {
-	public static final String DEFAULT_IMAGE = "Default.png";
 
 	private PenView pen;
 
-	public TurtleView(int id)
+	public TurtleView(String imageString, int id)
 	{
-		super(DEFAULT_IMAGE, id);
+		super(imageString, id);
 		pen = new PenView();
 	}
 
