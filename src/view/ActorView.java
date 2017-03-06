@@ -11,6 +11,7 @@ import javafx.scene.control.SelectionModel;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
+import main.Defaults;
 import models.Actor;
 import user_structures.ID;
 
@@ -32,7 +33,7 @@ public abstract class ActorView implements View
 	private SequentialTransition actorMove;
 	private ID id;
 
-	public ActorView(String imageString, int id)
+	public ActorView(Defaults defaults, int id)
 	{
 		actor = new Actor();
 		image = new ImageView();
@@ -43,7 +44,7 @@ public abstract class ActorView implements View
 		// scale the image
 		image.setFitHeight(ACTOR_HEIGHT);
 		image.setPreserveRatio(true);
-		loadImage(imageString);
+		loadImage(defaults.image());
 		// start facing up
 		this.setHeading(STARTING_HEADING);
 		// initial rotation

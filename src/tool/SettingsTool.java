@@ -38,7 +38,7 @@ public class SettingsTool extends Tool
 	}
 
 	@Override
-	public List<AbstractButton> getButtons()
+	protected List<AbstractButton> getButtons()
 	{
 		return buttons;
 
@@ -104,6 +104,7 @@ public class SettingsTool extends Tool
 		public DefaultButton()
 		{
 			super(new MenuItem("Set Defaults"));
+			this.getItem().setOnAction(e -> new DefaultChooser());
 		}
 	}
 

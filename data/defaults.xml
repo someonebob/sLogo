@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <defaults>
 	<background>white</background>
-	<image>deafult.png</image>
+	<pen>black</pen>
+	<image>default.png</image>
 	<numTurtles>1</numTurtles>
 	<language>English</language>
 </defaults>

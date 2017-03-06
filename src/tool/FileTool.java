@@ -37,7 +37,7 @@ public class FileTool extends Tool
 	
 
 	@Override
-	public List<AbstractButton> getButtons() {
+	protected List<AbstractButton> getButtons() {
 		return buttons;
 	}
 	

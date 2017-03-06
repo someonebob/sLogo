@@ -158,16 +158,12 @@ public class Controller implements Observer {
 	}
 
 	private void setupObservers(SimulationView simulation, InputBox inputBox, FileTool file, SettingsTool settings){
-		for (AbstractButton ab : file.getButtons()) {
-			ab.addObserver(simulation);
-			ab.addObserver(inputBox);
-			ab.addObserver(this);
-		}
-
-		for (AbstractButton ab : settings.getButtons()) {
-			ab.addObserver(simulation);
-			ab.addObserver(this);
-		}
+		file.addObservers(simulation);
+		file.addObservers(inputBox);
+		file.addObservers(this);
+		
+		settings.addObservers(simulation);
+		settings.addObservers(this);
 	}
 	
 	private void setupCommands(InputBox inputBox){

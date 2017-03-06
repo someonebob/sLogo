@@ -195,7 +195,7 @@ public class SimulationView implements View {
 	}
 
 	public void newActor() {
-		TurtleView actor = new TurtleView(defaults.image(),id);
+		TurtleView actor = new TurtleView(defaults,id);
 		id++;
 		actor.getPen().getCanvas().toBack();
 		actor.getPen().getCanvas().widthProperty().bind(root.widthProperty());

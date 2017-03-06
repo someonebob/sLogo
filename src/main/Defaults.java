@@ -5,12 +5,14 @@ import javafx.scene.paint.Paint;
 
 public final class Defaults {
 	private Paint background;
+	private Paint pen;
 	private String image;
 	private int numTurtles;
 	private String language;
 	
-	public Defaults(String color, String image, int numTurtles, String language){
-		background = Color.web(color);
+	public Defaults(String background, String pen, String image, int numTurtles, String language){
+		this.background = Color.web(background);
+		this.pen = Color.web(pen);
 		this.image = image;
 		this.numTurtles = numTurtles;
 		this.language= language;
@@ -18,6 +20,9 @@ public final class Defaults {
 	}
 	public Paint background(){
 		return background;
+	}
+	public Paint pen(){
+		return pen;
 	}
 	public String image(){
 		return image;
