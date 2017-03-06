@@ -21,7 +21,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import tool.FileTool.SaveButton;
 
-public class InputBox implements View {
+public class SingleLineInputBox implements View {
 	private BorderPane root;
 	private TextArea console;
 	private VBox box;
@@ -108,7 +108,7 @@ public class InputBox implements View {
 		console.appendText(previous.getItems().get(previous.getItems().size() - 1 - historyIndex));
 	}
 
-	public InputBox() {
+	public SingleLineInputBox() {
 		initiateItems();
 	}
 
@@ -155,7 +155,7 @@ public class InputBox implements View {
 			fw.write(convertPrevious());
 			fw.close();
 		} catch (IOException e) {
-			Logger.getLogger(InputBox.class.getName()).log(Level.SEVERE, null, e);
+			Logger.getLogger(SingleLineInputBox.class.getName()).log(Level.SEVERE, null, e);
 		}
 	}
 
