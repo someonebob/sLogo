@@ -1,4 +1,4 @@
-package interpreter;
+package interpreter.execute;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,6 +7,8 @@ import exceptions.InvalidCommandException;
 import exceptions.WrongArgumentNumberException;
 import instruction.Instruction;
 import instruction.InstructionData;
+import interpreter.classification.InstructionClassifier;
+import interpreter.misc.InstructionNode;
 
 /**
  * Class used to traverse tree and produce runnable instructions. Carries out
@@ -92,6 +94,8 @@ public class TreeExecuter
 	
 	private List<String> buildArguments(InstructionNode head){
 		ArrayList<String> args = new ArrayList<String>();
+		
+		//Null child here somewhere
 		
 		for (InstructionNode child : head.getMyChildren()) {
 			if (!child.hasRun()) {

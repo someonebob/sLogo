@@ -1,4 +1,4 @@
-package util;
+package interpreter.util;
 
 import instruction.InstructionData;
 

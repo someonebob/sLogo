@@ -28,7 +28,7 @@ public class GroupStart extends Instruction {
 	//Repeated TODO: Fix
 	private double runValueParse() {
 		//TODO Need to change when decide on way to set language (possibly through InstructionData)
-		Interpreter listInterpreter = new Interpreter(getInstructionData(), "English");
+		Interpreter listInterpreter = new Interpreter(getInstructionData());
 		return listInterpreter.parseAndRun(getArgumentString(0));
 	}
 

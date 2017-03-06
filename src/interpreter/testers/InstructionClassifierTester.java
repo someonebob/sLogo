@@ -1,11 +1,11 @@
-package testers;
+package interpreter.testers;
 
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.regex.Pattern;
 
 import instruction.Instruction;
-import interpreter.InstructionClassifier;
+import interpreter.classification.InstructionClassifier;
 
 public class InstructionClassifierTester {
 

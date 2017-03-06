@@ -1,4 +1,4 @@
-package interpreter;
+package interpreter.classification;
 import java.util.List;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 
 import exceptions.ReflectionException;
 import instruction.*;
-import util.ResourceToListUtil;
+import interpreter.util.ResourceToListUtil;
 
 /**
  * This class performs the reflection necessary to produce instances of each

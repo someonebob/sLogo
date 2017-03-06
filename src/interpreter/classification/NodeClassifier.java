@@ -1,8 +1,10 @@
-package interpreter;
+package interpreter.classification;
 
 import java.util.HashSet;
 import java.util.Set;
 
+import interpreter.builders.GroupBuilderUtil;
+import interpreter.builders.ListBuilderUtil;
 import util.Pair;
 
 public class NodeClassifier {
@@ -10,10 +12,10 @@ public class NodeClassifier {
 	public static final String NO_MATCH = "NO MATCH";
 	
 	private static Set<Pair> populateBrackets(){
-		String gstart = GroupTreeBuilder.getStartBracket();
-		String gend = GroupTreeBuilder.getStartBracket();
-		String lstart = ListTreeBuilder.getStartBracket();
-		String lend = ListTreeBuilder.getEndBracket();
+		String gstart = GroupBuilderUtil.getStartBracket();
+		String gend = GroupBuilderUtil.getStartBracket();
+		String lstart = ListBuilderUtil.getStartBracket();
+		String lend = ListBuilderUtil.getEndBracket();
 		Set<Pair> myBrackets = new HashSet<Pair>();
 		myBrackets.add(new Pair(lstart, lend));
 		myBrackets.add(new Pair(gstart, gend));
@@ -40,11 +42,11 @@ public class NodeClassifier {
 	}
 	
 	public static boolean isList(String name){
-		return name.equals(ListTreeBuilder.getStartBracket());
+		return name.equals(ListBuilderUtil.getStartBracket());
 	}
 	
 	public static boolean isGroup(String name){
-		return name.equals(GroupTreeBuilder.getStartBracket());
+		return name.equals(GroupBuilderUtil.getStartBracket());
 	}
 	
 	public static boolean isUnknown(String name){

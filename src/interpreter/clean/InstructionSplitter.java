@@ -1,9 +1,11 @@
-package interpreter;
+package interpreter.clean;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 import instruction.InstructionData;
+import interpreter.classification.InstructionClassifier;
+import interpreter.misc.InstructionNode;
 /**
  * Purely a utility class, used for purposes of splitting an input line and
  * returning strings or Instructions from input

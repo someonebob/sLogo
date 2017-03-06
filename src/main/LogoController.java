@@ -131,10 +131,10 @@ public class LogoController implements Observer {
 	}
 
 	private void runCommand(String command) {
-		InstructionData data = new InstructionData(simulation, variables, functions);
+		InstructionData data = new InstructionData(simulation, variables, functions, language);
 		// TODO: make function to get language
 		try {
-			interpret = new Interpreter(data, language);
+			interpret = new Interpreter(data);
 			value = interpret.parseAndRun(command);
 			simulation.step();
 			inputBox.updateData(command);

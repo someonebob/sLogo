@@ -1,12 +1,12 @@
-package testers;
+package interpreter.testers;
 
 
 import java.util.List;
 
 import instruction.InstructionData;
-import interpreter.InstructionClassifier;
-import interpreter.InstructionNode;
-import interpreter.TreeBuilder;
+import interpreter.builders.TreeBuilder;
+import interpreter.classification.InstructionClassifier;
+import interpreter.misc.InstructionNode;
 
 /**
  * Tester to fix bugs in TreeBuilder class and

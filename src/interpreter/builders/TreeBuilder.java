@@ -1,11 +1,15 @@
-package interpreter;
+package interpreter.builders;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import instruction.InstructionData;
-import util.ArgumentReaderUtil;
+import interpreter.classification.InstructionClassifier;
+import interpreter.classification.NodeClassifier;
+import interpreter.clean.InstructionSplitter;
+import interpreter.misc.InstructionNode;
+import interpreter.util.ArgumentReaderUtil;
 import util.Pair;
 /**
  * Builds a tree of InstructionNodes for
@@ -90,12 +94,12 @@ public class TreeBuilder {
 	}
 	
 	private void buildList(String classification, InstructionNode head){
-		String newCurrent = ListTreeBuilder.construct(nodes, head, getCurrentText());
+		String newCurrent = ListBuilderUtil.construct(nodes, head, getCurrentText());
 		setCurrentText(newCurrent);
 	}
 	
 	private void buildGroup(String classification, InstructionNode head){
-		String newCurrent = GroupTreeBuilder.construct(nodes, head, getCurrentText(), data);
+		String newCurrent = GroupBuilderUtil.construct(nodes, head, getCurrentText(), data);
 		setCurrentText(newCurrent);
 	}
 	

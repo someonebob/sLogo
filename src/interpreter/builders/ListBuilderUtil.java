@@ -1,5 +1,8 @@
-package interpreter;
+package interpreter.builders;
 import java.util.List;
+
+import interpreter.clean.InstructionSplitter;
+import interpreter.misc.InstructionNode;
 import util.Pair;
 /**
  * This is a class dedicated to the creation of 
@@ -8,7 +11,7 @@ import util.Pair;
  * @author maddiebriere
  *
  */
-public class ListTreeBuilder {
+public class ListBuilderUtil {
 	private final static String END = "ListEnd";
 	private final static String START = "ListStart";
 	

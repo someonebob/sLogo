@@ -1,4 +1,4 @@
-package util;
+package interpreter.util;
 
 import java.util.Enumeration;
 import java.util.List;
