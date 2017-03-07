@@ -147,7 +147,7 @@ public class Controller implements Observer
 
 		setupBorderPane(pane, selectionBar, simulation, inputBox, workspace, preferences);
 		putIntoMaps(tab, selectionBar, simulation, inputBox, workspace, userCommands, variables, functions);
-		setupObservers(simulation, inputBox, file, settings);
+		setupObservers(simulation, inputBox, file, settings, preferences);
 		setupCommands(inputBox);
 
 		tab.setContent(pane);
@@ -179,7 +179,7 @@ public class Controller implements Observer
 	}
 
 	private void setupObservers(SimulationView simulation, SingleLineInputBox inputBox, FileTool file,
-			SettingsTool settings)
+			SettingsTool settings, PreferencesView preferences)
 	{
 		file.addObservers(simulation);
 		file.addObservers(inputBox);

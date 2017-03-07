@@ -13,6 +13,9 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import view.PenPreferencesView.PenColorButton;
+import view.PenPreferencesView.PenThicknessUpdater;
 
 public class PreferencesView implements View
 {
@@ -41,9 +44,14 @@ public class PreferencesView implements View
 		initializePreferenceViews();
 		makePreferencesChooser();
 		header.getChildren().add(new Label("Current Actor:"));
-		actorImage.setImage(actor.getImage().getImage());
+		updateActorImage();
 		header.getChildren().add(actorImage);
 		root.setTop(header);
+	}
+
+	private void updateActorImage()
+	{
+		actorImage.setImage(actor.getImage().getImage());
 	}
 
 	private void makePreferencesChooser()
@@ -65,12 +73,21 @@ public class PreferencesView implements View
 	private void initializePreferenceViews()
 	{
 		preferenceViews = new HashMap<>();
-		preferenceViews.put("Pen", new PenPreferencesView(actor).display());
+		PenPreferencesView penPreferences = new PenPreferencesView(actor);
+		penPreferences.addObserver(this);
+		preferenceViews.put("Pen", penPreferences.display());
 	}
 
 	@Override
 	public void update(Observable o, Object arg)
 	{
+		// when click on new turtle, update it in here
+		if (o instanceof PenColorButton) {
+			actor.getPen().setColor((Color) arg);
+		}
+		if (o instanceof PenThicknessUpdater) {
+			actor.getPen().setThickness(Double.valueOf((String) arg));
+		}
 		// actor = (ActorView) o;
 		System.out.println("hi");
 	}

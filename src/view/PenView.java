@@ -158,6 +158,16 @@ public class PenView implements View
 		return canvas;
 	}
 
+	public double getThickness()
+	{
+		return thickness;
+	}
+
+	public void setThickness(double thickness)
+	{
+		this.thickness = thickness;
+	}
+
 	@Override
 	public Node display()
 	{
