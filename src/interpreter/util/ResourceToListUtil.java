@@ -1,4 +1,4 @@
-package util;
+package interpreter.util;
 
 import java.util.Enumeration;
 import java.util.List;
@@ -35,14 +35,14 @@ public final class ResourceToListUtil {
 		try{
 			target = resources.getObject(key);
 		} catch (Exception e){
-			return -1;
+			return 0;
 		}
 		try{
 			return Integer.parseInt((String)target);
 		}
 		catch(Exception e){
 			//TODO: Error handling
-			return -1;
+			return 0;
 		}
 	}
 }

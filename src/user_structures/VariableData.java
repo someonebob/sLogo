@@ -8,7 +8,7 @@ import javafx.beans.property.*;
  * @author maddiebriere
  *
  */
-public class VariableData {
+public class VariableData implements Comparable<VariableData> {
 	private StringProperty name;
 	private DoubleProperty value;
 	
@@ -41,6 +41,26 @@ public class VariableData {
 	}
 	public double getValue(){
 		return valueProperty().get();
+	}
+
+	@Override
+	public int compareTo(VariableData o) {
+		if(this == o){
+			return 0;
+		}
+		return this.getName().compareTo(o.getName());
+	}
+	
+	@Override
+	public boolean equals(Object o){
+		if (!(o instanceof VariableData)){
+			return false;
+			//TODO: Error handling
+		}
+		if(this == o){
+			return true;
+		}
+		return this.getName().equals(((VariableData)o).getName());
 	}
 
 }

@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import interpreter.util.WorkspaceUpdater;
 import javafx.geometry.Bounds;
-import models.Simulation;
 import user_structures.FunctionData;
 import user_structures.VariableData;
 import view.ActorView;
@@ -26,19 +26,22 @@ public class InstructionData
 	SimulationView simulation;
 	List<VariableData> variables;
 	List<FunctionData> functions;
+	String language;
 
 	public InstructionData()
 	{
 		this.simulation = new SimulationView();
 		this.variables = new ArrayList<VariableData>();
 		this.functions = new ArrayList<FunctionData>();
+		this.language = "English";
 	}
 
-	public InstructionData(SimulationView simulation, List<VariableData> variables, List<FunctionData> functions)
+	public InstructionData(SimulationView simulation, List<VariableData> variables, List<FunctionData> functions, String language)
 	{ 
 		this.simulation = simulation;
 		this.variables = variables;
 		this.functions = functions;
+		this.language = language;
 	}
 
 	public ActorView getActiveActor()
@@ -120,10 +123,19 @@ public class InstructionData
 	}
 	
 	public void addVariable(VariableData v){
-		variables.add(v);
+		WorkspaceUpdater.add(variables, v);
 	}
 	
 	public void addFunction(FunctionData f){
-		functions.add(f);
+		WorkspaceUpdater.add(functions, f);
 	}
+	
+	public String getLanguage(){
+		return language;
+	}
+	
+	public SimulationView getSimulation(){
+		return simulation;
+	}
+
 }

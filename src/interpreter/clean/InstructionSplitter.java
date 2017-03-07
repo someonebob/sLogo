@@ -1,9 +1,11 @@
-package interpreter;
+package interpreter.clean;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 import instruction.InstructionData;
+import interpreter.classification.InstructionClassifier;
+import interpreter.misc.InstructionNode;
 /**
  * Purely a utility class, used for purposes of splitting an input line and
  * returning strings or Instructions from input
@@ -32,7 +34,7 @@ public class InstructionSplitter {
 		ArrayList<InstructionNode> toRet = new ArrayList<InstructionNode>();
 		List<String> commands = getInstructionStrings(toParse);
 		for (String name : commands) {
-			String type = classifier.findShortcutKey(name, data);
+			String type = classifier.getInstructionType(name, data);
 			toRet.add(new InstructionNode(type,name));
 		}
 		return toRet;
@@ -41,6 +43,20 @@ public class InstructionSplitter {
 		// TODO: Error check for empty string
 		return splitString(toParse);
 	}
+	
+	/**
+	 * Rewrite the Instruction from the given list of nodes
+	 * @param list List of nodes
+	 * @return String representing original instruction
+	 */
+	public static String rewriteNonLinkedInstruction(List<InstructionNode> list){
+		String toRet = "";
+		for(InstructionNode n: list){
+			toRet += n.getMyCommand() + " ";
+		}
+		return toRet.substring(0,toRet.length()-1);
+	}
+
 	/**
 	 * Split String by whitespace to get relevant words
 	 * 

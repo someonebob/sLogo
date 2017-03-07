@@ -1,11 +1,15 @@
-package interpreter;
+package interpreter.builders;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import instruction.InstructionData;
-import util.ArgumentReaderUtil;
+import interpreter.classification.InstructionClassifier;
+import interpreter.classification.NodeClassifier;
+import interpreter.clean.InstructionSplitter;
+import interpreter.misc.InstructionNode;
+import interpreter.util.ArgumentReaderUtil;
 import util.Pair;
 /**
  * Builds a tree of InstructionNodes for
@@ -15,15 +19,10 @@ import util.Pair;
  *
  */
 public class TreeBuilder {
-	private static final String LIST_START = "ListStart";
-	private static final String LIST_END = "ListEnd";
-	private static final String GROUP_START = "GroupStart";
-	private static final String GROUP_END = "GroupEnd";
 	
 	private String currentText;
 	private InstructionClassifier classifier;
 	private List <InstructionNode> nodes;
-	private Set<Pair> myBrackets;
 	private InstructionData data;
 	
 	public TreeBuilder(String text, InstructionClassifier c, InstructionData d){
@@ -33,15 +32,9 @@ public class TreeBuilder {
 			nodes = InstructionSplitter.getInstructions(text, c, d);
 		else
 			nodes = new ArrayList<InstructionNode>();
-		populateBrackets();
-		data=d;
+		data = d;
 	}
 	
-	private void populateBrackets(){
-		myBrackets = new HashSet<Pair>();
-		myBrackets.add(new Pair(LIST_START, LIST_END));
-		myBrackets.add(new Pair(GROUP_START, GROUP_END));
-	}
 	
 	/**
 	 * This builds a tree of InstructioNodes given a list of Instructions 
@@ -53,21 +46,14 @@ public class TreeBuilder {
 	 * @return A list of single InstructionNode, each head of their own tree
 	 */
 	public List<InstructionNode> buildTree(){
-		if(getClassifier() == null){
-			//TODO: Error check
-		}
-		
 		if(getCurrentText().isEmpty()){
 			return new ArrayList<InstructionNode>();
 		}
-		
 		ArrayList<InstructionNode> headNodes = new ArrayList<InstructionNode>();
-		/**
-		 * While there is still text left, continue to iterate through tree and build new node
-		 */
 		while(!getCurrentText().isEmpty()){
-			//TODO: Check param
-			headNodes.add(buildSubTree());
+			InstructionNode newHead = buildSubTree();
+			if(newHead!=null)
+				headNodes.add(newHead); //build a list of nodes from text
 		}
 		return headNodes;
 	}
@@ -84,44 +70,59 @@ public class TreeBuilder {
 			return null;
 		}
 		
-		InstructionNode head = nodes.remove(0); //take node out of list to add to tree
-		String value = InstructionSplitter.getInstructionStrings(getCurrentText()).get(0);
-		head.setMyValue(value);
-		setCurrentText(InstructionSplitter.removeFirstItem(getCurrentText()));//remove node from current text
-		String classification = classifier.findShortcutKey(value, data);
-		Pair brackets = getBrackets(classification);
+		InstructionNode head = removeHeadNode(); //take node out of list to add to tree
+		String headText = getHeadNodeText(); 
+		setHeadText(head, headText); 
+		decrementCurrentText(); //remove a node
+		String classification = classifier.getInstructionType(headText, data); 
 		
-		if(brackets==null){
-			int numArgs = 0;
-			if(!classification.equals("NO MATCH")){
-				numArgs = ArgumentReaderUtil.getNumArgs(classification, data);
-				if(numArgs == -1){ //if nothing, be more specific
-					numArgs = ArgumentReaderUtil.getNumArgs(value, data);
-				}
-				System.out.println(classification + " " + numArgs);
-			}
-			
+		//Unknown classification gets no treatment
+		if(NodeClassifier.isExecutable(classification)){
+			int numArgs = ArgumentReaderUtil.getNumArgs(classification, headText, data);
 			head.setProperNumArgs(numArgs);
-			
-			for(int i=0; i<numArgs; i++){
-				head.getMyChildren().add(buildSubTree());
-			}
-			
+			buildChildren(numArgs, head);
 		}
-		else{
-			String newCurrent = ListTreeBuilder.buildList(brackets, nodes, head, getCurrentText());
-			setCurrentText(newCurrent);
+		else if (NodeClassifier.isList(classification)){
+			head.setExecutable(false);
+			buildList(classification, head);
+		}
+		else if (NodeClassifier.isGroup(classification)){
+			//head.setExecutable(false); //child is non-executable instead
+			buildGroup(classification, head);
 		}
 		return head;
 	}
 	
-	private Pair getBrackets(String value){
-		for(Pair pair: myBrackets){
-			if(pair.getMyA().equals(value)){
-				return pair;
-			}
+	private void buildList(String classification, InstructionNode head){
+		String newCurrent = ListBuilderUtil.construct(nodes, head, getCurrentText());
+		setCurrentText(newCurrent);
+	}
+	
+	private void buildGroup(String classification, InstructionNode head){
+		String newCurrent = GroupBuilderUtil.construct(nodes, head, getCurrentText(), data);
+		setCurrentText(newCurrent);
+	}
+	
+	private void buildChildren(int numArgs, InstructionNode head){
+		for(int i=0; i<numArgs; i++){
+			head.getMyChildren().add(buildSubTree());
 		}
-		return null;
+	}
+	
+	private void decrementCurrentText(){
+		setCurrentText(InstructionSplitter.removeFirstItem(getCurrentText()));//remove node from current text
+	}
+	
+	private void setHeadText(InstructionNode head, String value){
+		head.setMyCommand(value);
+	}
+	
+	private InstructionNode removeHeadNode(){
+		return nodes.remove(0);
+	}
+	
+	private String getHeadNodeText(){
+		return InstructionSplitter.getInstructionStrings(getCurrentText()).get(0);
 	}
 	
 	public String getCurrentText() {
@@ -136,11 +137,9 @@ public class TreeBuilder {
 	public void setClassifier(InstructionClassifier classifier) {
 		this.classifier = classifier;
 	}
-
 	public InstructionData getData() {
 		return data;
 	}
-
 	public void setData(InstructionData data) {
 		this.data = data;
 	}
