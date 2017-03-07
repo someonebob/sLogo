@@ -15,18 +15,21 @@ import org.xml.sax.SAXException;
 
 import main.Defaults;
 
-public class XMLParser {
+public class XMLParser
+{
 	public static final DocumentBuilder DOCUMENT_BUILDER = getDocumentBuilder();
 	public static final String DEFAULT_FILE = "/data/defaults.xml";
-	public static final List<String> DATA_FIELDS = Arrays.asList(new String[] { "background", "pen", "image", "numTurtles", "language"});
+	public static final List<String> DATA_FIELDS = Arrays
+			.asList(new String[] { "background", "pen", "image", "numTurtles", "language" });
 
 	private String background;
 	private String pen;
 	private String image;
 	private String numTurtles;
 	private String language;
-	
-	public XMLParser() {
+
+	public XMLParser()
+	{
 		File defaultFile = new File(System.getProperty("user.dir") + DEFAULT_FILE);
 		Element root = getRootElement(defaultFile);
 		background = root.getElementsByTagName(DATA_FIELDS.get(0)).item(0).getTextContent();
@@ -36,12 +39,14 @@ public class XMLParser {
 		language = root.getElementsByTagName(DATA_FIELDS.get(4)).item(0).getTextContent();
 
 	}
-	
-	public Defaults setDefaults(){
+
+	public Defaults setDefaults()
+	{
 		return new Defaults(background, pen, image, Integer.parseInt(numTurtles), language);
 	}
 
-	private Element getRootElement(File xmlFile) {
+	private Element getRootElement(File xmlFile)
+	{
 		try {
 			DOCUMENT_BUILDER.reset();
 			Document xmlDocument = DOCUMENT_BUILDER.parse(xmlFile);
@@ -51,7 +56,8 @@ public class XMLParser {
 		}
 	}
 
-	private static DocumentBuilder getDocumentBuilder() {
+	private static DocumentBuilder getDocumentBuilder()
+	{
 		try {
 			return DocumentBuilderFactory.newInstance().newDocumentBuilder();
 		} catch (ParserConfigurationException e) {

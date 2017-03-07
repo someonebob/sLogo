@@ -9,7 +9,7 @@ public class Main extends Application
 	@Override
 	public void start(Stage stage) throws Exception
 	{
-		//LogoController controller = new LogoController(stage);
+		// LogoController controller = new LogoController(stage);
 		XMLParser parser = new XMLParser();
 		Controller controller = new Controller(stage, parser.setDefaults());
 	}
@@ -18,5 +18,5 @@ public class Main extends Application
 	{
 		launch(args);
 	}
-	
+
 }

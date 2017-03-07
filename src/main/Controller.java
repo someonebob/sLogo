@@ -9,10 +9,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import exceptions.SLogoException;
 import instruction.InstructionData;
@@ -39,9 +39,10 @@ import tool.SettingsTool;
 import tool.SettingsTool.LanguageButton;
 import user_structures.FunctionData;
 import user_structures.VariableData;
-import view.SingleLineInputBox;
+import view.PreferencesView;
 import view.SavedCommandsView;
 import view.SimulationView;
+import view.SingleLineInputBox;
 import view.WorkspaceView;
 
 /**
@@ -49,7 +50,8 @@ import view.WorkspaceView;
  * @author Jesse
  *
  */
-public class Controller implements Observer {	
+public class Controller implements Observer
+{
 	private TabPane root;
 	private ObjectProperty<Tab> currentTab;
 	private Map<Tab, SelectionBar> selectionBarMap;
@@ -57,36 +59,38 @@ public class Controller implements Observer {
 	private Map<Tab, SingleLineInputBox> inputBoxMap;
 	private Map<Tab, WorkspaceView> workspaceMap;
 	private Map<Tab, SavedCommandsView> savedCommandsMap;
-	
+
 	private Map<Tab, ObservableList<VariableData>> variableMap;
 	private Map<Tab, ObservableList<FunctionData>> functionMap;
-	
+
 	private Stage stage;
 	private double printValue;
 	private Defaults defaults;
 	private List<String> language;
 	private IntegerProperty currentIndex;
-	
-	public Controller(Stage stage, Defaults defaults){
+
+	public Controller(Stage stage, Defaults defaults)
+	{
 		this.stage = stage;
 		this.defaults = defaults;
 		language = new ArrayList<>();
 		currentIndex = new SimpleIntegerProperty();
 		setupItems();
 		newTab();
-		//currentTab is always the one selected
+		// currentTab is always the one selected
 		currentTab.bind(root.getSelectionModel().selectedItemProperty());
 		currentIndex.bind(root.getSelectionModel().selectedIndexProperty());
-		
-		stage.setTitle("SLogo");	
+
+		stage.setTitle("SLogo");
 		stage.setScene(new Scene(root));
 		stage.setMaximized(true);
 		stage.show();
 	}
 
 	@Override
-	public void update(Observable o, Object arg) {
-		if(o instanceof NewButton){
+	public void update(Observable o, Object arg)
+	{
+		if (o instanceof NewButton) {
 			newTab();
 		}
 		if (o instanceof OpenButton) {
@@ -96,9 +100,9 @@ public class Controller implements Observer {
 			language.set(currentIndex.get(), (String) arg);
 		}
 	}
-	
-	
-	private void setupItems(){
+
+	private void setupItems()
+	{
 		root = new TabPane();
 		currentTab = new SimpleObjectProperty<>();
 		selectionBarMap = new HashMap<>();
@@ -106,80 +110,92 @@ public class Controller implements Observer {
 		inputBoxMap = new HashMap<>();
 		workspaceMap = new HashMap<>();
 		savedCommandsMap = new HashMap<>();
-		
+
 		variableMap = new HashMap<>();
 		functionMap = new HashMap<>();
-		
+
 	}
-	
-	private void newTab(){
+
+	private void newTab()
+	{
 		Tab tab = new Tab();
-		root.getSelectionModel().select(tab);;
+		root.getSelectionModel().select(tab);
+		;
 		language.add(defaults.language());
 		tab.setText("untitled.logo");
 		BorderPane pane = new BorderPane();
 		SimulationView simulation = new SimulationView(defaults);
 		SingleLineInputBox inputBox = new SingleLineInputBox();
-//		inputBox.setFocus();
+		// inputBox.setFocus();
 		WorkspaceView workspace = new WorkspaceView();
 		SavedCommandsView userCommands = new SavedCommandsView();
-		
+		PreferencesView preferences = new PreferencesView(simulation.getTurtle());
+
 		SelectionBar selectionBar = new SelectionBar();
 		FileTool file = new FileTool(stage);
 		SettingsTool settings = new SettingsTool(stage);
 		HelpTool help = new HelpTool(stage);
 		selectionBar.addAllTools(file, settings, help);
-		
+
 		List<VariableData> varList = new ArrayList<>();
 		ObservableList<VariableData> variables = FXCollections.observableList(varList);
 		List<FunctionData> funcList = new ArrayList<>();
 		ObservableList<FunctionData> functions = FXCollections.observableList(funcList);
-		
-		workspace.setItems(variables);
-		//TODO setup functions	
 
-		setupBorderPane(pane, selectionBar, simulation, inputBox, workspace, userCommands);
+		workspace.setItems(variables);
+		// TODO setup functions
+
+		setupBorderPane(pane, selectionBar, simulation, inputBox, workspace, preferences);
 		putIntoMaps(tab, selectionBar, simulation, inputBox, workspace, userCommands, variables, functions);
 		setupObservers(simulation, inputBox, file, settings);
 		setupCommands(inputBox);
-		
+
 		tab.setContent(pane);
 		root.getTabs().add(tab);
 	}
-	
-	private void setupBorderPane(BorderPane pane, SelectionBar selectionBar, SimulationView simulation, SingleLineInputBox inputBox, WorkspaceView workspace, SavedCommandsView userCommands){
+
+	private void setupBorderPane(BorderPane pane, SelectionBar selectionBar, SimulationView simulation,
+			SingleLineInputBox inputBox, WorkspaceView workspace, PreferencesView preferences)
+	{
 		pane.setTop(selectionBar.display());
 		pane.setCenter(simulation.display());
 		pane.setBottom(inputBox.display());
 		pane.setLeft(workspace.display());
-		pane.setRight(userCommands.display());
+		pane.setRight(preferences.display());
 	}
-	
-	private void putIntoMaps(Tab tab, SelectionBar selectionBar, SimulationView simulation, SingleLineInputBox inputBox, WorkspaceView workspace, SavedCommandsView userCommands, ObservableList<VariableData> variables, ObservableList<FunctionData> functions){
+
+	private void putIntoMaps(Tab tab, SelectionBar selectionBar, SimulationView simulation, SingleLineInputBox inputBox,
+			WorkspaceView workspace, SavedCommandsView userCommands, ObservableList<VariableData> variables,
+			ObservableList<FunctionData> functions)
+	{
 		selectionBarMap.put(tab, selectionBar);
 		simulationMap.put(tab, simulation);
 		inputBoxMap.put(tab, inputBox);
 		workspaceMap.put(tab, workspace);
 		savedCommandsMap.put(tab, userCommands);
-		
+
 		variableMap.put(tab, variables);
 		functionMap.put(tab, functions);
 	}
 
-	private void setupObservers(SimulationView simulation, SingleLineInputBox inputBox, FileTool file, SettingsTool settings){
+	private void setupObservers(SimulationView simulation, SingleLineInputBox inputBox, FileTool file,
+			SettingsTool settings)
+	{
 		file.addObservers(simulation);
 		file.addObservers(inputBox);
 		file.addObservers(this);
-		
+
 		settings.addObservers(simulation);
 		settings.addObservers(this);
 	}
-	
-	private void setupCommands(SingleLineInputBox inputBox){
+
+	private void setupCommands(SingleLineInputBox inputBox)
+	{
 		inputBox.assignOnEnterCommand(e -> executeCommand(e, inputBox));
 	}
-	
-	private void executeCommand(KeyEvent e, SingleLineInputBox inputBox){
+
+	private void executeCommand(KeyEvent e, SingleLineInputBox inputBox)
+	{
 		if (e.getCode() == KeyCode.ENTER) {
 			inputBox.enterAction(e);
 
@@ -201,9 +217,10 @@ public class Controller implements Observer {
 		}
 	}
 
-
-	private void runCommand(SingleLineInputBox inputBox, String command){
-		InstructionData data = new InstructionData(simulationMap.get(currentTab.get()), variableMap.get(currentTab.get()), functionMap.get(currentTab.get()), language.get(currentIndex.get()));
+	private void runCommand(SingleLineInputBox inputBox, String command)
+	{
+		InstructionData data = new InstructionData(simulationMap.get(currentTab.get()),
+				variableMap.get(currentTab.get()), functionMap.get(currentTab.get()), language.get(currentIndex.get()));
 		try {
 			Interpreter interpreter = new Interpreter(data);
 
@@ -214,13 +231,14 @@ public class Controller implements Observer {
 			exception.displayAlert();
 		}
 	}
-	
-	private void openFile(File file) {
+
+	private void openFile(File file)
+	{
 		try {
 			String command = new String(Files.readAllBytes(Paths.get(file.getPath())));
-			
-			for(Tab t : root.getTabs()){
-				if (t.isSelected()){
+
+			for (Tab t : root.getTabs()) {
+				if (t.isSelected()) {
 					runCommand(inputBoxMap.get(t), command);
 				}
 			}
@@ -230,6 +248,5 @@ public class Controller implements Observer {
 			Logger.getLogger(SingleLineInputBox.class.getName()).log(Level.SEVERE, null, e);
 		}
 	}
-	
-	
+
 }

@@ -2,7 +2,7 @@
 <defaults>
 	<background>white</background>
 	<pen>black</pen>
-	<image>default.png</image>
+	<image>Default.png</image>
 	<numTurtles>1</numTurtles>
 	<language>English</language>
 </defaults>
