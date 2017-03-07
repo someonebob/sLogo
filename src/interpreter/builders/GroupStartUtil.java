@@ -30,18 +30,17 @@ public class GroupStartUtil extends BuilderUtil{
 	}
 	
 	/**
-	 * Return the same commands as in Group brackets ( ), but
+	 * Work with the same commands as in Group brackets ( ), but
 	 * rearrange it so that the initial TreeBuilder can interpret it. Does not
-	 * parse the text -- only rearranges for parsing in the main TreeBuilder
+	 * parse the text -- only rearranges for parsing in the main TreeBuilder. It
+	 * stores the altered text (from with in the brackets)
+	 *  in a child node of the GroupStart head node, for 
+	 * parsing (called in the GroupStart instruction class). 
 	 * 
-	 * @param nodes Current nodes in the tree builder
-	 * @param head The head node of the list
-	 * @param current The current String representing the non-parsed parts of the instruction
-	 * @param data The InstructionData holding information about the current workspace
 	 * @return The String representing the new current text (re-ordered)
 	 */
 	public String construct() {
-		InstructionNode next = getNext();
+		InstructionNode next = removeNext();
 		decrementCurrentText();
 		String value;
 		
@@ -59,25 +58,6 @@ public class GroupStartUtil extends BuilderUtil{
 		addChild(value);
 		
 		return getCurrent();
-	}
-	
-	/**
-	 * Create a child for the head node with value "(" that
-	 * will hold the value created using this Util class
-	 * (the re-arranged and parsable text). This child can then
-	 * be accessed by the GroupStart instruction class when
-	 * necessary for execution.
-	 * 
-	 * @param value The value (calculated in the construct method) to be
-	 * assigned to the new child
-	 */
-	private void addChild(String value){
-		InstructionNode child = new InstructionNode();
-		child.setMyRunValue(value);
-		child.setExecutable(false);
-		ArrayList<InstructionNode> newChildren = new ArrayList<InstructionNode> ();
-		newChildren.add(child);
-		getHead().setMyChildren(newChildren);
 	}
 	
 	/**
@@ -149,7 +129,7 @@ public class GroupStartUtil extends BuilderUtil{
 
 			for(int i=0; i<numArgs; i++){
 				if(!isEmpty()){
-					currNode = getNext();
+					currNode = removeNext();
 					decrementCurrentText();
 					name = currNode.getMyClassification();
 					if(name.equals(END)){
@@ -185,11 +165,11 @@ public class GroupStartUtil extends BuilderUtil{
 		while(!isEmpty()){
 			decrementCurrentText();
 			if(peekNext().equals(END)){
-				getNext(); //remove bracket
+				removeNext(); //remove bracket
 				break;
 			}
 			else{
-				toRet.add(getNext());
+				toRet.add(removeNext());
 			}
 		}
 		return toRet;

@@ -1,5 +1,6 @@
 package interpreter.builders;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import instruction.InstructionData;
@@ -66,7 +67,28 @@ public abstract class BuilderUtil {
 	 */
 	public abstract String construct();
 
-	public InstructionNode getNext(){
+	/**
+	 * Create a child for the head node  that
+	 * will hold the value created using this Util class
+	 * (the re-arranged and parsable text). This child can then
+	 * be accessed by the corresponding head node instruction class when
+	 * necessary for execution.
+	 * 
+	 * Ex: Used in GroupStartUtil to place all of commands into child node
+	 * for execution as dictated by GroupStart instruction
+	 * 
+	 * @param value The value (calculated in the construct method) to be
+	 * assigned to the new child
+	 */
+	public void addChild(String value){
+		InstructionNode child = new InstructionNode();
+		child.setMyRunValue(value);
+		ArrayList<InstructionNode> newChildren = new ArrayList<InstructionNode> ();
+		newChildren.add(child);
+		getHead().setMyChildren(newChildren);
+	}
+	
+	public InstructionNode removeNext(){
 		return getNodes().remove(0);
 	}
 	

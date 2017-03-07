@@ -2,11 +2,24 @@ package interpreter.builders;
 import java.util.List;
 
 import instruction.InstructionData;
-import interpreter.clean.InstructionSplitter;
 import interpreter.misc.InstructionNode;
 /**
  * This is a class dedicated to the creation of 
- * Lists and Groups, which cannot be execute and must be handled differently.
+ * Lists, which cannot be execute and must be handled differently.
+ * Lists are only executed when they are called upon by other commands 
+ * (such as conditionals).
+ * 
+ * N.B: The class' construct method, unlike that of GroupStartUtil, 
+ * will not produce a child holding
+ * the run value. This is because we DO NOT want the List to execute.
+ *  
+ * In order to stop the list from executing, we must to give it
+ * (the head node, of type ListStart) some
+ * run value (this is the signal in InstructionNode that the node
+ * has already been executed). We hence set the head node's value
+ * to this newly "parsed" text -- this text will be added to the list of
+ * arguments and can be called upon and parsed by conditionals and other
+ * commands.
  * 
  * @author maddiebriere
  *
@@ -20,23 +33,32 @@ public class ListStartUtil extends BuilderUtil {
 		super(nodes, head, current, data);
 	}
 	
+	/**
+	 * Works with the same commands as in List brackets [ ], but assigns
+	 * the entire chunk of text as the run value for the ListStart node.
+	 * This makes it so that commands using Lists can create their argument
+	 * list by calling upon the runValue of the ListStart node (rather
+	 * than trying to execute an invalid command by passing the entire
+	 * chunk of text to the execute function). 
+	 * 
+	 * @return String representing the current text (after the list has
+	 * been accounted for and removed from the instruction)
+	 */
 	public String construct() {
 		String value = "";
-		String current = getCurrent();
 		while(!getNodes().isEmpty())
 		{
-			String name = getNext().getMyClassification();
-			current = InstructionSplitter.removeFirstItem(current);
+			InstructionNode next = removeNext();
+			String name = next.getMyClassification();
+			decrementCurrentText();
 			if(name.equals(END)){
 				break;
 			}
-			value += getNext().getMyCommand() + " ";
+			value += next.getMyCommand() + " ";
 		}
 		value = removeSpace(value);
 		getHead().setMyRunValue(value);
-		getNodes().remove(0); //remove final bracket (closing)
-		getHead().setExecutable(false);
-		return current;
+		return getCurrent();
 	}
 	
 	private static String removeSpace(String value){

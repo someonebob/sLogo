@@ -49,6 +49,23 @@ public class TreeBuilder {
 		return headNodes;
 	}
 	
+	/**
+	 * This is the recursive function called upon when an object of this class
+	 * builds a tree. This function will iterate through the current nodes and
+	 * text (what is left unprocessed from the instruction) and connect the nodes
+	 * and remove the processed words from the current text. It will either perform 
+	 * this process generically, if there is no BuilderUtil class associated with the
+	 * instruction type of the head node, or perform specialized processing (groups,
+	 * lists, user-defined commands).
+	 * 
+	 * This method may terminate before the instruction is entirely processed -- 
+	 * if the head node is "satisfied" (gets all of its arguments), this method will 
+	 * complete its connecting process and return the head node (now connected
+	 * to its children).
+	 * 
+	 * @return a new InstructionNode representing this individual subtree (there can be 
+	 * multiple subtrees in a single instruction). 
+	 */
 	private InstructionNode buildSubTree(){
 		if(getCurrentText().isEmpty()){
 			return null;
@@ -71,6 +88,13 @@ public class TreeBuilder {
 		return head;
 	}
 	
+	/**
+	 * The recursive part of tree-building. This method iterates through all
+	 * of the children of a headnode and creates sub-trees for those nodes.
+	 * @param numArgs The number of arguments this particular instruction 
+	 * (the head instruction) takes
+	 * @param head The current head node (just removed from the list)
+	 */
 	private void buildChildren(int numArgs, InstructionNode head){
 		for(int i=0; i<numArgs; i++){
 			head.getMyChildren().add(buildSubTree());

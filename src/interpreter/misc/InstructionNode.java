@@ -19,7 +19,6 @@ public class InstructionNode {
 	private String myCommand; //String command
 	private List<InstructionNode> myChildren;
 	private String myRunValue; //This is used for tree traversal, to check if a command has been excuted already
-	private boolean isExecutable; //Used for list/ group creation
 	private int properNumArgs = -1;
 	
 	public InstructionNode() {
@@ -37,7 +36,6 @@ public class InstructionNode {
 		myCommand = value;
 		myChildren = children;
 		myRunValue = "NO RUN"; //default
-		isExecutable = true;
 	}
 	/**
 	 * Pieces together a String from the current Node using the current Node
@@ -118,14 +116,6 @@ public class InstructionNode {
 	
 	public int getProperNumArgs(){
 		return properNumArgs;
-	}
-	
-	public void setExecutable(boolean e){
-		isExecutable = e;
-	}
-	
-	public boolean getExecutable(){
-		return isExecutable;
 	}
 	
 }
