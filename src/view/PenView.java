@@ -113,6 +113,11 @@ public class PenView implements View
 		});
 	}
 
+	public Color getColor()
+	{
+		return this.color;
+	}
+
 	public void setColor(Color color)
 	{
 		canvas.getGraphicsContext2D().setFill(color);
@@ -151,6 +156,16 @@ public class PenView implements View
 	public Canvas getCanvas()
 	{
 		return canvas;
+	}
+
+	public double getThickness()
+	{
+		return thickness;
+	}
+
+	public void setThickness(double thickness)
+	{
+		this.thickness = thickness;
 	}
 
 	@Override

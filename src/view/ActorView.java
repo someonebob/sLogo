@@ -7,7 +7,6 @@ import javafx.animation.SequentialTransition;
 import javafx.animation.TranslateTransition;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
-import javafx.scene.control.SelectionModel;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
@@ -50,8 +49,9 @@ public abstract class ActorView implements View
 		// initial rotation
 		actorMove.play();
 	}
-	
-	public ID getID(){
+
+	public ID getID()
+	{
 		return id;
 	}
 
@@ -72,7 +72,6 @@ public abstract class ActorView implements View
 
 	}
 
-
 	public Actor getActor()
 	{
 		return actor;
@@ -92,7 +91,7 @@ public abstract class ActorView implements View
 	{
 		return image;
 	}
-	
+
 	private void loadImage(String stringImage)
 	{
 		Image image = new Image(getClass().getClassLoader().getResourceAsStream(stringImage));

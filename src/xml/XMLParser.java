@@ -25,8 +25,9 @@ public class XMLParser extends XML{
 		language = root.getElementsByTagName(DATA_FIELDS.get(4)).item(0).getTextContent();
 
 	}
-	
-	public Defaults setDefaults(){
+
+	public Defaults setDefaults()
+	{
 		return new Defaults(background, pen, image, Integer.parseInt(numTurtles), language);
 	}
 
