@@ -92,7 +92,6 @@ public class TreeBuilder {
 	private String getHeadNodeText(){
 		return InstructionSplitter.getInstructionStrings(getCurrentText()).get(0);
 	}
-
 	
 	public String getCurrentText() {
 		return currentText;

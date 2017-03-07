@@ -25,12 +25,12 @@ public class ListStartUtil extends BuilderUtil {
 		String current = getCurrent();
 		while(!getNodes().isEmpty())
 		{
-			String name = getNodes().get(0).getMyClassification();
+			String name = getNext().getMyClassification();
 			current = InstructionSplitter.removeFirstItem(current);
 			if(name.equals(END)){
 				break;
 			}
-			value += getNodes().remove(0).getMyCommand() + " ";
+			value += getNext().getMyCommand() + " ";
 		}
 		value = removeSpace(value);
 		getHead().setMyRunValue(value);

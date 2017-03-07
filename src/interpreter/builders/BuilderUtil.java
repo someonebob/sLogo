@@ -3,6 +3,7 @@ package interpreter.builders;
 import java.util.List;
 
 import instruction.InstructionData;
+import interpreter.clean.InstructionSplitter;
 import interpreter.misc.InstructionNode;
 
 /**
@@ -65,6 +66,22 @@ public abstract class BuilderUtil {
 	 */
 	public abstract String construct();
 
+	public InstructionNode getNext(){
+		return getNodes().remove(0);
+	}
+	
+	public InstructionNode peekNext(){
+		return getNodes().get(0);
+	}
+	
+	public boolean isEmpty(){
+		return getNodes().isEmpty();
+	}
+	
+	public void decrementCurrentText(){
+		setCurrent(InstructionSplitter.removeFirstItem(getCurrent()));//remove node from current text
+	}
+	
 	public List<InstructionNode> getNodes() {
 		return nodes;
 	}

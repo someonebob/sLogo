@@ -95,8 +95,6 @@ public class TreeExecuter
 	private List<String> buildArguments(InstructionNode head){
 		ArrayList<String> args = new ArrayList<String>();
 		
-		//Null child here somewhere
-		
 		for (InstructionNode child : head.getMyChildren()) {
 			if (!child.hasRun()) {
 				execute(child);

@@ -4,11 +4,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 import instruction.InstructionData;
-import interpreter.clean.InstructionSplitter;
 import interpreter.misc.InstructionNode;
 import interpreter.util.ArgumentReaderUtil;
 import interpreter.util.GroupReader;
-import util.Pair;
+
+/**
+ * Subclass of BuilderUtil that processes the current
+ * text and nodes when the parser stumbles upon a GroupStart
+ * command. This class processes up to the end of the Grouping (the
+ * GroupEnd) and returns the nodes and current text with those sections
+ * removed, and the processed instructions inside the grouping
+ * saved within the head node.
+ * 
+ * @author maddiebriere
+ *
+ */
 
 public class GroupStartUtil extends BuilderUtil{
 	private final static String END = "GroupEnd";
@@ -31,43 +41,64 @@ public class GroupStartUtil extends BuilderUtil{
 	 * @return The String representing the new current text (re-ordered)
 	 */
 	public String construct() {
+		InstructionNode next = getNext();
+		decrementCurrentText();
 		String value;
-		InstructionNode headNode = getNodes().remove(0);
-		String current = InstructionSplitter.removeFirstItem(getCurrent());
-		String instruction = headNode.getMyCommand(); //remove head instruction
-		String type = headNode.getMyClassification();
+		
+		String instruction = next.getMyCommand(); //remove head instruction
+		String type = next.getMyClassification();
 		int numArgs = ArgumentReaderUtil.getNumArgs(type, instruction, getData());
 		
-		Pair <String, String> result;
 		String group = GroupReader.getGroup(type);
 		if(group.equals("Layer")){
-			result = layerArguments(getNodes(), instruction, current, numArgs);
+			value = layerArguments(instruction, numArgs);
 		}
 		else{
-			result = multipleArguments(getNodes(), instruction, current, numArgs);
+			value = multipleArguments(instruction, numArgs);
 		}
+		addChild(value);
 		
-		value = result.getMyA();
-		current = result.getMyB();
-		
+		return getCurrent();
+	}
+	
+	/**
+	 * Create a child for the head node with value "(" that
+	 * will hold the value created using this Util class
+	 * (the re-arranged and parsable text). This child can then
+	 * be accessed by the GroupStart instruction class when
+	 * necessary for execution.
+	 * 
+	 * @param value The value (calculated in the construct method) to be
+	 * assigned to the new child
+	 */
+	private void addChild(String value){
 		InstructionNode child = new InstructionNode();
 		child.setMyRunValue(value);
 		child.setExecutable(false);
 		ArrayList<InstructionNode> newChildren = new ArrayList<InstructionNode> ();
 		newChildren.add(child);
 		getHead().setMyChildren(newChildren);
-		
-		return current;
 	}
 	
-	
-	//TODO: Fix
-	private static Pair<String, String> layerArguments(List<InstructionNode> nodes, 
-			String instruction, String current, int numArgs){
+	/**
+	 * WAY 1: The first way for Groups to be parsed is by layering arguments.
+	 * One instruction that follows this pattern is "sum"
+	 * This method would transform: ( sum 10 20 30 40 )
+	 * Into: sum sum sum 10 20 30 40
+	 * Which our current parser can read
+	 * 
+	 * TODO: Clean up implementation
+	 * 
+	 * @param instruction The name of the head instruction in the group (above, it
+	 * would be sum)
+	 * @param numArgs The number of arguments that head instruction takes (needed for 
+	 * the layering)
+	 * @return A String representing the new value for the child node
+	 */
+	private String layerArguments(String instruction, int numArgs){
 		String value = "";
 		int grouping = numArgs - 1;
-		List<InstructionNode> constants = countAndRemoveArgs(nodes);
-		current = removeExpression(current, constants.size());
+		List<InstructionNode> constants = countAndRemoveArgs();
 		
 		//remove inner arguments
 		if(constants.size() >= numArgs){
@@ -78,7 +109,7 @@ public class GroupStartUtil extends BuilderUtil{
 			}
 		}
 		else{
-			return new Pair<String, String>(value, current);
+			return value;
 		}
 		
 		while(!constants.isEmpty()){
@@ -90,49 +121,36 @@ public class GroupStartUtil extends BuilderUtil{
 			value = instruction + " " + value;
 		}
 		value = removeSpace(value);
-		
-		return new Pair<String, String>(value, current);
+		return value;
 	}
 	
-	private static String removeExpression(String current, int elemIndex){
-		List<String> elems = InstructionSplitter.getInstructionStrings(current);
-		for(int i=0; i<elemIndex; i++){
-			elems.remove(0);
-		}
-		String toRet = "";
-		for(String e : elems){
-			toRet += e + " ";
-		}
-		toRet = removeSpace(toRet);
-		return toRet;
-	}
-	
-	private static List<InstructionNode> countAndRemoveArgs(List<InstructionNode> nodes){
-		List<InstructionNode> toRet = new ArrayList<InstructionNode>();
-		while(!nodes.isEmpty()){
-			if(nodes.get(0).equals(END)){
-				nodes.remove(0); //remove bracket
-				break;
-			}
-			else{
-				toRet.add(nodes.remove(0));
-			}
-		}
-		return toRet;
-	}
-	
-	//TODO: Complete
-	private static Pair<String, String> multipleArguments(List<InstructionNode> nodes, 
-			String instruction, String current, int numArgs){
+	/**
+	 * WAY 2: The second way for Groups to be parsed is by treating the arguments
+	 * as multiple commands.
+	 * 
+	 * One instruction that follows this pattern is "fd"
+	 * This method would transform: ( fd 10 20 30 40 )
+	 * Into: fd 10 fd 20 fd 30 fd 40
+	 * Which our current parser can read
+	 * 
+	 * TODO: Clean up implementation
+	 * 
+	 * @param instruction The name of the head instruction in the group (above, it
+	 * would be sum)
+	 * @param numArgs The number of arguments that head instruction takes (needed for 
+	 * the layering)
+	 * @return A String representing the new value for the child node
+	 */
+	private String multipleArguments(String instruction, int numArgs){
 		String value = "";
 		while(true){
 			InstructionNode currNode;
 			String name = "";
 
 			for(int i=0; i<numArgs; i++){
-				if(!nodes.isEmpty()){
-					currNode = nodes.remove(0);
-					current = InstructionSplitter.removeFirstItem(current);
+				if(!isEmpty()){
+					currNode = getNext();
+					decrementCurrentText();
 					name = currNode.getMyClassification();
 					if(name.equals(END)){
 						break;
@@ -148,9 +166,40 @@ public class GroupStartUtil extends BuilderUtil{
 			}
 		}
 		value = removeSpace(value);
-		return new Pair<String, String>(value, current);
+		return value;
 	}
 	
+	/**
+	 * Counts the number of arguments in the grouping and removes the arguments (as well as 
+	 * the end bracket) from the list of nodes and current text. 
+	 * 
+	 * Ex: This method called on the following list of nodes: 
+	 * { '(' 'fd' '50' '50' ')' 'fd' '50')}
+	 * Would decrement the current text accordingly and return the nodes: 
+	 * { 'fd', '50'}
+	 * 
+	 * @return
+	 */
+	private  List<InstructionNode> countAndRemoveArgs(){
+		List<InstructionNode> toRet = new ArrayList<InstructionNode>();
+		while(!isEmpty()){
+			decrementCurrentText();
+			if(peekNext().equals(END)){
+				getNext(); //remove bracket
+				break;
+			}
+			else{
+				toRet.add(getNext());
+			}
+		}
+		return toRet;
+	}
+	
+	/**
+	 * Removes the last space from the given string and returns the result
+	 * @param value String to modify
+	 * @return String with space removed
+	 */
 	private static String removeSpace(String value){
 		if(!value.isEmpty()){
 			value = value.substring(0, value.length()-1);
