@@ -1,9 +1,9 @@
 package interpreter.builders;
 import java.util.List;
 
+import instruction.InstructionData;
 import interpreter.clean.InstructionSplitter;
 import interpreter.misc.InstructionNode;
-import util.Pair;
 /**
  * This is a class dedicated to the creation of 
  * Lists and Groups, which cannot be execute and must be handled differently.
@@ -11,25 +11,31 @@ import util.Pair;
  * @author maddiebriere
  *
  */
-public class ListBuilderUtil {
+public class ListStartUtil extends BuilderUtil {
 	private final static String END = "ListEnd";
 	private final static String START = "ListStart";
 	
-	public static String construct(List<InstructionNode> nodes, InstructionNode head, String current) {
-
+	public ListStartUtil(List<InstructionNode> nodes,
+			InstructionNode head, String current, InstructionData data){
+		super(nodes, head, current, data);
+	}
+	
+	public String construct() {
+		getHead().setExecutable(false);
 		String value = "";
-		while(!nodes.isEmpty())
+		String current = getCurrent();
+		while(getNodes().isEmpty())
 		{
-			String name = nodes.get(0).getMyClassification();
+			String name = getNodes().get(0).getMyClassification();
 			current = InstructionSplitter.removeFirstItem(current);
 			if(name.equals(END)){
 				break;
 			}
-			value += nodes.remove(0).getMyCommand() + " ";
+			value += getNodes().remove(0).getMyCommand() + " ";
 		}
 		value = removeSpace(value);
-		head.setMyRunValue(value);
-		nodes.remove(0); //remove final bracket (closing)
+		getHead().setMyRunValue(value);
+		getNodes().remove(0); //remove final bracket (closing)
 		return current;
 	}
 	

@@ -10,11 +10,14 @@ import interpreter.util.ArgumentReaderUtil;
 import interpreter.util.GroupReader;
 import util.Pair;
 
-public class GroupBuilderUtil {
+public class GroupStartUtil extends BuilderUtil{
 	private final static String END = "GroupEnd";
 	private final static String START = "GroupStart";
 	
-	//TODO: CLEAN UP
+	public GroupStartUtil(List<InstructionNode> nodes,
+			InstructionNode head, String current, InstructionData data){
+		super(nodes, head, current, data);
+	}
 	
 	/**
 	 * Return the same commands as in Group brackets ( ), but
@@ -27,23 +30,22 @@ public class GroupBuilderUtil {
 	 * @param data The InstructionData holding information about the current workspace
 	 * @return The String representing the new current text (re-ordered)
 	 */
-	public static String construct(List<InstructionNode> nodes,
-			InstructionNode head, String current, InstructionData data) {
+	public String construct() {
 		
 		String value;
-		InstructionNode headNode = nodes.remove(0);
-		current = InstructionSplitter.removeFirstItem(current);
+		InstructionNode headNode = getNodes().remove(0);
+		String current = InstructionSplitter.removeFirstItem(getCurrent());
 		String instruction = headNode.getMyCommand(); //remove head instruction
 		String type = headNode.getMyClassification();
-		int numArgs = ArgumentReaderUtil.getNumArgs(type, instruction, data);
+		int numArgs = ArgumentReaderUtil.getNumArgs(type, instruction, getData());
 		
 		Pair <String, String> result;
 		String group = GroupReader.getGroup(type);
 		if(group.equals("Layer")){
-			result = layerArguments(nodes, instruction, current, numArgs);
+			result = layerArguments(getNodes(), instruction, current, numArgs);
 		}
 		else{
-			result = multipleArguments(nodes, instruction, current, numArgs);
+			result = multipleArguments(getNodes(), instruction, current, numArgs);
 		}
 		
 		value = result.getMyA();
@@ -54,7 +56,7 @@ public class GroupBuilderUtil {
 		child.setExecutable(false);
 		ArrayList<InstructionNode> newChildren = new ArrayList<InstructionNode> ();
 		newChildren.add(child);
-		head.setMyChildren(newChildren);
+		getHead().setMyChildren(newChildren);
 		
 		System.out.println(value);
 		System.out.println(current);

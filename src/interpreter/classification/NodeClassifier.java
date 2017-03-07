@@ -3,19 +3,21 @@ package interpreter.classification;
 import java.util.HashSet;
 import java.util.Set;
 
-import interpreter.builders.GroupBuilderUtil;
-import interpreter.builders.ListBuilderUtil;
+import interpreter.builders.GroupStartUtil;
+import interpreter.builders.ListStartUtil;
 import util.Pair;
 
 public class NodeClassifier {
 	
+	//TODO: Move to decommision
+	
 	public static final String NO_MATCH = "NO MATCH";
 	
 	private static Set<Pair> populateBrackets(){
-		String gstart = GroupBuilderUtil.getStartBracket();
-		String gend = GroupBuilderUtil.getStartBracket();
-		String lstart = ListBuilderUtil.getStartBracket();
-		String lend = ListBuilderUtil.getEndBracket();
+		String gstart = GroupStartUtil.getStartBracket();
+		String gend = GroupStartUtil.getStartBracket();
+		String lstart = ListStartUtil.getStartBracket();
+		String lend = ListStartUtil.getEndBracket();
 		Set<Pair> myBrackets = new HashSet<Pair>();
 		myBrackets.add(new Pair(lstart, lend));
 		myBrackets.add(new Pair(gstart, gend));
@@ -42,11 +44,11 @@ public class NodeClassifier {
 	}
 	
 	public static boolean isList(String name){
-		return name.equals(ListBuilderUtil.getStartBracket());
+		return name.equals(ListStartUtil.getStartBracket());
 	}
 	
 	public static boolean isGroup(String name){
-		return name.equals(GroupBuilderUtil.getStartBracket());
+		return name.equals(GroupStartUtil.getStartBracket());
 	}
 	
 	public static boolean isUnknown(String name){
