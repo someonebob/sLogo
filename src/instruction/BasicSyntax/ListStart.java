@@ -25,14 +25,11 @@ public class ListStart extends Instruction {
 
 	public ListStart(InstructionData data,  List<String> args, String myText){
 		super(data, args, myText);
-
-		//TODO: check and complete
 	}
 	
 	
 	@Override
 	public double execute() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 

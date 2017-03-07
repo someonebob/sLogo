@@ -21,7 +21,8 @@ public class Home extends TurtleCommand
 	@Override
 	public double execute()
 	{
+		double distanceTraveled = MathUtil.distance(getPosition().getX(), getPosition().getY());
 		setPosition(0, 0);
-		return MathUtil.distance(getPosition().getX(), getPosition().getY());
+		return distanceTraveled;
 	}
 }

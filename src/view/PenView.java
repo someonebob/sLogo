@@ -2,7 +2,9 @@ package view;
 
 import java.util.Observable;
 
+import javafx.animation.FadeTransition;
 import javafx.animation.PathTransition;
+import javafx.animation.SequentialTransition;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Point2D;
@@ -10,10 +12,12 @@ import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
+import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
 /**
@@ -23,20 +27,36 @@ import javafx.util.Duration;
  */
 public class PenView implements View
 {
-	public final Color DEFAULT_COLOR = Color.BLACK;
 
 	// private Path myPath;
 	private Canvas canvas;
 	private double thickness;
 	private Color color;
+	private boolean isUp;
+	private SequentialTransition actorMove;
 
-	public PenView()
+	public PenView(Paint color)
 	{
+		isUp = false;
 		thickness = 2;
-		color = DEFAULT_COLOR;
-		// myPath = new Path();
+		this.color = (Color) color;
 		canvas = new Canvas();
-		this.setColor(DEFAULT_COLOR);
+		this.setColor(this.color);
+		actorMove = new SequentialTransition();
+	}
+
+	public void step()
+	{
+		actorMove.play();
+	}
+
+	public void waitTransition(double waitTime)
+	{
+		FadeTransition delayTransition = new FadeTransition(Duration.millis(waitTime), new Rectangle());
+		actorMove.getChildren().add(delayTransition);
+		delayTransition.setOnFinished(e -> {
+			actorMove.getChildren().remove(delayTransition);
+		});
 	}
 
 	public void move(Point2D currLocation, Point2D newLocation)
@@ -87,7 +107,15 @@ public class PenView implements View
 				oldLocation = new Point2D(x + canvas.getWidth() / 2, y + canvas.getHeight() / 2);
 			}
 		});
-		pathTransition.play();
+		actorMove.getChildren().add(pathTransition);
+		pathTransition.setOnFinished(e -> {
+			actorMove.getChildren().remove(pathTransition);
+		});
+	}
+
+	public Color getColor()
+	{
+		return this.color;
 	}
 
 	public void setColor(Color color)
@@ -106,23 +134,38 @@ public class PenView implements View
 	public void penUp()
 	{
 		this.setColor(Color.TRANSPARENT);
+		this.isUp = true;
 	}
 
 	public void penDown()
 	{
 		this.setColor(color);
+		this.isUp = false;
 	}
 
-	@Override
-	public void updateData(String arg)
+	public boolean isUp()
 	{
-		// TODO Auto-generated method stub
+		return isUp;
+	}
 
+	public void clear()
+	{
+		canvas.getGraphicsContext2D().clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 	}
 
 	public Canvas getCanvas()
 	{
 		return canvas;
+	}
+
+	public double getThickness()
+	{
+		return thickness;
+	}
+
+	public void setThickness(double thickness)
+	{
+		this.thickness = thickness;
 	}
 
 	@Override

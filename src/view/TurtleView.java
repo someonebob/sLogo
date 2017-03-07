@@ -2,17 +2,24 @@ package view;
 
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
+import main.Defaults;
 
 public class TurtleView extends ActorView
 {
-	public static final String DEFAULT_IMAGE = "Default.png";
 
 	private PenView pen;
 
-	public TurtleView()
+	public TurtleView(Defaults defaults, int id)
 	{
-		super(DEFAULT_IMAGE);
-		pen = new PenView();
+		super(defaults, id);
+		pen = new PenView(defaults.pen());
+	}
+
+	@Override
+	public void step()
+	{
+		super.step();
+		this.getPen().step();
 	}
 
 	@Override
@@ -24,6 +31,15 @@ public class TurtleView extends ActorView
 	public PenView getPen()
 	{
 		return pen;
+	}
+
+	@Override
+	public void setHeading(double newHeading)
+	{
+		super.setHeading(newHeading);
+		if (pen != null) {
+			pen.waitTransition(200);
+		}
 	}
 
 	@Override

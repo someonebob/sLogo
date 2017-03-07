@@ -34,10 +34,11 @@ public class SettingsTool extends Tool
 		buttons.add(new TurtleImageButton());
 		buttons.add(new PenColorButton());
 		buttons.add(new LanguageButton());
+		buttons.add(new DefaultButton());
 	}
 
 	@Override
-	public List<AbstractButton> getButtons()
+	protected List<AbstractButton> getButtons()
 	{
 		return buttons;
 
@@ -89,11 +90,21 @@ public class SettingsTool extends Tool
 		}
 	}
 
-	public class LanguageButton extends AbstractButton
+	public class LanguageButton extends AbstractLanguageButton
 	{
 		public LanguageButton()
 		{
 			super(new MenuItem("Language"));
+
+		}
+	}
+	
+	public class DefaultButton extends AbstractButton
+	{
+		public DefaultButton()
+		{
+			super(new MenuItem("Set Defaults"));
+			this.getItem().setOnAction(e -> new DefaultChooser());
 		}
 	}
 

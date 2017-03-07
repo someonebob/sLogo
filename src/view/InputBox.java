@@ -1,142 +1,112 @@
 package view;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Observable;
-import java.util.Stack;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import javafx.scene.Node;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextArea;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
-import tool.FileTool.SaveButton;
+import javafx.scene.text.Font;
 
-/**
- * The view that displays the console, allows the user to input commands
- * 
- * @author Jesse
- *
- */
-public class InputBox implements View
-{
-	private BorderPane inputBox;
-	private ScrollPane scroll;
-	private TextField console;
-	private VBox inputs;
-	private List<String> previous;
-	private String input;
-	private Stack<String> clickedCommands;
-
-	/**
-	 * Generates all the nodes and defines their actions
-	 */
-	public InputBox()
-	{
+public abstract class InputBox implements View {
+	protected BorderPane root;
+	protected VBox box;
+	protected TextArea console;
+	protected ListView<String> previous;
+	protected int historyIndex = 0;
+	protected String preamble = "slogo_team07$ ";
+	
+	public InputBox(){
 		initiateItems();
 	}
-
-	/**
-	 * Returns the the input of the console
-	 * 
-	 * @return
-	 */
-	public String getInput()
-	{
-		return input;
-	}
-
-	public TextField getField()
-	{
-		return console;
-	}
-
-	public List<String> getPastInputs()
-	{
-		return previous;
-	}
-
-	/**
-	 * Returns the group of nodes to be displayed
-	 * 
-	 * @return
-	 */
-	@Override
-	public Node display()
-	{
-		return inputBox;
-	}
-
-	@Override
-	public void update(Observable o, Object arg)
-	{
-		if (o instanceof SaveButton) {
-			saveFile((File) arg);
-		}
+	
+	private void initiateItems() {
+		root = new BorderPane();
+		console = new TextArea();
+		console.setOnMouseClicked(e -> console.positionCaret(console.getText().length()));
+		console.setWrapText(true);
+		console.textProperty().addListener(new ChangeListener<Object>() {
+		    @Override
+		    public void changed(ObservableValue<?> observable, Object oldValue, Object newValue) {
+		    	//scroll to bottom
+		        console.setScrollTop(Double.MAX_VALUE);
+		    }
+		});
+		box = new VBox();
+		previous = new ListView<>();
+		Label heading = new Label("Previous Commands");
 		
-	}
+		heading.setStyle("-fx-font-weight: bold");
+		box.setAlignment(Pos.CENTER);
+		box.getChildren().addAll(heading, previous);
 
-	@Override
-	public void updateData(String arg)
-	{
-		Label current = new Label(arg);
-		previous.add(arg);
-		current.setOnMouseClicked(e -> clickedCommands.add(current.getText()));
-		inputs.getChildren().add(current);
-	}
-
-	private void initiateItems()
-	{
-		inputBox = new BorderPane();
-		scroll = new ScrollPane();
-		scroll.setPrefHeight(200);
-		scroll.setMaxHeight(200);
-
-		inputs = new VBox();
-		scroll.setContent(inputs);
-		scroll.vvalueProperty().bind(inputs.heightProperty());
-
-		console = new TextField();
-		console.setPromptText("Enter your code here...");
-		console.setFocusTraversable(false);
+		console.appendText(preamble);
+		console.setFont(Font.font("Courier new"));
+		previous.setPrefWidth(200);
+		previous.setFocusTraversable(false);
+		previous.setOnMouseClicked(e -> appendText(previous.getSelectionModel().getSelectedItem()));
 		
-		inputBox.setCenter(scroll);
-		inputBox.setBottom(console);
-
-		previous = new ArrayList<>();
-		clickedCommands = new Stack<>();
+		root.setMaxHeight(200);
+		root.setLeft(box);
+		root.setCenter(console);
 	}
-
-	private void saveFile(File file)
-	{
-		FileWriter fw = null;
-		try {
-			fw = new FileWriter(file);
-			fw.write(convertPrevious());
-			fw.close();
-		} catch (IOException e) {
-			Logger.getLogger(InputBox.class.getName()).log(Level.SEVERE, null, e);
+	
+	
+	public void assignOnEnterCommand(EventHandler<? super KeyEvent> e){
+		console.setOnKeyPressed(e);
+	}
+	public void appendPreamble(){
+		appendText("\n" + preamble);
+	}
+	public String getCurrentCommand(){
+		// returns text between last instance of preamble and end
+		return console.getText(console.getText().lastIndexOf(preamble) + preamble.length(), console.getText().length());
+	}
+	public void clear(){
+		console.setText(preamble);
+	}
+	public void setFocus(){
+		console.requestFocus();
+	}
+	public void appendText(String s){
+		console.appendText(s);
+	}
+	public abstract void enterAction(KeyEvent e);
+	public void upAction(KeyEvent e) {
+		if (historyIndex <= previous.getItems().size() - 1) {
+			appendPastCommand();
+		}
+		if (historyIndex < previous.getItems().size() - 1) {
+			historyIndex++;
+		}
+		e.consume();
+	}
+	public void downAction(KeyEvent e) {
+		if (historyIndex == 0) {
+			clearCommand();
+			return;
+		}
+		historyIndex--;
+		appendPastCommand();
+		e.consume();
+	}
+	protected void appendPastCommand() {
+		clearCommand();
+		console.appendText(previous.getItems().get(previous.getItems().size() - 1 - historyIndex));
+	}
+	protected void clearCommand() {
+		console.setText(console.getText().substring(0, console.getText().lastIndexOf(getCurrentCommand())));
+		console.positionCaret(console.getText().length());
+	}
+	public void protectPreamble(KeyEvent e) {
+		int pos = console.getText().lastIndexOf(preamble) + preamble.length();
+		if (console.getSelectedText().length() != 0 || pos == console.getCaretPosition()) {
+			e.consume();
 		}
 	}
-
-	public Stack<String> getClickedCommands()
-	{
-		return clickedCommands;
-	}
-
-	private String convertPrevious()
-	{
-		StringBuilder content = new StringBuilder();
-		for (String s : previous) {
-			content.append(s + "\n");
-		}
-		return content.toString();
-	}
-
+	
 }

@@ -3,13 +3,16 @@ package instruction.Miscellaneous;
 import java.util.List;
 
 import instruction.InstructionData;
-import interpreter.InstructionSplitter;
+import interpreter.clean.InstructionSplitter;
 import user_structures.FunctionData;
 
 /**
  * 
  * Instruction for a user-defined instruction.
- * Stores a String name
+ * This class stores a String name that represents 
+ * the command (e.g., dance, flower) -- this name is given
+ * by the user. Also has a String that can be parsed
+ * upon execution of this command to perform the intended functionality.
  * 
  * @author maddiebriere
  *

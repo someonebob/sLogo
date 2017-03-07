@@ -6,7 +6,11 @@ import instruction.InstructionData;
 
 /**
  * Class to construct a variable, adding its name
- * to the workspace and changing/setting its value
+ * to the workspace and changing/setting its value.
+ * DIFFERENT from the Variable class in that this
+ * produces the variable in the first place -- it does
+ * not return the value of the variable as a run value
+ * like the Variable class does.
  * 
  * @author maddiebriere
  *

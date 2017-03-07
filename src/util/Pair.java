@@ -7,29 +7,29 @@ package util;
  *
  */
 
-public class Pair {
+public class Pair <A, B> {
 	
-	private String myA;
-	private String myB;
+	private A myA;
+	private B myB;
 	
-	public Pair(String a, String b){
+	public Pair(A a, B b){
 		myA = a;
 		myB = b;
 	}
 
-	public String getMyA() {
+	public A getMyA() {
 		return myA;
 	}
 
-	public void setMyA(String myA) {
+	public void setMyA(A myA) {
 		this.myA = myA;
 	}
 
-	public String getMyB() {
+	public B getMyB() {
 		return myB;
 	}
 
-	public void setMyB(String myB) {
+	public void setMyB(B myB) {
 		this.myB = myB;
 	}
 	

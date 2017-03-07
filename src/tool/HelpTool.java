@@ -29,7 +29,7 @@ public class HelpTool extends Tool
 	}
 
 	@Override
-	public List<AbstractButton> getButtons()
+	protected List<AbstractButton> getButtons()
 	{
 		buttons = new ArrayList<AbstractButton>();
 		buttons.add(new HelpButton());

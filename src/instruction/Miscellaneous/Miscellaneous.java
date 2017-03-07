@@ -24,7 +24,7 @@ public abstract class Miscellaneous extends Instruction {
 	
 	protected double runListCommands(int argumentNumber) {
 		//TODO Need to change when decide on way to set language (possibly through InstructionData)
-		Interpreter listInterpreter = new Interpreter(getInstructionData(), "English");
+		Interpreter listInterpreter = new Interpreter(getInstructionData());
 		return listInterpreter.parseAndRun(getArgumentString(argumentNumber));
 	}
 	
@@ -41,6 +41,7 @@ public abstract class Miscellaneous extends Instruction {
 			lastReturnedValue = runListCommands(1);
 			counter.setValue(counter.getValue() + increment);
 		}
+		counter.setValue(counter.getValue()-1);
 		return lastReturnedValue;
 	}
 	

@@ -9,6 +9,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
+import tool.VariableEditor;
 import user_structures.VariableData;
 
 /**
@@ -46,12 +47,6 @@ public class WorkspaceView implements PageView
 
 	}
 
-	@Override
-	public void updateData(String arg)
-	{
-
-	}
-
 	public void setItems(ObservableList<VariableData> data)
 	{
 		table.setItems(data);
@@ -72,8 +67,6 @@ public class WorkspaceView implements PageView
 		table.getColumns().setAll(variables, values);
 
 		edit = new Button("Edit");
-		// magic number to make it line up with tabs
-		edit.setPrefHeight(38);
 		pane.setTop(edit);
 		pane.setCenter(table);
 

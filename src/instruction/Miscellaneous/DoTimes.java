@@ -6,8 +6,9 @@ import instruction.InstructionData;
 import user_structures.VariableData;
 
 /**
- * Class to perform a certain action
- * from 1 - the given limit.
+ * Class to perform a certain action a set number of times,
+ * iterating a given variable from the value of 1 up to the 
+ * given limit (For use in the commands).
  * 
  * Assumption: The limit passed to this function is a constant
  * and not an expression -- hopefully change with future
@@ -22,10 +23,9 @@ public class DoTimes extends Miscellaneous {
 		super(instructionData, args, myText);
 	}
 
-	//Assumption made that limit is constant
-	//TODO: Error throwing
 	@Override
 	public double execute() {
+		//TODO: Error-throwing
 		String[] args = getArgumentString(0).split(" ");
 		VariableData counter = initializeVariable(args[0], 1.0);
 		return iterateThroughLoop(counter, Double.parseDouble(args[1]), 1.0);

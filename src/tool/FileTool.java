@@ -32,12 +32,12 @@ public class FileTool extends Tool
 		buttons.add(new NewButton());
 		buttons.add(new OpenButton());
 		buttons.add(new SaveButton());
-		buttons.add(new SaveAsButton());
+		buttons.add(new SaveImageButton());
 	}
 	
 
 	@Override
-	public List<AbstractButton> getButtons() {
+	protected List<AbstractButton> getButtons() {
 		return buttons;
 	}
 	
@@ -88,10 +88,10 @@ public class FileTool extends Tool
 		
 	}
 
-	public class SaveAsButton extends AbstractButton{
+	public class SaveImageButton extends AbstractButton{
 
-		public SaveAsButton() {
-			super(new MenuItem("Save As"));
+		public SaveImageButton() {
+			super(new MenuItem("Save Image"));
 			// TODO make it save
 			this.getItem().setOnAction(e -> {
 				this.setChanged();
