@@ -5,10 +5,11 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.VBox;
 
 public class PenPreferencesView implements View
@@ -31,6 +32,7 @@ public class PenPreferencesView implements View
 		PenColorButton penColorButton = new PenColorButton();
 		updaters.add(penColorButton);
 		display.getChildren().add(penColorButton.display());
+		display.getChildren().add(new Label("Pen Thickness:"));
 		PenThicknessUpdater penThicknessUpdater = new PenThicknessUpdater();
 		updaters.add(penThicknessUpdater);
 		display.getChildren().add(penThicknessUpdater.display());
@@ -71,10 +73,20 @@ public class PenPreferencesView implements View
 		{
 			input = new TextField();
 			input.setText(String.valueOf(pen.getThickness()));
-			input.setOnKeyPressed(e -> {
-				if (e.getCode() == KeyCode.ENTER) {
-					this.setChanged();
-					this.notifyObservers(input.getText());
+			input.setOnAction(e -> {
+				this.setChanged();
+				this.notifyObservers(input.getText());
+			});
+			// update when box is deselected
+			input.focusedProperty().addListener(new ChangeListener<Boolean>()
+			{
+				@Override
+				public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue)
+				{
+					if (!newValue && oldValue) {
+						setChanged();
+						notifyObservers(input.getText());
+					}
 				}
 			});
 		}
