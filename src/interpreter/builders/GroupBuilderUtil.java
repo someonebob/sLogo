@@ -14,6 +14,7 @@ public class GroupBuilderUtil {
 	private final static String END = "GroupEnd";
 	private final static String START = "GroupStart";
 	
+	//TODO: CLEAN UP
 	
 	/**
 	 * Return the same commands as in Group brackets ( ), but
