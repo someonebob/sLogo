@@ -47,7 +47,13 @@ public class GroupBuilderUtil {
 		
 		value = result.getMyA();
 		current = result.getMyB();
-		head.setMyRunValue(value);
+		
+		InstructionNode child = new InstructionNode();
+		child.setMyRunValue(value);
+		child.setExecutable(false);
+		ArrayList<InstructionNode> newChildren = new ArrayList<InstructionNode> ();
+		newChildren.add(child);
+		head.setMyChildren(newChildren);
 		
 		System.out.println(value);
 		System.out.println(current);

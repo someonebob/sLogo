@@ -30,9 +30,9 @@ public class InstructionNode {
 		this(clss, value, new ArrayList<InstructionNode>());
 	}
 	public InstructionNode(String clss, String value, List<InstructionNode> children) {
-		if (value.isEmpty()) {
-			throw new WrongArgumentNumberException(RESOURCE_ARGUMENTS_NAME);
-		}
+		//if (value.isEmpty()) {
+		//	throw new WrongArgumentNumberException(RESOURCE_ARGUMENTS_NAME);
+		//}
 		myClassification = clss;
 		myCommand = value;
 		myChildren = children;

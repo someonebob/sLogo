@@ -87,7 +87,7 @@ public class TreeBuilder {
 			buildList(classification, head);
 		}
 		else if (NodeClassifier.isGroup(classification)){
-			head.setExecutable(false);
+			//head.setExecutable(false); //child is non-executable instead
 			buildGroup(classification, head);
 		}
 		return head;
