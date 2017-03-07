@@ -103,7 +103,7 @@ public class TreeExecuter
 			}
 			args.add(child.getMyRunValue());
 		}
-		if(head.hasRun()){ //if head has already executed (lists, groups), make last node return value
+		if(head.hasRun()){ //if head has already executed (lists), then just return run value
 			args.add(head.getMyRunValue());
 		}
 		return args;

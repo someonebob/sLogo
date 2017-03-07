@@ -1,5 +1,6 @@
 package interpreter.builders;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import instruction.InstructionData;
@@ -13,6 +14,7 @@ public class GroupBuilderUtil {
 	private final static String END = "GroupEnd";
 	private final static String START = "GroupStart";
 	
+	//TODO: CLEAN UP
 	
 	/**
 	 * Return the same commands as in Group brackets ( ), but
@@ -46,7 +48,13 @@ public class GroupBuilderUtil {
 		
 		value = result.getMyA();
 		current = result.getMyB();
-		head.setMyRunValue(value);
+		
+		InstructionNode child = new InstructionNode();
+		child.setMyRunValue(value);
+		child.setExecutable(false);
+		ArrayList<InstructionNode> newChildren = new ArrayList<InstructionNode> ();
+		newChildren.add(child);
+		head.setMyChildren(newChildren);
 		
 		System.out.println(value);
 		System.out.println(current);
@@ -54,35 +62,65 @@ public class GroupBuilderUtil {
 		return current;
 	}
 	
+	
 	//TODO: Fix
 	private static Pair<String, String> layerArguments(List<InstructionNode> nodes, 
 			String instruction, String current, int numArgs){
 		String value = "";
 		int grouping = numArgs - 1;
-		int i = grouping;
-		InstructionNode curr = nodes.get(i);
+		List<InstructionNode> constants = countAndRemoveArgs(nodes);
+		current = removeExpression(current, constants.size());
 		
-		while(!curr.getMyClassification().equals(END)){
-			if (!curr.getMyClassification().equals(END)){
-				value = instruction + " " + value;
+		//remove inner arguments
+		if(constants.size() >= numArgs){
+			for(int i=0; i<numArgs; i++){
+				InstructionNode cu = constants.remove(0);
+				if(!cu.getMyClassification().equals(END))
+					value += cu.getMyCommand() + " ";
 			}
-			else{
-				break;
-			}
-			//TODO: Check for empty list
-			for(int j=0; j<grouping; j++){
-				if (!curr.getMyClassification().equals(END)){
-					curr = nodes.remove(i);
-					current = InstructionSplitter.removeFirstItem(current);
-					value += curr.getMyCommand() + " ";
-					break;
-				} 
-			}
-		} 
+		}
+		else{
+			return new Pair<String, String>(value, current);
+		}
 		
-		
+		while(!constants.isEmpty()){
+			for(int i=0; i < grouping; i++){
+				InstructionNode cu = constants.remove(0);
+				if(!cu.getMyClassification().equals(END))
+					value += cu.getMyCommand() + " ";
+			}
+			value = instruction + " " + value;
+		}
+		value = removeSpace(value);
 		
 		return new Pair<String, String>(value, current);
+	}
+	
+	private static String removeExpression(String current, int elemIndex){
+		List<String> elems = InstructionSplitter.getInstructionStrings(current);
+		for(int i=0; i<elemIndex; i++){
+			elems.remove(0);
+		}
+		String toRet = "";
+		for(String e : elems){
+			toRet += e + " ";
+		}
+		toRet = removeSpace(toRet);
+		return toRet;
+	}
+	
+	private static List<InstructionNode> countAndRemoveArgs(List<InstructionNode> nodes){
+		List<InstructionNode> toRet = new ArrayList<InstructionNode>();
+		while(!nodes.isEmpty()){
+			if(nodes.get(0).equals(END)){
+				nodes.remove(0); //remove bracket
+				break;
+			}
+			else{
+				toRet.add(nodes.remove(0));
+			}
+		}
+		return toRet;
 	}
 	
 	//TODO: Complete
