@@ -72,12 +72,6 @@ public abstract class ActorView implements View
 
 	}
 
-	@Override
-	public void updateData(String arg)
-	{
-		// TODO Auto-generated method stub
-
-	}
 
 	public Actor getActor()
 	{

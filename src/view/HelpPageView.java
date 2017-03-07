@@ -21,11 +21,4 @@ public class HelpPageView implements PageView
 
 	}
 
-	@Override
-	public void updateData(String arg)
-	{
-		// TODO Auto-generated method stub
-
-	}
-
 }

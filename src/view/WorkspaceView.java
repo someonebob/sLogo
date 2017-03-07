@@ -9,6 +9,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
+import tool.VariableEditor;
 import user_structures.VariableData;
 
 /**
@@ -43,12 +44,6 @@ public class WorkspaceView implements PageView
 	public void update(Observable o, Object arg)
 	{
 		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void updateData(String arg)
-	{
 
 	}
 

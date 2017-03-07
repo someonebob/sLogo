@@ -23,11 +23,5 @@ public interface View extends Observer
 	 */
 	public Node display();
 
-	/**
-	 * Updates the View to reflect new form
-	 * 
-	 * @param arg
-	 */
-	public void updateData(String arg);
 
 }

@@ -21,7 +21,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import tool.FileTool.SaveButton;
 
-public class SingleLineInputBox implements View {
+public class SingleLineInputBox extends InputBox {
 	private BorderPane root;
 	private TextArea console;
 	private VBox box;
@@ -43,70 +43,18 @@ public class SingleLineInputBox implements View {
 		return root;
 	}
 
-	@Override
+
 	public void updateData(String arg) {
 		previous.getItems().add(arg);
 	}
 
-	public void assignOnEnterCommand(EventHandler<? super KeyEvent> e){
-		console.setOnKeyPressed(e);
-	}
-	
-	public void appendPreamble(){
-		appendText("\n" + preamble);
-	}
-
-	public String getCurrentCommand() {
-		// returns text between last instance of preamble and end
-		return console.getText(console.getText().lastIndexOf(preamble) + preamble.length(), console.getText().length());
-	}
-
-	public void clear() {
-		console.setText(preamble);
-	}
-	
-	public void setFocus(){
-		console.requestFocus();
-	}
-	
-	public void appendText(String s){
-		console.appendText(s);
-	}
 	
 	public void enterAction(KeyEvent e) {
 		e.consume();
 		historyIndex = 0;
 	}
-	public void upAction(KeyEvent e) {
-		if (historyIndex <= previous.getItems().size() - 1) {
-			appendPastCommand();
-		}
-		if (historyIndex < previous.getItems().size() - 1) {
-			historyIndex++;
-		}
-		e.consume();
-	}
+	
 
-	public void downAction(KeyEvent e) {
-		if (historyIndex == 0) {
-			clearCommand();
-			return;
-		}
-		historyIndex--;
-		appendPastCommand();
-		e.consume();
-	}
-
-	public void protectPreamble(KeyEvent e) {
-		int pos = console.getText().lastIndexOf(preamble) + preamble.length();
-		if (console.getSelectedText().length() != 0 || pos == console.getCaretPosition()) {
-			e.consume();
-		}
-	}
-	private void appendPastCommand() {
-		clearCommand();
-		console.appendText(previous.getItems().get(previous.getItems().size() - 1 - historyIndex));
-	}
 
 	public SingleLineInputBox() {
 		initiateItems();
@@ -141,11 +89,6 @@ public class SingleLineInputBox implements View {
 		root.setMaxHeight(200);
 		root.setLeft(box);
 		root.setCenter(console);
-	}
-
-	private void clearCommand() {
-		console.setText(console.getText().substring(0, console.getText().lastIndexOf(getCurrentCommand())));
-		console.positionCaret(console.getText().length());
 	}
 
 	private void saveFile(File file) {

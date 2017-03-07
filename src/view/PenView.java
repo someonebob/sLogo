@@ -148,13 +148,6 @@ public class PenView implements View
 		canvas.getGraphicsContext2D().clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 	}
 
-	@Override
-	public void updateData(String arg)
-	{
-		// TODO Auto-generated method stub
-
-	}
-
 	public Canvas getCanvas()
 	{
 		return canvas;

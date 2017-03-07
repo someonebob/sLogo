@@ -189,6 +189,10 @@ public class SimulationView implements View {
 		actors.get(0).move(deltaLocation);
 	}
 	
+	public void setBackgroundColor(String color){
+		root.setBackground(new Background(new BackgroundFill(Paint.valueOf(color), null, null)));
+	}
+	
 	public TurtleView getTurtle()
 	{
 		return (TurtleView) actors.get(0);
@@ -239,12 +243,6 @@ public class SimulationView implements View {
 	public Node display() {
 		// TODO Auto-generated method stub
 		return root;
-	}
-
-	@Override
-	public void updateData(String arg) {
-		// TODO Auto-generated method stub
-
 	}
 
 	public Bounds getBounds() {
