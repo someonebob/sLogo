@@ -44,6 +44,11 @@ import view.SavedCommandsView;
 import view.SimulationView;
 import view.WorkspaceView;
 
+/**
+ * @author jimmy
+ * @author Jesse
+ *
+ */
 public class Controller implements Observer {	
 	private TabPane root;
 	private ObjectProperty<Tab> currentTab;
