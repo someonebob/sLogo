@@ -1,15 +1,59 @@
 package view;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 
 public abstract class InputBox implements View {
-	private TextArea console;
-	private ListView<String> previous;
-	private int historyIndex = 0;
-	private String preamble = "slogo_team07$ ";
+	protected BorderPane root;
+	protected VBox box;
+	protected TextArea console;
+	protected ListView<String> previous;
+	protected int historyIndex = 0;
+	protected String preamble = "slogo_team07$ ";
+	
+	public InputBox(){
+		initiateItems();
+	}
+	
+	private void initiateItems() {
+		root = new BorderPane();
+		console = new TextArea();
+		console.setOnMouseClicked(e -> console.positionCaret(console.getText().length()));
+		console.setWrapText(true);
+		console.textProperty().addListener(new ChangeListener<Object>() {
+		    @Override
+		    public void changed(ObservableValue<?> observable, Object oldValue, Object newValue) {
+		    	//scroll to bottom
+		        console.setScrollTop(Double.MAX_VALUE);
+		    }
+		});
+		box = new VBox();
+		previous = new ListView<>();
+		Label heading = new Label("Previous Commands");
+		
+		heading.setStyle("-fx-font-weight: bold");
+		box.setAlignment(Pos.CENTER);
+		box.getChildren().addAll(heading, previous);
+
+		console.appendText(preamble);
+		console.setFont(Font.font("Courier new"));
+		previous.setPrefWidth(200);
+		previous.setFocusTraversable(false);
+		previous.setOnMouseClicked(e -> appendText(previous.getSelectionModel().getSelectedItem()));
+		
+		root.setMaxHeight(200);
+		root.setLeft(box);
+		root.setCenter(console);
+	}
 	
 	
 	public void assignOnEnterCommand(EventHandler<? super KeyEvent> e){
