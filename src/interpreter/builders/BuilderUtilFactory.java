@@ -9,7 +9,7 @@ import interpreter.misc.InstructionNode;
 
 public class BuilderUtilFactory {
 	
-	private static final String PATH = "src/interpreter/builders/";
+	private static final String PATH = "interpreter.builders.";
 
 	public static BuilderUtil make(List<InstructionNode> nodes,
 			InstructionNode head, String current, InstructionData data){
@@ -19,7 +19,8 @@ public class BuilderUtilFactory {
 		Object builderHopeful = new Object();
 		
 		try {
-			clazz = Class.forName(PATH + instructionType + "Util");
+			String path = PATH + instructionType + "Util";
+			clazz = Class.forName(path);
 		}catch(Exception e){
 			return null;
 		}

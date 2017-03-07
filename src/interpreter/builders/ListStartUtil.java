@@ -21,10 +21,9 @@ public class ListStartUtil extends BuilderUtil {
 	}
 	
 	public String construct() {
-		getHead().setExecutable(false);
 		String value = "";
 		String current = getCurrent();
-		while(getNodes().isEmpty())
+		while(!getNodes().isEmpty())
 		{
 			String name = getNodes().get(0).getMyClassification();
 			current = InstructionSplitter.removeFirstItem(current);
@@ -36,6 +35,7 @@ public class ListStartUtil extends BuilderUtil {
 		value = removeSpace(value);
 		getHead().setMyRunValue(value);
 		getNodes().remove(0); //remove final bracket (closing)
+		getHead().setExecutable(false);
 		return current;
 	}
 	

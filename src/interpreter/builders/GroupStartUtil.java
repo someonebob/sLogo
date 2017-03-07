@@ -31,7 +31,6 @@ public class GroupStartUtil extends BuilderUtil{
 	 * @return The String representing the new current text (re-ordered)
 	 */
 	public String construct() {
-		
 		String value;
 		InstructionNode headNode = getNodes().remove(0);
 		String current = InstructionSplitter.removeFirstItem(getCurrent());
@@ -57,9 +56,6 @@ public class GroupStartUtil extends BuilderUtil{
 		ArrayList<InstructionNode> newChildren = new ArrayList<InstructionNode> ();
 		newChildren.add(child);
 		getHead().setMyChildren(newChildren);
-		
-		System.out.println(value);
-		System.out.println(current);
 		
 		return current;
 	}
