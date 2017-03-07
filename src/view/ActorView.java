@@ -84,10 +84,6 @@ public abstract class ActorView implements View
 
 	public void setImage(Image image)
 	{
-		// ImageView view = new ImageView(image);
-		// view.setFitHeight(ACTOR_HEIGHT);
-		// view.setPreserveRatio(true);
-		// this.setHeading(STARTING_HEADING);
 		this.image.setImage(image);
 	}
 

@@ -126,7 +126,7 @@ public class Controller implements Observer
 		BorderPane pane = new BorderPane();
 		SimulationView simulation = new SimulationView(defaults);
 		SingleLineInputBox inputBox = new SingleLineInputBox();
-		// inputBox.setFocus();
+		inputBox.setFocus();
 		WorkspaceView workspace = new WorkspaceView();
 		SavedCommandsView userCommands = new SavedCommandsView();
 		PreferencesView preferences = new PreferencesView(simulation.getTurtle());
