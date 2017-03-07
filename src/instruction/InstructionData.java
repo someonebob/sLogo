@@ -6,6 +6,7 @@ import java.util.List;
 
 import interpreter.util.WorkspaceUpdater;
 import javafx.geometry.Bounds;
+import javafx.scene.paint.Color;
 import user_structures.FunctionData;
 import user_structures.VariableData;
 import view.ActorView;
@@ -23,7 +24,7 @@ import view.SimulationView;
  */
 public class InstructionData
 {
-	SimulationView simulation;
+	SimulationView simulationView;
 	List<VariableData> variables;
 	List<FunctionData> functions;
 	String language;
@@ -38,7 +39,7 @@ public class InstructionData
 
 	public InstructionData(SimulationView simulation, List<VariableData> variables, List<FunctionData> functions, String language)
 	{ 
-		this.simulation = simulation;
+		this.simulationView = simulation;
 		this.variables = variables;
 		this.functions = functions;
 		this.language = language;
@@ -46,7 +47,7 @@ public class InstructionData
 
 	public ActorView getActiveActor()
 	{
-		return simulation.getTurtle();
+		return simulationView.getTurtle();
 	}
 
 	/**
@@ -56,12 +57,12 @@ public class InstructionData
 	 */
 	public List<ActorView> getActors()
 	{
-		return Arrays.asList(simulation.getTurtle());
+		return Arrays.asList(simulationView.getTurtle());
 	}
 
 	public Bounds getSimulationBounds()
 	{
-		return simulation.getBounds();
+		return simulationView.getBounds();
 	}
 	
 	public List<VariableData> getVariables(){
@@ -135,7 +136,51 @@ public class InstructionData
 	}
 	
 	public SimulationView getSimulation(){
-		return simulation;
+		return simulationView;
 	}
-
+	
+	/**
+	 * Sets the background color of the simulation to the color represented by index
+	 * @param index
+	 */
+	public void setBackgroundColorIndex(int index){
+		//In what View will the color array be contained?
+		//Should InstructionData accept a list of all Views to have access to them?
+	}
+	
+	/**
+	 * Sets the pen color of currently active turtle to color represented by index
+	 * @param index
+	 */
+	public void setPenColorIndex(int index){
+		
+	}
+	
+	/**
+	 * Sets the pen size of currently active turtle to the turtle to pixels
+	 * @param index
+	 */
+	public void setPenSize(int pixels){
+		
+	}
+	
+	/**
+	 * Sets the ImageView of currently active turtle to the ImageView at index
+	 * @param index
+	 */
+	public void setTurtleImageViewIndex(int index){
+		
+	}
+	
+	public void setPalette(int index, Color color){
+		
+	}
+	
+	public double getPenColorIndex(){
+		
+	}
+	
+	public double getTurtleImageViewIndex(){
+		
+	}
 }
