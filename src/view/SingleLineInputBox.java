@@ -22,12 +22,6 @@ import javafx.scene.text.Font;
 import tool.FileTool.SaveButton;
 
 public class SingleLineInputBox extends InputBox {
-	private BorderPane root;
-	private TextArea console;
-	private VBox box;
-	private ListView<String> previous;
-	private int historyIndex = 0;
-	private String preamble = "slogo_team07$ ";
 
 	@Override
 	public void update(Observable o, Object arg) {
@@ -57,39 +51,10 @@ public class SingleLineInputBox extends InputBox {
 
 
 	public SingleLineInputBox() {
-		initiateItems();
+		super();
 	}
 
-	private void initiateItems() {
-		root = new BorderPane();
-		console = new TextArea();
-		console.setOnMouseClicked(e -> console.positionCaret(console.getText().length()));
-		console.setWrapText(true);
-		console.textProperty().addListener(new ChangeListener<Object>() {
-		    @Override
-		    public void changed(ObservableValue<?> observable, Object oldValue, Object newValue) {
-		    	//scroll to bottom
-		        console.setScrollTop(Double.MAX_VALUE);
-		    }
-		});
-		box = new VBox();
-		previous = new ListView<>();
-		Label heading = new Label("Previous Commands");
-		
-		heading.setStyle("-fx-font-weight: bold");
-		box.setAlignment(Pos.CENTER);
-		box.getChildren().addAll(heading, previous);
-
-		console.appendText(preamble);
-		console.setFont(Font.font("Courier new"));
-		previous.setPrefWidth(200);
-		previous.setFocusTraversable(false);
-		previous.setOnMouseClicked(e -> appendText(previous.getSelectionModel().getSelectedItem()));
-		
-		root.setMaxHeight(200);
-		root.setLeft(box);
-		root.setCenter(console);
-	}
+	
 
 	private void saveFile(File file) {
 		FileWriter fw = null;
