@@ -7,10 +7,10 @@ import javafx.animation.SequentialTransition;
 import javafx.animation.TranslateTransition;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
-import javafx.scene.control.SelectionModel;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
+import main.Defaults;
 import models.Actor;
 import user_structures.ID;
 
@@ -32,7 +32,7 @@ public abstract class ActorView implements View
 	private SequentialTransition actorMove;
 	private ID id;
 
-	public ActorView(String imageString, int id)
+	public ActorView(Defaults defaults, int id)
 	{
 		actor = new Actor();
 		image = new ImageView();
@@ -43,14 +43,15 @@ public abstract class ActorView implements View
 		// scale the image
 		image.setFitHeight(ACTOR_HEIGHT);
 		image.setPreserveRatio(true);
-		loadImage(imageString);
+		loadImage(defaults.image());
 		// start facing up
 		this.setHeading(STARTING_HEADING);
 		// initial rotation
 		actorMove.play();
 	}
-	
-	public ID getID(){
+
+	public ID getID()
+	{
 		return id;
 	}
 
@@ -71,13 +72,6 @@ public abstract class ActorView implements View
 
 	}
 
-	@Override
-	public void updateData(String arg)
-	{
-		// TODO Auto-generated method stub
-
-	}
-
 	public Actor getActor()
 	{
 		return actor;
@@ -90,10 +84,6 @@ public abstract class ActorView implements View
 
 	public void setImage(Image image)
 	{
-		// ImageView view = new ImageView(image);
-		// view.setFitHeight(ACTOR_HEIGHT);
-		// view.setPreserveRatio(true);
-		// this.setHeading(STARTING_HEADING);
 		this.image.setImage(image);
 	}
 
@@ -101,7 +91,7 @@ public abstract class ActorView implements View
 	{
 		return image;
 	}
-	
+
 	private void loadImage(String stringImage)
 	{
 		Image image = new Image(getClass().getClassLoader().getResourceAsStream(stringImage));

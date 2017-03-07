@@ -142,7 +142,6 @@ package view;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
-import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -155,26 +154,28 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
+import main.Defaults;
 import tool.SettingsTool.BackgroundColorButton;
 import tool.SettingsTool.PenColorButton;
 import tool.SettingsTool.TurtleImageButton;
 import user_structures.ID;
 
 public class SimulationView implements View {
-	//public static final ResourceBundle RESOURCES = ResourceBundle.getBundle("resources/userinterface/default");
 
 	private StackPane root;
 	private ObservableList<ActorView> actors;
 	private int id = 1;
+	private Defaults defaults;
 
-	public SimulationView() {
+	public SimulationView(Defaults defaults) {
 		root = new StackPane();
+		this.defaults = defaults;
 		List<ActorView> list = new ArrayList<>();
 		actors = FXCollections.observableList(list);
-		for (int i = 0; i < Integer.parseInt("1"); i++) {//RESOURCES.getString("numTurtles")
+		for (int i = 0; i < defaults.numTurtles(); i++) {
 			newActor();
 		}
-		root.setBackground(new Background(new BackgroundFill(Color.WHITE, null, null)));
+		root.setBackground(new Background(new BackgroundFill(defaults.background(), null, null)));
 
 	}
 	
@@ -188,20 +189,24 @@ public class SimulationView implements View {
 		actors.get(0).move(deltaLocation);
 	}
 	
+	public void setBackgroundColor(String color){
+		root.setBackground(new Background(new BackgroundFill(Paint.valueOf(color), null, null)));
+	}
+	
 	public TurtleView getTurtle()
 	{
 		return (TurtleView) actors.get(0);
 	}
 
 	public void newActor() {
-		TurtleView actor = new TurtleView(id);
+		TurtleView actor = new TurtleView(defaults,id);
 		id++;
 		actor.getPen().getCanvas().toBack();
 		actor.getPen().getCanvas().widthProperty().bind(root.widthProperty());
 		actor.getPen().getCanvas().heightProperty().bind(root.heightProperty());
-
-		root.getChildren().add(actor.display());
+		
 		root.getChildren().add(actor.getPen().getCanvas());
+		root.getChildren().add(actor.display());
 
 		actors.add(actor);
 
@@ -238,12 +243,6 @@ public class SimulationView implements View {
 	public Node display() {
 		// TODO Auto-generated method stub
 		return root;
-	}
-
-	@Override
-	public void updateData(String arg) {
-		// TODO Auto-generated method stub
-
 	}
 
 	public Bounds getBounds() {

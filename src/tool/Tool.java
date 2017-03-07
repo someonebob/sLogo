@@ -1,6 +1,7 @@
 package tool;
 
 import java.util.List;
+import java.util.Observer;
 
 import javafx.scene.control.Menu;
 import javafx.stage.Stage;
@@ -47,5 +48,11 @@ public abstract class Tool
 
 	public abstract void makeMenuItems();
 
-	public abstract List<AbstractButton> getButtons();
+	protected abstract List<AbstractButton> getButtons();
+	
+	public void addObservers(Observer ob){
+		for(AbstractButton ab : getButtons()){
+			ab.addObserver(ob);
+		}
+	}
 }

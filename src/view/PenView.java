@@ -12,6 +12,7 @@ import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
@@ -26,7 +27,6 @@ import javafx.util.Duration;
  */
 public class PenView implements View
 {
-	public final Color DEFAULT_COLOR = Color.BLACK;
 
 	// private Path myPath;
 	private Canvas canvas;
@@ -35,13 +35,13 @@ public class PenView implements View
 	private boolean isUp;
 	private SequentialTransition actorMove;
 
-	public PenView()
+	public PenView(Paint color)
 	{
 		isUp = false;
 		thickness = 2;
-		color = DEFAULT_COLOR;
+		this.color = (Color) color;
 		canvas = new Canvas();
-		this.setColor(DEFAULT_COLOR);
+		this.setColor(this.color);
 		actorMove = new SequentialTransition();
 	}
 
@@ -113,6 +113,11 @@ public class PenView implements View
 		});
 	}
 
+	public Color getColor()
+	{
+		return this.color;
+	}
+
 	public void setColor(Color color)
 	{
 		canvas.getGraphicsContext2D().setFill(color);
@@ -134,7 +139,7 @@ public class PenView implements View
 
 	public void penDown()
 	{
-		this.setColor(DEFAULT_COLOR);
+		this.setColor(color);
 		this.isUp = false;
 	}
 
@@ -148,16 +153,19 @@ public class PenView implements View
 		canvas.getGraphicsContext2D().clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 	}
 
-	@Override
-	public void updateData(String arg)
-	{
-		// TODO Auto-generated method stub
-
-	}
-
 	public Canvas getCanvas()
 	{
 		return canvas;
+	}
+
+	public double getThickness()
+	{
+		return thickness;
+	}
+
+	public void setThickness(double thickness)
+	{
+		this.thickness = thickness;
 	}
 
 	@Override
