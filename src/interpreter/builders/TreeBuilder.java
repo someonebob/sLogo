@@ -1,23 +1,14 @@
 package interpreter.builders;
+
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import instruction.InstructionData;
 import interpreter.classification.InstructionClassifier;
-import interpreter.classification.NodeClassifier;
 import interpreter.clean.InstructionSplitter;
 import interpreter.misc.InstructionNode;
 import interpreter.util.ArgumentReaderUtil;
-import util.Pair;
-/**
- * Builds a tree of InstructionNodes for
- * use in execution of an Instruction
- * 
- * @author maddiebriere
- *
- */
+
 public class TreeBuilder {
 	
 	private String currentText;
@@ -58,13 +49,6 @@ public class TreeBuilder {
 		return headNodes;
 	}
 	
-	/**
-	 * One of the more important method in the backend -- produces a sub-tree from the
-	 * current text by iterating until the head node is satisfied. 
-	 * 
-	 * @return The head node, now linked to the correct child nodes and set with the
-	 * correct values.
-	 */
 	private InstructionNode buildSubTree(){
 		if(getCurrentText().isEmpty()){
 			return null;
@@ -74,33 +58,17 @@ public class TreeBuilder {
 		String headText = getHeadNodeText(); 
 		setHeadText(head, headText); 
 		decrementCurrentText(); //remove a node
-		String classification = classifier.getInstructionType(headText, data); 
 		
-		//Unknown classification gets no treatment
-		if(NodeClassifier.isExecutable(classification)){
-			int numArgs = ArgumentReaderUtil.getNumArgs(classification, headText, data);
+		BuilderUtil build = BuilderUtilFactory.make(nodes, head, currentText, data);
+		if(build!=null){
+			setCurrentText(build.construct()); //change current text according to builder
+		}
+		else{
+			int numArgs = ArgumentReaderUtil.getNumArgs(head.getMyClassification(), headText, data);
 			head.setProperNumArgs(numArgs);
 			buildChildren(numArgs, head);
 		}
-		else if (NodeClassifier.isList(classification)){
-			head.setExecutable(false);
-			buildList(classification, head);
-		}
-		else if (NodeClassifier.isGroup(classification)){
-			//head.setExecutable(false); //child is non-executable instead
-			buildGroup(classification, head);
-		}
 		return head;
-	}
-	
-	private void buildList(String classification, InstructionNode head){
-		String newCurrent = ListBuilderUtil.construct(nodes, head, getCurrentText());
-		setCurrentText(newCurrent);
-	}
-	
-	private void buildGroup(String classification, InstructionNode head){
-		String newCurrent = GroupBuilderUtil.construct(nodes, head, getCurrentText(), data);
-		setCurrentText(newCurrent);
 	}
 	
 	private void buildChildren(int numArgs, InstructionNode head){
@@ -143,6 +111,5 @@ public class TreeBuilder {
 	public void setData(InstructionData data) {
 		this.data = data;
 	}
-	
-	
+
 }
