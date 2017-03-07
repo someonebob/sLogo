@@ -46,7 +46,7 @@ public class GroupStartUtil extends BuilderUtil{
 		
 		String instruction = next.getMyCommand(); //remove head instruction
 		String type = next.getMyClassification();
-		int numArgs = ArgumentReaderUtil.getNumArgs(type, instruction, getData());
+		int numArgs = getNumArgs(next);
 		
 		String group = GroupReader.getGroup(type);
 		if(group.equals("Layer")){

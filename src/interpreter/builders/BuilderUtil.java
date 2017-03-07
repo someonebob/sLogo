@@ -6,6 +6,7 @@ import java.util.List;
 import instruction.InstructionData;
 import interpreter.clean.InstructionSplitter;
 import interpreter.misc.InstructionNode;
+import interpreter.util.ArgumentReaderUtil;
 
 /**
  * Abstract class defining requirements of a BuilderUtil
@@ -86,6 +87,13 @@ public abstract class BuilderUtil {
 		ArrayList<InstructionNode> newChildren = new ArrayList<InstructionNode> ();
 		newChildren.add(child);
 		getHead().setMyChildren(newChildren);
+	}
+	
+	public int getNumArgs(InstructionNode next){
+		String instruction = next.getMyCommand(); //remove head instruction
+		String type = next.getMyClassification();
+		int numArgs = ArgumentReaderUtil.getNumArgs(type, instruction, getData());
+		return numArgs;
 	}
 	
 	public InstructionNode removeNext(){

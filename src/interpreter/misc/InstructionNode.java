@@ -71,6 +71,11 @@ public class InstructionNode {
 	public List<InstructionNode> getMyChildren() {
 		return myChildren;
 	}
+	
+	public void addChildren (List<InstructionNode> children){
+		myChildren.addAll(children);
+	}
+	
 	public String getMyClassification() {
 		return myClassification;
 	}
