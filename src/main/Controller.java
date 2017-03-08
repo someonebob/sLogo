@@ -39,19 +39,13 @@ import tool.SettingsTool;
 import tool.SettingsTool.LanguageButton;
 import user_structures.FunctionData;
 import user_structures.VariableData;
-<<<<<<< HEAD
 import view.SingleLineInputBox;
 import view.InputBox;
 import view.SavedCommandsView;
 import view.SimulationView;
 import view.StackedSimulationView;
 import view.View;
-=======
 import view.PreferencesView;
-import view.SavedCommandsView;
-import view.SimulationView;
-import view.SingleLineInputBox;
->>>>>>> master
 import view.WorkspaceView;
 
 /**

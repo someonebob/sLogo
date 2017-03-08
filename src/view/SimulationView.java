@@ -1,8 +1,12 @@
 package view;
 
 
+import java.util.List;
+
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
+import property.BackgroundColorProperty;
+import property.Property;
 
 public interface SimulationView extends View{
 	public void step();
