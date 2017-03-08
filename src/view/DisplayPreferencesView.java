@@ -7,12 +7,10 @@ import javafx.scene.layout.VBox;
 
 public class DisplayPreferencesView implements View
 {
-	private SimulationView simulation;
 	private VBox display;
 
 	public DisplayPreferencesView(SimulationView simulation)
 	{
-		this.simulation = simulation;
 		display = new VBox();
 		simulation.getProperties().forEach(property -> display.getChildren().add(property.makeDynamicUpdater()));
 	}

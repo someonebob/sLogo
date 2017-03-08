@@ -7,12 +7,10 @@ import javafx.scene.layout.VBox;
 
 public class TurtlePreferencesView implements View
 {
-	private TurtleView turtle;
 	private VBox display;
 
 	public TurtlePreferencesView(TurtleView turtle)
 	{
-		this.turtle = turtle;
 		display = new VBox();
 		turtle.getProperties().forEach(property -> display.getChildren().add(property.makeDynamicUpdater()));
 	}
