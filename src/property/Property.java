@@ -1,6 +1,7 @@
 package property;
 
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 
 /**
  * Because of the intertwinings between xml and graphically updatable settings,
@@ -13,11 +14,13 @@ import javafx.scene.Node;
 public abstract class Property<T>
 {
 	private T value;
+	private Label valueLabel;
 	private String name;
 
 	public Property(String name)
 	{
 		this.name = name;
+		valueLabel = new Label(name + " value: " + this.getValue());
 	}
 
 	public T getValue()
@@ -33,11 +36,22 @@ public abstract class Property<T>
 	public void setValue(T value)
 	{
 		this.value = value;
+		updateLabel();
 	}
 
 	public String convertToXML()
 	{
 		return "<" + name + ">" + value + "</" + name + ">";
+	}
+
+	public Node display()
+	{
+		return valueLabel;
+	}
+
+	private void updateLabel()
+	{
+		valueLabel.setText(name + " value : " + this.getValue().toString());
 	}
 
 	public abstract void setValue(String stringValue);

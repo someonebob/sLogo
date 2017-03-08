@@ -56,9 +56,15 @@ public class PreferencesView implements View
 		updateActorImage();
 		header.getChildren().add(actorImage);
 		root.setTop(header);
-		header.getChildren().add(new Label(String.format("Position: %s", actor.getActor().getLocation())));
-		header.getChildren().add(new Label(String.format("Heading: %s", actor.getHeading())));
-		header.getChildren().add(new Label(String.format("Pen up/down: %s", actor.getPen().isUp() ? "up" : "down")));
+		header.getChildren().add(actor.getImageColorProperty().display());
+		header.getChildren().add(actor.getImageColorProperty().makeDynamicUpdater());
+		// header.getChildren().add(actor.getActorPositionProperty().display());
+		// header.getChildren().add(new Label(String.format("Position: %s",
+		// actor.getActor().getLocation())));
+		// header.getChildren().add(new Label(String.format("Heading: %s",
+		// actor.getHeading())));
+		// header.getChildren().add(new Label(String.format("Pen up/down: %s",
+		// actor.getPen().isUp() ? "up" : "down")));
 	}
 
 	private void updateActorImage()
