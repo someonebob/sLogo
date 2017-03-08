@@ -122,7 +122,9 @@ public class PenView implements View
 	{
 		canvas.getGraphicsContext2D().setFill(color);
 		canvas.getGraphicsContext2D().setStroke(color);
-		this.color = color;
+		if (color != Color.TRANSPARENT) {
+			this.color = color;
+		}
 	}
 
 	@Override

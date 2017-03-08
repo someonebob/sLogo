@@ -23,6 +23,7 @@ import user_structures.ID;
 public abstract class ActorView implements View
 {
 	public static final int ACTOR_HEIGHT = 75;
+	public static final int ACTOR_WIDTH = 75;
 	public static final int STARTING_HEADING = -90;
 	// TODO: Make stack of animations to run, and run them 1 at a time.
 	// TODO: Update image so that it
@@ -42,6 +43,7 @@ public abstract class ActorView implements View
 		actorMove.setNode(this.getImage());
 		// scale the image
 		image.setFitHeight(ACTOR_HEIGHT);
+		image.setFitWidth(ACTOR_WIDTH);
 		image.setPreserveRatio(true);
 		loadImage(defaults.image());
 		// start facing up

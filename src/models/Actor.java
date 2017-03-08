@@ -72,6 +72,6 @@ public class Actor
 
 	public void setHeading(double heading)
 	{
-		this.heading = heading;
+		this.heading = Math.floorMod((int) heading, 360);
 	}
 }
