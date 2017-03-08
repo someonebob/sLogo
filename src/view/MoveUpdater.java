@@ -15,7 +15,7 @@ public abstract class MoveUpdater extends AbstractUpdater
 	private TextField initializeTextBox(String defaultText)
 	{
 		TextField input = new TextField();
-		input.setText(defaultText);
+		input.setPromptText(defaultText);
 		input.setOnAction(e -> {
 			this.setChanged();
 			this.notifyObservers(input.getText());

@@ -34,13 +34,14 @@ public class StackedSimulationView implements SimulationView {
 
 	public StackedSimulationView(Defaults defaults) {
 		root = new StackPane();
+		backgroundColor = new BackgroundColorProperty("Background Color", root);
 		this.defaults = defaults;
 		List<ActorView> list = new ArrayList<>();
 		actors = FXCollections.observableList(list);
 		for (int i = 0; i < defaults.numTurtles(); i++) {
 			newActor();
 		}
-		root.setBackground(new Background(new BackgroundFill(defaults.background(), null, null)));
+		backgroundColor.setValue((Color) defaults.background());
 
 	}
 	
@@ -55,7 +56,7 @@ public class StackedSimulationView implements SimulationView {
 	}
 	
 	public void setBackgroundColor(String color){
-		root.setBackground(new Background(new BackgroundFill(Paint.valueOf(color), null, null)));
+		backgroundColor.setValue(color);
 	}
 	
 	public TurtleView getTurtle()
