@@ -46,14 +46,23 @@ public class ListStartUtil extends BuilderUtil {
 	 */
 	public String construct() {
 		String value = "";
+		int innerCount = 0; //how many layers in are you
 		while(!getNodes().isEmpty())
 		{
 			InstructionNode next = removeNext();
 			String name = next.getMyClassification();
 			decrementCurrentText();
-			if(name.equals(END)){
+			
+			if(name.equals(START)){
+				innerCount++;
+			}
+			if(name.equals(END) && innerCount==0){
 				break;
 			}
+			else if(name.equals(END)){
+				innerCount--;
+			}
+			
 			value += next.getMyCommand() + " ";
 		}
 		value = removeSpace(value);
