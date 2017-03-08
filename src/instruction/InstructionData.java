@@ -2,18 +2,12 @@ package instruction;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 
-import exceptions.InvalidIndexException;
 import interpreter.util.WorkspaceUpdater;
 import javafx.geometry.Bounds;
-import javafx.scene.image.ImageView;
-import javafx.scene.paint.Color;
 import user_structures.FunctionData;
-import user_structures.NamedImageWrapper;
 import user_structures.VariableData;
-import util.MathUtil;
 import view.ActorView;
 import view.SimulationView;
 
@@ -29,22 +23,22 @@ import view.SimulationView;
  */
 public class InstructionData
 {
-	SimulationView simulationView;
+	SimulationView simulation;
 	List<VariableData> variables;
 	List<FunctionData> functions;
 	String language;
 
-//	public InstructionData()
-//	{
-//		this.simulation = new SimulationView();
-//		this.variables = new ArrayList<VariableData>();
-//		this.functions = new ArrayList<FunctionData>();
-//		this.language = "English";
-//	}
+	public InstructionData()
+	{
+		this.simulation = null;
+		this.variables = new ArrayList<VariableData>();
+		this.functions = new ArrayList<FunctionData>();
+		this.language = "English";
+	}
 
 	public InstructionData(SimulationView simulation, List<VariableData> variables, List<FunctionData> functions, String language)
 	{ 
-		this.simulationView = simulation;
+		this.simulation = simulation;
 		this.variables = variables;
 		this.functions = functions;
 		this.language = language;
@@ -52,7 +46,7 @@ public class InstructionData
 
 	public ActorView getActiveActor()
 	{
-		return simulationView.getTurtle();
+		return simulation.getTurtle();
 	}
 
 	/**
@@ -62,12 +56,12 @@ public class InstructionData
 	 */
 	public List<ActorView> getActors()
 	{
-		return Arrays.asList(simulationView.getTurtle());
+		return Arrays.asList(simulation.getTurtle());
 	}
 
 	public Bounds getSimulationBounds()
 	{
-		return simulationView.getBounds();
+		return simulation.getBounds();
 	}
 	
 	public List<VariableData> getVariables(){
@@ -141,44 +135,7 @@ public class InstructionData
 	}
 	
 	public SimulationView getSimulation(){
-		return simulationView;
+		return simulation;
 	}
-	
-	public List<Color> getColorList(){
-		return null;//simulationView.getColorList();
-	}
-	
-	public List<NamedImageWrapper> getTurtleImageList(){
-		return getActiveActor().getAvailableImages();
-	}
-	/*
-	public void setImageByIndex(double index){
-		checkValidIndex(index, getTurtleImageList().size());
-		getActiveActor().setImage(getTurtleImageList().get((int)index));
-	}
-	*/
-	/**
-	 * (Current actor's imageView's index)
-	 * @return
-	 */
-	/*
-	public int getImageByIndex(){
-		int index = getTurtleImageList().indexOf(getActiveActor().getImage());
-		if(index != -1){
-			return index;
-		}
-		else{
-			throw new InvalidIndexException(RESOURCE_NOT_FOUND_NAME);
-		}
-	}
-	
-	private void checkValidIndex(double index, int size){
-		if(!MathUtil.hasIntegerValue(index)){
-			throw new InvalidIndexException(RESOURCE_DOUBLE_NAME);
-		}
-		if(index < 0.0 || index >= size){
-			throw new InvalidIndexException(RESOURCE_BOUNDS_NAME);
-		}
-	}
-	*/
+
 }

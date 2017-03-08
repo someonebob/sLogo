@@ -1,20 +1,20 @@
 package view;
 
-import java.io.File;
-
 import javafx.geometry.Point2D;
+import javafx.scene.Node;
 import main.Defaults;
-import user_structures.NamedImageWrapper;
 
-public class TurtleView extends ActorView
+public class TurtleView extends ActorView implements Cloneable
 {
-	private static final String TURTLE_IMAGES_LOCATION = "images";
+
 	private PenView pen;
-	
+	private Defaults defaults;
+
 	public TurtleView(Defaults defaults, int id)
 	{
 		super(defaults, id);
 		pen = new PenView(defaults.pen());
+		this.defaults = defaults;
 	}
 
 	@Override
@@ -22,6 +22,12 @@ public class TurtleView extends ActorView
 	{
 		super.step();
 		this.getPen().step();
+	}
+
+	@Override
+	public Node display()
+	{
+		return this.getImage();
 	}
 
 	public PenView getPen()
@@ -45,14 +51,15 @@ public class TurtleView extends ActorView
 		super.move(newLocation);
 	}
 
-	//TODO Possibly modify for more modular file reading
 	@Override
-	protected void populateAvailableImages() {
-		File currentFolder = new File(".");
-		File srcFolder = currentFolder.getParentFile();
-		File imagesFolder = new File(srcFolder, TURTLE_IMAGES_LOCATION);
-		for(File imageFile : imagesFolder.listFiles()){
-			getAvailableImages().add(new NamedImageWrapper(imageFile.getName()));
-		}
+	public TurtleView clone()
+	{
+		TurtleView clone = new TurtleView(defaults, this.getID().getID());
+		clone.getImageProperty().setValue(this.getImageProperty().display());
+		clone.setHeading(200);
+		// clone.getImageColorProperty().setValue(this.getImageColorProperty().getValue());
+		clone.getActorPositionProperty().setValue(this.getActorPositionProperty().getValue());
+		return clone;
 	}
+
 }

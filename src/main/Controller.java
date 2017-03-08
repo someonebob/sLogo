@@ -81,6 +81,7 @@ public class Controller implements Observer
 		currentTab.bind(root.getSelectionModel().selectedItemProperty());
 		currentIndex.bind(root.getSelectionModel().selectedIndexProperty());
 
+		root.getStylesheets().add("DarkTheme.css");
 		stage.setTitle("SLogo");
 		stage.setScene(new Scene(root));
 		stage.setMaximized(true);
@@ -129,7 +130,7 @@ public class Controller implements Observer
 		inputBox.setFocus();
 		WorkspaceView workspace = new WorkspaceView();
 		SavedCommandsView userCommands = new SavedCommandsView();
-		PreferencesView preferences = new PreferencesView(simulation.getTurtle());
+		PreferencesView preferences = new PreferencesView(simulation.getTurtle(), simulation);
 
 		SelectionBar selectionBar = new SelectionBar();
 		FileTool file = new FileTool(stage);

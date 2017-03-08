@@ -14,6 +14,8 @@ import interpreter.misc.InstructionNode;
  * Class used to traverse tree and produce runnable instructions. Carries out
  * the instructions head in the InstructionNode head node passed to the class.
  * 
+ * TODO: Clean-up
+ * 
  * @author maddiebriere
  *
  */
@@ -72,6 +74,9 @@ public class TreeExecuter
 	}
 	
 	/**
+	 * 
+	 * TODO: Move this into its own BuilderUtil class? Very out of place right now
+	 * 
 	 * If this is a variable creation command, make sure that the output has knowledge
 	 * of the desired variable name.
 	 * @param head InstructionNode at head of tree
@@ -95,15 +100,13 @@ public class TreeExecuter
 	private List<String> buildArguments(InstructionNode head){
 		ArrayList<String> args = new ArrayList<String>();
 		
-		//Null child here somewhere
-		
 		for (InstructionNode child : head.getMyChildren()) {
 			if (!child.hasRun()) {
 				execute(child);
 			}
 			args.add(child.getMyRunValue());
 		}
-		if(head.hasRun()){ //if head has already executed (lists), then just return run value
+		if(head.hasRun()){ //Add the head value if the whole thing has already run
 			args.add(head.getMyRunValue());
 		}
 		return args;
