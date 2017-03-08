@@ -5,16 +5,16 @@ import java.util.Observable;
 import javafx.scene.Node;
 import javafx.scene.layout.VBox;
 
-public class PenPreferencesView implements View
+public class TurtlePreferencesView implements View
 {
-	private PenView pen;
+	private TurtleView turtle;
 	private VBox display;
 
-	public PenPreferencesView(TurtleView turtle)
+	public TurtlePreferencesView(TurtleView turtle)
 	{
-		this.pen = turtle.getPen();
+		this.turtle = turtle;
 		display = new VBox();
-		pen.getProperties().forEach(property -> display.getChildren().add(property.makeDynamicUpdater()));
+		turtle.getProperties().forEach(property -> display.getChildren().add(property.makeDynamicUpdater()));
 	}
 
 	@Override
@@ -28,5 +28,4 @@ public class PenPreferencesView implements View
 	{
 		return display;
 	}
-
 }
