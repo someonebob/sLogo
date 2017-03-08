@@ -11,18 +11,9 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.effect.Light;
-import javafx.scene.effect.Lighting;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import view.PenPreferencesView.PenColorButton;
-import view.PenPreferencesView.PenThicknessUpdater;
-import view.PenPreferencesView.PenUpDownUpdater;
-import view.TurtlePreferencesView.TurtleColorButton;
-import view.TurtlePreferencesView.TurtleImageButton;
 
 public class PreferencesView implements View
 {
@@ -91,68 +82,17 @@ public class PreferencesView implements View
 	{
 		preferenceViews = new HashMap<>();
 		PenPreferencesView penPreferences = new PenPreferencesView(actor);
-		penPreferences.addObserver(this);
 		preferenceViews.put("Pen", penPreferences.display());
 		TurtlePreferencesView turtlePreferences = new TurtlePreferencesView(actor);
-		turtlePreferences.addObserver(this);
 		preferenceViews.put("Turtle", turtlePreferences.display());
+		DisplayPreferencesView displayPreferences = new DisplayPreferencesView(simulation);
+		preferenceViews.put("Display", displayPreferences.display());
 	}
 
 	@Override
 	public void update(Observable o, Object arg)
 	{
-		// when click on new turtle, update it in here
-		if (o instanceof PenColorButton) {
-			if (arg instanceof Color) {
-				actor.getPen().setColor((Color) arg);
-			}
-		}
-		if (o instanceof PenThicknessUpdater) {
-			if (arg instanceof String) {
-				actor.getPen().setThickness(Double.valueOf((String) arg));
-			}
-		}
-		if (o instanceof PenUpDownUpdater) {
-			if (arg instanceof String) {
-				if (((String) arg).equals("Up")) {
-					actor.getPen().penUp();
-				} else if (((String) arg).equals("Down")) {
-					actor.getPen().penDown();
-				}
-			}
-		}
-		if (o instanceof TurtleColorButton) {
-			if (arg instanceof Color) {
-				// ColorAdjust monochrome = new ColorAdjust();
-				// monochrome.setSaturation(-1.0);
 
-				// actor.getImage().setClip(actor.getImage());
-				// actor.getImage().setClip(value);
-
-				Lighting lighting = new Lighting();
-				lighting.setDiffuseConstant(1.0);
-				lighting.setSpecularConstant(0.0);
-				lighting.setSpecularExponent(0.0);
-				lighting.setSurfaceScale(0.0);
-				lighting.setLight(new Light.Distant(45, 45, (Color) arg));
-
-				// Blend changeColor = new Blend(BlendMode.MULTIPLY, monochrome,
-				// new
-				// ColorInput(0, 0,
-				// actor.getImage().getFitWidth(),
-				// actor.getImage().getFitHeight(),
-				// Color.ORANGE));
-				// actor.getImage().setEffect(lighting);
-				actor.getImage().setEffect(lighting);
-			}
-		}
-		if (o instanceof TurtleImageButton) {
-			if (arg instanceof Image) {
-				actor.setImage((Image) arg);
-			}
-		}
-
-		// actor = (ActorView) o;
 	}
 
 	@Override

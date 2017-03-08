@@ -1,5 +1,7 @@
 package view;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Observable;
 
 import javafx.animation.FadeTransition;
@@ -22,6 +24,7 @@ import javafx.util.Duration;
 import property.PenColorProperty;
 import property.PenThicknessProperty;
 import property.PenUpProperty;
+import property.Property;
 
 /**
  * 
@@ -188,5 +191,10 @@ public class PenView implements View
 	public PenThicknessProperty getPenThicknessProperty()
 	{
 		return penThickness;
+	}
+
+	public List<Property<?>> getProperties()
+	{
+		return Arrays.asList(color, penUp, penThickness);
 	}
 }

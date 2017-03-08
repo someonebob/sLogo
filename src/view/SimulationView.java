@@ -140,6 +140,7 @@
 package view;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Observable;
 
@@ -156,6 +157,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import main.Defaults;
 import property.BackgroundColorProperty;
+import property.Property;
 import tool.SettingsTool.BackgroundColorButton;
 import tool.SettingsTool.PenColorButton;
 import tool.SettingsTool.TurtleImageButton;
@@ -260,6 +262,11 @@ public class SimulationView implements View
 	public BackgroundColorProperty getBackgroundColorProperty()
 	{
 		return backgroundColor;
+	}
+
+	public List<Property<?>> getProperties()
+	{
+		return Arrays.asList(backgroundColor);
 	}
 
 }

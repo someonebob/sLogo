@@ -1,5 +1,7 @@
 package view;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Observable;
 
 import javafx.animation.RotateTransition;
@@ -15,6 +17,7 @@ import models.Actor;
 import property.ActorPositionProperty;
 import property.ImageColorProperty;
 import property.ImageProperty;
+import property.Property;
 import user_structures.ID;
 
 /**
@@ -156,6 +159,11 @@ public abstract class ActorView implements View
 	public double getHeading()
 	{
 		return actor.getHeading();
+	}
+
+	public List<Property<?>> getProperties()
+	{
+		return Arrays.asList(image, imageColor, actorPosition);
 	}
 
 }
