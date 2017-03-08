@@ -28,13 +28,13 @@ public class InstructionData
 	List<FunctionData> functions;
 	String language;
 
-//	public InstructionData()
-//	{
-//		this.simulation = new SimulationView();
-//		this.variables = new ArrayList<VariableData>();
-//		this.functions = new ArrayList<FunctionData>();
-//		this.language = "English";
-//	}
+	public InstructionData()
+	{
+		this.simulation = null;
+		this.variables = new ArrayList<VariableData>();
+		this.functions = new ArrayList<FunctionData>();
+		this.language = "English";
+	}
 
 	public InstructionData(SimulationView simulation, List<VariableData> variables, List<FunctionData> functions, String language)
 	{ 

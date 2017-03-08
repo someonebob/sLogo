@@ -1,8 +1,6 @@
 package interpreter.misc;
 import java.util.ArrayList;
 import java.util.List;
-
-import exceptions.WrongArgumentNumberException;
 /**
  * This class represents the nodes used in the parsed string tree. This tree
  * will hold the nodes (each representing its own individual word) in an order
@@ -13,14 +11,10 @@ import exceptions.WrongArgumentNumberException;
  */
 public class InstructionNode {
 	
-	private static final String RESOURCE_ARGUMENTS_NAME = "WrongArgumentNumberMessage";
-	
 	private String myClassification; // The String representing the type (Forward, Equal, Comment)
 	private String myCommand; //String command
 	private List<InstructionNode> myChildren;
 	private String myRunValue; //This is used for tree traversal, to check if a command has been excuted already
-	private boolean isExecutable; //Used for list/ group creation
-	private int properNumArgs = -1;
 	
 	public InstructionNode() {
 		this("", "", new ArrayList<InstructionNode>());
@@ -37,7 +31,6 @@ public class InstructionNode {
 		myCommand = value;
 		myChildren = children;
 		myRunValue = "NO RUN"; //default
-		isExecutable = true;
 	}
 	/**
 	 * Pieces together a String from the current Node using the current Node
@@ -73,6 +66,11 @@ public class InstructionNode {
 	public List<InstructionNode> getMyChildren() {
 		return myChildren;
 	}
+	
+	public void addChildren (List<InstructionNode> children){
+		myChildren.addAll(children);
+	}
+	
 	public String getMyClassification() {
 		return myClassification;
 	}
@@ -101,31 +99,5 @@ public class InstructionNode {
 		return !myRunValue.equals("NO RUN");
 	}
 
-	/**
-	 * Retrieve the current run-value (if this node was executed)
-	 * OR retrieve a list holding
-	 * all of the non-executed InstructionNodes as a String for
-	 * later execution
-	 * @return
-	 */
-	/**public String getRunValueList(){
-		
-	}*/
-	
-	public void setProperNumArgs(int properNumber){
-		properNumArgs = properNumber;
-	}
-	
-	public int getProperNumArgs(){
-		return properNumArgs;
-	}
-	
-	public void setExecutable(boolean e){
-		isExecutable = e;
-	}
-	
-	public boolean getExecutable(){
-		return isExecutable;
-	}
 	
 }

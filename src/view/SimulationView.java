@@ -1,5 +1,6 @@
 package view;
 
+
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 
@@ -10,5 +11,7 @@ public interface SimulationView extends View{
 	public TurtleView getTurtle();
 	public void newActor();
 	public Bounds getBounds();
+	public BackgroundColorProperty getBackgroundColorProperty();
+	public List<Property<?>> getProperties();
 
 }

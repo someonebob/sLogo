@@ -16,6 +16,8 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import main.Defaults;
+import property.BackgroundColorProperty;
+import property.Property;
 import tool.SettingsTool.BackgroundColorButton;
 import tool.SettingsTool.PenColorButton;
 import tool.SettingsTool.TurtleImageButton;
@@ -24,6 +26,7 @@ import user_structures.ID;
 public class StackedSimulationView implements SimulationView {
 
 	private StackPane root;
+	private BackgroundColorProperty backgroundColor;
 	private ObservableList<ActorView> actors;
 	private int id = 1;
 	private Defaults defaults;
@@ -108,6 +111,16 @@ public class StackedSimulationView implements SimulationView {
 
 	public Bounds getBounds() {
 		return root.getBoundsInLocal();
+	}
+	
+	public BackgroundColorProperty getBackgroundColorProperty()
+	{
+		return backgroundColor;
+	}
+
+	public List<Property<?>> getProperties()
+	{
+		return Arrays.asList(backgroundColor);
 	}
 
 }
