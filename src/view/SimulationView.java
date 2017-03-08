@@ -140,6 +140,7 @@
 package view;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Observable;
 
@@ -155,6 +156,8 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import main.Defaults;
+import property.BackgroundColorProperty;
+import property.Property;
 import tool.SettingsTool.BackgroundColorButton;
 import tool.SettingsTool.PenColorButton;
 import tool.SettingsTool.TurtleImageButton;
@@ -163,6 +166,7 @@ public class SimulationView implements View
 {
 
 	private StackPane root;
+	private BackgroundColorProperty backgroundColor;
 	private ObservableList<ActorView> actors;
 	private int id = 1;
 	private Defaults defaults;
@@ -170,14 +174,14 @@ public class SimulationView implements View
 	public SimulationView(Defaults defaults)
 	{
 		root = new StackPane();
+		backgroundColor = new BackgroundColorProperty("Background Color", root);
 		this.defaults = defaults;
 		List<ActorView> list = new ArrayList<>();
 		actors = FXCollections.observableList(list);
 		for (int i = 0; i < defaults.numTurtles(); i++) {
 			newActor();
 		}
-		root.setBackground(new Background(new BackgroundFill(defaults.background(), null, null)));
-
+		backgroundColor.setValue((Color) defaults.background());
 	}
 
 	public void step()
@@ -192,7 +196,7 @@ public class SimulationView implements View
 
 	public void setBackgroundColor(String color)
 	{
-		root.setBackground(new Background(new BackgroundFill(Paint.valueOf(color), null, null)));
+		backgroundColor.setValue(color);
 	}
 
 	public TurtleView getTurtle()
@@ -253,6 +257,16 @@ public class SimulationView implements View
 	public Bounds getBounds()
 	{
 		return root.getBoundsInLocal();
+	}
+
+	public BackgroundColorProperty getBackgroundColorProperty()
+	{
+		return backgroundColor;
+	}
+
+	public List<Property<?>> getProperties()
+	{
+		return Arrays.asList(backgroundColor);
 	}
 
 }

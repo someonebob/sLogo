@@ -48,4 +48,5 @@ public class TurtleView extends ActorView
 		pen.move(this.getActor().getLocation(), newLocation);
 		super.move(newLocation);
 	}
+
 }

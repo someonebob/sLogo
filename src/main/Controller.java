@@ -129,7 +129,7 @@ public class Controller implements Observer
 		inputBox.setFocus();
 		WorkspaceView workspace = new WorkspaceView();
 		SavedCommandsView userCommands = new SavedCommandsView();
-		PreferencesView preferences = new PreferencesView(simulation.getTurtle());
+		PreferencesView preferences = new PreferencesView(simulation.getTurtle(), simulation);
 
 		SelectionBar selectionBar = new SelectionBar();
 		FileTool file = new FileTool(stage);
