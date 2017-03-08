@@ -29,17 +29,19 @@ public class PreferencesView implements View
 
 	private BorderPane root;
 	private TurtleView actor;
+	private SimulationView simulation;
 	private ImageView actorImage;
 	private Map<String, Node> preferenceViews;
 	private VBox header;
 
-	public PreferencesView(TurtleView initialActor)
+	public PreferencesView(TurtleView initialActor, SimulationView simulation)
 	{
 		root = new BorderPane();
 		actorImage = new ImageView();
 		actorImage.setPreserveRatio(true);
 		actorImage.setFitHeight(70);
 		this.actor = initialActor;
+		this.simulation = simulation;
 		setupHeader();
 		// root.setCenter(new PenPreferencesView(actor).display());
 	}

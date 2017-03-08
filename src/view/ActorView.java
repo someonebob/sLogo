@@ -12,6 +12,9 @@ import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 import main.Defaults;
 import models.Actor;
+import property.ActorPositionProperty;
+import property.ImageColorProperty;
+import property.ImageProperty;
 import user_structures.ID;
 
 /**
@@ -29,22 +32,26 @@ public abstract class ActorView implements View
 	// TODO: Update image so that it
 
 	private Actor actor;
-	private ImageView image;
+	private ImageProperty image;
+	private ImageColorProperty imageColor;
+	private ActorPositionProperty actorPosition;
 	private SequentialTransition actorMove;
 	private ID id;
 
 	public ActorView(Defaults defaults, int id)
 	{
 		actor = new Actor();
-		image = new ImageView();
+		image = new ImageProperty("Actor Image");
+		imageColor = new ImageColorProperty("Actor Image Color", image);
+		actorPosition = new ActorPositionProperty("Actor Position", this);
 		this.id = new ID(id);
 
 		actorMove = new SequentialTransition();
 		actorMove.setNode(this.getImage());
 		// scale the image
-		image.setFitHeight(ACTOR_HEIGHT);
-		image.setFitWidth(ACTOR_WIDTH);
-		image.setPreserveRatio(true);
+		image.getValue().setFitHeight(ACTOR_HEIGHT);
+		image.getValue().setFitWidth(ACTOR_WIDTH);
+		image.getValue().setPreserveRatio(true);
 		loadImage(defaults.image());
 		// start facing up
 		this.setHeading(STARTING_HEADING);
@@ -62,10 +69,20 @@ public abstract class ActorView implements View
 		actorMove.play();
 	}
 
+	public ImageColorProperty getImageColorProperty()
+	{
+		return imageColor;
+	}
+
+	public ActorPositionProperty getActorPositionProperty()
+	{
+		return actorPosition;
+	}
+
 	@Override
 	public Node display()
 	{
-		return image;
+		return image.getValue();
 	}
 
 	@Override
@@ -86,12 +103,12 @@ public abstract class ActorView implements View
 
 	public void setImage(Image image)
 	{
-		this.image.setImage(image);
+		this.image.setValue(image);
 	}
 
 	public ImageView getImage()
 	{
-		return image;
+		return image.getValue();
 	}
 
 	private void loadImage(String stringImage)
@@ -118,8 +135,8 @@ public abstract class ActorView implements View
 
 	public void moveWithoutDrawing(Point2D newLocation)
 	{
-		image.translateXProperty().set(0);
-		image.translateYProperty().set(0);
+		image.getValue().translateXProperty().set(0);
+		image.getValue().translateYProperty().set(0);
 		actor.setLocation(newLocation);
 	}
 

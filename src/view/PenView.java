@@ -19,6 +19,9 @@ import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
+import property.PenColorProperty;
+import property.PenThicknessProperty;
+import property.PenUpProperty;
 
 /**
  * 
@@ -30,18 +33,20 @@ public class PenView implements View
 
 	// private Path myPath;
 	private Canvas canvas;
-	private double thickness;
-	private Color color;
-	private boolean isUp;
+	private PenColorProperty color;
+	private PenUpProperty penUp;
+	private PenThicknessProperty penThickness;
 	private SequentialTransition actorMove;
 
 	public PenView(Paint color)
 	{
-		isUp = false;
-		thickness = 2;
-		this.color = (Color) color;
 		canvas = new Canvas();
-		this.setColor(this.color);
+		this.color = new PenColorProperty("Pen color", canvas);
+		this.color.setValue((Color) color);
+		penUp = new PenUpProperty("Pen Up", this.color);
+		penUp.setValue(false);
+		penThickness = new PenThicknessProperty("Pen Thickness");
+		penThickness.setValue(2.0);
 		actorMove = new SequentialTransition();
 	}
 
@@ -70,7 +75,7 @@ public class PenView implements View
 		myPath.getElements().add(lineTo);
 
 		GraphicsContext gc = canvas.getGraphicsContext2D();
-		Circle pen = new Circle(0, 0, thickness);
+		Circle pen = new Circle(0, 0, penThickness.getValue());
 
 		// create path transition
 		PathTransition pathTransition = new PathTransition(Duration.millis(500), myPath, pen);
@@ -99,7 +104,7 @@ public class PenView implements View
 					return;
 				}
 				// draw line
-				gc.setLineWidth(thickness);
+				gc.setLineWidth(penThickness.getValue());
 				gc.strokeLine(oldLocation.getX(), oldLocation.getY(), x + canvas.getWidth() / 2,
 						y + canvas.getHeight() / 2);
 
@@ -115,16 +120,12 @@ public class PenView implements View
 
 	public Color getColor()
 	{
-		return this.color;
+		return color.getValue();
 	}
 
 	public void setColor(Color color)
 	{
-		canvas.getGraphicsContext2D().setFill(color);
-		canvas.getGraphicsContext2D().setStroke(color);
-		if (color != Color.TRANSPARENT) {
-			this.color = color;
-		}
+		this.color.setValue(color);
 	}
 
 	@Override
@@ -135,19 +136,17 @@ public class PenView implements View
 
 	public void penUp()
 	{
-		this.setColor(Color.TRANSPARENT);
-		this.isUp = true;
+		this.penUp.setValue(true);
 	}
 
 	public void penDown()
 	{
-		this.setColor(color);
-		this.isUp = false;
+		this.penUp.setValue(false);
 	}
 
 	public boolean isUp()
 	{
-		return isUp;
+		return penUp.getValue();
 	}
 
 	public void clear()
@@ -162,17 +161,32 @@ public class PenView implements View
 
 	public double getThickness()
 	{
-		return thickness;
+		return penThickness.getValue();
 	}
 
 	public void setThickness(double thickness)
 	{
-		this.thickness = thickness;
+		penThickness.setValue(thickness);
 	}
 
 	@Override
 	public Node display()
 	{
 		return canvas;
+	}
+
+	public PenColorProperty getPenColorProperty()
+	{
+		return color;
+	}
+
+	public PenUpProperty getPenUpProperty()
+	{
+		return penUp;
+	}
+
+	public PenThicknessProperty getPenThicknessProperty()
+	{
+		return penThickness;
 	}
 }
