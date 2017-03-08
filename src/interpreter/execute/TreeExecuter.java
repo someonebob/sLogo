@@ -94,7 +94,12 @@ public class TreeExecuter
 			return Double.parseDouble(head.getMyRunValue());
 		}
 		catch(NumberFormatException e){
-			throw new InvalidCommandException(RESOURCE_INVALID_COMMAND_NAME);
+			if(myClass.isValid(head.getMyCommand(), myData)){
+				return 0.0;
+			}
+			else{
+				throw new InvalidCommandException(RESOURCE_INVALID_COMMAND_NAME);
+			}
 		}
 	}
 	

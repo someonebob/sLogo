@@ -7,7 +7,6 @@ import java.util.Map.Entry;
 import java.util.regex.Pattern;
 
 import exceptions.InvalidCommandException;
-import exceptions.ReflectionException;
 import instruction.*;
 import interpreter.util.ResourceToListUtil;
 
@@ -39,6 +38,10 @@ public class InstructionClassifier {
 		mySyntax = SYNTAX;
 		myPaths = PATHS;
 		generateTerms();
+	}
+	
+	public boolean isValid(String text, InstructionData data){
+		return !getInstructionType(text,data).equals(ERROR);
 	}
 	
     /**
