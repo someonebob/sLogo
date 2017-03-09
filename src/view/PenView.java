@@ -7,6 +7,8 @@ import java.util.Observable;
 import javafx.animation.FadeTransition;
 import javafx.animation.PathTransition;
 import javafx.animation.SequentialTransition;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Point2D;
@@ -33,6 +35,8 @@ import property.Property;
  */
 public class PenView implements View
 {
+	public static final DoubleProperty NUMERATOR = new SimpleDoubleProperty(1000);
+	public static final double DEFAULT_FPS = 5;
 
 	// private Path myPath;
 	private Canvas canvas;
@@ -40,6 +44,8 @@ public class PenView implements View
 	private PenUpProperty penUp;
 	private PenThicknessProperty penThickness;
 	private SequentialTransition actorMove;
+	private DoubleProperty FPS;
+	private DoubleProperty millisecondDelay;
 
 	public PenView(Paint color)
 	{
@@ -51,6 +57,10 @@ public class PenView implements View
 		penThickness = new PenThicknessProperty("Pen Thickness");
 		penThickness.setValue(2.0);
 		actorMove = new SequentialTransition();
+		FPS = new SimpleDoubleProperty();
+		millisecondDelay = new SimpleDoubleProperty();
+		FPS.setValue(DEFAULT_FPS);
+		millisecondDelay.bind(NUMERATOR.divide(FPS));
 	}
 
 	public void step()
@@ -82,7 +92,7 @@ public class PenView implements View
 		Circle pen = new Circle(0, 0, penThickness.getValue());
 
 		// create path transition
-		PathTransition pathTransition = new PathTransition(Duration.millis(500), myPath, pen);
+		PathTransition pathTransition = new PathTransition(Duration.millis(millisecondDelay.get()), myPath, pen);
 		pathTransition.currentTimeProperty().addListener(new ChangeListener<Duration>()
 		{
 

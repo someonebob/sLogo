@@ -35,6 +35,9 @@ public abstract class ActorView implements View, Cloneable
 	public static final int ACTOR_HEIGHT = 75;
 	public static final int ACTOR_WIDTH = 75;
 	public static final int STARTING_HEADING = -90;
+	public static final DoubleProperty NUMERATOR = new SimpleDoubleProperty(1000);
+	public static final double DEFAULT_FPS = 5;
+
 	// TODO: Make stack of animations to run, and run them 1 at a time.
 	// TODO: Update image so that it
 
@@ -48,6 +51,7 @@ public abstract class ActorView implements View, Cloneable
 	private ID id;
 	private DoubleProperty FPS;
 	private DoubleProperty millisecondDelay;
+	
 
 	public ActorView(Defaults defaults, int id)
 	{
@@ -59,8 +63,8 @@ public abstract class ActorView implements View, Cloneable
 		this.id = new ID(id);
 		FPS = new SimpleDoubleProperty();
 		millisecondDelay = new SimpleDoubleProperty();
-		FPS.setValue(50);
-		millisecondDelay.bind(FPS.multiply(10));
+		FPS.setValue(DEFAULT_FPS);
+		millisecondDelay.bind(NUMERATOR.divide(FPS));
 
 		actorMove = new SequentialTransition();
 		actorMove.setNode(this.getImageView());
@@ -172,12 +176,12 @@ public abstract class ActorView implements View, Cloneable
 	public void rotate(double rotateAngle)
 	{
 		makeRotateTransition(this.actor.getHeading(), this.actor.getHeading() + rotateAngle);
-		actor.setHeading(actor.getHeading() + rotateAngle);
+		setHeading(actor.getHeading() + rotateAngle);
 	}
 
 	private void makeRotateTransition(double startAngle, double endAngle)
 	{
-		RotateTransition rotate = new RotateTransition(Duration.millis(200));
+		RotateTransition rotate = new RotateTransition(Duration.millis(millisecondDelay.get()/2));
 		rotate.setFromAngle(startAngle);
 		rotate.setToAngle(endAngle);
 		rotate.setCycleCount(1);

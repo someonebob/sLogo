@@ -154,7 +154,7 @@ public class Controller implements Observer
 
 		setupBorderPane(pane, selectionBar, simulation, inputBox, workspace, preferences);
 		putIntoMaps(tab, selectionBar, simulation, inputBox, workspace, userCommands, variables, functions);
-		setupObservers(simulation, inputBox, file, settings, preferences);
+		setupObservers(simulation, inputBox, file, settings, animation, preferences);
 		setupCommands(inputBox);
 
 		tab.setContent(pane);
@@ -188,7 +188,7 @@ public class Controller implements Observer
 	}
 
 	private void setupObservers(SimulationView simulation, InputBox inputBox, MenuTool file,
-			MenuTool settings, PreferencesView preferences)
+			MenuTool settings, ToolButton slider, PreferencesView preferences)
 	{
 		file.addObservers(simulation);
 		file.addObservers(inputBox);
@@ -196,6 +196,8 @@ public class Controller implements Observer
 
 		settings.addObservers(simulation);
 		settings.addObservers(this);
+		
+		slider.addObservers(simulation.getTurtle());
 	}
 
 	private void setupCommands(InputBox inputBox)

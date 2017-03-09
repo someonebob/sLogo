@@ -3,13 +3,15 @@ package tool;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.scene.control.Button;
+import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 
 public class AnimationControlToolButtons extends ToolButton{
-	public static final double MIN_FPS = 10;
-	public static final double MAX_FPS = 10;
-	public static final double DEFAULT_FPS = 10;
+	public static final double MIN_FPS = .1;
+	public static final double MAX_FPS = 1000;
+	public static final double DEFAULT_FPS = 5;
 	
 	private List<AbstractButton> buttons;
 
@@ -41,9 +43,21 @@ public class AnimationControlToolButtons extends ToolButton{
 
 		public AnimationSlider() {
 			super(new Slider(MIN_FPS, MAX_FPS, DEFAULT_FPS));
-			this.getItem().setOnDragDone(e -> {
+			this.getItem().setOnMouseReleased(e -> {
 				this.setChanged();
 				this.notifyObservers(((Slider) this.getItem()).getValue());
+			});
+		}
+		
+	}
+	
+	public class AnimationPlayPause extends AbstractButton{
+
+		public AnimationPlayPause() {
+			super(new Button("Pause"));
+			this.getItem().setOnMouseClicked(e -> {
+				this.setChanged();
+				this.notifyObservers();
 			});
 		}
 		
