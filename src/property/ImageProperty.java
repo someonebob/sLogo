@@ -2,6 +2,7 @@ package property;
 
 import java.io.File;
 
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -73,6 +74,7 @@ public class ImageProperty extends Property<ImageView>
 		vbox.getChildren().add(label);
 		vbox.getChildren().add(input);
 
+		vbox.setAlignment(Pos.CENTER);
 		return vbox;
 	}
 

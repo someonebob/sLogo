@@ -2,6 +2,7 @@ package property;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
@@ -56,7 +57,7 @@ public class PenThicknessProperty extends Property<Double>
 
 		vbox.getChildren().add(label);
 		vbox.getChildren().add(slider);
-
+		vbox.setAlignment(Pos.CENTER);
 		return vbox;
 	}
 }

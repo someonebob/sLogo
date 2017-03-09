@@ -21,7 +21,9 @@ public class TurtleView extends ActorView implements Cloneable
 	public void step()
 	{
 		super.step();
-		this.getPen().step();
+		if (pen != null) {
+			this.getPen().step();
+		}
 	}
 
 	@Override
@@ -47,7 +49,7 @@ public class TurtleView extends ActorView implements Cloneable
 	@Override
 	public void move(Point2D newLocation)
 	{
-		pen.move(this.getActor().getLocation(), newLocation);
+		pen.move(this.getLocation(), newLocation);
 		super.move(newLocation);
 	}
 

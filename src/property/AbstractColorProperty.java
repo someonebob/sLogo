@@ -2,6 +2,7 @@ package property;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
@@ -37,7 +38,7 @@ public abstract class AbstractColorProperty extends Property<Color>
 
 		vbox.getChildren().add(label);
 		vbox.getChildren().add(colorPicker);
-
+		vbox.setAlignment(Pos.CENTER);
 		return vbox;
 	}
 
