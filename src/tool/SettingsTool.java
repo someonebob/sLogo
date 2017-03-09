@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javafx.scene.control.MenuItem;
-import javafx.scene.image.Image;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
@@ -74,7 +73,7 @@ public class SettingsTool extends Tool
 				Stage newWindow = new Stage();
 				File selectedFile = setupFileChooser().showOpenDialog(newWindow);
 				if (selectedFile != null) {
-					Image newImage = new Image(selectedFile.toURI().toString());
+					String newImage = selectedFile.toURI().toString();
 					this.setChanged();
 					this.notifyObservers(newImage);
 				}

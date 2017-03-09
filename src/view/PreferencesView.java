@@ -60,7 +60,7 @@ public class PreferencesView implements View
 
 	private void updateActorImage()
 	{
-		actorImage.setImage(actor.getImage().getImage());
+		actorImage.setImage(actor.getImage().getImageView().getImage());
 	}
 
 	private void makePreferencesChooser()

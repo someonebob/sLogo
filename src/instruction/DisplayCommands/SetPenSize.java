@@ -1,12 +1,18 @@
 package instruction.DisplayCommands;
 
-/**
- * Sets size of the pen to be pixels thickness
-	returns given pixels
- * @author maddiebriere
- *
- */
+import java.util.List;
 
-public class SetPenSize {
+import instruction.InstructionData;
+
+public class SetPenSize extends DisplayCommand{
+
+	public SetPenSize(InstructionData instructionData, List<String> args, String myText) {
+		super(instructionData, args, myText);
+	}
+
+	@Override
+	public double execute() {
+		getInstructionData().getActiveActor().setPenSize(getArgumentDouble(0));
+	}
 
 }
