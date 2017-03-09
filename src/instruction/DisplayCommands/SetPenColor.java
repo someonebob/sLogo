@@ -11,6 +11,7 @@ import java.util.List;
 
 import instruction.InstructionData;
 import javafx.scene.paint.Color;
+import util.MathUtil;
 
 public class SetPenColor extends DisplayCommand{
 
@@ -20,16 +21,10 @@ public class SetPenColor extends DisplayCommand{
 
 	@Override
 	public double execute() {
-		List<Color> penColorList = getInstructionData().getPenColorList();
-		checkValidIndex(getArgumentDouble(0), penColorList.size());
-		Color newColor = penColorList.get((int)getArgumentDouble(0));
-		getInstructionData().getActiveActor().setPenColor(
-		
-		
-		//NEED TO FINISH THIS
-		
-		checkValidIndex(getArgumentDouble(0), getInstructionData().getActiveActor().getPenColo)
-		getInstructionData().getActiveActor().setPenColor((int)getArgumentDouble(0));  //TODO Update Jimmy
+		List<Color> indexedColors = getInstructionData().getActivePenView().getPenColorProperty().getIndexedColors();
+		MathUtil.checkValidIndex(getArgumentDouble(0), indexedColors.size());
+		Color newColor = indexedColors.get((int)getArgumentDouble(0));
+		getInstructionData().getActivePenView().setColor(newColor);
 		return getArgumentDouble(0);
 	}
 

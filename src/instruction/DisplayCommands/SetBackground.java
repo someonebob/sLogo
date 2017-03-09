@@ -11,6 +11,7 @@ import java.util.List;
 
 import instruction.InstructionData;
 import javafx.scene.paint.Color;
+import util.MathUtil;
 
 public class SetBackground extends DisplayCommand{
 
@@ -20,12 +21,10 @@ public class SetBackground extends DisplayCommand{
 
 	@Override
 	public double execute() {
-		checkValidIndex(getArgumentDouble(0), getInstructionData().getBackgroundColorList().size());
-		Color color = getInstructionData().getBackgroundColorList()
-				
-		
-		Color color = getInstructionData().getBackgroundColorList().get((int)getArgumentDouble(0));
-		getInstructionData().getSimulation().setBackgroundColor(color);
+		List<Color> indexedColors = getInstructionData().getSimulation().getBackgroundColorProperty().getIndexedColors();
+		MathUtil.checkValidIndex(getArgumentDouble(0), indexedColors.size());
+		Color newColor = indexedColors.get((int)getArgumentDouble(0));
+		getInstructionData().getSimulation().getBackgroundColorProperty().setValue(newColor);
 		return getArgumentDouble(0);
 	}
 	

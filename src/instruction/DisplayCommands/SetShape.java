@@ -12,7 +12,7 @@ public class SetShape extends DisplayCommand{
 
 	@Override
 	public double execute() {
-		getInstructionData().getActiveActor().setImageByIndex(getArgumentDouble(0));
+		//getInstructionData().getActiveActor().;
 		return getArgumentDouble(0);
 	}
 

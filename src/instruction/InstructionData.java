@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.List;
 
 import exceptions.InvalidIndexException;
+import exceptions.SLogoException;
 import interpreter.util.WorkspaceUpdater;
 import javafx.geometry.Bounds;
 import javafx.scene.image.ImageView;
@@ -15,7 +16,9 @@ import user_structures.NamedImageWrapper;
 import user_structures.VariableData;
 import util.MathUtil;
 import view.ActorView;
+import view.PenView;
 import view.SimulationView;
+import view.TurtleView;
 
 /**
  * This acts as container for all of the data associated with the current state
@@ -36,7 +39,7 @@ public class InstructionData
 
 	public InstructionData()
 	{
-		this.simulation = null;
+		this.simulationView = null;
 		this.variables = new ArrayList<VariableData>();
 		this.functions = new ArrayList<FunctionData>();
 		this.language = "English";
@@ -144,13 +147,20 @@ public class InstructionData
 		return simulationView;
 	}
 	
+	public PenView getActivePenView(){
+		if(!(getActiveActor() instanceof TurtleView)){
+			throw new SLogoException("Placeholder");  //TODO Change to subclass of exception
+		}
+		return ((TurtleView) getActiveActor()).getPen();
+	}
+	/*
 	public List<Color> getColorList(){
 		return null;//simulationView.getColorList();
 	}
-	
 	public List<NamedImageWrapper> getTurtleImageList(){
 		return getActiveActor().getAvailableImages();
 	}
+	*/
 	/*
 	public void setImageByIndex(double index){
 		checkValidIndex(index, getTurtleImageList().size());
