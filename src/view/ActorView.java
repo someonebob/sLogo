@@ -6,8 +6,6 @@ import java.util.Observable;
 import javafx.animation.Animation;
 import javafx.animation.SequentialTransition;
 
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
 
 import javafx.animation.Transition;
 
@@ -21,7 +19,7 @@ import property.HeadingProperty;
 import property.ImageColorProperty;
 import property.ImageProperty;
 import property.Property;
-import tool.AnimationControlToolButtons.AnimationSlider;
+import property.SpeedProperty;
 import user_structures.ID;
 
 /**
@@ -35,8 +33,6 @@ public abstract class ActorView implements View, Cloneable
 	public static final int ACTOR_HEIGHT = 75;
 	public static final int ACTOR_WIDTH = 75;
 	public static final int STARTING_HEADING = -90;
-	public static final DoubleProperty NUMERATOR = new SimpleDoubleProperty(1000);
-	public static final double DEFAULT_FPS = 5;
 
 	// TODO: Make stack of animations to run, and run them 1 at a time.
 	// TODO: Update image so that it
@@ -47,21 +43,19 @@ public abstract class ActorView implements View, Cloneable
 	private HeadingProperty heading;
 	private SequentialTransition actorMove;
 	private ID id;
-	private DoubleProperty FPS;
-	private DoubleProperty millisecondDelay;
+	protected SpeedProperty speed;
 	
 
 	public ActorView(Defaults defaults, int id)
 	{
 		image = new ImageProperty("Actor Image");
 		imageColor = new ImageColorProperty("Actor Image Color", image);
+		speed = new SpeedProperty("FPS");
+		speed.setValue(5.0);
 		actorPosition = new ActorPositionProperty("Actor Position", this);
 		heading = new HeadingProperty("Actor Heading", this);
 		this.id = new ID(id);
-		FPS = new SimpleDoubleProperty();
-		millisecondDelay = new SimpleDoubleProperty();
-		FPS.setValue(DEFAULT_FPS);
-		millisecondDelay.bind(NUMERATOR.divide(FPS));
+		
 
 		actorMove = new SequentialTransition();
 		actorMove.setNode(this.getImageView());
@@ -108,9 +102,7 @@ public abstract class ActorView implements View, Cloneable
 	@Override
 	public void update(Observable o, Object arg)
 	{
-		if(o instanceof AnimationSlider){
-			FPS.setValue((Double) arg);
-		}
+
 	}
 
 	public void move(Point2D point)
@@ -168,7 +160,11 @@ public abstract class ActorView implements View, Cloneable
 	}
 	public List<Property<?>> getProperties()
 	{
-		return Arrays.asList(image, imageColor, actorPosition, heading);
+		return Arrays.asList(image, imageColor, actorPosition, heading, speed);
+	}
+	
+	public double getSpeed(){
+		return speed.getValue();
 	}
 
 }

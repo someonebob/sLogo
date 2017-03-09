@@ -4,7 +4,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Observable;
 
-import javafx.animation.FadeTransition;
 import javafx.animation.PathTransition;
 import javafx.animation.PauseTransition;
 import javafx.animation.SequentialTransition;
@@ -22,12 +21,12 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
-import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import property.PenColorProperty;
 import property.PenThicknessProperty;
 import property.PenUpProperty;
 import property.Property;
+import property.SpeedProperty;
 
 /**
  * 
@@ -45,10 +44,9 @@ public class PenView implements View
 	private PenUpProperty penUp;
 	private PenThicknessProperty penThickness;
 	private SequentialTransition actorMove;
-	private DoubleProperty FPS;
-	private DoubleProperty millisecondDelay;
+	private SpeedProperty speed;
 
-	public PenView(Paint color)
+	public PenView(Paint color, SpeedProperty speed)
 	{
 		canvas = new Canvas();
 		this.color = new PenColorProperty("Pen color", canvas);
@@ -58,10 +56,7 @@ public class PenView implements View
 		penThickness = new PenThicknessProperty("Pen Thickness");
 		penThickness.setValue(2.0);
 		actorMove = new SequentialTransition();
-		FPS = new SimpleDoubleProperty();
-		millisecondDelay = new SimpleDoubleProperty();
-		FPS.setValue(DEFAULT_FPS);
-		millisecondDelay.bind(NUMERATOR.divide(FPS));
+		this.speed = speed;
 	}
 
 	public void step()
@@ -95,7 +90,8 @@ public class PenView implements View
 		Circle pen = new Circle(0, 0, penThickness.getValue());
 
 		// create path transition
-		PathTransition pathTransition = new PathTransition(Duration.millis(millisecondDelay.get()), myPath, pen);
+		PathTransition pathTransition = new PathTransition(Duration.millis(1000/speed.getValue()), myPath, pen);
+		System.out.println(speed.getValue());
 		pathTransition.currentTimeProperty().addListener(new ChangeListener<Duration>()
 		{
 
@@ -107,6 +103,7 @@ public class PenView implements View
 			@Override
 			public void changed(ObservableValue<? extends Duration> observable, Duration oldValue, Duration newValue)
 			{
+				System.out.println("hi");
 				// skip starting at 0/0
 				if (oldValue == Duration.ZERO)
 					return;
