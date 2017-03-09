@@ -27,7 +27,7 @@ public class TurtleView extends ActorView implements Cloneable
 	@Override
 	public Node display()
 	{
-		return this.getImage();
+		return this.getImageView();
 	}
 
 	public PenView getPen()

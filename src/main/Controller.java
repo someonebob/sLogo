@@ -35,10 +35,12 @@ import tool.FileTool.NewButton;
 import tool.FileTool.OpenButton;
 import tool.HelpTool;
 import tool.SelectionBar;
+import tool.SelectionMenuBar;
 import tool.SettingsTool;
 import tool.SettingsTool.LanguageButton;
 import user_structures.FunctionData;
 import user_structures.VariableData;
+import view.InputBox;
 import view.PreferencesView;
 import view.SavedCommandsView;
 import view.SimulationView;
@@ -56,7 +58,7 @@ public class Controller implements Observer
 	private ObjectProperty<Tab> currentTab;
 	private Map<Tab, SelectionBar> selectionBarMap;
 	private Map<Tab, SimulationView> simulationMap;
-	private Map<Tab, SingleLineInputBox> inputBoxMap;
+	private Map<Tab, InputBox> inputBoxMap;
 	private Map<Tab, WorkspaceView> workspaceMap;
 	private Map<Tab, SavedCommandsView> savedCommandsMap;
 
@@ -126,13 +128,13 @@ public class Controller implements Observer
 		tab.setText("untitled.logo");
 		BorderPane pane = new BorderPane();
 		SimulationView simulation = new SimulationView(defaults);
-		SingleLineInputBox inputBox = new SingleLineInputBox();
+		InputBox inputBox = new SingleLineInputBox();
 		inputBox.setFocus();
 		WorkspaceView workspace = new WorkspaceView();
 		SavedCommandsView userCommands = new SavedCommandsView();
 		PreferencesView preferences = new PreferencesView(simulation.getTurtle(), simulation);
 
-		SelectionBar selectionBar = new SelectionBar();
+		SelectionBar selectionBar = new SelectionMenuBar();
 		FileTool file = new FileTool(stage);
 		SettingsTool settings = new SettingsTool(stage);
 		HelpTool help = new HelpTool(stage);
@@ -156,7 +158,8 @@ public class Controller implements Observer
 	}
 
 	private void setupBorderPane(BorderPane pane, SelectionBar selectionBar, SimulationView simulation,
-			SingleLineInputBox inputBox, WorkspaceView workspace, PreferencesView preferences)
+			InputBox inputBox, WorkspaceView workspace, PreferencesView preferences)
+
 	{
 		pane.setTop(selectionBar.display());
 		pane.setCenter(simulation.display());
@@ -165,7 +168,8 @@ public class Controller implements Observer
 		pane.setRight(preferences.display());
 	}
 
-	private void putIntoMaps(Tab tab, SelectionBar selectionBar, SimulationView simulation, SingleLineInputBox inputBox,
+	private void putIntoMaps(Tab tab, SelectionBar selectionBar, SimulationView simulation, InputBox inputBox,
+
 			WorkspaceView workspace, SavedCommandsView userCommands, ObservableList<VariableData> variables,
 			ObservableList<FunctionData> functions)
 	{
@@ -179,7 +183,7 @@ public class Controller implements Observer
 		functionMap.put(tab, functions);
 	}
 
-	private void setupObservers(SimulationView simulation, SingleLineInputBox inputBox, FileTool file,
+	private void setupObservers(SimulationView simulation, InputBox inputBox, FileTool file,
 			SettingsTool settings, PreferencesView preferences)
 	{
 		file.addObservers(simulation);
@@ -190,12 +194,12 @@ public class Controller implements Observer
 		settings.addObservers(this);
 	}
 
-	private void setupCommands(SingleLineInputBox inputBox)
+	private void setupCommands(InputBox inputBox)
 	{
 		inputBox.assignOnEnterCommand(e -> executeCommand(e, inputBox));
 	}
 
-	private void executeCommand(KeyEvent e, SingleLineInputBox inputBox)
+	private void executeCommand(KeyEvent e, InputBox inputBox)
 	{
 		if (e.getCode() == KeyCode.ENTER) {
 			inputBox.enterAction(e);
@@ -218,7 +222,7 @@ public class Controller implements Observer
 		}
 	}
 
-	private void runCommand(SingleLineInputBox inputBox, String command)
+	private void runCommand(InputBox inputBox, String command)
 	{
 		InstructionData data = new InstructionData(simulationMap.get(currentTab.get()),
 				variableMap.get(currentTab.get()), functionMap.get(currentTab.get()), language.get(currentIndex.get()));
