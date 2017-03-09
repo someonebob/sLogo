@@ -8,6 +8,7 @@ import interpreter.classification.InstructionClassifier;
 import interpreter.clean.InstructionSplitter;
 import interpreter.misc.InstructionNode;
 import interpreter.util.ArgumentReaderUtil;
+import util.Pair;
 
 public class TreeBuilder {
 	
@@ -36,7 +37,7 @@ public class TreeBuilder {
 	 * @param clzz InstructionClassifier used to split
 	 * @return A list of single InstructionNode, each head of their own tree
 	 */
-	public List<InstructionNode> buildTree(){
+	public List<InstructionNode> buildFullTree(){
 		if(getCurrentText().isEmpty()){
 			return new ArrayList<InstructionNode>();
 		}
@@ -47,6 +48,28 @@ public class TreeBuilder {
 				headNodes.add(newHead); //build a list of nodes from text
 		}
 		return headNodes;
+	}
+	
+	/**
+	 * This builds a tree of InstructioNodes given a list of Instructions 
+	 * (The utility of having Instruction type is to have access
+	 * to the number of arguments needed for an instruction). It will only build
+	 * enough of the tree to satisfied the head node instruction. 
+	 * 
+	 * Following this, it will return the node it created and the modified text.
+	 * 
+	 * @param toParse String to parse into instructions for tree constructions
+	 * @param clzz InstructionClassifier used to split
+	 * @return A Pair with:
+	 * A) The new InstructionNode (representing the head instruction)
+	 * B) The updated current text
+	 */
+	public Pair<InstructionNode, String> buildTree(){
+		if(getCurrentText().isEmpty()){
+			return new Pair<InstructionNode, String>(null, "");
+		}
+		InstructionNode newHead = buildSubTree();
+		return new Pair<InstructionNode, String>(newHead, getCurrentText());
 	}
 	
 	/**
