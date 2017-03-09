@@ -28,8 +28,10 @@
 
 3. **Instruction Data** Several changes were made to the InstructionData class. First, the getActorList() method was renamed as getActors() for brevity. The getBackgroundColor() and setBackgroundColor() methods were omitted, since the frontend changed the design to incorporate a ColorProperty object, which was directly accessed. A similar omission was decided on for getTurtleImage() and setTurtleImage() due to the creation of the ImageProperty class. The setActorList() method was removed since it was never used (only the contents of this List were modified). 
 
+3. ** 
 
 ## New API Features
 1. **New classes: ** Several new classes with public methods were added to the back-end for the purposes of interpretation. The process turned out to be much more work than expected and required several helper classes (such as InstructionClassifier, TreeBuilder, etc.) with which to work. These had to have public methods for the purposes of communication between the interpreter and the other classes in the package. These classes were added to split up functionality and avoid having the Interpreter class become one monstrous class of code. 
+
 
 2. **Instruction Data** The getSimualationBounds() method was added for error checking for commands that move the turtle. 
