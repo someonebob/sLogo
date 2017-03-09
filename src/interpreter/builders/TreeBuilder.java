@@ -1,15 +1,12 @@
 package interpreter.builders;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import instruction.InstructionData;
 import interpreter.classification.InstructionClassifier;
 import interpreter.clean.InstructionSplitter;
 import interpreter.misc.InstructionNode;
 import interpreter.util.ArgumentReaderUtil;
 import util.Pair;
-
 public class TreeBuilder {
 	
 	private String currentText;
@@ -105,7 +102,6 @@ public class TreeBuilder {
 		}
 		else{
 			int numArgs = ArgumentReaderUtil.getNumArgs(head.getMyClassification(), headText, data);
-			head.setProperNumArgs(numArgs);
 			buildChildren(numArgs, head);
 		}
 		return head;
@@ -158,5 +154,4 @@ public class TreeBuilder {
 	public void setData(InstructionData data) {
 		this.data = data;
 	}
-
 }

@@ -5,11 +5,9 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Map.Entry;
 import java.util.regex.Pattern;
-
-import exceptions.ReflectionException;
+import exceptions.InvalidCommandException;
 import instruction.*;
 import interpreter.util.ResourceToListUtil;
-
 /**
  * This class performs the reflection necessary to produce instances of each
  * command type without direct statement of the desired class type. This class
@@ -17,14 +15,15 @@ import interpreter.util.ResourceToListUtil;
  * 
  * @author maddiebriere
  */
-
 public class InstructionClassifier {
 	private final String ERROR = "NO MATCH";
+	private final String INSTRUCTION = "Instruction";
+	private final String USER_INSTRUCTION = "UserInstruction";
 	
 	public final String SYNTAX = "resources/languages/Syntax";
 	public final String PATHS = "resources/interpreter/JavaSpeak"; //Full class names matched to shortcuts
 	public final String LANGUAGE = "resources/languages/";
-	public final String RESOURCE_REFLECTION_NAME = "ReflectionMessage";
+	public final String RESOURCE_REFLECTION_NAME = "InvalidCommandMessage";
 	
 	private String mySyntax;
 	private String myLanguage;
@@ -38,6 +37,10 @@ public class InstructionClassifier {
 		mySyntax = SYNTAX;
 		myPaths = PATHS;
 		generateTerms();
+	}
+	
+	public boolean isValid(String text, InstructionData data){
+		return !getInstructionType(text,data).equals(ERROR);
 	}
 	
     /**
@@ -56,7 +59,7 @@ public class InstructionClassifier {
          */
         for (Entry<String, Pattern> e : mySyntaxList) {
             if (match(text, e.getValue())) {
-            	if(!e.getKey().equals("Instruction")){
+            	if(!e.getKey().equals(INSTRUCTION)){
             		return e.getKey();
             	}
             	else
@@ -85,12 +88,10 @@ public class InstructionClassifier {
   	   
     	 /**User instruction**/
 	  	 if(data.containsFunction(key)!=null){
-	  		   return "UserInstruction";
+	  		   return USER_INSTRUCTION;
 	  	 }
-
 	  	return ERROR;
     }
-
     
     /**
      * Searches for the specific address (Down to the correct package)
@@ -100,7 +101,6 @@ public class InstructionClassifier {
      * @return matching Key
      */
     public String findAddressKey(String text) {
-        final String ERROR = "NO MATCH";
         for (Entry<String, Pattern> e : myPathsList) {
             if (match(text, e.getKey())) {
                 return e.getValue().toString();
@@ -156,17 +156,16 @@ public class InstructionClassifier {
 			clazz = Class.forName(classPath);
 			Constructor<?> ctor = clazz.getDeclaredConstructor(InstructionData.class, List.class, String.class);
 			instructionHopeful = ctor.newInstance(data, args, comm);
-		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | NoSuchMethodException | SecurityException | IllegalArgumentException | InvocationTargetException e) {
-			throw new ReflectionException(RESOURCE_REFLECTION_NAME);
-		}
-		try{
 			instruction = (Instruction) instructionHopeful;
-		}
-		catch(Exception e){
-			throw new ReflectionException(RESOURCE_REFLECTION_NAME);
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException 
+				| NoSuchMethodException | SecurityException | 
+				IllegalArgumentException | InvocationTargetException e) {
+			throw new InvalidCommandException(RESOURCE_REFLECTION_NAME);
 		}
 		return instruction;
 	}
+	
+	
 	public void generateTerms() {
 		mySyntaxList = new ArrayList<Entry<String, Pattern>>();
 		myLanguageList = new ArrayList<Entry<String, Pattern>>();
