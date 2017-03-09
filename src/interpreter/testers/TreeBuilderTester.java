@@ -20,7 +20,7 @@ public class TreeBuilderTester {
 	public static void main(String [] args){
 		//problem with string value in tree
 		//change in node so that no string need be saved
-		TreeBuilder build = new TreeBuilder("fd sum 1 :x", new InstructionClassifier("English"), new InstructionData());
+		TreeBuilder build = new TreeBuilder("( fd 50 50 )", new InstructionClassifier("English"), new InstructionData());
 		List<InstructionNode> headNodes = build.buildTree();
 		System.out.println("Single Node, Level-labelled Print:");
 		labelledNodePrint(headNodes, 0);

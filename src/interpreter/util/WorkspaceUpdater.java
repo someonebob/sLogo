@@ -13,10 +13,9 @@ import java.util.List;
 public class WorkspaceUpdater {
 	
 	public static <T> void add(List<T> current, T toAdd){
-		for(int i=0; i<current.size(); i++){
-			if(current.get(i).equals(toAdd)){
-				current.remove(i);
-				i--;
+		for(T t : current){
+			if(t.equals(toAdd)){
+				current.remove(t);
 			}
 		}
 		current.add(toAdd);
