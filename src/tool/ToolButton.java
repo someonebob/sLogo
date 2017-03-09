@@ -23,9 +23,7 @@ public abstract class ToolButton implements Tool{
 			}
 		}
 	}
-	
-	public abstract void makeItems();
-	
+		
 	@Override
 	public Node getItem(){
 		return group;

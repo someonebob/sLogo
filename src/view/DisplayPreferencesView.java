@@ -16,7 +16,7 @@ public class DisplayPreferencesView implements View
 		this.simulation = simulation;
 		display = new VBox();
 		display.setAlignment(Pos.CENTER);
-		simulation.getProperties().forEach(property -> display.getChildren().add(property.makeDynamicUpdater()));
+		simulation.getProperties().forEach(property -> display.getChildren().add(property.displayDynamicUpdater()));
 	}
 
 	@Override

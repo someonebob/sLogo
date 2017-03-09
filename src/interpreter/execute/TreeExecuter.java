@@ -1,15 +1,13 @@
 package interpreter.execute;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import exceptions.InvalidCommandException;
 import exceptions.WrongArgumentNumberException;
 import instruction.Instruction;
 import instruction.InstructionData;
 import interpreter.classification.InstructionClassifier;
 import interpreter.misc.InstructionNode;
-
+import interpreter.util.ArgumentReaderUtil;
 /**
  * Class used to traverse tree and produce runnable instructions. Carries out
  * the instructions head in the InstructionNode head node passed to the class.
@@ -21,19 +19,16 @@ import interpreter.misc.InstructionNode;
  */
 public class TreeExecuter
 {
-
 	private static final String RESOURCE_INVALID_COMMAND_NAME = "InvalidCommandMessage";
 	private static final String RESOURCE_ARGUMENT_NAME = "WrongArgumentNumberMessage";
 	
 	private InstructionData myData;
 	private InstructionClassifier myClass;
-
 	public TreeExecuter(InstructionData data, InstructionClassifier clzz)
 	{
 		myData = data;
 		myClass = clzz;
 	}
-
 	/**
 	 * Deconstruct a tree and execute using post-traversal
 	 * 
@@ -48,7 +43,7 @@ public class TreeExecuter
 	public double execute(InstructionNode head)
 	{
 		//TODO: Error check without losing functionality
-		//checkChildren(head);
+		checkChildren(head);
 		List<String> args = buildArguments(head);
 		variableCheck(head,args);
 		generateHead(head, args);
@@ -93,7 +88,12 @@ public class TreeExecuter
 			return Double.parseDouble(head.getMyRunValue());
 		}
 		catch(NumberFormatException e){
-			return 0.0;
+			if(myClass.isValid(head.getMyCommand(), myData)){
+				return 0.0;
+			}
+			else{
+				throw new InvalidCommandException(RESOURCE_INVALID_COMMAND_NAME);
+			}
 		}
 	}
 	
@@ -120,10 +120,9 @@ public class TreeExecuter
 				numberNonNullChildren++;
 		}
 		
-		if(numberNonNullChildren != head.getProperNumArgs()){
+		if(numberNonNullChildren != ArgumentReaderUtil.
+				getNumArgs(head.getMyClassification(), head.getMyCommand(), myData)){
 			throw new WrongArgumentNumberException(RESOURCE_ARGUMENT_NAME);
 		}
 	}
-
-
 }

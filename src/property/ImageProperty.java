@@ -1,6 +1,8 @@
 package property;
+
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import exceptions.InvalidIndexException;
@@ -10,12 +12,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 import util.ImageViewTuple;
 import view.ActorView;
+
 /**
  * 
  * @author jimmy
@@ -37,8 +39,8 @@ public class ImageProperty extends Property<ImageView>
 	private static final String RESOURCE_INDEX_NAME = "DefaultIndexMessage";
 	
 	private ImageView displayImage;
-	
-	static{
+
+	static {
 		File currentFolder = new File(".");
 		File srcFolder = currentFolder.getParentFile();
 		File imagesFolder = new File(srcFolder, TURTLE_IMAGES_LOCATION);
@@ -46,7 +48,7 @@ public class ImageProperty extends Property<ImageView>
 			INDEXED_IMAGES.add(new ImageViewTuple(imageFile.getName(), new ImageView(new Image(imageFile.getName()))));
 		}
 	}
-	
+
 	public ImageProperty(String name)
 	{
 		super(name);
@@ -81,38 +83,41 @@ public class ImageProperty extends Property<ImageView>
 	{
 		this.setValue(image.getImage());
 	}
+
 	public void setValue(Image image)
 	{
 		this.getValue().setImage(image);
 		updateDisplay();
 	}
+
 	@Override
 	public void setValue(String stringValue)
 	{
 		this.setValue(new Image(stringValue));
 	}
+
 	@Override
 	public void updateDisplay()
 	{
 		displayImage.setImage(this.getValue().getImage());
 		displayImage.setEffect(this.getValue().getEffect());
 	}
+
 	@Override
 	public ImageView display()
 	{
 		return displayImage;
 	}
+
 	@Override
-	public Node makeDynamicUpdater()
+	public List<Node> makeDynamicUpdaters()
 	{
 		Label label = new Label(String.format("Update %s", this.getName()));
 		Button input = initializeButton(String.format("Update %s", this.getName()));
-		VBox vbox = new VBox();
-		vbox.getChildren().add(label);
-		vbox.getChildren().add(input);
-		vbox.setAlignment(Pos.CENTER);
-		return vbox;
+
+		return Arrays.asList(label, input);
 	}
+
 	private Button initializeButton(String defaultText)
 	{
 		Button input = new Button();
@@ -126,14 +131,16 @@ public class ImageProperty extends Property<ImageView>
 		});
 		return input;
 	}
+
 	private FileChooser setupFileChooser()
 	{
-		final String EXTENSION = "*.png";
+		final String PNG_EXTENSION = "*png";
+		final String GIF_EXTENSION = "*.gif";
 		FileChooser chooser = new FileChooser();
 		chooser.setTitle("New Image");
 		File defaultDirectory = new File(System.getProperty("user.dir") + "/images");
 		chooser.setInitialDirectory(defaultDirectory);
-		chooser.getExtensionFilters().setAll(new ExtensionFilter("IMAGE", EXTENSION));
+		chooser.getExtensionFilters().add(new ExtensionFilter("IMAGE", PNG_EXTENSION, GIF_EXTENSION));
 		return chooser;
 	}
 }

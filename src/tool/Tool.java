@@ -9,6 +9,6 @@ import java.util.Observer;
  */
 public interface Tool {
 	public void addObservers(Observer ob);
-	public abstract void makeItems();
+	public void makeItems();
 	public Object getItem();
 }

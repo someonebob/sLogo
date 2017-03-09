@@ -1,7 +1,11 @@
 package property;
 
+import java.util.List;
+
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
 
 /**
  * Because of the intertwinings between xml and graphically updatable settings,
@@ -56,6 +60,13 @@ public abstract class Property<T>
 
 	public abstract void setValue(String stringValue);
 
-	public abstract Node makeDynamicUpdater();
+	public abstract List<Node> makeDynamicUpdaters();
+	
+	public Node displayDynamicUpdater(){
+		VBox vbox = new VBox();
+		vbox.getChildren().addAll(makeDynamicUpdaters());
+		vbox.setAlignment(Pos.CENTER);
+		return vbox;
+	}
 
 }

@@ -18,7 +18,7 @@ import user_structures.VariableData;
  * @author Jesse
  *
  */
-public class WorkspaceView implements PageView
+public class WorkspaceView implements View
 {
 	private BorderPane pane;
 	private TableView<VariableData> table;

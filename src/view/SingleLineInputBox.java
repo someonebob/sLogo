@@ -22,12 +22,12 @@ import javafx.scene.text.Font;
 import tool.FileMenuTool.SaveButton;
 
 public class SingleLineInputBox implements InputBox {
-	protected BorderPane root;
-	protected VBox box;
-	protected TextArea console;
-	protected ListView<String> previous;
-	protected int historyIndex = 0;
-	protected String preamble = "slogo_team07$ ";
+	private BorderPane root;
+	private VBox box;
+	private TextArea console;
+	private ListView<String> previous;
+	private int historyIndex = 0;
+	private String preamble = "slogo_team07$ ";
 
 	@Override
 	public void update(Observable o, Object arg) {

@@ -1,15 +1,14 @@
 package property;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
 public abstract class AbstractColorProperty extends Property<Color>
@@ -46,16 +45,12 @@ public abstract class AbstractColorProperty extends Property<Color>
 	}
 	
 	@Override
-	public Node makeDynamicUpdater()
+	public List<Node> makeDynamicUpdaters()
 	{
-		VBox vbox = new VBox();
 		Label label = new Label(String.format("Update %s", this.getName()));
 		ColorPicker colorPicker = initializeColorPicker();
 
-		vbox.getChildren().add(label);
-		vbox.getChildren().add(colorPicker);
-		vbox.setAlignment(Pos.CENTER);
-		return vbox;
+		return Arrays.asList(label, colorPicker);
 	}
 
 	private ColorPicker initializeColorPicker()

@@ -1,12 +1,13 @@
 package property;
 
+import java.util.Arrays;
+import java.util.List;
+
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
-import javafx.scene.layout.VBox;
 
 /**
  * 
@@ -34,9 +35,8 @@ public class PenThicknessProperty extends Property<Double>
 	}
 
 	@Override
-	public Node makeDynamicUpdater()
+	public List<Node> makeDynamicUpdaters()
 	{
-		VBox vbox = new VBox();
 		Label label = new Label(String.format("Set %s", this.getName()));
 		// TODO: REPLACE THESE WITH RESOURCE FILE
 		Slider slider = new Slider();
@@ -55,9 +55,6 @@ public class PenThicknessProperty extends Property<Double>
 			}
 		});
 
-		vbox.getChildren().add(label);
-		vbox.getChildren().add(slider);
-		vbox.setAlignment(Pos.CENTER);
-		return vbox;
+		return Arrays.asList(label, slider);
 	}
 }
