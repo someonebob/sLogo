@@ -17,6 +17,8 @@ import interpreter.util.ResourceToListUtil;
  */
 public class InstructionClassifier {
 	private final String ERROR = "NO MATCH";
+	private final String INSTRUCTION = "Instruction";
+	private final String USER_INSTRUCTION = "UserInstruction";
 	
 	public final String SYNTAX = "resources/languages/Syntax";
 	public final String PATHS = "resources/interpreter/JavaSpeak"; //Full class names matched to shortcuts
@@ -57,7 +59,7 @@ public class InstructionClassifier {
          */
         for (Entry<String, Pattern> e : mySyntaxList) {
             if (match(text, e.getValue())) {
-            	if(!e.getKey().equals("Instruction")){
+            	if(!e.getKey().equals(INSTRUCTION)){
             		return e.getKey();
             	}
             	else
@@ -86,7 +88,7 @@ public class InstructionClassifier {
   	   
     	 /**User instruction**/
 	  	 if(data.containsFunction(key)!=null){
-	  		   return "UserInstruction";
+	  		   return USER_INSTRUCTION;
 	  	 }
 	  	return ERROR;
     }
@@ -99,7 +101,6 @@ public class InstructionClassifier {
      * @return matching Key
      */
     public String findAddressKey(String text) {
-        final String ERROR = "NO MATCH";
         for (Entry<String, Pattern> e : myPathsList) {
             if (match(text, e.getKey())) {
                 return e.getValue().toString();

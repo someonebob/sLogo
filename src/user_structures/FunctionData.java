@@ -13,35 +13,16 @@ import javafx.beans.property.StringProperty;
  * @author maddiebriere
  *
  */
-public class FunctionData implements Comparable<FunctionData>
+public class FunctionData extends StructureData 
 {
-	private StringProperty name;
 	private StringProperty commands;
 	private List<String> args; 
 	
 	public FunctionData(String name, String commands, List<String> args){
 
-		setName(name);
+		super(name);
 		setCommands(commands);
 		setArgs(args);
-	}
-
-	public StringProperty nameProperty()
-	{
-		if (name == null) {
-			name = new SimpleStringProperty(this, "variable");
-		}
-		return name;
-	}
-
-	public void setName(String value)
-	{
-		nameProperty().set(value);
-	}
-
-	public String getName()
-	{
-		return nameProperty().get();
 	}
 
 	public StringProperty commandsProperty()
@@ -75,25 +56,5 @@ public class FunctionData implements Comparable<FunctionData>
 	public List<String> getArgs(){
 		return argsProperty();
 	}
-
-	@Override
-	public int compareTo(FunctionData o) {
-		if(this == o){
-			return 0;
-		}
-		return this.getName().compareTo(o.getName());
-	}
 	
-	@Override
-	public boolean equals(Object o){
-		if (!(o instanceof FunctionData)){
-			return false;
-			//TODO: Error handling
-		}
-		if(this == o){
-			return true;
-		}
-		return this.getName().equals(((FunctionData)o).getName());
-	}
-
 }
