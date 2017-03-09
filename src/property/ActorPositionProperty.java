@@ -22,7 +22,7 @@ import view.ActorView;
  */
 public class ActorPositionProperty extends Property<Point2D>
 {
-	ActorView actor;
+	private ActorView actor;
 
 	public ActorPositionProperty(String name, ActorView actor)
 	{
@@ -95,7 +95,7 @@ public class ActorPositionProperty extends Property<Point2D>
 
 	private void actorMove(Point2D newLocation)
 	{
-		TranslateTransition move = new TranslateTransition(Duration.millis(500));
+		TranslateTransition move = new TranslateTransition(Duration.millis(1000/actor.getSpeed()));
 		move.setFromX(this.getValue().getX());
 		move.setToX(newLocation.getX());
 		move.setFromY(this.getValue().getY());

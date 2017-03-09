@@ -4,9 +4,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Observable;
 
-import javafx.animation.FadeTransition;
 import javafx.animation.PathTransition;
+import javafx.animation.PauseTransition;
 import javafx.animation.SequentialTransition;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Point2D;
@@ -19,12 +21,12 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
-import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import property.PenColorProperty;
 import property.PenThicknessProperty;
 import property.PenUpProperty;
 import property.Property;
+import property.SpeedProperty;
 
 /**
  * 
@@ -33,6 +35,8 @@ import property.Property;
  */
 public class PenView implements View
 {
+	public static final DoubleProperty NUMERATOR = new SimpleDoubleProperty(1000);
+	public static final double DEFAULT_FPS = 5;
 
 	// private Path myPath;
 	private Canvas canvas;
@@ -40,8 +44,9 @@ public class PenView implements View
 	private PenUpProperty penUp;
 	private PenThicknessProperty penThickness;
 	private SequentialTransition actorMove;
+	private SpeedProperty speed;
 
-	public PenView(Paint color)
+	public PenView(Paint color, SpeedProperty speed)
 	{
 		canvas = new Canvas();
 		this.color = new PenColorProperty("Pen color", canvas);
@@ -51,6 +56,7 @@ public class PenView implements View
 		penThickness = new PenThicknessProperty("Pen Thickness");
 		penThickness.setValue(2.0);
 		actorMove = new SequentialTransition();
+		this.speed = speed;
 	}
 
 	public void step()
@@ -60,9 +66,10 @@ public class PenView implements View
 
 	public void waitTransition(double waitTime)
 	{
-		// PauseTransition delayTransition = new
-		// PauseTransition(Duration.millis(waitTime));
-		FadeTransition delayTransition = new FadeTransition(Duration.millis(waitTime), new Rectangle());
+
+		 PauseTransition delayTransition = new
+		 PauseTransition(Duration.millis(waitTime));
+
 		actorMove.getChildren().add(delayTransition);
 		delayTransition.setOnFinished(e -> {
 			actorMove.getChildren().remove(delayTransition);
@@ -83,7 +90,8 @@ public class PenView implements View
 		Circle pen = new Circle(0, 0, penThickness.getValue());
 
 		// create path transition
-		PathTransition pathTransition = new PathTransition(Duration.millis(500), myPath, pen);
+		PathTransition pathTransition = new PathTransition(Duration.millis(1000/speed.getValue()), myPath, pen);
+		System.out.println(speed.getValue());
 		pathTransition.currentTimeProperty().addListener(new ChangeListener<Duration>()
 		{
 
@@ -95,6 +103,7 @@ public class PenView implements View
 			@Override
 			public void changed(ObservableValue<? extends Duration> observable, Duration oldValue, Duration newValue)
 			{
+				System.out.println("hi");
 				// skip starting at 0/0
 				if (oldValue == Duration.ZERO)
 					return;

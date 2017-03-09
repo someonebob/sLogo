@@ -157,9 +157,9 @@ import javafx.scene.paint.Paint;
 import main.Defaults;
 import property.BackgroundColorProperty;
 import property.Property;
-import tool.SettingsTool.BackgroundColorButton;
-import tool.SettingsTool.PenColorButton;
-import tool.SettingsTool.TurtleImageButton;
+import tool.SettingsMenuTool.BackgroundColorButton;
+import tool.SettingsMenuTool.PenColorButton;
+import tool.SettingsMenuTool.TurtleImageButton;
 
 public class SimulationView implements View, Cloneable
 {

@@ -13,7 +13,7 @@ public class TurtleView extends ActorView implements Cloneable
 	public TurtleView(Defaults defaults, int id)
 	{
 		super(defaults, id);
-		pen = new PenView(defaults.pen());
+		pen = new PenView(defaults.pen(), speed);
 		this.defaults = defaults;
 	}
 
