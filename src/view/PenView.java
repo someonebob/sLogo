@@ -67,8 +67,7 @@ public class PenView implements View
 	public void waitTransition(double waitTime)
 	{
 
-		 PauseTransition delayTransition = new
-		 PauseTransition(Duration.millis(waitTime));
+		PauseTransition delayTransition = new PauseTransition(Duration.millis(waitTime));
 
 		actorMove.getChildren().add(delayTransition);
 		delayTransition.setOnFinished(e -> {
@@ -90,7 +89,7 @@ public class PenView implements View
 		Circle pen = new Circle(0, 0, penThickness.getValue());
 
 		// create path transition
-		PathTransition pathTransition = new PathTransition(Duration.millis(1000/speed.getValue()), myPath, pen);
+		PathTransition pathTransition = new PathTransition(Duration.millis(1000 / speed.getValue()), myPath, pen);
 		System.out.println(speed.getValue());
 		pathTransition.currentTimeProperty().addListener(new ChangeListener<Duration>()
 		{
@@ -129,6 +128,8 @@ public class PenView implements View
 		actorMove.getChildren().add(pathTransition);
 		pathTransition.setOnFinished(e -> {
 			actorMove.getChildren().remove(pathTransition);
+			gc.strokeLine(currLocation.getX() + canvas.getWidth() / 2, currLocation.getY() + canvas.getHeight() / 2,
+					newLocation.getX() + canvas.getWidth() / 2, newLocation.getY() + canvas.getHeight() / 2);
 		});
 	}
 
