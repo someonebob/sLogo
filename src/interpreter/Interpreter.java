@@ -52,15 +52,19 @@ public class Interpreter {
 		}
 		return toRet;
 	}
+	
 	public InstructionClassifier getMyClassifier() {
 		return myClassifier;
 	}
+	
 	public void setMyClassifier(InstructionClassifier myClassifier) {
 		this.myClassifier = myClassifier;
 	}
+	
 	public InstructionData getMyData() {
 		return myData;
 	}
+	
 	public void setMyData(InstructionData myData) {
 		this.myData = myData;
 	}

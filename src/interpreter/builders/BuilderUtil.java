@@ -1,13 +1,10 @@
 package interpreter.builders;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import instruction.InstructionData;
 import interpreter.clean.InstructionSplitter;
 import interpreter.misc.InstructionNode;
 import interpreter.util.ArgumentReaderUtil;
-
 /**
  * Abstract class defining requirements of a BuilderUtil
  * (helper) class -- they class types are used on individual node
@@ -16,7 +13,6 @@ import interpreter.util.ArgumentReaderUtil;
  * @author maddiebriere
  *
  */
-
 public abstract class BuilderUtil {
 	
 	private List<InstructionNode> nodes;
@@ -67,7 +63,6 @@ public abstract class BuilderUtil {
 	 * the words that have already been accounted for
 	 */
 	public abstract String construct();
-
 	/**
 	 * Create a child for the head node  that
 	 * will hold the value created using this Util class
@@ -115,31 +110,24 @@ public abstract class BuilderUtil {
 	public List<InstructionNode> getNodes() {
 		return nodes;
 	}
-
 	public void setNodes(List<InstructionNode> nodes) {
 		this.nodes = nodes;
 	}
-
 	public InstructionNode getHead() {
 		return head;
 	}
-
 	public void setHead(InstructionNode head) {
 		this.head = head;
 	}
-
 	public String getCurrent() {
 		return current;
 	}
-
 	public void setCurrent(String current) {
 		this.current = current;
 	}
-
 	public InstructionData getData() {
 		return data;
 	}
-
 	public void setData(InstructionData data) {
 		this.data = data;
 	}

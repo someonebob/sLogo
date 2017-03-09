@@ -7,4 +7,5 @@
 
 ## Back-End
 1. **New classes: ** Several new classes with public methods were added to the back-end for the purposes of interpretation. The process turned out to be much more work than expected and required several helper classes (such as InstructionClassifier, TreeBuilder, etc.) with which to work. These had to have public methods for the purposes of communication between the interpreter and the other classes in the package. These classes were added to split up functionality and avoid having the Interpreter class become one monstrous class of code. 
+
 2. ** Responsibilities in the backend: ** The Instruction class was modified several times, with the constructors being changed to accomodate various requirements from the interpreter. In the end, the Instruction class needed to accept a List of arguments and a String of text to define the instruction, which were not included before. These were necessary for communication between the interpreter and the instructions.
