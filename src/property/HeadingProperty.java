@@ -32,7 +32,7 @@ public class HeadingProperty extends Property<Double>
 	{
 		setActorHeading(heading);
 		super.setValue((double) Math.floorMod(heading.intValue(), 360));
-		actor.step();
+		// actor.step();
 	}
 
 	@Override

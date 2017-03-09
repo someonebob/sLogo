@@ -21,7 +21,7 @@ public class TurtleView extends ActorView implements Cloneable
 	public void step()
 	{
 		super.step();
-		if (pen != null) {
+		if (this.pen != null) {
 			this.getPen().step();
 		}
 	}

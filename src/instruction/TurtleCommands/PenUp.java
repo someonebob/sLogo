@@ -21,8 +21,8 @@ public class PenUp extends TurtleCommand
 	@Override
 	public double execute()
 	{
-		if (this.getActiveActor() instanceof TurtleView) {
-			((TurtleView) this.getActiveActor()).getPen().penUp();
+		if (this.getActiveTurtle() instanceof TurtleView) {
+			this.getActiveTurtle().getPen().penUp();
 		}
 		return 0;
 	}

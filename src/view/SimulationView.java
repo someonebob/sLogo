@@ -286,10 +286,11 @@ public class SimulationView implements View, Cloneable
 	@Override
 	public SimulationView clone()
 	{
-		SimulationView clone = new SimulationView(this.defaults);
-		System.out.println(clone.getTurtle().getHeading());
-		clone.getTurtle().setHeading(300);
-		System.out.println(clone.getTurtle().getHeading());
-		return clone;
+		// SimulationView clone = new SimulationView(this.defaults);
+		// System.out.println(clone.getTurtle().getHeading());
+		// clone.getTurtle().setHeading(300);
+		// System.out.println(clone.getTurtle().getHeading());
+		// return clone;
+		return null;
 	}
 }

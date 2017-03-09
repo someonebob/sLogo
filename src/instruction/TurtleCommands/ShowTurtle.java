@@ -20,7 +20,7 @@ public class ShowTurtle extends TurtleCommand
 	@Override
 	public double execute()
 	{
-		this.getActiveActor().getImageView().setVisible(true);
+		this.getActiveTurtle().getImageView().setVisible(true);
 		return 1;
 	}
 }

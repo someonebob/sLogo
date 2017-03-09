@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Observable;
 
+import javafx.animation.Animation;
 import javafx.animation.SequentialTransition;
 import javafx.animation.Transition;
 import javafx.geometry.Point2D;
@@ -58,7 +59,7 @@ public abstract class ActorView implements View, Cloneable
 		loadImage(defaults.image());
 		// start facing up
 		this.setHeading(STARTING_HEADING);
-		// initial rotation
+		// // initial rotation
 		actorMove.play();
 	}
 
@@ -127,6 +128,9 @@ public abstract class ActorView implements View, Cloneable
 
 	public void addTransition(Transition transition)
 	{
+		for (Animation trans : actorMove.getChildren()) {
+			System.out.print(trans);
+		}
 		transition.setOnFinished(e -> {
 			actorMove.getChildren().remove(transition);
 		});
@@ -140,7 +144,7 @@ public abstract class ActorView implements View, Cloneable
 
 	public void rotate(double rotateAngle)
 	{
-		heading.setValue(heading.getValue() + rotateAngle);
+		this.setHeading(heading.getValue() + rotateAngle);
 	}
 
 	public double getHeading()

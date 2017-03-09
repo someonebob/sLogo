@@ -21,8 +21,8 @@ public class PenDown extends TurtleCommand
 	@Override
 	public double execute()
 	{
-		if (this.getActiveActor() instanceof TurtleView) {
-			((TurtleView) this.getActiveActor()).getPen().penDown();
+		if (this.getActiveTurtle() instanceof TurtleView) {
+			this.getActiveTurtle().getPen().penDown();
 		}
 		return 1;
 	}
