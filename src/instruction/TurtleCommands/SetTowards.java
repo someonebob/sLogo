@@ -22,8 +22,8 @@ public class SetTowards extends TurtleCommand
 	{
 		double x = getArgumentDouble(0);
 		double y = getArgumentDouble(1);
-		double currX = this.getActiveActor().getActor().getLocation().getX();
-		double currY = this.getActiveActor().getActor().getLocation().getY();
+		double currX = this.getActiveActor().getLocation().getX();
+		double currY = this.getActiveActor().getLocation().getY();
 		double currHeading = this.getActiveActor().getHeading();
 		double newHeading = Math.toDegrees(Math.atan((y - currY) / (x - currX)));
 		if (y - currY < 0) {

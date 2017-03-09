@@ -1,5 +1,6 @@
 package property;
 
+import javafx.animation.RotateTransition;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Pos;
@@ -7,6 +8,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
+import javafx.util.Duration;
 import view.ActorView;
 
 /**
@@ -22,14 +24,14 @@ public class HeadingProperty extends Property<Double>
 	{
 		super(name);
 		this.actor = actor;
-		super.setValue(actor.getImageProperty().getValue().getRotate());
+		super.setValue(0.0);
 	}
 
 	@Override
 	public void setValue(Double heading)
 	{
+		setActorHeading(heading);
 		super.setValue((double) Math.floorMod(heading.intValue(), 360));
-		actor.setHeading(heading);
 		actor.step();
 	}
 
@@ -63,6 +65,20 @@ public class HeadingProperty extends Property<Double>
 		vbox.getChildren().addAll(label, input);
 		vbox.setAlignment(Pos.CENTER);
 		return vbox;
+	}
+
+	private void setActorHeading(double heading)
+	{
+		actor.addTransition(makeRotateTransition(this.getValue(), heading));
+	}
+
+	private RotateTransition makeRotateTransition(double startAngle, double endAngle)
+	{
+		RotateTransition rotate = new RotateTransition(Duration.millis(200));
+		rotate.setFromAngle(startAngle);
+		rotate.setToAngle(endAngle);
+		rotate.setCycleCount(1);
+		return rotate;
 	}
 
 }
