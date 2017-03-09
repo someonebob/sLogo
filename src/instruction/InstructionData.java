@@ -4,8 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import exceptions.InvalidIndexException;
-import exceptions.SLogoException;
+import exceptions.CastingException;
 import interpreter.util.WorkspaceUpdater;
 import javafx.geometry.Bounds;
 import user_structures.FunctionData;
@@ -27,6 +26,7 @@ import view.TurtleView;
  */
 public class InstructionData
 {
+	private static final String RESOURCE_CAST_EXCEPTION = "CastingMessage";
 	SimulationView simulationView;
 	List<VariableData> variables;
 	List<FunctionData> functions;
@@ -157,46 +157,9 @@ public class InstructionData
 	
 	public PenView getActivePenView(){
 		if(!(getActiveActor() instanceof TurtleView)){
-			throw new SLogoException("Placeholder");  //TODO Change to subclass of exception
+			throw new CastingException(RESOURCE_CAST_EXCEPTION);
 		}
 		return ((TurtleView) getActiveActor()).getPen();
 	}
-	/*
-	public List<Color> getColorList(){
-		return null;//simulationView.getColorList();
-	}
-	public List<NamedImageWrapper> getTurtleImageList(){
-		return getActiveActor().getAvailableImages();
-	}
-	*/
-	/*
-	public void setImageByIndex(double index){
-		checkValidIndex(index, getTurtleImageList().size());
-		getActiveActor().setImage(getTurtleImageList().get((int)index));
-	}
-	*/
-	/**
-	 * (Current actor's imageView's index)
-	 * @return
-	 */
-	/*
-	public int getImageByIndex(){
-		int index = getTurtleImageList().indexOf(getActiveActor().getImage());
-		if(index != -1){
-			return index;
-		}
-		else{
-			throw new InvalidIndexException(RESOURCE_NOT_FOUND_NAME);
-		}
-	}
-	
-	private void checkValidIndex(double index, int size){
-		if(!MathUtil.hasIntegerValue(index)){
-			throw new InvalidIndexException(RESOURCE_DOUBLE_NAME);
-		}
-		if(index < 0.0 || index >= size){
-			throw new InvalidIndexException(RESOURCE_BOUNDS_NAME);
-		}
-	}
-	*/
+
 }

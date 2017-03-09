@@ -4,9 +4,7 @@ import java.util.List;
 
 import exceptions.NonsensicalArgumentException;
 import instruction.InstructionData;
-import javafx.scene.paint.Color;
 import property.PenThicknessProperty;
-import util.MathUtil;
 
 /**
  * Sets size of the pen to be pixels thickness

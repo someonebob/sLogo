@@ -1,11 +1,9 @@
 package property;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
+import exceptions.InvalidIndexException;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -16,7 +14,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
-import util.Pair;
+import util.ImageViewTuple;
 import view.ActorView;
 /**
  * 
@@ -34,9 +32,9 @@ import view.ActorView;
 
 public class ImageProperty extends Property<ImageView>
 {
-	//private static final Map<String, ImageView> INDEXED_IMAGES = new HashMap<>();
-	private static final List<Pair<String, ImageView>> INDEXED_IMAGES = new ArrayList<>();
+	private static final List<ImageViewTuple> INDEXED_IMAGES = new ArrayList<>();
 	private static final String TURTLE_IMAGES_LOCATION = "images";
+	private static final String RESOURCE_INDEX_NAME = "DefaultIndexMessage";
 	
 	private ImageView displayImage;
 	
@@ -45,7 +43,7 @@ public class ImageProperty extends Property<ImageView>
 		File srcFolder = currentFolder.getParentFile();
 		File imagesFolder = new File(srcFolder, TURTLE_IMAGES_LOCATION);
 		for(File imageFile : imagesFolder.listFiles()){
-			INDEXED_IMAGES.add(new Pair<>(imageFile.getName(), new ImageView(new Image(imageFile.getName()))));
+			INDEXED_IMAGES.add(new ImageViewTuple(imageFile.getName(), new ImageView(new Image(imageFile.getName()))));
 		}
 	}
 	
@@ -58,12 +56,8 @@ public class ImageProperty extends Property<ImageView>
 		displayImage.setFitWidth(ActorView.ACTOR_WIDTH);
 		displayImage.setPreserveRatio(true);
 	}
-	/*
-	public Map<String, ImageView> getIndexedImages(){
-		return INDEXED_IMAGES;
-	}
-	*/
-	public List<Pair<String, ImageView>> getIndexedImages(){
+	
+	public List<ImageViewTuple> getIndexedImages(){
 		return INDEXED_IMAGES;
 	}
 	/**
@@ -72,14 +66,14 @@ public class ImageProperty extends Property<ImageView>
 	 * @param initialImageFilename
 	 */
 	
-	public void addDefaultImageToInitialImageFilename(String initialImageFilename){
-		//INDEXED_IMAGES.put(initialImageFilename, displayImage);
-		//For List, iterate over and find filename match, and replace that element
-		 for(Pair<String, ImageView> pair : INDEXED_IMAGES){
-			 if(pair.getMyA().equals(initialImageFilename)){  //TODO Change to Comparator, TODO error throwing
-				 pair.setMyB(displayImage);
+	public void mergeDuplicateDefaultImages(String initialImageFilename){
+		 for(ImageViewTuple tuple : INDEXED_IMAGES){
+			 if(tuple.getFilename().equals(initialImageFilename)){
+				 tuple.setImageView(displayImage);
+				 return;
 			 }
 		 }
+		 throw new InvalidIndexException(RESOURCE_INDEX_NAME);
 	}
 	
 	@Override
