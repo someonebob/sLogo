@@ -74,7 +74,7 @@ public class HeadingProperty extends Property<Double>
 
 	private RotateTransition makeRotateTransition(double startAngle, double endAngle)
 	{
-		RotateTransition rotate = new RotateTransition(Duration.millis(200));
+		RotateTransition rotate = new RotateTransition(Duration.millis(1000 / actor.getSpeed()));
 		rotate.setFromAngle(startAngle);
 		rotate.setToAngle(endAngle);
 		rotate.setCycleCount(1);

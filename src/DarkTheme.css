@@ -1,3 +1,7 @@
+/*
+ * from https://toedter.com/2011/10/26/java-fx-2-0-css-styling/
+ */
+
 .root {
 -fx-base: rgb(50, 50, 50);
 -fx-background: rgb(50, 50, 50);
