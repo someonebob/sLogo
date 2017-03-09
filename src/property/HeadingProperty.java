@@ -2,6 +2,7 @@ package property;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -60,6 +61,7 @@ public class HeadingProperty extends Property<Double>
 			}
 		});
 		vbox.getChildren().addAll(label, input);
+		vbox.setAlignment(Pos.CENTER);
 		return vbox;
 	}
 

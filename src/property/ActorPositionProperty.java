@@ -2,6 +2,7 @@ package property;
 
 import javafx.collections.FXCollections;
 import javafx.geometry.Point2D;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -75,7 +76,7 @@ public class ActorPositionProperty extends Property<Point2D>
 		vbox.getChildren().add(directionPicker);
 		vbox.getChildren().add(distance);
 		vbox.getChildren().add(moveButton);
-
+		vbox.setAlignment(Pos.CENTER);
 		return vbox;
 	}
 
