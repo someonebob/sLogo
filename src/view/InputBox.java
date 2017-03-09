@@ -4,7 +4,7 @@ import javafx.event.EventHandler;
 import javafx.scene.input.KeyEvent;
 
 public interface InputBox extends View {
-	
+
 	public void enterAction(KeyEvent e);
 	public void assignOnEnterCommand(EventHandler<? super KeyEvent> e);
 	public void appendPreamble();
@@ -17,3 +17,4 @@ public interface InputBox extends View {
 	public void protectPreamble(KeyEvent e);
 	public void updateData(String arg);
 }
+

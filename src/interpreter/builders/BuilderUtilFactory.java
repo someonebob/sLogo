@@ -41,7 +41,6 @@ public class BuilderUtilFactory {
 		Class<?> clazz;
 		Object builderHopeful = new Object();
 		
-		//Choose BuilderUtil type
 		try {
 			String path = PATH + instructionType + "Util";
 			clazz = Class.forName(path);
@@ -49,18 +48,37 @@ public class BuilderUtilFactory {
 			return null;
 		}
 		
-		//Create BuilderUtil or return null
 		Constructor<?> ctor;
 		try {
 			ctor = clazz.getDeclaredConstructor(List.class, InstructionNode.class, 
 					String.class, InstructionData.class);
 			builderHopeful = ctor.newInstance(nodes, head, current, data);
-			toRet = (BuilderUtil)builderHopeful;
-		} catch (NoSuchMethodException |SecurityException | InstantiationException
-				|IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+		} catch (NoSuchMethodException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} 
+		} catch (SecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		try{
+			toRet = (BuilderUtil)builderHopeful;
+		}
+		catch(Exception e){
+			//TODO: Error throw
+		}
 		return toRet;
 	}
 }

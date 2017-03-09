@@ -1,13 +1,16 @@
 package property;
 
+import javafx.animation.TranslateTransition;
 import javafx.collections.FXCollections;
 import javafx.geometry.Point2D;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
+import javafx.util.Duration;
 import util.MathUtil;
 import util.PointPolar;
 import view.ActorView;
@@ -25,14 +28,14 @@ public class ActorPositionProperty extends Property<Point2D>
 	{
 		super(name);
 		this.actor = actor;
-		super.setValue(actor.getActor().getLocation());
+		super.setValue(new Point2D(0, 0));
 	}
 
 	@Override
 	public void setValue(Point2D location)
 	{
+		actorMove(location);
 		super.setValue(location);
-		actor.move(location);
 	}
 
 	@Override
@@ -55,7 +58,8 @@ public class ActorPositionProperty extends Property<Point2D>
 		Label label = new Label(String.format("Move %s", this.getName()));
 		// TODO: REPLACE THESE WITH RESOURCE FILE
 		ComboBox<String> directionPicker = new ComboBox<>(FXCollections.observableArrayList("fd", "bk", "lt", "rt"));
-		TextField distance = new TextField("Amount to move");
+		TextField distance = new TextField();
+		distance.setPromptText("Amount to move");
 		Button moveButton = new Button("Move");
 
 		moveButton.setOnAction(e -> {
@@ -75,22 +79,28 @@ public class ActorPositionProperty extends Property<Point2D>
 		vbox.getChildren().add(directionPicker);
 		vbox.getChildren().add(distance);
 		vbox.getChildren().add(moveButton);
-
+		vbox.setAlignment(Pos.CENTER);
 		return vbox;
 	}
 
-	protected void move(double distance)
+	private void move(double distance)
 	{
 		Point2D currentLocation = this.getValue();
 		double currentHeading = actor.getHeading();
 		Point2D deltaVector = MathUtil.polarToRectangular(new PointPolar(distance, currentHeading));
 		Point2D newLocation = currentLocation.add(deltaVector);
-		actor.move(newLocation);
+		actorMove(newLocation);
 		this.setValue(newLocation);
 	}
 
-	private void updatePosition(Point2D newPosition)
+	private void actorMove(Point2D newLocation)
 	{
-		actor.move(newPosition);
+		TranslateTransition move = new TranslateTransition(Duration.millis(500));
+		move.setFromX(this.getValue().getX());
+		move.setToX(newLocation.getX());
+		move.setFromY(this.getValue().getY());
+		move.setToY(newLocation.getY());
+		move.setCycleCount(1);
+		actor.addTransition(move);
 	}
 }

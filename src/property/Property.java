@@ -36,7 +36,7 @@ public abstract class Property<T>
 	public void setValue(T value)
 	{
 		this.value = value;
-		updateLabel();
+		updateDisplay();
 	}
 
 	public String convertToXML()
@@ -49,7 +49,7 @@ public abstract class Property<T>
 		return valueLabel;
 	}
 
-	private void updateLabel()
+	protected void updateDisplay()
 	{
 		valueLabel.setText(name + " value : " + this.getValue().toString());
 	}

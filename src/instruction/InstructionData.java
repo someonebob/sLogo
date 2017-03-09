@@ -2,19 +2,14 @@ package instruction;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 
 import exceptions.InvalidIndexException;
 import exceptions.SLogoException;
 import interpreter.util.WorkspaceUpdater;
 import javafx.geometry.Bounds;
-import javafx.scene.image.ImageView;
-import javafx.scene.paint.Color;
 import user_structures.FunctionData;
-import user_structures.NamedImageWrapper;
 import user_structures.VariableData;
-import util.MathUtil;
 import view.ActorView;
 import view.PenView;
 import view.SimulationView;
@@ -32,7 +27,7 @@ import view.TurtleView;
  */
 public class InstructionData
 {
-	SimulationView simulationView;
+	SimulationView simulation;
 	List<VariableData> variables;
 	List<FunctionData> functions;
 	String language;
@@ -47,7 +42,7 @@ public class InstructionData
 
 	public InstructionData(SimulationView simulation, List<VariableData> variables, List<FunctionData> functions, String language)
 	{ 
-		this.simulationView = simulation;
+		this.simulation = simulation;
 		this.variables = variables;
 		this.functions = functions;
 		this.language = language;
@@ -55,7 +50,7 @@ public class InstructionData
 
 	public ActorView getActiveActor()
 	{
-		return simulationView.getTurtle();
+		return simulation.getTurtle();
 	}
 
 	/**
@@ -65,12 +60,12 @@ public class InstructionData
 	 */
 	public List<ActorView> getActors()
 	{
-		return Arrays.asList(simulationView.getTurtle());
+		return Arrays.asList(simulation.getTurtle());
 	}
 
 	public Bounds getSimulationBounds()
 	{
-		return simulationView.getBounds();
+		return simulation.getBounds();
 	}
 	
 	public List<VariableData> getVariables(){
@@ -144,7 +139,7 @@ public class InstructionData
 	}
 	
 	public SimulationView getSimulation(){
-		return simulationView;
+		return simulation;
 	}
 	
 	public PenView getActivePenView(){

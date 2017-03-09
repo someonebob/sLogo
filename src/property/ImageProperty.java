@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -13,6 +14,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
+import view.ActorView;
 
 /**
  * 
@@ -37,7 +39,11 @@ public class ImageProperty extends Property<ImageView>
 	public ImageProperty(String name)
 	{
 		super(name);
+		displayImage = new ImageView();
 		super.setValue(new ImageView());
+		displayImage.setFitHeight(ActorView.ACTOR_HEIGHT);
+		displayImage.setFitWidth(ActorView.ACTOR_WIDTH);
+		displayImage.setPreserveRatio(true);
 	}
 	
 	public List<ImageView> getIndexedImages(){
@@ -53,12 +59,26 @@ public class ImageProperty extends Property<ImageView>
 	public void setValue(Image image)
 	{
 		this.getValue().setImage(image);
+		updateDisplay();
 	}
 
 	@Override
 	public void setValue(String stringValue)
 	{
 		this.setValue(new Image(stringValue));
+	}
+
+	@Override
+	public void updateDisplay()
+	{
+		displayImage.setImage(this.getValue().getImage());
+		displayImage.setEffect(this.getValue().getEffect());
+	}
+
+	@Override
+	public ImageView display()
+	{
+		return displayImage;
 	}
 
 	@Override
@@ -71,6 +91,7 @@ public class ImageProperty extends Property<ImageView>
 		vbox.getChildren().add(label);
 		vbox.getChildren().add(input);
 
+		vbox.setAlignment(Pos.CENTER);
 		return vbox;
 	}
 
@@ -82,7 +103,7 @@ public class ImageProperty extends Property<ImageView>
 		input.setOnAction(e -> {
 			File selectedFile = setupFileChooser().showOpenDialog(newWindow);
 			if (selectedFile != null) {
-				this.getValue().setImage(new Image(selectedFile.toURI().toString()));
+				this.setValue(new Image(selectedFile.toURI().toString()));
 			}
 		});
 		return input;

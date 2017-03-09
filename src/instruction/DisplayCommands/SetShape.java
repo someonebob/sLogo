@@ -1,8 +1,14 @@
 package instruction.DisplayCommands;
 
-import java.util.List;
+/**
+ * Sets shape of turtle to that represented by index
+	returns given index
+ * 
+ * @author maddiebriere
+ *
+ */
 
-import instruction.InstructionData;
+public class SetShape {
 
 public class SetShape extends DisplayCommand{
 

@@ -7,6 +7,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -27,6 +28,9 @@ public class PreferencesView implements View
 		actorImage.setPreserveRatio(true);
 		actorImage.setFitHeight(70);
 		this.actor = initialActor;
+		actor.getImageView().setOnMouseClicked(e ->{
+			System.out.println("hi");
+		});
 		this.simulation = simulation;
 		setupHeader();
 		// root.setCenter(new PenPreferencesView(actor).display());
@@ -34,15 +38,19 @@ public class PreferencesView implements View
 	private void setupHeader()
 	{
 		header = new VBox();
+		header.setAlignment(Pos.CENTER);
+		header.setPrefWidth(200);
+		header.getChildren().add(makeUndoButton());
 		header.getChildren().add(new Label("Change Property:"));
 		initializePreferenceViews();
 		makePreferencesChooser();
 		header.getChildren().add(new Label("Current Actor:"));
 		updateActorImage();
-		header.getChildren().add(actorImage);
+		header.getChildren().add(actor.getImageProperty().display());
+		// header.getChildren().add(actorImage);
+		// root.getChildren().add(header);
 		root.setTop(header);
-		header.getChildren().add(actor.getImageColorProperty().display());
-		header.getChildren().add(actor.getImageColorProperty().makeDynamicUpdater());
+
 		// header.getChildren().add(actor.getActorPositionProperty().display());
 		// header.getChildren().add(new Label(String.format("Position: %s",
 		// actor.getActor().getLocation())));
@@ -53,7 +61,7 @@ public class PreferencesView implements View
 	}
 	private void updateActorImage()
 	{
-		actorImage.setImage(actor.getImage().getImage());
+		actorImage.setImage(actor.getImageView().getImage());
 	}
 	private void makePreferencesChooser()
 	{
@@ -64,11 +72,23 @@ public class PreferencesView implements View
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue)
 			{
 				BorderPane.setAlignment(preferenceViews.get(newValue), Pos.CENTER);
+				// root.getChildren().add(preferenceViews.get(newValue));
+
 				root.setCenter(preferenceViews.get(newValue));
 			}
 		});
 		header.getChildren().add(chooser);
 	}
+
+	private Button makeUndoButton()
+	{
+		Button undo = new Button("Undo");
+		undo.setOnAction(e -> {
+			simulation.undo();
+		});
+		return undo;
+	}
+
 	private void initializePreferenceViews()
 	{
 		preferenceViews = new HashMap<>();

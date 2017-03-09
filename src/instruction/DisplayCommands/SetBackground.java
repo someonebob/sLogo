@@ -7,7 +7,7 @@ package instruction.DisplayCommands;
  *
  */
 
-import java.util.List;
+public class SetBackground {
 
 import instruction.InstructionData;
 import javafx.scene.paint.Color;
