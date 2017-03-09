@@ -15,19 +15,19 @@ import javafx.stage.Stage;
  * @author Jesse
  *
  */
-public class SettingsTool extends Tool
+public class SettingsMenuTool extends MenuTool
 {
 	public static final String name = "Settings";
 
-	private List<AbstractButton> buttons;
+	private List<AbstractMenuItem> buttons;
 
-	public SettingsTool(Stage window)
+	public SettingsMenuTool(Stage window)
 	{
 		super(name, window);
 	}
 
 	@Override
-	public void makeMenuItems()
+	public void makeItems()
 	{
 		buttons = new ArrayList<>();
 		buttons.add(new BackgroundColorButton());
@@ -38,7 +38,7 @@ public class SettingsTool extends Tool
 	}
 
 	@Override
-	protected List<AbstractButton> getButtons()
+	protected List<AbstractMenuItem> getButtons()
 	{
 		return buttons;
 
@@ -65,7 +65,7 @@ public class SettingsTool extends Tool
 		}
 	}
 
-	public class TurtleImageButton extends AbstractButton
+	public class TurtleImageButton extends AbstractMenuItem
 	{
 		public TurtleImageButton()
 		{
@@ -99,7 +99,7 @@ public class SettingsTool extends Tool
 		}
 	}
 	
-	public class DefaultButton extends AbstractButton
+	public class DefaultButton extends AbstractMenuItem
 	{
 		public DefaultButton()
 		{

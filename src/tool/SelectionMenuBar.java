@@ -24,19 +24,22 @@ public class SelectionMenuBar implements SelectionBar
 	 * 
 	 * @param tool
 	 */
+	@Override
 	public void addTool(Tool tool)
 	{
-		mainMenu.getMenus().add(tool.getMenu());
+		mainMenu.getMenus().add(((MenuTool) tool).getItem());
 	}
 	
 	/**
 	 * Adds multiple tools to the toolbar
 	 * @param tools
 	 */
+	@Override
 	public void addAllTools(Tool...tools)
 	{
-		for(Tool t : tools)
-		mainMenu.getMenus().add(t.getMenu());
+		for(Tool t : tools){
+			addTool(t);
+		}
 	}
 
 	/**

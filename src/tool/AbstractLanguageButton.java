@@ -10,7 +10,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class AbstractLanguageButton extends AbstractButton{
+public class AbstractLanguageButton extends AbstractMenuItem{
 	public static final List<String> LANGUAGES = Arrays.asList(new String[]{"Chinese", "English", "French", "German", "Italian", "Portuguese", "Russian", "Spanish"});
 	
 	private String language;

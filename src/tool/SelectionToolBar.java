@@ -3,29 +3,33 @@ package tool;
 import javafx.scene.Node;
 import javafx.scene.control.ToolBar;
 
+/**
+ * 
+ * @author Jesse
+ *
+ */
 public class SelectionToolBar implements SelectionBar{
 	private ToolBar bar;
 	
 	public SelectionToolBar(){
-		
+		bar = new ToolBar();
 	}
 
 	@Override
 	public void addTool(Tool tool) {
-		// TODO Auto-generated method stub
-		
+		bar.getItems().add(((ToolButton) tool).getItem());
 	}
 
 	@Override
 	public void addAllTools(Tool... tools) {
-		// TODO Auto-generated method stub
-		
+		for(Tool t : tools){
+			addTool(t);
+		}
 	}
 
 	@Override
 	public Node display() {
-		// TODO Auto-generated method stub
-		return null;
+		return bar;
 	}
 
 }

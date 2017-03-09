@@ -32,8 +32,8 @@ public abstract class TurtleCommand extends Instruction
 
 	protected void move(double distance)
 	{
-		Point2D currentLocation = getActiveActor().getLocation();
-		double currentHeading = getActiveActor().getHeading();
+		Point2D currentLocation = getActiveTurtle().getLocation();
+		double currentHeading = getActiveTurtle().getHeading();
 		Point2D deltaVector = MathUtil.polarToRectangular(new PointPolar(distance, currentHeading));
 		Point2D newLocation = currentLocation.add(deltaVector);
 		move(newLocation);
@@ -48,17 +48,17 @@ public abstract class TurtleCommand extends Instruction
 				|| MathUtil.doubleGreaterThan(newLocation.getY(), bounds.getMaxY() / 2)) {
 			throw new NonsensicalArgumentException(RESOURCE_BOUNDS_NAME);
 		}
-		getActiveActor().move(newLocation);
+		getActiveTurtle().move(newLocation);
 	}
 
 	protected void setHeading(double newHeading)
 	{
-		getActiveActor().setHeading(ActorView.STARTING_HEADING + newHeading);
+		getActiveTurtle().setHeading(ActorView.STARTING_HEADING + newHeading);
 	}
 
 	protected void turn(double deltaHeading)
 	{
-		getActiveActor().rotate(deltaHeading);
+		getActiveTurtle().rotate(deltaHeading);
 	}
 
 	protected void setPosition(double x, double y)
@@ -68,7 +68,7 @@ public abstract class TurtleCommand extends Instruction
 
 	protected Point2D getPosition()
 	{
-		return getActiveActor().getLocation();
+		return getActiveTurtle().getLocation();
 	}
 
 	protected void togglePenState()

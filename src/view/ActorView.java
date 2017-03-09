@@ -3,8 +3,12 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Observable;
 
+import javafx.animation.Animation;
 import javafx.animation.SequentialTransition;
+
+
 import javafx.animation.Transition;
+
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
@@ -29,6 +33,7 @@ public abstract class ActorView implements View, Cloneable
 	public static final int ACTOR_HEIGHT = 75;
 	public static final int ACTOR_WIDTH = 75;
 	public static final int STARTING_HEADING = -90;
+
 	// TODO: Make stack of animations to run, and run them 1 at a time.
 	// TODO: Update image so that it
 
@@ -36,17 +41,21 @@ public abstract class ActorView implements View, Cloneable
 	private ImageColorProperty imageColor;
 	private ActorPositionProperty actorPosition;
 	private HeadingProperty heading;
-	private SpeedProperty speed;
 	private SequentialTransition actorMove;
 	private ID id;
+	protected SpeedProperty speed;
+	
 
 	public ActorView(Defaults defaults, int id)
 	{
 		image = new ImageProperty("Actor Image");
 		imageColor = new ImageColorProperty("Actor Image Color", image);
+		speed = new SpeedProperty("FPS");
+		speed.setValue(5.0);
 		actorPosition = new ActorPositionProperty("Actor Position", this);
 		heading = new HeadingProperty("Actor Heading", this);
 		this.id = new ID(id);
+		
 
 		actorMove = new SequentialTransition();
 		actorMove.setNode(this.getImageView());
@@ -57,7 +66,7 @@ public abstract class ActorView implements View, Cloneable
 		loadImage(defaults.image());
 		// start facing up
 		this.setHeading(STARTING_HEADING);
-		// initial rotation
+		// // initial rotation
 		actorMove.play();
 	}
 
@@ -124,6 +133,10 @@ public abstract class ActorView implements View, Cloneable
 
 	public void addTransition(Transition transition)
 	{
+
+		for (Animation trans : actorMove.getChildren()) {
+			System.out.print(trans);
+		}
 		transition.setOnFinished(e -> {
 			actorMove.getChildren().remove(transition);
 		});
@@ -137,8 +150,9 @@ public abstract class ActorView implements View, Cloneable
 
 	public void rotate(double rotateAngle)
 	{
-		heading.setValue(heading.getValue() + rotateAngle);
+		setHeading(heading.getValue() + rotateAngle);
 	}
+
 
 	public double getHeading()
 	{
@@ -146,7 +160,11 @@ public abstract class ActorView implements View, Cloneable
 	}
 	public List<Property<?>> getProperties()
 	{
-		return Arrays.asList(image, imageColor, actorPosition, heading);
+		return Arrays.asList(image, imageColor, actorPosition, heading, speed);
+	}
+	
+	public double getSpeed(){
+		return speed.getValue();
 	}
 
 }
