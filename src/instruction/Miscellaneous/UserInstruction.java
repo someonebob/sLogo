@@ -50,11 +50,6 @@ public class UserInstruction extends Miscellaneous {
 		List<VariableData> localVariables = new ArrayList<VariableData>();
 		localVariables.addAll(getInstructionData().getVariables());
 		
-		if(function == null){
-			//TODO: Error-handling
-			return null;
-		}
-		
 		//TODO: Make sure this replaces initial value
 		for(int i=0; i<function.getArgs().size(); i++){
 			VariableData newVar = new VariableData(function.getArgs().get(i), getArgumentDouble(i));
