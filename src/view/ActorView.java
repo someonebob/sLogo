@@ -1,5 +1,6 @@
 package view;
-import java.util.ArrayList;
+
+import java.util.Arrays;
 import java.util.List;
 import java.util.Observable;
 
@@ -12,6 +13,10 @@ import javafx.scene.Node;
 import javafx.util.Duration;
 import main.Defaults;
 import models.Actor;
+import property.ActorPositionProperty;
+import property.ImageColorProperty;
+import property.ImageProperty;
+import property.Property;
 import user_structures.ID;
 import user_structures.NamedImageWrapper;
 import util.MathUtil;
@@ -25,6 +30,7 @@ import util.MathUtil;
 public abstract class ActorView implements View
 {
 	public static final int ACTOR_HEIGHT = 75;
+	public static final int ACTOR_WIDTH = 75;
 	public static final int STARTING_HEADING = -90;
 	public static final String RESOURCE_DOUBLE_NAME = "DoubleIndexMessage";
 	public static final String RESOURCE_BOUNDS_NAME = "IndexOutOfBoundsMessage";
@@ -32,8 +38,9 @@ public abstract class ActorView implements View
 	// TODO: Make stack of animations to run, and run them 1 at a time.
 	// TODO: Update image so that it
 	private Actor actor;
-	private List<NamedImageWrapper> availableImages;
-	private NamedImageWrapper image;
+	private ImageProperty image;
+	private ImageColorProperty imageColor;
+	private ActorPositionProperty actorPosition;
 	private SequentialTransition actorMove;
 	private ID id;
 	public ActorView(Defaults defaults, int id)
@@ -51,10 +58,17 @@ public abstract class ActorView implements View
 		//loadImage(defaults.image());
 		
 		actor = new Actor();
+		image = new ImageProperty("Actor Image");
+		imageColor = new ImageColorProperty("Actor Image Color", image);
+		actorPosition = new ActorPositionProperty("Actor Position", this);
 		this.id = new ID(id);
 		actorMove = new SequentialTransition();
-		actorMove.setNode(this.getImage().getImageView());
-		
+		actorMove.setNode(this.getImage());
+		// scale the image
+		image.getValue().setFitHeight(ACTOR_HEIGHT);
+		image.getValue().setFitWidth(ACTOR_WIDTH);
+		image.getValue().setPreserveRatio(true);
+		loadImage(defaults.image());
 		// start facing up
 		this.setHeading(STARTING_HEADING);
 		// initial rotation
@@ -99,10 +113,21 @@ public abstract class ActorView implements View
 	{
 		actorMove.play();
 	}
+
+	public ImageColorProperty getImageColorProperty()
+	{
+		return imageColor;
+	}
+
+	public ActorPositionProperty getActorPositionProperty()
+	{
+		return actorPosition;
+	}
+
 	@Override
 	public Node display()
 	{
-		return image.getImageView();
+		return image.getValue();
 	}
 	@Override
 	public void update(Observable o, Object arg)
@@ -118,12 +143,11 @@ public abstract class ActorView implements View
 	}
 	public void setImage(NamedImageWrapper image)
 	{
-		image.setImage(image.getImageView());
-		System.out.println(this.image.getFilename());
+		this.image.setValue(image);
 	}
 	public NamedImageWrapper getImage()
 	{
-		return image;
+		return image.getValue();
 	}
 	private void loadImage(String stringImage)
 	{
@@ -155,8 +179,8 @@ public abstract class ActorView implements View
 	}
 	public void moveWithoutDrawing(Point2D newLocation)
 	{
-		image.getImageView().translateXProperty().set(0);
-		image.getImageView().translateYProperty().set(0);
+		image.getValue().translateXProperty().set(0);
+		image.getValue().translateYProperty().set(0);
 		actor.setLocation(newLocation);
 	}
 	public void setHeading(double newHeading)
@@ -175,4 +199,10 @@ public abstract class ActorView implements View
 	{
 		return actor.getHeading();
 	}
+
+	public List<Property<?>> getProperties()
+	{
+		return Arrays.asList(image, imageColor, actorPosition);
+	}
+
 }

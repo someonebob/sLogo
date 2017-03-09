@@ -1,6 +1,13 @@
 package instruction.DisplayCommands;
 
-import java.util.List;
+/**
+ * Returns turtle's current color index
+ * 
+ * @author maddiebriere
+ *
+ */
+
+public class GetPenColor {
 
 import instruction.InstructionData;
 

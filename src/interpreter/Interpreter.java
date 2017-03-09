@@ -8,11 +8,12 @@ import java.util.List;
 import instruction.*;
 import interpreter.builders.TreeBuilder;
 import interpreter.classification.InstructionClassifier;
+import interpreter.clean.InstructionCleaner;
 import interpreter.execute.TreeExecuter;
 import interpreter.misc.InstructionNode;
 
 /**
- * This interface will use a variety of resource files to transform An input
+ * This class uses a variety of resource files to transform an input
  * string into a useable command (we call it an Instruction). By returning an
  * Instruction, we have transformed something with no functionality Into
  * something capable of executing and returning knowledge about itself.
@@ -69,6 +70,7 @@ public class Interpreter {
 	 * @return Root node of the instruction, read from toParse
 	 */
 	public List<InstructionNode> parse(String toParse) {
+		toParse = InstructionCleaner.clean(toParse);
 		TreeBuilder builder = new TreeBuilder(toParse, getMyClassifier(), getMyData());
 		List<InstructionNode> headNodes = builder.buildTree();
 		return headNodes;

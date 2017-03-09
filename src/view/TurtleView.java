@@ -45,14 +45,4 @@ public class TurtleView extends ActorView
 		super.move(newLocation);
 	}
 
-	//TODO Possibly modify for more modular file reading
-	@Override
-	protected void populateAvailableImages() {
-		File currentFolder = new File(".");
-		File srcFolder = currentFolder.getParentFile();
-		File imagesFolder = new File(srcFolder, TURTLE_IMAGES_LOCATION);
-		for(File imageFile : imagesFolder.listFiles()){
-			getAvailableImages().add(new NamedImageWrapper(imageFile.getName()));
-		}
-	}
 }

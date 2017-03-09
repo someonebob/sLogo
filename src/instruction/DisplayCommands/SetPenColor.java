@@ -1,4 +1,11 @@
 package instruction.DisplayCommands;
+/**
+ * Sets color of the pen to that represented by index
+	returns given index
+ * 
+ * @author maddiebriere
+ *
+ */
 
 import java.util.List;
 
