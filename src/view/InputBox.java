@@ -1,112 +1,20 @@
 package view;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
-import javafx.geometry.Pos;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextArea;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
 
-public abstract class InputBox implements View {
-	protected BorderPane root;
-	protected VBox box;
-	protected TextArea console;
-	protected ListView<String> previous;
-	protected int historyIndex = 0;
-	protected String preamble = "slogo_team07$ ";
-	
-	public InputBox(){
-		initiateItems();
-	}
-	
-	private void initiateItems() {
-		root = new BorderPane();
-		console = new TextArea();
-		console.setOnMouseClicked(e -> console.positionCaret(console.getText().length()));
-		console.setWrapText(true);
-		console.textProperty().addListener(new ChangeListener<Object>() {
-		    @Override
-		    public void changed(ObservableValue<?> observable, Object oldValue, Object newValue) {
-		    	//scroll to bottom
-		        console.setScrollTop(Double.MAX_VALUE);
-		    }
-		});
-		box = new VBox();
-		previous = new ListView<>();
-		Label heading = new Label("Previous Commands");
-		
-		heading.setStyle("-fx-font-weight: bold");
-		box.setAlignment(Pos.CENTER);
-		box.getChildren().addAll(heading, previous);
+public interface InputBox extends View {
 
-		console.appendText(preamble);
-		console.setFont(Font.font("Courier new"));
-		previous.setPrefWidth(200);
-		previous.setFocusTraversable(false);
-		previous.setOnMouseClicked(e -> appendText(previous.getSelectionModel().getSelectedItem()));
-		
-		root.setMaxHeight(200);
-		root.setLeft(box);
-		root.setCenter(console);
-	}
-	
-	
-	public void assignOnEnterCommand(EventHandler<? super KeyEvent> e){
-		console.setOnKeyPressed(e);
-	}
-	public void appendPreamble(){
-		appendText("\n" + preamble);
-	}
-	public String getCurrentCommand(){
-		// returns text between last instance of preamble and end
-		return console.getText(console.getText().lastIndexOf(preamble) + preamble.length(), console.getText().length());
-	}
-	public void clear(){
-		console.setText(preamble);
-	}
-	public void setFocus(){
-		console.requestFocus();
-	}
-	public void appendText(String s){
-		console.appendText(s);
-	}
-	public abstract void enterAction(KeyEvent e);
-	public void upAction(KeyEvent e) {
-		if (historyIndex <= previous.getItems().size() - 1) {
-			appendPastCommand();
-		}
-		if (historyIndex < previous.getItems().size() - 1) {
-			historyIndex++;
-		}
-		e.consume();
-	}
-	public void downAction(KeyEvent e) {
-		if (historyIndex == 0) {
-			clearCommand();
-			return;
-		}
-		historyIndex--;
-		appendPastCommand();
-		e.consume();
-	}
-	protected void appendPastCommand() {
-		clearCommand();
-		console.appendText(previous.getItems().get(previous.getItems().size() - 1 - historyIndex));
-	}
-	protected void clearCommand() {
-		console.setText(console.getText().substring(0, console.getText().lastIndexOf(getCurrentCommand())));
-		console.positionCaret(console.getText().length());
-	}
-	public void protectPreamble(KeyEvent e) {
-		int pos = console.getText().lastIndexOf(preamble) + preamble.length();
-		if (console.getSelectedText().length() != 0 || pos == console.getCaretPosition()) {
-			e.consume();
-		}
-	}
-	
+	public void enterAction(KeyEvent e);
+	public void assignOnEnterCommand(EventHandler<? super KeyEvent> e);
+	public void appendPreamble();
+	public String getCurrentCommand();
+	public void clear();
+	public void setFocus();
+	public void appendText(String s);
+	public void upAction(KeyEvent e);
+	public void downAction(KeyEvent e);
+	public void protectPreamble(KeyEvent e);
+	public void updateData(String arg);
 }
+

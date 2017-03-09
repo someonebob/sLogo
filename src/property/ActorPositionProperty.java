@@ -56,7 +56,8 @@ public class ActorPositionProperty extends Property<Point2D>
 		Label label = new Label(String.format("Move %s", this.getName()));
 		// TODO: REPLACE THESE WITH RESOURCE FILE
 		ComboBox<String> directionPicker = new ComboBox<>(FXCollections.observableArrayList("fd", "bk", "lt", "rt"));
-		TextField distance = new TextField("Amount to move");
+		TextField distance = new TextField();
+		distance.setPromptText("Amount to move");
 		Button moveButton = new Button("Move");
 
 		moveButton.setOnAction(e -> {
