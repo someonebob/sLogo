@@ -15,7 +15,7 @@ public class IsShowing extends TurtleQuery
 	@Override
 	public double execute()
 	{
-		return getActiveActor().getImage().isVisible() ? 1 : 0;
+		return getActiveActor().getImageView().isVisible() ? 1 : 0;
 	}
 
 }

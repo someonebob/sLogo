@@ -50,7 +50,7 @@ public abstract class ActorView implements View
 		this.id = new ID(id);
 
 		actorMove = new SequentialTransition();
-		actorMove.setNode(this.getImage());
+		actorMove.setNode(this.getImageView());
 		// scale the image
 		image.getValue().setFitHeight(ACTOR_HEIGHT);
 		image.getValue().setFitWidth(ACTOR_WIDTH);
@@ -109,7 +109,7 @@ public abstract class ActorView implements View
 		this.image.setValue(image);
 	}
 
-	public ImageView getImage()
+	public ImageView getImageView()
 	{
 		return image.getValue();
 	}

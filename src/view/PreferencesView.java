@@ -32,6 +32,9 @@ public class PreferencesView implements View
 		actorImage.setPreserveRatio(true);
 		actorImage.setFitHeight(70);
 		this.actor = initialActor;
+		actor.getImageView().setOnMouseClicked(e ->{
+			System.out.println("hi");
+		});
 		this.simulation = simulation;
 		setupHeader();
 		// root.setCenter(new PenPreferencesView(actor).display());
@@ -60,7 +63,7 @@ public class PreferencesView implements View
 
 	private void updateActorImage()
 	{
-		actorImage.setImage(actor.getImage().getImage());
+		actorImage.setImage(actor.getImageView().getImage());
 	}
 
 	private void makePreferencesChooser()

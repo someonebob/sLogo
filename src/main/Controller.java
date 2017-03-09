@@ -34,7 +34,7 @@ import tool.FileTool;
 import tool.FileTool.NewButton;
 import tool.FileTool.OpenButton;
 import tool.HelpTool;
-import tool.SelectionBar;
+import tool.SelectionMenuBar;
 import tool.SettingsTool;
 import tool.SettingsTool.LanguageButton;
 import user_structures.FunctionData;
@@ -57,7 +57,7 @@ public class Controller implements Observer
 {
 	private TabPane root;
 	private ObjectProperty<Tab> currentTab;
-	private Map<Tab, SelectionBar> selectionBarMap;
+	private Map<Tab, SelectionMenuBar> selectionBarMap;
 	private Map<Tab, SimulationView> simulationMap;
 
 	private Map<Tab, InputBox> inputBoxMap;
@@ -135,7 +135,8 @@ public class Controller implements Observer
 		SavedCommandsView userCommands = new SavedCommandsView();
 		PreferencesView preferences = new PreferencesView(simulation.getTurtle(), simulation);
 
-		SelectionBar selectionBar = new SelectionBar();
+		SelectionMenuBar selectionBar = new SelectionMenuBar();
+		SelectionMenuBar selectionBar2 = new SelectionMenuBar();
 		FileTool file = new FileTool(stage);
 		SettingsTool settings = new SettingsTool(stage);
 		HelpTool help = new HelpTool(stage);
@@ -158,7 +159,7 @@ public class Controller implements Observer
 		root.getTabs().add(tab);
 	}
 
-	private void setupBorderPane(BorderPane pane, SelectionBar selectionBar, SimulationView simulation,
+	private void setupBorderPane(BorderPane pane, SelectionMenuBar selectionBar, SimulationView simulation,
 			InputBox inputBox, WorkspaceView workspace, PreferencesView preferences)
 	{
 
@@ -169,7 +170,7 @@ public class Controller implements Observer
 		pane.setRight(preferences.display());
 	}
 
-	private void putIntoMaps(Tab tab, SelectionBar selectionBar, SimulationView simulation, InputBox inputBox,
+	private void putIntoMaps(Tab tab, SelectionMenuBar selectionBar, SimulationView simulation, InputBox inputBox,
 			WorkspaceView workspace, SavedCommandsView userCommands, ObservableList<VariableData> variables,
 			ObservableList<FunctionData> functions)
 	{
