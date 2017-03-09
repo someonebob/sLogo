@@ -1,6 +1,8 @@
 package property;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -21,8 +23,19 @@ import view.ActorView;
  */
 public class ImageProperty extends Property<ImageView>
 {
-	private ImageView displayImage;
-
+	private static final List<ImageView> INDEXED_IMAGES = new ArrayList<>();
+	private static final String TURTLE_IMAGES_LOCATION = "images";
+	
+	static{
+		File currentFolder = new File(".");
+		File srcFolder = currentFolder.getParentFile();
+		File imagesFolder = new File(srcFolder, TURTLE_IMAGES_LOCATION);
+		for(File imageFile : imagesFolder.listFiles()){
+			//Cannot use the normal InputStream because getClass() has error when called from static context
+			INDEXED_IMAGES.add(new ImageView(new Image(imageFile.getName())));
+		}
+	}
+	
 	public ImageProperty(String name)
 	{
 		super(name);
@@ -31,6 +44,10 @@ public class ImageProperty extends Property<ImageView>
 		displayImage.setFitHeight(ActorView.ACTOR_HEIGHT);
 		displayImage.setFitWidth(ActorView.ACTOR_WIDTH);
 		displayImage.setPreserveRatio(true);
+	}
+	
+	public List<ImageView> getIndexedImages(){
+		return INDEXED_IMAGES;
 	}
 
 	@Override

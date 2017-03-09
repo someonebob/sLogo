@@ -4,12 +4,16 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import exceptions.InvalidIndexException;
+import exceptions.SLogoException;
 import interpreter.util.WorkspaceUpdater;
 import javafx.geometry.Bounds;
 import user_structures.FunctionData;
 import user_structures.VariableData;
 import view.ActorView;
+import view.PenView;
 import view.SimulationView;
+import view.TurtleView;
 
 /**
  * This acts as container for all of the data associated with the current state
@@ -30,7 +34,7 @@ public class InstructionData
 
 	public InstructionData()
 	{
-		this.simulation = null;
+		this.simulationView = null;
 		this.variables = new ArrayList<VariableData>();
 		this.functions = new ArrayList<FunctionData>();
 		this.language = "English";
@@ -137,5 +141,49 @@ public class InstructionData
 	public SimulationView getSimulation(){
 		return simulation;
 	}
-
+	
+	public PenView getActivePenView(){
+		if(!(getActiveActor() instanceof TurtleView)){
+			throw new SLogoException("Placeholder");  //TODO Change to subclass of exception
+		}
+		return ((TurtleView) getActiveActor()).getPen();
+	}
+	/*
+	public List<Color> getColorList(){
+		return null;//simulationView.getColorList();
+	}
+	public List<NamedImageWrapper> getTurtleImageList(){
+		return getActiveActor().getAvailableImages();
+	}
+	*/
+	/*
+	public void setImageByIndex(double index){
+		checkValidIndex(index, getTurtleImageList().size());
+		getActiveActor().setImage(getTurtleImageList().get((int)index));
+	}
+	*/
+	/**
+	 * (Current actor's imageView's index)
+	 * @return
+	 */
+	/*
+	public int getImageByIndex(){
+		int index = getTurtleImageList().indexOf(getActiveActor().getImage());
+		if(index != -1){
+			return index;
+		}
+		else{
+			throw new InvalidIndexException(RESOURCE_NOT_FOUND_NAME);
+		}
+	}
+	
+	private void checkValidIndex(double index, int size){
+		if(!MathUtil.hasIntegerValue(index)){
+			throw new InvalidIndexException(RESOURCE_DOUBLE_NAME);
+		}
+		if(index < 0.0 || index >= size){
+			throw new InvalidIndexException(RESOURCE_BOUNDS_NAME);
+		}
+	}
+	*/
 }

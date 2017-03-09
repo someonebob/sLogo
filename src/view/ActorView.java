@@ -1,5 +1,4 @@
 package view;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.Observable;
@@ -81,12 +80,10 @@ public abstract class ActorView implements View, Cloneable
 	{
 		return imageColor;
 	}
-
 	public ActorPositionProperty getActorPositionProperty()
 	{
 		return actorPosition;
 	}
-
 	@Override
 	public Node display()
 	{
@@ -147,7 +144,6 @@ public abstract class ActorView implements View, Cloneable
 	{
 		return heading.getValue();
 	}
-
 	public List<Property<?>> getProperties()
 	{
 		return Arrays.asList(image, imageColor, actorPosition, heading);

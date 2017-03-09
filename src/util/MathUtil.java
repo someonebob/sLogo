@@ -1,5 +1,6 @@
 package util;
 
+import exceptions.InvalidIndexException;
 import javafx.geometry.Point2D;
 
 /**
@@ -19,6 +20,8 @@ public final class MathUtil
 	public static final Point2D UNIT_X_VECTOR = new Point2D(1.0, 0.0);
 	public static final Point2D UNIT_Y_VECTOR = new Point2D(0.0, 1.0);
 	public static final double DOUBLE_COMPARISON_PRECISION = 0.000001;
+	private static final String RESOURCE_DOUBLE_NAME = "DoubleIndexMessage";
+	private static final String RESOURCE_BOUNDS_NAME = "IndexOutOfBoundsMessage";
 
 	private MathUtil()
 	{
@@ -141,5 +144,14 @@ public final class MathUtil
 			relativeYAngle *= -1;
 		}
 		return relativeYAngle;
+	}
+	
+	public static void checkValidIndex(double index, int size){
+		if(!MathUtil.hasIntegerValue(index)){
+			throw new InvalidIndexException(RESOURCE_DOUBLE_NAME);
+		}
+		if(index < 0.0 || index >= size){
+			throw new InvalidIndexException(RESOURCE_BOUNDS_NAME);
+		}
 	}
 }
