@@ -90,6 +90,7 @@ public class PenView implements View
 
 		// create path transition
 		PathTransition pathTransition = new PathTransition(Duration.millis(1000 / speed.getValue()), myPath, pen);
+
 		System.out.println(speed.getValue());
 		pathTransition.currentTimeProperty().addListener(new ChangeListener<Duration>()
 		{

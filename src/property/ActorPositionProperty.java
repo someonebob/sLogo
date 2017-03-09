@@ -1,15 +1,16 @@
 package property;
 
+import java.util.Arrays;
+import java.util.List;
+
 import javafx.animation.TranslateTransition;
 import javafx.collections.FXCollections;
 import javafx.geometry.Point2D;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import util.MathUtil;
 import util.PointPolar;
@@ -52,9 +53,8 @@ public class ActorPositionProperty extends Property<Point2D>
 	}
 
 	@Override
-	public Node makeDynamicUpdater()
+	public List<Node> makeDynamicUpdaters()
 	{
-		VBox vbox = new VBox();
 		Label label = new Label(String.format("Move %s", this.getName()));
 		// TODO: REPLACE THESE WITH RESOURCE FILE
 		ComboBox<String> directionPicker = new ComboBox<>(FXCollections.observableArrayList("fd", "bk", "lt", "rt"));
@@ -74,13 +74,8 @@ public class ActorPositionProperty extends Property<Point2D>
 			}
 			actor.step();
 		});
-
-		vbox.getChildren().add(label);
-		vbox.getChildren().add(directionPicker);
-		vbox.getChildren().add(distance);
-		vbox.getChildren().add(moveButton);
-		vbox.setAlignment(Pos.CENTER);
-		return vbox;
+		
+		return Arrays.asList(label, directionPicker, distance, moveButton);
 	}
 
 	private void move(double distance)

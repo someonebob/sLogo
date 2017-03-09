@@ -2,15 +2,14 @@ package property;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
@@ -86,15 +85,12 @@ public class ImageProperty extends Property<ImageView>
 	}
 
 	@Override
-	public Node makeDynamicUpdater()
+	public List<Node> makeDynamicUpdaters()
 	{
 		Label label = new Label(String.format("Update %s", this.getName()));
 		Button input = initializeButton(String.format("Update %s", this.getName()));
-		VBox vbox = new VBox();
-		vbox.getChildren().add(label);
-		vbox.getChildren().add(input);
-		vbox.setAlignment(Pos.CENTER);
-		return vbox;
+
+		return Arrays.asList(label, input);
 	}
 
 	private Button initializeButton(String defaultText)

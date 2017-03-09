@@ -1,14 +1,16 @@
 package property;
 
-import javafx.geometry.Pos;
+import java.util.Arrays;
+import java.util.List;
+
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
-import javafx.scene.layout.VBox;
 
 public class SpeedProperty extends Property<Double>
 {
 	public static final double MIN_FPS = .1;
+
 	public static final double MAX_FPS = 50;
 	public static final double DEFAULT_FPS = 5;
 
@@ -25,22 +27,18 @@ public class SpeedProperty extends Property<Double>
 	}
 
 	@Override
-	public Node makeDynamicUpdater()
+	public List<Node> makeDynamicUpdaters()
 	{
-		VBox vbox = new VBox();
 		Label label = new Label(String.format("Set %s", this.getName()));
 		Slider slider = new Slider(MIN_FPS, MAX_FPS, DEFAULT_FPS);
 		slider.setShowTickLabels(true);
-		slider.setMajorTickUnit(250);
+		slider.setMajorTickUnit(100);
 		slider.setOnMouseReleased(e -> {
 			this.setValue(slider.getValue());
 		});
 
-		vbox.getChildren().add(label);
-		vbox.getChildren().add(slider);
-		vbox.setAlignment(Pos.CENTER);
 
-		return vbox;
+		return Arrays.asList(label, slider);
 	}
 
 }

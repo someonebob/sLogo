@@ -16,7 +16,7 @@ public class PenPreferencesView implements View
 		this.pen = turtle.getPen();
 		display = new VBox();
 		display.setAlignment(Pos.CENTER);
-		pen.getProperties().forEach(property -> display.getChildren().add(property.makeDynamicUpdater()));
+		pen.getProperties().forEach(property -> display.getChildren().add(property.displayDynamicUpdater()));
 	}
 
 	@Override
