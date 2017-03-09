@@ -129,6 +129,7 @@ public abstract class ActorView implements View, Cloneable
 	{
 		Image image = new Image(getClass().getClassLoader().getResourceAsStream(stringImage));
 		this.setImage(image);
+		this.image.mergeDuplicateDefaultImages(stringImage);
 	}
 
 	public void addTransition(Transition transition)

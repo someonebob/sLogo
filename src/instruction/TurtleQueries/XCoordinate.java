@@ -15,6 +15,6 @@ public class XCoordinate extends TurtleQuery
 	@Override
 	public double execute()
 	{
-		return getActiveActor().getLocation().getX();
+		return getInstructionData().getActiveActor().getLocation().getX();
 	}
 }

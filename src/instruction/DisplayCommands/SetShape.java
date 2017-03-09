@@ -3,8 +3,7 @@ package instruction.DisplayCommands;
 import java.util.List;
 
 import instruction.InstructionData;
-import javafx.scene.image.ImageView;
-import javafx.scene.paint.Color;
+import util.ImageViewTuple;
 import util.MathUtil;
 
 /**
@@ -23,10 +22,10 @@ public class SetShape extends DisplayCommand{
 
 	@Override
 	public double execute() {
-		List<ImageView> indexedImages = getInstructionData().getActiveActor().getImageProperty().getIndexedImages();
+		List<ImageViewTuple> indexedImages = getInstructionData().getActiveActor().getImageProperty().getIndexedImages();
 		MathUtil.checkValidIndex(getArgumentDouble(0), indexedImages.size());
-		ImageView imageView = indexedImages.get((int)getArgumentDouble(0));
-		getInstructionData().getActiveActor().setImage(imageView.getImage());
+		ImageViewTuple newTuple = indexedImages.get((int)getArgumentDouble(0));
+		getInstructionData().getActiveActor().setImage(newTuple.getImageView().getImage());
 		return getArgumentDouble(0);
 	}
 
