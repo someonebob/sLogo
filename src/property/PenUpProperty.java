@@ -1,5 +1,6 @@
 package property;
 
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
@@ -58,6 +59,7 @@ public class PenUpProperty extends Property<Boolean>
 
 		vbox.getChildren().add(label);
 		vbox.getChildren().add(upDownButton);
+		vbox.setAlignment(Pos.CENTER);
 
 		return vbox;
 	}

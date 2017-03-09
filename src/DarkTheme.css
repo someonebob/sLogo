@@ -18,6 +18,7 @@ linear-gradient(to bottom, derive(-fx-base,+50%), derive(-fx-base,-40%), derive(
 }
  
 .button {
+-fx-border-color: transparent -fx-base transparent -fx-base;
 -fx-background-color: transparent;
 }
  

@@ -6,6 +6,7 @@ import java.util.Observable;
 
 import javafx.animation.FadeTransition;
 import javafx.animation.PathTransition;
+import javafx.animation.PauseTransition;
 import javafx.animation.SequentialTransition;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -70,8 +71,10 @@ public class PenView implements View
 
 	public void waitTransition(double waitTime)
 	{
-		System.out.println("hi");
-		FadeTransition delayTransition = new FadeTransition(Duration.millis(waitTime), new Rectangle());
+
+		 PauseTransition delayTransition = new
+		 PauseTransition(Duration.millis(waitTime));
+
 		actorMove.getChildren().add(delayTransition);
 		delayTransition.setOnFinished(e -> {
 			actorMove.getChildren().remove(delayTransition);

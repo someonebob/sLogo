@@ -1,21 +1,21 @@
 package view;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.Observable;
 
-import javafx.animation.RotateTransition;
+import javafx.animation.Animation;
 import javafx.animation.SequentialTransition;
-import javafx.animation.TranslateTransition;
+
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
+
+import javafx.animation.Transition;
+
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.util.Duration;
 import main.Defaults;
-import models.Actor;
 import property.ActorPositionProperty;
 import property.HeadingProperty;
 import property.ImageColorProperty;
@@ -41,12 +41,10 @@ public abstract class ActorView implements View, Cloneable
 	// TODO: Make stack of animations to run, and run them 1 at a time.
 	// TODO: Update image so that it
 
-	private Actor actor;
 	private ImageProperty image;
 	private ImageColorProperty imageColor;
 	private ActorPositionProperty actorPosition;
 	private HeadingProperty heading;
-	// private SpeedProperty speed;
 	private SequentialTransition actorMove;
 	private ID id;
 	private DoubleProperty FPS;
@@ -55,7 +53,6 @@ public abstract class ActorView implements View, Cloneable
 
 	public ActorView(Defaults defaults, int id)
 	{
-		actor = new Actor();
 		image = new ImageProperty("Actor Image");
 		imageColor = new ImageColorProperty("Actor Image Color", image);
 		actorPosition = new ActorPositionProperty("Actor Position", this);
@@ -75,7 +72,7 @@ public abstract class ActorView implements View, Cloneable
 		loadImage(defaults.image());
 		// start facing up
 		this.setHeading(STARTING_HEADING);
-		// initial rotation
+		// // initial rotation
 		actorMove.play();
 	}
 
@@ -98,12 +95,10 @@ public abstract class ActorView implements View, Cloneable
 	{
 		return imageColor;
 	}
-
 	public ActorPositionProperty getActorPositionProperty()
 	{
 		return actorPosition;
 	}
-
 	@Override
 	public Node display()
 	{
@@ -118,14 +113,14 @@ public abstract class ActorView implements View, Cloneable
 		}
 	}
 
-	public Actor getActor()
+	public void move(Point2D point)
 	{
-		return actor;
+		actorPosition.setValue(point);
 	}
 
-	public void setActor(Actor actor)
+	public Point2D getLocation()
 	{
-		this.actor = actor;
+		return actorPosition.getValue();
 	}
 
 	public void setImage(Image image)
@@ -144,58 +139,33 @@ public abstract class ActorView implements View, Cloneable
 		this.setImage(image);
 	}
 
-	public void move(Point2D newLocation)
+	public void addTransition(Transition transition)
 	{
-		TranslateTransition move = new TranslateTransition(Duration.millis(millisecondDelay.get()));
-		move.setFromX(actor.getLocation().getX());
-		move.setToX(newLocation.getX());
-		move.setFromY(actor.getLocation().getY());
-		move.setToY(newLocation.getY());
-		move.setCycleCount(1);
-		move.setOnFinished(e -> {
-			actorMove.getChildren().remove(move);
+
+		for (Animation trans : actorMove.getChildren()) {
+			System.out.print(trans);
+		}
+		transition.setOnFinished(e -> {
+			actorMove.getChildren().remove(transition);
 		});
-
-		actorMove.getChildren().add(move);
-		actor.setLocation(newLocation);
-	}
-
-	public void moveWithoutDrawing(Point2D newLocation)
-	{
-		image.getValue().translateXProperty().set(0);
-		image.getValue().translateYProperty().set(0);
-		actor.setLocation(newLocation);
+		actorMove.getChildren().add(transition);
 	}
 
 	public void setHeading(double newHeading)
 	{
-		makeRotateTransition(this.getHeading(), newHeading);
-		actor.setHeading(newHeading);
+		heading.setValue(newHeading);
 	}
 
 	public void rotate(double rotateAngle)
 	{
-		makeRotateTransition(this.actor.getHeading(), this.actor.getHeading() + rotateAngle);
-		setHeading(actor.getHeading() + rotateAngle);
+		setHeading(heading.getValue() + rotateAngle);
 	}
 
-	private void makeRotateTransition(double startAngle, double endAngle)
-	{
-		RotateTransition rotate = new RotateTransition(Duration.millis(millisecondDelay.get()/2));
-		rotate.setFromAngle(startAngle);
-		rotate.setToAngle(endAngle);
-		rotate.setCycleCount(1);
-		rotate.setOnFinished(e -> {
-			actorMove.getChildren().remove(rotate);
-		});
-		actorMove.getChildren().add(rotate);
-	}
 
 	public double getHeading()
 	{
-		return actor.getHeading();
+		return heading.getValue();
 	}
-
 	public List<Property<?>> getProperties()
 	{
 		return Arrays.asList(image, imageColor, actorPosition, heading);

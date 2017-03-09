@@ -1,9 +1,7 @@
 package view;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
-
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -15,17 +13,14 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
-
 public class PreferencesView implements View
 {
-
 	private BorderPane root;
 	private TurtleView actor;
 	private SimulationView simulation;
 	private ImageView actorImage;
 	private Map<String, Node> preferenceViews;
 	private VBox header;
-
 	public PreferencesView(TurtleView initialActor, SimulationView simulation)
 	{
 		root = new BorderPane();
@@ -40,7 +35,6 @@ public class PreferencesView implements View
 		setupHeader();
 		// root.setCenter(new PenPreferencesView(actor).display());
 	}
-
 	private void setupHeader()
 	{
 		header = new VBox();
@@ -65,12 +59,10 @@ public class PreferencesView implements View
 		// header.getChildren().add(new Label(String.format("Pen up/down: %s",
 		// actor.getPen().isUp() ? "up" : "down")));
 	}
-
 	private void updateActorImage()
 	{
 		actorImage.setImage(actor.getImageView().getImage());
 	}
-
 	private void makePreferencesChooser()
 	{
 		ComboBox<String> chooser = new ComboBox<String>(FXCollections.observableArrayList(preferenceViews.keySet()));
@@ -107,17 +99,13 @@ public class PreferencesView implements View
 		DisplayPreferencesView displayPreferences = new DisplayPreferencesView(simulation);
 		preferenceViews.put("Display", displayPreferences.display());
 	}
-
 	@Override
 	public void update(Observable o, Object arg)
 	{
-
 	}
-
 	@Override
 	public Node display()
 	{
 		return root;
 	}
-
 }
