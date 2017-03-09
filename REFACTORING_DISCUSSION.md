@@ -11,3 +11,5 @@ Before we made changes, there were several areas with repeated code, particularl
 
 **3. Fixing magic values ** 
 
+We fixed the magic values in InstructionClassifier (which were used to define certain non-uniform conditions like "NO MATCH"). These are now constants.
+
