@@ -2,13 +2,18 @@ package instruction;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
+import exceptions.InvalidIndexException;
 import interpreter.util.WorkspaceUpdater;
 import javafx.geometry.Bounds;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import user_structures.FunctionData;
+import user_structures.NamedImageWrapper;
 import user_structures.VariableData;
+import util.MathUtil;
 import view.ActorView;
 import view.SimulationView;
 
@@ -139,48 +144,41 @@ public class InstructionData
 		return simulationView;
 	}
 	
+	public List<Color> getColorList(){
+		return null;//simulationView.getColorList();
+	}
+	
+	public List<NamedImageWrapper> getTurtleImageList(){
+		return getActiveActor().getAvailableImages();
+	}
+	/*
+	public void setImageByIndex(double index){
+		checkValidIndex(index, getTurtleImageList().size());
+		getActiveActor().setImage(getTurtleImageList().get((int)index));
+	}
+	*/
 	/**
-	 * Sets the background color of the simulation to the color represented by index
-	 * @param index
+	 * (Current actor's imageView's index)
+	 * @return
 	 */
-	public void setBackgroundColorIndex(int index){
-		//In what View will the color array be contained?
-		//Should InstructionData accept a list of all Views to have access to them?
+	/*
+	public int getImageByIndex(){
+		int index = getTurtleImageList().indexOf(getActiveActor().getImage());
+		if(index != -1){
+			return index;
+		}
+		else{
+			throw new InvalidIndexException(RESOURCE_NOT_FOUND_NAME);
+		}
 	}
 	
-	/**
-	 * Sets the pen color of currently active turtle to color represented by index
-	 * @param index
-	 */
-	public void setPenColorIndex(int index){
-		
+	private void checkValidIndex(double index, int size){
+		if(!MathUtil.hasIntegerValue(index)){
+			throw new InvalidIndexException(RESOURCE_DOUBLE_NAME);
+		}
+		if(index < 0.0 || index >= size){
+			throw new InvalidIndexException(RESOURCE_BOUNDS_NAME);
+		}
 	}
-	
-	/**
-	 * Sets the pen size of currently active turtle to the turtle to pixels
-	 * @param index
-	 */
-	public void setPenSize(int pixels){
-		
-	}
-	
-	/**
-	 * Sets the ImageView of currently active turtle to the ImageView at index
-	 * @param index
-	 */
-	public void setTurtleImageViewIndex(int index){
-		
-	}
-	
-	public void setPalette(int index, Color color){
-		
-	}
-	
-	public double getPenColorIndex(){
-		
-	}
-	
-	public double getTurtleImageViewIndex(){
-		
-	}
+	*/
 }

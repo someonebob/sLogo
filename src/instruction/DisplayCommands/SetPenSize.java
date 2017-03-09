@@ -12,8 +12,7 @@ public class SetPenSize extends DisplayCommand{
 
 	@Override
 	public double execute() {
-		// TODO Auto-generated method stub
-		return 0;
+		getInstructionData().getActiveActor().setPenSize(getArgumentDouble(0));
 	}
 
 }

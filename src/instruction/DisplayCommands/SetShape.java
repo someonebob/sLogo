@@ -12,8 +12,8 @@ public class SetShape extends DisplayCommand{
 
 	@Override
 	public double execute() {
-		// TODO Auto-generated method stub
-		return 0;
+		getInstructionData().getActiveActor().setImageByIndex(getArgumentDouble(0));
+		return getArgumentDouble(0);
 	}
 
 }

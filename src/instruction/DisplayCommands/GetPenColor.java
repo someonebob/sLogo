@@ -14,5 +14,4 @@ public class GetPenColor extends DisplayCommand{
 	public double execute() {
 		return getInstructionData().getActiveActor().getPenColorIndex();  //TODO Update Jimmy
 	}
-
 }

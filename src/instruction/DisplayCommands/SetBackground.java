@@ -3,6 +3,7 @@ package instruction.DisplayCommands;
 import java.util.List;
 
 import instruction.InstructionData;
+import javafx.scene.paint.Color;
 
 public class SetBackground extends DisplayCommand{
 
@@ -12,7 +13,12 @@ public class SetBackground extends DisplayCommand{
 
 	@Override
 	public double execute() {
-		getInstructionData().setBackgroundColorIndex((int)getArgumentDouble(0));
+		checkValidIndex(getArgumentDouble(0), getInstructionData().getBackgroundColorList().size());
+		Color color = getInstructionData().getBackgroundColorList()
+				
+		
+		Color color = getInstructionData().getBackgroundColorList().get((int)getArgumentDouble(0));
+		getInstructionData().getSimulation().setBackgroundColor(color);
 		return getArgumentDouble(0);
 	}
 	

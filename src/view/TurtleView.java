@@ -1,14 +1,16 @@
 package view;
 
+import java.io.File;
+
 import javafx.geometry.Point2D;
-import javafx.scene.Node;
 import main.Defaults;
+import user_structures.NamedImageWrapper;
 
 public class TurtleView extends ActorView
 {
-
+	private static final String TURTLE_IMAGES_LOCATION = "images";
 	private PenView pen;
-
+	
 	public TurtleView(Defaults defaults, int id)
 	{
 		super(defaults, id);
@@ -20,12 +22,6 @@ public class TurtleView extends ActorView
 	{
 		super.step();
 		this.getPen().step();
-	}
-
-	@Override
-	public Node display()
-	{
-		return this.getImage();
 	}
 
 	public PenView getPen()
@@ -47,5 +43,16 @@ public class TurtleView extends ActorView
 	{
 		pen.move(this.getActor().getLocation(), newLocation);
 		super.move(newLocation);
+	}
+
+	//TODO Possibly modify for more modular file reading
+	@Override
+	protected void populateAvailableImages() {
+		File currentFolder = new File(".");
+		File srcFolder = currentFolder.getParentFile();
+		File imagesFolder = new File(srcFolder, TURTLE_IMAGES_LOCATION);
+		for(File imageFile : imagesFolder.listFiles()){
+			getAvailableImages().add(new NamedImageWrapper(imageFile.getName()));
+		}
 	}
 }

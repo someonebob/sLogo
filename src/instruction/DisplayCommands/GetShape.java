@@ -1,5 +1,6 @@
 package instruction.DisplayCommands;
 
+import java.awt.Image;
 import java.util.List;
 
 import instruction.InstructionData;
@@ -11,8 +12,19 @@ public class GetShape extends DisplayCommand{
 	}
 
 	@Override
-	public double execute() {
-		return getInstructionData().getActiveActor().getImageViewIndex();  //TODO Update Jimmy
+	public double execute() {   //TODO / messy
+		/*
+		int index = 0;
+		for(Image image : Defaults.ImageList)
+		{
+			index++;
+			if(image.equals(getInstructionData().getActiveActor().getImage().getImage())
+					{
+				return index;
+					}
+		}
+		*/
+		//return getInstructionData().getActiveActor().getImageByIndex();
 	}
 
 }

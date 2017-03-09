@@ -1,103 +1,144 @@
 package view;
-
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Observable;
 
+import exceptions.InvalidIndexException;
 import javafx.animation.RotateTransition;
 import javafx.animation.SequentialTransition;
 import javafx.animation.TranslateTransition;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 import main.Defaults;
 import models.Actor;
 import user_structures.ID;
-
+import user_structures.NamedImageWrapper;
+import util.MathUtil;
 /**
  * 
  * @author jimmy
  * @author Jesse
+ * @author Matthew Barbano
  *
  */
 public abstract class ActorView implements View
 {
 	public static final int ACTOR_HEIGHT = 75;
 	public static final int STARTING_HEADING = -90;
+	public static final String RESOURCE_DOUBLE_NAME = "DoubleIndexMessage";
+	public static final String RESOURCE_BOUNDS_NAME = "IndexOutOfBoundsMessage";
+	public static final String RESOURCE_NOT_FOUND_NAME = "ElementNotFoundMessage";
 	// TODO: Make stack of animations to run, and run them 1 at a time.
 	// TODO: Update image so that it
-
 	private Actor actor;
-	private ImageView image;
+	private List<NamedImageWrapper> availableImages;
+	private NamedImageWrapper image;
 	private SequentialTransition actorMove;
 	private ID id;
-
 	public ActorView(Defaults defaults, int id)
 	{
+		// populate availableImages by subclass
+		availableImages = new ArrayList<>();
+		populateAvailableImages();
+		// scale all the images
+		for(NamedImageWrapper possibleImage : availableImages){
+			possibleImage.getImageView().setFitHeight(ACTOR_HEIGHT);
+			possibleImage.getImageView().setPreserveRatio(true);
+		}
+		// load the default image
+		image = new NamedImageWrapper(defaults.image());
+		//loadImage(defaults.image());
+		
 		actor = new Actor();
-		image = new ImageView();
 		this.id = new ID(id);
-
 		actorMove = new SequentialTransition();
-		actorMove.setNode(this.getImage());
-		// scale the image
-		image.setFitHeight(ACTOR_HEIGHT);
-		image.setPreserveRatio(true);
-		loadImage(defaults.image());
+		actorMove.setNode(this.getImage().getImageView());
+		
 		// start facing up
 		this.setHeading(STARTING_HEADING);
 		// initial rotation
 		actorMove.play();
 	}
-
+	
+	protected abstract void populateAvailableImages();
+	
+	public List<NamedImageWrapper> getAvailableImages(){
+		return availableImages;
+	}
+	
+	
+	public void setImageByIndex(double index){
+		checkValidIndex(index, availableImages.size());
+		setImage(availableImages.get((int)index));
+	}
+	public int getImageByIndex(){
+		int index = availableImages.indexOf(getImage());
+		if(index != -1){
+			return index;
+		}
+		else{
+			throw new InvalidIndexException(RESOURCE_NOT_FOUND_NAME);
+		}
+	}
+	
+	private void checkValidIndex(double index, int size){
+		if(!MathUtil.hasIntegerValue(index)){
+			throw new InvalidIndexException(RESOURCE_DOUBLE_NAME);
+		}
+		if(index < 0.0 || index >= size){
+			throw new InvalidIndexException(RESOURCE_BOUNDS_NAME);
+		}
+	}
+	
 	public ID getID()
 	{
 		return id;
 	}
-
 	public void step()
 	{
 		actorMove.play();
 	}
-
 	@Override
 	public Node display()
 	{
-		return image;
+		return image.getImageView();
 	}
-
 	@Override
 	public void update(Observable o, Object arg)
 	{
-
 	}
-
 	public Actor getActor()
 	{
 		return actor;
 	}
-
 	public void setActor(Actor actor)
 	{
 		this.actor = actor;
 	}
-
-	public void setImage(Image image)
+	public void setImage(NamedImageWrapper image)
 	{
-		this.image.setImage(image);
+		image.setImage(image.getImageView());
+		System.out.println(this.image.getFilename());
 	}
-
-	public ImageView getImage()
+	public NamedImageWrapper getImage()
 	{
 		return image;
 	}
-
 	private void loadImage(String stringImage)
 	{
-		Image image = new Image(getClass().getClassLoader().getResourceAsStream(stringImage));
-		this.setImage(image);
+		int index = 0;
+		for(NamedImageWrapper imageElement : availableImages){
+			if(stringImage.equals(imageElement.getFilename())){
+				this.setImage(availableImages.get(index));
+				return; 
+			}
+			index++;
+		}
+		throw new InvalidIndexException(RESOURCE_NOT_FOUND_NAME);
+		
+		//setImage(new NamedImageWrapper(stringImage));  - Caution: This is wrong - need the actual object in availableImages, not a copy
 	}
-
 	public void move(Point2D newLocation)
 	{
 		TranslateTransition move = new TranslateTransition(Duration.millis(500));
@@ -109,18 +150,15 @@ public abstract class ActorView implements View
 		move.setOnFinished(e -> {
 			actorMove.getChildren().remove(move);
 		});
-
 		actorMove.getChildren().add(move);
 		actor.setLocation(newLocation);
 	}
-
 	public void moveWithoutDrawing(Point2D newLocation)
 	{
-		image.translateXProperty().set(0);
-		image.translateYProperty().set(0);
+		image.getImageView().translateXProperty().set(0);
+		image.getImageView().translateYProperty().set(0);
 		actor.setLocation(newLocation);
 	}
-
 	public void setHeading(double newHeading)
 	{
 		RotateTransition rotate = new RotateTransition(Duration.millis(200));
@@ -133,10 +171,8 @@ public abstract class ActorView implements View
 		actorMove.getChildren().add(rotate);
 		actor.setHeading(newHeading);
 	}
-
 	public double getHeading()
 	{
 		return actor.getHeading();
 	}
-
 }

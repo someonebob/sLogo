@@ -3,6 +3,7 @@ package instruction.DisplayCommands;
 import java.util.List;
 
 import instruction.InstructionData;
+import javafx.scene.paint.Color;
 
 public class SetPenColor extends DisplayCommand{
 
@@ -12,8 +13,17 @@ public class SetPenColor extends DisplayCommand{
 
 	@Override
 	public double execute() {
-		// TODO Auto-generated method stub
-		return 0;
+		List<Color> penColorList = getInstructionData().getPenColorList();
+		checkValidIndex(getArgumentDouble(0), penColorList.size());
+		Color newColor = penColorList.get((int)getArgumentDouble(0));
+		getInstructionData().getActiveActor().setPenColor(
+		
+		
+		//NEED TO FINISH THIS
+		
+		checkValidIndex(getArgumentDouble(0), getInstructionData().getActiveActor().getPenColo)
+		getInstructionData().getActiveActor().setPenColor((int)getArgumentDouble(0));  //TODO Update Jimmy
+		return getArgumentDouble(0);
 	}
 
 }

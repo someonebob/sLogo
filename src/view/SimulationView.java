@@ -158,7 +158,7 @@ import main.Defaults;
 import tool.SettingsTool.BackgroundColorButton;
 import tool.SettingsTool.PenColorButton;
 import tool.SettingsTool.TurtleImageButton;
-import user_structures.ID;
+import user_structures.NamedImageWrapper;
 
 public class SimulationView implements View {
 
@@ -187,6 +187,10 @@ public class SimulationView implements View {
 	public void move( Point2D deltaLocation)
 	{
 		actors.get(0).move(deltaLocation);
+	}
+	
+	public void setBackgroundColor(Color color){
+		root.setBackground(new Background(new BackgroundFill(color, null, null)));
 	}
 	
 	public void setBackgroundColor(String color){
@@ -224,7 +228,7 @@ public class SimulationView implements View {
 		if (o instanceof TurtleImageButton) {
 			if (arg instanceof Image) {
 				//TODO make ID's work
-				actors.get(0).setImage((Image) arg);
+				actors.get(0).setImage(new NamedImageWrapper((String) arg));
 					
 			}
 		}
