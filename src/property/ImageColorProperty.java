@@ -43,5 +43,6 @@ public class ImageColorProperty extends AbstractColorProperty
 		// Color.ORANGE));
 		// actor.getImage().setEffect(lighting);
 		actingImage.getValue().setEffect(lighting);
+		actingImage.updateDisplay();
 	}
 }

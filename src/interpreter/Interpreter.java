@@ -8,7 +8,6 @@ import java.util.List;
 import instruction.*;
 import interpreter.builders.TreeBuilder;
 import interpreter.classification.InstructionClassifier;
-import interpreter.clean.InstructionCleaner;
 import interpreter.execute.TreeExecuter;
 import interpreter.misc.InstructionNode;
 
@@ -70,7 +69,6 @@ public class Interpreter {
 	 * @return Root node of the instruction, read from toParse
 	 */
 	public List<InstructionNode> parse(String toParse) {
-		toParse = InstructionCleaner.clean(toParse);
 		TreeBuilder builder = new TreeBuilder(toParse, getMyClassifier(), getMyData());
 		List<InstructionNode> headNodes = builder.buildTree();
 		return headNodes;

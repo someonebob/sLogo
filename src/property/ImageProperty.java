@@ -11,6 +11,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
+import view.ActorView;
 
 /**
  * 
@@ -19,11 +20,16 @@ import javafx.stage.Stage;
  */
 public class ImageProperty extends Property<ImageView>
 {
+	private ImageView displayImage;
 
 	public ImageProperty(String name)
 	{
 		super(name);
+		displayImage = new ImageView();
 		super.setValue(new ImageView());
+		displayImage.setFitHeight(ActorView.ACTOR_HEIGHT);
+		displayImage.setFitWidth(ActorView.ACTOR_WIDTH);
+		displayImage.setPreserveRatio(true);
 	}
 
 	@Override
@@ -35,12 +41,26 @@ public class ImageProperty extends Property<ImageView>
 	public void setValue(Image image)
 	{
 		this.getValue().setImage(image);
+		updateDisplay();
 	}
 
 	@Override
 	public void setValue(String stringValue)
 	{
 		this.setValue(new Image(stringValue));
+	}
+
+	@Override
+	public void updateDisplay()
+	{
+		displayImage.setImage(this.getValue().getImage());
+		displayImage.setEffect(this.getValue().getEffect());
+	}
+
+	@Override
+	public ImageView display()
+	{
+		return displayImage;
 	}
 
 	@Override
@@ -64,7 +84,7 @@ public class ImageProperty extends Property<ImageView>
 		input.setOnAction(e -> {
 			File selectedFile = setupFileChooser().showOpenDialog(newWindow);
 			if (selectedFile != null) {
-				this.getValue().setImage(new Image(selectedFile.toURI().toString()));
+				this.setValue(new Image(selectedFile.toURI().toString()));
 			}
 		});
 		return input;

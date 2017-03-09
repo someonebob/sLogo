@@ -22,12 +22,12 @@ import javafx.scene.text.Font;
 import tool.FileTool.SaveButton;
 
 public class SingleLineInputBox implements InputBox {
-	private BorderPane root;
-	private VBox box;
-	private TextArea console;
-	private ListView<String> previous;
-	private int historyIndex = 0;
-	private String preamble = "slogo_team07$ ";
+	protected BorderPane root;
+	protected VBox box;
+	protected TextArea console;
+	protected ListView<String> previous;
+	protected int historyIndex = 0;
+	protected String preamble = "slogo_team07$ ";
 
 	@Override
 	public void update(Observable o, Object arg) {
@@ -46,12 +46,6 @@ public class SingleLineInputBox implements InputBox {
 
 	public void updateData(String arg) {
 		previous.getItems().add(arg);
-	}
-
-	
-	public void enterAction(KeyEvent e) {
-		e.consume();
-		historyIndex = 0;
 	}
 	private void initiateItems() {
 		root = new BorderPane();
@@ -122,11 +116,11 @@ public class SingleLineInputBox implements InputBox {
 		appendPastCommand();
 		e.consume();
 	}
-	private void appendPastCommand() {
+	protected void appendPastCommand() {
 		clearCommand();
 		console.appendText(previous.getItems().get(previous.getItems().size() - 1 - historyIndex));
 	}
-	private void clearCommand() {
+	protected void clearCommand() {
 		console.setText(console.getText().substring(0, console.getText().lastIndexOf(getCurrentCommand())));
 		console.positionCaret(console.getText().length());
 	}
@@ -135,6 +129,11 @@ public class SingleLineInputBox implements InputBox {
 		if (console.getSelectedText().length() != 0 || pos == console.getCaretPosition()) {
 			e.consume();
 		}
+	}
+
+	public void enterAction(KeyEvent e) {
+		e.consume();
+		historyIndex = 0;
 	}
 	
 

@@ -56,14 +56,9 @@ public abstract class TurtleCommand extends Instruction
 		getActiveActor().setHeading(ActorView.STARTING_HEADING + newHeading);
 	}
 
-	protected void turnNewHeading(double newHeading)
-	{
-		getActiveActor().setHeading(newHeading);
-	}
-
 	protected void turn(double deltaHeading)
 	{
-		turnNewHeading(getActiveActor().getHeading() + deltaHeading);
+		getActiveActor().rotate(deltaHeading);
 	}
 
 	protected void setPosition(double x, double y)

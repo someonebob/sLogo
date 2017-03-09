@@ -4,15 +4,17 @@ import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import main.Defaults;
 
-public class TurtleView extends ActorView
+public class TurtleView extends ActorView implements Cloneable
 {
 
 	private PenView pen;
+	private Defaults defaults;
 
 	public TurtleView(Defaults defaults, int id)
 	{
 		super(defaults, id);
 		pen = new PenView(defaults.pen());
+		this.defaults = defaults;
 	}
 
 	@Override
@@ -47,6 +49,17 @@ public class TurtleView extends ActorView
 	{
 		pen.move(this.getActor().getLocation(), newLocation);
 		super.move(newLocation);
+	}
+
+	@Override
+	public TurtleView clone()
+	{
+		TurtleView clone = new TurtleView(defaults, this.getID().getID());
+		clone.getImageProperty().setValue(this.getImageProperty().display());
+		clone.setHeading(200);
+		// clone.getImageColorProperty().setValue(this.getImageColorProperty().getValue());
+		clone.getActorPositionProperty().setValue(this.getActorPositionProperty().getValue());
+		return clone;
 	}
 
 }

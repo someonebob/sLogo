@@ -15,6 +15,7 @@ import javafx.util.Duration;
 import main.Defaults;
 import models.Actor;
 import property.ActorPositionProperty;
+import property.HeadingProperty;
 import property.ImageColorProperty;
 import property.ImageProperty;
 import property.Property;
@@ -26,7 +27,7 @@ import user_structures.ID;
  * @author Jesse
  *
  */
-public abstract class ActorView implements View
+public abstract class ActorView implements View, Cloneable
 {
 	public static final int ACTOR_HEIGHT = 75;
 	public static final int ACTOR_WIDTH = 75;
@@ -38,6 +39,8 @@ public abstract class ActorView implements View
 	private ImageProperty image;
 	private ImageColorProperty imageColor;
 	private ActorPositionProperty actorPosition;
+	private HeadingProperty heading;
+	// private SpeedProperty speed;
 	private SequentialTransition actorMove;
 	private ID id;
 
@@ -47,6 +50,7 @@ public abstract class ActorView implements View
 		image = new ImageProperty("Actor Image");
 		imageColor = new ImageColorProperty("Actor Image Color", image);
 		actorPosition = new ActorPositionProperty("Actor Position", this);
+		heading = new HeadingProperty("Actor Heading", this);
 		this.id = new ID(id);
 
 		actorMove = new SequentialTransition();
@@ -70,6 +74,11 @@ public abstract class ActorView implements View
 	public void step()
 	{
 		actorMove.play();
+	}
+
+	public ImageProperty getImageProperty()
+	{
+		return image;
 	}
 
 	public ImageColorProperty getImageColorProperty()
@@ -145,15 +154,26 @@ public abstract class ActorView implements View
 
 	public void setHeading(double newHeading)
 	{
+		makeRotateTransition(this.getHeading(), newHeading);
+		actor.setHeading(newHeading);
+	}
+
+	public void rotate(double rotateAngle)
+	{
+		makeRotateTransition(this.actor.getHeading(), this.actor.getHeading() + rotateAngle);
+		actor.setHeading(actor.getHeading() + rotateAngle);
+	}
+
+	private void makeRotateTransition(double startAngle, double endAngle)
+	{
 		RotateTransition rotate = new RotateTransition(Duration.millis(200));
-		rotate.setFromAngle(this.actor.getHeading());
-		rotate.setToAngle(newHeading);
+		rotate.setFromAngle(startAngle);
+		rotate.setToAngle(endAngle);
 		rotate.setCycleCount(1);
 		rotate.setOnFinished(e -> {
 			actorMove.getChildren().remove(rotate);
 		});
 		actorMove.getChildren().add(rotate);
-		actor.setHeading(newHeading);
 	}
 
 	public double getHeading()
@@ -163,7 +183,7 @@ public abstract class ActorView implements View
 
 	public List<Property<?>> getProperties()
 	{
-		return Arrays.asList(image, imageColor, actorPosition);
+		return Arrays.asList(image, imageColor, actorPosition, heading);
 	}
 
 }
