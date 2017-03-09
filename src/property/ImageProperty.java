@@ -1,7 +1,10 @@
 package property;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -13,15 +16,26 @@ import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
+import util.Pair;
 import view.ActorView;
 /**
  * 
  * @author jimmy
  *
  */
+
+/*
+ * Note from Matthew: Whenever you instantiate a new ImageProperty instance,
+ * you MUST call addDefaultImageToInitialImageFilename() after setting the default
+ * image, else several Instructions will not work. Ideally, you could do all this in the
+ * ImageProperty constructor, but I did not want to modify this class more than necessary.
+ * 
+ */
+
 public class ImageProperty extends Property<ImageView>
 {
-	private static final List<ImageView> INDEXED_IMAGES = new ArrayList<>();
+	//private static final Map<String, ImageView> INDEXED_IMAGES = new HashMap<>();
+	private static final List<Pair<String, ImageView>> INDEXED_IMAGES = new ArrayList<>();
 	private static final String TURTLE_IMAGES_LOCATION = "images";
 	
 	private ImageView displayImage;
@@ -31,8 +45,7 @@ public class ImageProperty extends Property<ImageView>
 		File srcFolder = currentFolder.getParentFile();
 		File imagesFolder = new File(srcFolder, TURTLE_IMAGES_LOCATION);
 		for(File imageFile : imagesFolder.listFiles()){
-			//Cannot use the normal InputStream because getClass() has error when called from static context
-			INDEXED_IMAGES.add(new ImageView(new Image(imageFile.getName())));
+			INDEXED_IMAGES.add(new Pair<>(imageFile.getName(), new ImageView(new Image(imageFile.getName()))));
 		}
 	}
 	
@@ -45,9 +58,28 @@ public class ImageProperty extends Property<ImageView>
 		displayImage.setFitWidth(ActorView.ACTOR_WIDTH);
 		displayImage.setPreserveRatio(true);
 	}
-	
-	public List<ImageView> getIndexedImages(){
+	/*
+	public Map<String, ImageView> getIndexedImages(){
 		return INDEXED_IMAGES;
+	}
+	*/
+	public List<Pair<String, ImageView>> getIndexedImages(){
+		return INDEXED_IMAGES;
+	}
+	/**
+	 * Fixes the .equals() problem. Consult me for details.
+	 * @author Matthew
+	 * @param initialImageFilename
+	 */
+	
+	public void addDefaultImageToInitialImageFilename(String initialImageFilename){
+		//INDEXED_IMAGES.put(initialImageFilename, displayImage);
+		//For List, iterate over and find filename match, and replace that element
+		 for(Pair<String, ImageView> pair : INDEXED_IMAGES){
+			 if(pair.getMyA().equals(initialImageFilename)){  //TODO Change to Comparator, TODO error throwing
+				 pair.setMyB(displayImage);
+			 }
+		 }
 	}
 	
 	@Override

@@ -1,5 +1,13 @@
 package instruction.DisplayCommands;
 
+import java.util.List;
+
+import exceptions.NonsensicalArgumentException;
+import instruction.InstructionData;
+import javafx.scene.paint.Color;
+import property.PenThicknessProperty;
+import util.MathUtil;
+
 /**
  * Sets size of the pen to be pixels thickness
 	returns given pixels
@@ -7,6 +15,20 @@ package instruction.DisplayCommands;
  *
  */
 
-public class SetPenSize {
+public class SetPenSize extends DisplayCommand {
+	private static final String RESOURCE_NEGATIVE_NAME = "NonpositivePenThicknessMessage";
+	
+	public SetPenSize(InstructionData instructionData, List<String> args, String myText) {
+		super(instructionData, args, myText);
+	}
 
+	@Override
+	public double execute() {
+		PenThicknessProperty penThicknessProperty = getInstructionData().getActivePenView().getPenThicknessProperty();
+		if(getArgumentDouble(0) <= 0){
+			throw new NonsensicalArgumentException(RESOURCE_NEGATIVE_NAME);
+		}
+		penThicknessProperty.setValue(getArgumentDouble(0));
+		return getArgumentDouble(0);
+	}
 }

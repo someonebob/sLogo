@@ -27,7 +27,7 @@ import view.TurtleView;
  */
 public class InstructionData
 {
-	SimulationView simulation;
+	SimulationView simulationView;
 	List<VariableData> variables;
 	List<FunctionData> functions;
 	String language;
@@ -43,7 +43,7 @@ public class InstructionData
 	public InstructionData(SimulationView simulation, List<VariableData> variables, List<FunctionData> functions,
 			String language)
 	{
-		this.simulation = simulation;
+		this.simulationView = simulation;
 		this.variables = variables;
 		this.functions = functions;
 		this.language = language;
@@ -51,7 +51,7 @@ public class InstructionData
 
 	public TurtleView getActiveActor()
 	{
-		return simulation.getTurtle();
+		return simulationView.getTurtle();
 	}
 
 	/**
@@ -61,12 +61,12 @@ public class InstructionData
 	 */
 	public List<ActorView> getActors()
 	{
-		return Arrays.asList(simulation.getTurtle());
+		return Arrays.asList(simulationView.getTurtle());
 	}
 
 	public Bounds getSimulationBounds()
 	{
-		return simulation.getBounds();
+		return simulationView.getBounds();
 	}
 
 	public List<VariableData> getVariables()
@@ -152,7 +152,7 @@ public class InstructionData
 
 	public SimulationView getSimulation()
 	{
-		return simulation;
+		return simulationView;
 	}
 	
 	public PenView getActivePenView(){

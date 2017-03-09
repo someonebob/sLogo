@@ -18,9 +18,9 @@ public abstract class AbstractColorProperty extends Property<Color>
 	
 	//TODO Change to read in XML File
 	static{
-		INDEXED_COLORS.add(Color.RED);
-		INDEXED_COLORS.add(Color.GREEN);
-		INDEXED_COLORS.add(Color.BLUE);
+		INDEXED_COLORS.add(Color.rgb(255, 0, 0));
+		INDEXED_COLORS.add(Color.rgb(0, 255, 0));
+		INDEXED_COLORS.add(Color.rgb(0, 0, 255));
 	}
 	
 	public AbstractColorProperty(String name)

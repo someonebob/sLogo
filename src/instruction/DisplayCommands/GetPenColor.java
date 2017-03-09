@@ -23,7 +23,9 @@ public class GetPenColor extends DisplayCommand{
 	public double execute() {
 		PenColorProperty penColorProperty = getInstructionData().getActivePenView().getPenColorProperty();
 		List<Color> indexedColors = penColorProperty.getIndexedColors();
+		System.out.println(indexedColors);
 		Color currentColor = penColorProperty.getValue();
+		System.out.println(currentColor);
 		int index = indexedColors.indexOf(currentColor);
 		if(index == -1){
 			throw new InvalidIndexException(RESOURCE_NONINDEXED_NAME);

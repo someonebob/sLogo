@@ -1,11 +1,13 @@
 package instruction.DisplayCommands;
 
 import java.util.List;
+import java.util.Map;
 
 import instruction.InstructionData;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import util.MathUtil;
+import util.Pair;
 
 /**
  * Sets shape of turtle to that represented by index
@@ -23,10 +25,10 @@ public class SetShape extends DisplayCommand{
 
 	@Override
 	public double execute() {
-		List<ImageView> indexedImages = getInstructionData().getActiveActor().getImageProperty().getIndexedImages();
+		List<Pair<String, ImageView>> indexedImages = getInstructionData().getActiveActor().getImageProperty().getIndexedImages();
 		MathUtil.checkValidIndex(getArgumentDouble(0), indexedImages.size());
-		ImageView imageView = indexedImages.get((int)getArgumentDouble(0));
-		getInstructionData().getActiveActor().setImage(imageView.getImage());
+		Pair<String, ImageView> targetPair = indexedImages.get((int)getArgumentDouble(0));
+		getInstructionData().getActiveActor().setImage(targetPair.getMyB().getImage());
 		return getArgumentDouble(0);
 	}
 
