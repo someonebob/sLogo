@@ -9,13 +9,10 @@ import instruction.Instruction;
 import instruction.InstructionData;
 import interpreter.classification.InstructionClassifier;
 import interpreter.misc.InstructionNode;
-import interpreter.util.ArgumentReaderUtil;
 
 /**
  * Class used to traverse tree and produce runnable instructions. Carries out
  * the instructions head in the InstructionNode head node passed to the class.
- * 
- * TODO: Clean-up
  * 
  * @author maddiebriere
  *
@@ -49,7 +46,7 @@ public class TreeExecuter
 	public double execute(InstructionNode head)
 	{
 		//TODO: Error check without losing functionality
-		checkChildren(head);
+		//checkChildren(head);
 		List<String> args = buildArguments(head);
 		variableCheck(head,args);
 		generateHead(head, args);
@@ -75,9 +72,6 @@ public class TreeExecuter
 	}
 	
 	/**
-	 * 
-	 * TODO: Move this into its own BuilderUtil class? Very out of place right now
-	 * 
 	 * If this is a variable creation command, make sure that the output has knowledge
 	 * of the desired variable name.
 	 * @param head InstructionNode at head of tree
@@ -94,17 +88,14 @@ public class TreeExecuter
 			return Double.parseDouble(head.getMyRunValue());
 		}
 		catch(NumberFormatException e){
-			if(myClass.isValid(head.getMyCommand(), myData)){
-				return 0.0;
-			}
-			else{
-				throw new InvalidCommandException(RESOURCE_INVALID_COMMAND_NAME);
-			}
+			return 0.0;
 		}
 	}
 	
 	private List<String> buildArguments(InstructionNode head){
 		ArrayList<String> args = new ArrayList<String>();
+		
+		//Null child here somewhere
 		
 		for (InstructionNode child : head.getMyChildren()) {
 			if (!child.hasRun()) {
@@ -112,7 +103,7 @@ public class TreeExecuter
 			}
 			args.add(child.getMyRunValue());
 		}
-		if(head.hasRun()){ //Add the head value if the whole thing has already run
+		if(head.hasRun()){ //if head has already executed (lists), then just return run value
 			args.add(head.getMyRunValue());
 		}
 		return args;
@@ -126,8 +117,7 @@ public class TreeExecuter
 				numberNonNullChildren++;
 		}
 		
-		if(numberNonNullChildren != ArgumentReaderUtil.
-				getNumArgs(head.getMyClassification(), head.getMyCommand(), myData)){
+		if(numberNonNullChildren != head.getProperNumArgs()){
 			throw new WrongArgumentNumberException(RESOURCE_ARGUMENT_NAME);
 		}
 	}
