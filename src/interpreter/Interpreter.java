@@ -1,5 +1,4 @@
 package interpreter;
-
 import instruction.*;
 import interpreter.builders.TreeBuilder;
 import interpreter.classification.InstructionClassifier;
@@ -7,7 +6,6 @@ import interpreter.clean.InstructionCleaner;
 import interpreter.execute.TreeExecuter;
 import interpreter.misc.InstructionNode;
 import util.Pair;
-
 /**
  * This class uses a variety of resource files to transform an input
  * string into a useable command (we call it an Instruction). By returning an
@@ -16,7 +14,6 @@ import util.Pair;
  * 
  * @maddiebriere
  **/
-
 public class Interpreter {
 	
 	private InstructionData myData;
@@ -26,7 +23,6 @@ public class Interpreter {
 		myData = data;
 		myClassifier = new InstructionClassifier(data.getLanguage());
 	}
-
 	/**
 	 * Parse the instruction (Defined by s) and give Instructions access to
 	 * information about current state through InstructionData. Once parsed,
@@ -56,23 +52,18 @@ public class Interpreter {
 		}
 		return toRet;
 	}
-
 	public InstructionClassifier getMyClassifier() {
 		return myClassifier;
 	}
-
 	public void setMyClassifier(InstructionClassifier myClassifier) {
 		this.myClassifier = myClassifier;
 	}
-
 	public InstructionData getMyData() {
 		return myData;
 	}
-
 	public void setMyData(InstructionData myData) {
 		this.myData = myData;
 	}
 	
 	
-
 }

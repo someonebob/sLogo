@@ -3,7 +3,7 @@ package instruction;
 import java.util.ArrayList;
 import java.util.List;
 
-import view.ActorView;
+import view.TurtleView;
 
 /**
  * This is a the root of the inheritance hierarchy whose concrete subclasses
@@ -79,12 +79,13 @@ public abstract class Instruction
 		return arguments.get(index);
 	}
 
-	protected ActorView getActiveActor()
+	protected TurtleView getActiveTurtle()
 	{
 		return getInstructionData().getActiveActor();
 	}
-	
-	protected String getMyText(){
+
+	protected String getMyText()
+	{
 		return myText;
 	}
 }

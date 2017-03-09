@@ -105,6 +105,7 @@ public class TreeBuilder {
 		}
 		else{
 			int numArgs = ArgumentReaderUtil.getNumArgs(head.getMyClassification(), headText, data);
+			head.setProperNumArgs(numArgs);
 			buildChildren(numArgs, head);
 		}
 		return head;

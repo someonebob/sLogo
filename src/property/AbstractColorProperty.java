@@ -1,7 +1,11 @@
 package property;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
@@ -10,11 +14,24 @@ import javafx.scene.paint.Color;
 
 public abstract class AbstractColorProperty extends Property<Color>
 {
+	private static final List<Color> INDEXED_COLORS = new ArrayList<>();
+	
+	//TODO Change to read in XML File
+	static{
+		INDEXED_COLORS.add(Color.RED);
+		INDEXED_COLORS.add(Color.GREEN);
+		INDEXED_COLORS.add(Color.BLUE);
+	}
+	
 	public AbstractColorProperty(String name)
 	{
 		super(name);
 	}
-
+	
+	public List<Color> getIndexedColors(){
+		return INDEXED_COLORS;
+	}
+	
 	@Override
 	public void setValue(Color color)
 	{
@@ -27,7 +44,7 @@ public abstract class AbstractColorProperty extends Property<Color>
 	{
 		this.setValue(Color.web(stringValue));
 	}
-
+	
 	@Override
 	public Node makeDynamicUpdater()
 	{
@@ -37,7 +54,7 @@ public abstract class AbstractColorProperty extends Property<Color>
 
 		vbox.getChildren().add(label);
 		vbox.getChildren().add(colorPicker);
-
+		vbox.setAlignment(Pos.CENTER);
 		return vbox;
 	}
 

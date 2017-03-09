@@ -5,6 +5,7 @@ import java.util.List;
 
 import instruction.InstructionData;
 import interpreter.misc.InstructionNode;
+import interpreter.util.ArgumentReaderUtil;
 import interpreter.util.GroupReader;
 
 /**
@@ -14,8 +15,6 @@ import interpreter.util.GroupReader;
  * GroupEnd) and returns the nodes and current text with those sections
  * removed, and the processed instructions inside the grouping
  * saved within the head node.
- * 
- * TODO: Allow inner brackets
  * 
  * @author maddiebriere
  *

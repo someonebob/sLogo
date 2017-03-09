@@ -14,20 +14,20 @@ import javafx.stage.Stage;
  * @author Jesse
  *
  */
-public class FileTool extends Tool
+public class FileMenuTool extends MenuTool
 {
 
 	public static final String name = "File";
 	public static final String EXTENSION = "*.logo";
 
-	private List<AbstractButton> buttons;
+	private List<AbstractMenuItem> buttons;
 
-	public FileTool(Stage window) {
+	public FileMenuTool(Stage window) {
 		super(name, window);
 	}
 
 	@Override
-	public void makeMenuItems() {
+	public void makeItems() {
 		buttons = new ArrayList <>();
 		buttons.add(new NewButton());
 		buttons.add(new OpenButton());
@@ -37,11 +37,11 @@ public class FileTool extends Tool
 	
 
 	@Override
-	protected List<AbstractButton> getButtons() {
+	protected List<AbstractMenuItem> getButtons() {
 		return buttons;
 	}
 	
-	public class NewButton extends AbstractButton{
+	public class NewButton extends AbstractMenuItem{
 
 		public NewButton() {
 			super(new MenuItem("New"));
@@ -54,7 +54,7 @@ public class FileTool extends Tool
 		
 	}
 	
-	public class OpenButton extends AbstractButton{
+	public class OpenButton extends AbstractMenuItem{
 
 		public OpenButton() {
 			super(new MenuItem("Open"));
@@ -71,7 +71,7 @@ public class FileTool extends Tool
 		
 	}
 	
-	public class SaveButton extends AbstractButton{
+	public class SaveButton extends AbstractMenuItem{
 
 		public SaveButton() {
 			super(new MenuItem("Save"));
@@ -88,7 +88,7 @@ public class FileTool extends Tool
 		
 	}
 
-	public class SaveImageButton extends AbstractButton{
+	public class SaveImageButton extends AbstractMenuItem{
 
 		public SaveImageButton() {
 			super(new MenuItem("Save Image"));

@@ -19,15 +19,15 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
-import tool.FileTool.SaveButton;
+import tool.FileMenuTool.SaveButton;
 
 public class SingleLineInputBox implements InputBox {
-	private BorderPane root;
-	private VBox box;
-	private TextArea console;
-	private ListView<String> previous;
-	private int historyIndex = 0;
-	private String preamble = "slogo_team07$ ";
+	protected BorderPane root;
+	protected VBox box;
+	protected TextArea console;
+	protected ListView<String> previous;
+	protected int historyIndex = 0;
+	protected String preamble = "slogo_team07$ ";
 
 	@Override
 	public void update(Observable o, Object arg) {
@@ -43,15 +43,9 @@ public class SingleLineInputBox implements InputBox {
 		return root;
 	}
 
-
+	@Override
 	public void updateData(String arg) {
 		previous.getItems().add(arg);
-	}
-
-	
-	public void enterAction(KeyEvent e) {
-		e.consume();
-		historyIndex = 0;
 	}
 	private void initiateItems() {
 		root = new BorderPane();
@@ -84,26 +78,32 @@ public class SingleLineInputBox implements InputBox {
 		root.setCenter(console);
 	}
 	
-	
+	@Override
 	public void assignOnEnterCommand(EventHandler<? super KeyEvent> e){
 		console.setOnKeyPressed(e);
 	}
+	@Override
 	public void appendPreamble(){
 		appendText("\n" + preamble);
 	}
+	@Override
 	public String getCurrentCommand(){
 		// returns text between last instance of preamble and end
 		return console.getText(console.getText().lastIndexOf(preamble) + preamble.length(), console.getText().length());
 	}
+	@Override
 	public void clear(){
 		console.setText(preamble);
 	}
+	@Override
 	public void setFocus(){
 		console.requestFocus();
 	}
+	@Override
 	public void appendText(String s){
 		console.appendText(s);
 	}
+	@Override
 	public void upAction(KeyEvent e) {
 		if (historyIndex <= previous.getItems().size() - 1) {
 			appendPastCommand();
@@ -113,6 +113,7 @@ public class SingleLineInputBox implements InputBox {
 		}
 		e.consume();
 	}
+	@Override
 	public void downAction(KeyEvent e) {
 		if (historyIndex == 0) {
 			clearCommand();
@@ -122,19 +123,25 @@ public class SingleLineInputBox implements InputBox {
 		appendPastCommand();
 		e.consume();
 	}
-	private void appendPastCommand() {
+	protected void appendPastCommand() {
 		clearCommand();
 		console.appendText(previous.getItems().get(previous.getItems().size() - 1 - historyIndex));
 	}
-	private void clearCommand() {
+	protected void clearCommand() {
 		console.setText(console.getText().substring(0, console.getText().lastIndexOf(getCurrentCommand())));
 		console.positionCaret(console.getText().length());
 	}
+	@Override
 	public void protectPreamble(KeyEvent e) {
 		int pos = console.getText().lastIndexOf(preamble) + preamble.length();
 		if (console.getSelectedText().length() != 0 || pos == console.getCaretPosition()) {
 			e.consume();
 		}
+	}
+	@Override
+	public void enterAction(KeyEvent e) {
+		e.consume();
+		historyIndex = 0;
 	}
 	
 

@@ -30,22 +30,24 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import tool.FileTool;
-import tool.FileTool.NewButton;
-import tool.FileTool.OpenButton;
-import tool.HelpTool;
+import tool.AnimationControlToolButtons;
+import tool.ComboBar;
+import tool.FileMenuTool;
+import tool.FileMenuTool.NewButton;
+import tool.FileMenuTool.OpenButton;
+import tool.HelpMenuTool;
+import tool.MenuTool;
 import tool.SelectionBar;
-import tool.SettingsTool;
-import tool.SettingsTool.LanguageButton;
+import tool.SettingsMenuTool;
+import tool.SettingsMenuTool.LanguageButton;
+import tool.ToolButton;
 import user_structures.FunctionData;
 import user_structures.VariableData;
-import view.SingleLineInputBox;
 import view.InputBox;
+import view.PreferencesView;
 import view.SavedCommandsView;
 import view.SimulationView;
-import view.StackedSimulationView;
-import view.View;
-import view.PreferencesView;
+import view.SingleLineInputBox;
 import view.WorkspaceView;
 
 /**
@@ -59,10 +61,9 @@ public class Controller implements Observer
 	private ObjectProperty<Tab> currentTab;
 	private Map<Tab, SelectionBar> selectionBarMap;
 	private Map<Tab, SimulationView> simulationMap;
-
 	private Map<Tab, InputBox> inputBoxMap;
-	private Map<Tab, View> workspaceMap;
-	private Map<Tab, View> savedCommandsMap;
+	private Map<Tab, WorkspaceView> workspaceMap;
+	private Map<Tab, SavedCommandsView> savedCommandsMap;
 
 	private Map<Tab, ObservableList<VariableData>> variableMap;
 	private Map<Tab, ObservableList<FunctionData>> functionMap;
@@ -85,6 +86,7 @@ public class Controller implements Observer
 		currentTab.bind(root.getSelectionModel().selectedItemProperty());
 		currentIndex.bind(root.getSelectionModel().selectedIndexProperty());
 
+		root.getStylesheets().add("DarkTheme.css");
 		stage.setTitle("SLogo");
 		stage.setScene(new Scene(root));
 		stage.setMaximized(true);
@@ -128,18 +130,19 @@ public class Controller implements Observer
 		language.add(defaults.language());
 		tab.setText("untitled.logo");
 		BorderPane pane = new BorderPane();
-		StackedSimulationView simulation = new StackedSimulationView(defaults);
-		SingleLineInputBox inputBox = new SingleLineInputBox();
+		SimulationView simulation = new SimulationView(defaults);
+		InputBox inputBox = new SingleLineInputBox();
 		inputBox.setFocus();
 		WorkspaceView workspace = new WorkspaceView();
 		SavedCommandsView userCommands = new SavedCommandsView();
 		PreferencesView preferences = new PreferencesView(simulation.getTurtle(), simulation);
 
-		SelectionBar selectionBar = new SelectionBar();
-		FileTool file = new FileTool(stage);
-		SettingsTool settings = new SettingsTool(stage);
-		HelpTool help = new HelpTool(stage);
-		selectionBar.addAllTools(file, settings, help);
+		SelectionBar selectionBar = new ComboBar();
+		MenuTool file = new FileMenuTool(stage);
+		MenuTool settings = new SettingsMenuTool(stage);
+		MenuTool help = new HelpMenuTool(stage);
+		ToolButton animation = new AnimationControlToolButtons();
+		selectionBar.addAllTools(file, settings, help, animation);
 
 		List<VariableData> varList = new ArrayList<>();
 		ObservableList<VariableData> variables = FXCollections.observableList(varList);
@@ -151,7 +154,7 @@ public class Controller implements Observer
 
 		setupBorderPane(pane, selectionBar, simulation, inputBox, workspace, preferences);
 		putIntoMaps(tab, selectionBar, simulation, inputBox, workspace, userCommands, variables, functions);
-		setupObservers(simulation, inputBox, file, settings, preferences);
+		setupObservers(simulation, inputBox, file, settings, animation, preferences);
 		setupCommands(inputBox);
 
 		tab.setContent(pane);
@@ -160,8 +163,8 @@ public class Controller implements Observer
 
 	private void setupBorderPane(BorderPane pane, SelectionBar selectionBar, SimulationView simulation,
 			InputBox inputBox, WorkspaceView workspace, PreferencesView preferences)
-	{
 
+	{
 		pane.setTop(selectionBar.display());
 		pane.setCenter(simulation.display());
 		pane.setBottom(inputBox.display());
@@ -170,10 +173,10 @@ public class Controller implements Observer
 	}
 
 	private void putIntoMaps(Tab tab, SelectionBar selectionBar, SimulationView simulation, InputBox inputBox,
+
 			WorkspaceView workspace, SavedCommandsView userCommands, ObservableList<VariableData> variables,
 			ObservableList<FunctionData> functions)
 	{
-
 		selectionBarMap.put(tab, selectionBar);
 		simulationMap.put(tab, simulation);
 		inputBoxMap.put(tab, inputBox);
@@ -184,24 +187,25 @@ public class Controller implements Observer
 		functionMap.put(tab, functions);
 	}
 
-	private void setupObservers(SimulationView simulation, InputBox inputBox, FileTool file,
-			SettingsTool settings, PreferencesView preferences)
+	private void setupObservers(SimulationView simulation, InputBox inputBox, MenuTool file,
+			MenuTool settings, ToolButton slider, PreferencesView preferences)
 	{
-
 		file.addObservers(simulation);
 		file.addObservers(inputBox);
 		file.addObservers(this);
 
 		settings.addObservers(simulation);
 		settings.addObservers(this);
+		
+		slider.addObservers(simulation.getTurtle());
 	}
 
-	private void setupCommands(SingleLineInputBox inputBox)
+	private void setupCommands(InputBox inputBox)
 	{
 		inputBox.assignOnEnterCommand(e -> executeCommand(e, inputBox));
 	}
 
-	private void executeCommand(KeyEvent e, SingleLineInputBox inputBox)
+	private void executeCommand(KeyEvent e, InputBox inputBox)
 	{
 		if (e.getCode() == KeyCode.ENTER) {
 			inputBox.enterAction(e);
@@ -224,11 +228,10 @@ public class Controller implements Observer
 		}
 	}
 
-
-
-	private void runCommand(InputBox inputBox, String command){
-		InstructionData data = new InstructionData(simulationMap.get(currentTab.get()), variableMap.get(currentTab.get()), functionMap.get(currentTab.get()), language.get(currentIndex.get()));
-
+	private void runCommand(InputBox inputBox, String command)
+	{
+		InstructionData data = new InstructionData(simulationMap.get(currentTab.get()),
+				variableMap.get(currentTab.get()), functionMap.get(currentTab.get()), language.get(currentIndex.get()));
 		try {
 			Interpreter interpreter = new Interpreter(data);
 
