@@ -30,14 +30,17 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import tool.FileTool;
-import tool.FileTool.NewButton;
-import tool.FileTool.OpenButton;
-import tool.HelpTool;
+import tool.AnimationControlToolButtons;
+import tool.ComboBar;
+import tool.FileMenuTool;
+import tool.FileMenuTool.NewButton;
+import tool.FileMenuTool.OpenButton;
+import tool.HelpMenuTool;
+import tool.MenuTool;
 import tool.SelectionBar;
-import tool.SelectionMenuBar;
-import tool.SettingsTool;
-import tool.SettingsTool.LanguageButton;
+import tool.SettingsMenuTool;
+import tool.SettingsMenuTool.LanguageButton;
+import tool.ToolButton;
 import user_structures.FunctionData;
 import user_structures.VariableData;
 import view.InputBox;
@@ -134,11 +137,12 @@ public class Controller implements Observer
 		SavedCommandsView userCommands = new SavedCommandsView();
 		PreferencesView preferences = new PreferencesView(simulation.getTurtle(), simulation);
 
-		SelectionBar selectionBar = new SelectionMenuBar();
-		FileTool file = new FileTool(stage);
-		SettingsTool settings = new SettingsTool(stage);
-		HelpTool help = new HelpTool(stage);
-		selectionBar.addAllTools(file, settings, help);
+		SelectionBar selectionBar = new ComboBar();
+		MenuTool file = new FileMenuTool(stage);
+		MenuTool settings = new SettingsMenuTool(stage);
+		MenuTool help = new HelpMenuTool(stage);
+		ToolButton animation = new AnimationControlToolButtons();
+		selectionBar.addAllTools(file, settings, help, animation);
 
 		List<VariableData> varList = new ArrayList<>();
 		ObservableList<VariableData> variables = FXCollections.observableList(varList);
@@ -183,8 +187,8 @@ public class Controller implements Observer
 		functionMap.put(tab, functions);
 	}
 
-	private void setupObservers(SimulationView simulation, InputBox inputBox, FileTool file,
-			SettingsTool settings, PreferencesView preferences)
+	private void setupObservers(SimulationView simulation, InputBox inputBox, MenuTool file,
+			MenuTool settings, PreferencesView preferences)
 	{
 		file.addObservers(simulation);
 		file.addObservers(inputBox);

@@ -4,31 +4,29 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
-import javafx.scene.control.MenuItem;
+import javafx.scene.control.Control;
 
 /**
- * @author jimmy
+ * 
  * @author Jesse
  *
  */
-public abstract class AbstractButton extends Observable
-{
-	private MenuItem myItem;
+public abstract class AbstractButton extends Observable{
+	private Control myItem;
 	private List<AbstractButton> itemList;
-
-	public AbstractButton(MenuItem menu)
-	{
-		myItem = menu;
-		itemList = new ArrayList<AbstractButton>();
+	
+	public AbstractButton(Control item){
+		myItem = item;
+		itemList = new ArrayList<>();
 		itemList.add(this);
+		
 	}
-
 	public void addItem(AbstractButton item)
 	{
 		itemList.add(item);
 	}
 
-	public MenuItem getItem()
+	public Control getItem()
 	{
 		return myItem;
 	}
@@ -37,4 +35,5 @@ public abstract class AbstractButton extends Observable
 	{
 		return itemList;
 	}
+
 }

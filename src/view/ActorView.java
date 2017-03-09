@@ -7,6 +7,8 @@ import java.util.Observable;
 import javafx.animation.RotateTransition;
 import javafx.animation.SequentialTransition;
 import javafx.animation.TranslateTransition;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
@@ -19,6 +21,7 @@ import property.HeadingProperty;
 import property.ImageColorProperty;
 import property.ImageProperty;
 import property.Property;
+import tool.AnimationControlToolButtons.AnimationSlider;
 import user_structures.ID;
 
 /**
@@ -43,6 +46,8 @@ public abstract class ActorView implements View, Cloneable
 	// private SpeedProperty speed;
 	private SequentialTransition actorMove;
 	private ID id;
+	private DoubleProperty FPS;
+	private DoubleProperty millisecondDelay;
 
 	public ActorView(Defaults defaults, int id)
 	{
@@ -52,6 +57,10 @@ public abstract class ActorView implements View, Cloneable
 		actorPosition = new ActorPositionProperty("Actor Position", this);
 		heading = new HeadingProperty("Actor Heading", this);
 		this.id = new ID(id);
+		FPS = new SimpleDoubleProperty();
+		millisecondDelay = new SimpleDoubleProperty();
+		FPS.setValue(50);
+		millisecondDelay.bind(FPS.multiply(10));
 
 		actorMove = new SequentialTransition();
 		actorMove.setNode(this.getImageView());
@@ -100,7 +109,9 @@ public abstract class ActorView implements View, Cloneable
 	@Override
 	public void update(Observable o, Object arg)
 	{
-
+		if(o instanceof AnimationSlider){
+			FPS.setValue((Double) arg);
+		}
 	}
 
 	public Actor getActor()
@@ -131,7 +142,7 @@ public abstract class ActorView implements View, Cloneable
 
 	public void move(Point2D newLocation)
 	{
-		TranslateTransition move = new TranslateTransition(Duration.millis(500));
+		TranslateTransition move = new TranslateTransition(Duration.millis(millisecondDelay.get()));
 		move.setFromX(actor.getLocation().getX());
 		move.setToX(newLocation.getX());
 		move.setFromY(actor.getLocation().getY());

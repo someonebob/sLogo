@@ -10,33 +10,33 @@ import java.util.List;
 import javafx.scene.control.MenuItem;
 import javafx.stage.Stage;
 
-public class HelpTool extends Tool
+public class HelpMenuTool extends MenuTool
 {
 	public static final String name = "Help";
 
-	private List<AbstractButton> buttons;
+	private List<AbstractMenuItem> buttons;
 
-	public HelpTool(Stage window)
+	public HelpMenuTool(Stage window)
 	{
 		super(name, window);
 	}
 
 	@Override
-	public void makeMenuItems()
+	public void makeItems()
 	{
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	protected List<AbstractButton> getButtons()
+	protected List<AbstractMenuItem> getButtons()
 	{
-		buttons = new ArrayList<AbstractButton>();
+		buttons = new ArrayList<AbstractMenuItem>();
 		buttons.add(new HelpButton());
 		return buttons;
 	}
 
-	public class HelpButton extends AbstractButton
+	public class HelpButton extends AbstractMenuItem
 	{
 		public HelpButton()
 		{

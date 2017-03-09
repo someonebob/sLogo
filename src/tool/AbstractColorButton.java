@@ -9,7 +9,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-public class AbstractColorButton extends AbstractButton
+public class AbstractColorButton extends AbstractMenuItem
 {
 	private Color color;
 
