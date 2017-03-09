@@ -13,27 +13,20 @@ import org.xml.sax.SAXException;
 
 public class XML {
 	public static final DocumentBuilder DOCUMENT_BUILDER = getDocumentBuilder();
-	public static final String DEFAULT_FILE = "/data/defaults.xml";
-	
-	protected File defaultFile;
-	protected Element root;
-	protected Document xmlDocument;
-	
-	public XML(){
-		defaultFile = new File(System.getProperty("user.dir") + DEFAULT_FILE);
-		root = getRootElement(defaultFile);
-	}
+	public static final String DEFAULT_FILE_NAME = "/data/defaults.xml";
+	public static final File DEFAULT_FILE = new File(System.getProperty("user.dir") + DEFAULT_FILE_NAME);
+	public static final Document XML_DOCUMENT = getDocument(DEFAULT_FILE);
+	public static final Element ROOT = XML_DOCUMENT.getDocumentElement();
 
-	
-	private Element getRootElement(File xmlFile) {
-		try {
+	private static Document getDocument(File xmlFile){
+		try{
 			DOCUMENT_BUILDER.reset();
-			xmlDocument = DOCUMENT_BUILDER.parse(xmlFile);
-			return xmlDocument.getDocumentElement();
-		} catch (SAXException | IOException e) {
+			return DOCUMENT_BUILDER.parse(xmlFile);
+		}catch (SAXException | IOException e) {
 			throw new XMLException(e);
 		}
 	}
+
 
 	private static DocumentBuilder getDocumentBuilder() {
 		try {
