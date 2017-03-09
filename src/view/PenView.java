@@ -60,6 +60,8 @@ public class PenView implements View
 
 	public void waitTransition(double waitTime)
 	{
+		// PauseTransition delayTransition = new
+		// PauseTransition(Duration.millis(waitTime));
 		FadeTransition delayTransition = new FadeTransition(Duration.millis(waitTime), new Rectangle());
 		actorMove.getChildren().add(delayTransition);
 		delayTransition.setOnFinished(e -> {
