@@ -90,7 +90,7 @@ public class PenView implements View
 		Circle pen = new Circle(0, 0, penThickness.getValue());
 
 		// create path transition
-		PathTransition pathTransition = new PathTransition(Duration.millis(1000/speed.getValue()), myPath, pen);
+		PathTransition pathTransition = new PathTransition(Duration.millis(NUMERATOR.divide(speed.getValue()).get()), myPath, pen);
 		System.out.println(speed.getValue());
 		pathTransition.currentTimeProperty().addListener(new ChangeListener<Duration>()
 		{

@@ -41,12 +41,10 @@ public abstract class MenuTool implements Tool
 		return menu;
 	}
 
-	public Stage getStage()
+	protected Stage getStage()
 	{
 		return stage;
 	}
-
-	public abstract void makeItems();
 
 	protected abstract List<AbstractMenuItem> getButtons();
 	@Override
