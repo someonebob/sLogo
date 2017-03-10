@@ -41,7 +41,8 @@ public class Interpreter {
 	 */
 	public double parseAndRun(String instruction) {
 		double toRet = 0;
-		instruction = InstructionCleaner.clean(instruction);
+		InstructionCleaner clean = new InstructionCleaner(getMyData(), getMyClassifier());
+		instruction = clean.clean(instruction);
 		TreeBuilder builder = new TreeBuilder(instruction, getMyClassifier(), getMyData());
 		while(!instruction.isEmpty()){
 			Pair<InstructionNode, String> current = builder.buildTree();

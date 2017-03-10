@@ -28,14 +28,14 @@ public abstract class StructureData implements Comparable<StructureData>{
 	
 	@Override
 	public boolean equals(Object o){
-		if (!(o instanceof FunctionData)){
+		if (!(o instanceof StructureData)){
 			return false;
 			//TODO: Error handling
 		}
 		if(this == o){
 			return true;
 		}
-		return this.getName().equals(((FunctionData)o).getName());
+		return this.getName().equals(((StructureData)o).getName());
 	}
 	
 	public StringProperty nameProperty()
