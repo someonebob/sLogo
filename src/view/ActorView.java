@@ -44,7 +44,7 @@ public abstract class ActorView implements View, Cloneable
 	private SequentialTransition actorMove;
 	private ID id;
 	protected SpeedProperty speed;
-	
+	private boolean told = true;
 
 	public ActorView(Defaults defaults, int id)
 	{
@@ -68,6 +68,16 @@ public abstract class ActorView implements View, Cloneable
 		this.setHeading(STARTING_HEADING);
 		// // initial rotation
 		actorMove.play();
+	}
+	public boolean isTold(){
+		return told;
+	}
+	
+	public void setTold(){
+		told = true;
+	}
+	public void setUntold(){
+		told = false;
 	}
 
 	public ID getID()

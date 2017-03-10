@@ -17,6 +17,11 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import xml.XMLEditor;
 
+/**
+ * 
+ * @author Jesse
+ *
+ */
 public class DefaultChooser implements Chooser {	
 	public static final ObservableList<String> COLORS = FXCollections.observableList(Arrays.asList(new String[]{"white", "black", "red", "orange", "yellow", "green", "blue", "indigo", "violet"}));
 	public static final ObservableList<String> IMAGES = FXCollections.observableList(Arrays.asList(new String[]{"default.png", "Koopa.png", "Leonardo.png", "Squirt.png"}));

@@ -29,6 +29,12 @@ public abstract class ToolButton implements Tool{
 		return group;
 	}
 	
+	protected void addButtons(List<AbstractButton> buttons, AbstractButton... items){
+		for(AbstractButton item : items){
+			buttons.add(item);
+		}
+	}
+	
 	protected abstract List<AbstractButton> getButtons();
 
 	@Override
