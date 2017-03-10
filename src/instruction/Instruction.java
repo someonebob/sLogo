@@ -3,7 +3,7 @@ package instruction;
 import java.util.ArrayList;
 import java.util.List;
 
-import view.TurtleView;
+import view.ActorView;
 
 /**
  * This is a the root of the inheritance hierarchy whose concrete subclasses
@@ -47,13 +47,32 @@ public abstract class Instruction
 	{
 		this.instructionData = instructionData;
 	}
-
+	
+	public double executeAllToldTurtles(){
+		int index = 0;
+		double returnValue = -1.0;
+		//Return values
+		if(this instanceof ActorSpecificInstruction){
+			for(ActorView actor : instructionData.getActors()){
+				instructionData.setActiveActorIndex(index);
+				if(actor.isTold()){
+					returnValue = execute();
+				}
+				index++;
+			}
+		}
+		else{
+			returnValue = execute();
+		}
+		return returnValue;
+	}
+	
 	/**
 	 * Performs the action associated with this Instruction. Unique for each
 	 * concrete subclass implementation. Returns the same return value for the
 	 * SLogo command represented by this instruction.
 	 */
-	public abstract double execute();
+	protected abstract double execute();
 
 	protected List<Double> getArgumentsDouble()
 	{
@@ -79,7 +98,7 @@ public abstract class Instruction
 		return arguments.get(index);
 	}
 
-	protected TurtleView getActiveTurtle()
+	protected ActorView getActiveActor()
 	{
 		return getInstructionData().getActiveActor();
 	}

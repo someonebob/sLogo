@@ -2,6 +2,7 @@ package instruction.DisplayCommands;
 
 import java.util.List;
 
+import instruction.ActorSpecificInstruction;
 import instruction.InstructionData;
 import util.ImageViewTuple;
 import util.MathUtil;
@@ -14,7 +15,7 @@ import util.MathUtil;
  *
  */
 
-public class SetShape extends DisplayCommand{
+public class SetShape extends DisplayCommand  implements ActorSpecificInstruction {
 
 	public SetShape(InstructionData instructionData, List<String> args, String myText) {
 		super(instructionData, args, myText);

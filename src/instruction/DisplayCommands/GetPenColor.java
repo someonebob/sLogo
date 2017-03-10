@@ -4,6 +4,7 @@ package instruction.DisplayCommands;
 import java.util.List;
 
 import exceptions.InvalidIndexException;
+import instruction.ActorSpecificInstruction;
 /**
  * Returns turtle's current color index
  *
@@ -12,7 +13,7 @@ import instruction.InstructionData;
 import javafx.scene.paint.Color;
 import property.PenColorProperty;
 
-public class GetPenColor extends DisplayCommand{
+public class GetPenColor extends DisplayCommand  implements ActorSpecificInstruction {
 	private static final String RESOURCE_NONINDEXED_NAME = "NonindexedColorMessage";
 	
 	public GetPenColor(InstructionData instructionData, List<String> args, String myText) {

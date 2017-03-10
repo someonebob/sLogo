@@ -3,6 +3,7 @@ package instruction.DisplayCommands;
 import java.util.List;
 
 import exceptions.NonsensicalArgumentException;
+import instruction.ActorSpecificInstruction;
 import instruction.InstructionData;
 import property.PenThicknessProperty;
 
@@ -13,7 +14,7 @@ import property.PenThicknessProperty;
  *
  */
 
-public class SetPenSize extends DisplayCommand {
+public class SetPenSize extends DisplayCommand  implements ActorSpecificInstruction {
 	private static final String RESOURCE_NEGATIVE_NAME = "NonpositivePenThicknessMessage";
 	
 	public SetPenSize(InstructionData instructionData, List<String> args, String myText) {

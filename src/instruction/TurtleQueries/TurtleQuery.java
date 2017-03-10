@@ -2,6 +2,7 @@ package instruction.TurtleQueries;
 
 import java.util.List;
 
+import instruction.ActorSpecificInstruction;
 import instruction.Instruction;
 import instruction.InstructionData;
 
@@ -11,7 +12,7 @@ import instruction.InstructionData;
  * @author Matthew Barbano
  *
  */
-public abstract class TurtleQuery extends Instruction{
+public abstract class TurtleQuery extends Instruction implements ActorSpecificInstruction{
 	
 	public TurtleQuery(InstructionData instructionData, List<String> args, String myText){
 		super(instructionData, args, myText);

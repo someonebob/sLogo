@@ -93,7 +93,7 @@ public class SimulationView implements View, Cloneable, Observer
 		}
 	}
 	
-	public Collection<ActorView> getActors(){
+	public List<ActorView> getActors(){
 		return actors;
 	}
 

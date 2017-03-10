@@ -2,6 +2,7 @@ package instruction.Miscellaneous;
 
 import java.util.List;
 
+import instruction.ActorSpecificInstruction;
 import instruction.Instruction;
 import instruction.InstructionData;
 import interpreter.Interpreter;
@@ -16,7 +17,7 @@ import util.MathUtil;
  * @author Maddie Briere
  *
  */
-public abstract class Miscellaneous extends Instruction {
+public abstract class Miscellaneous extends Instruction implements ActorSpecificInstruction{
 	
 	public Miscellaneous(InstructionData instructionData, List<String> args, String myText) {
 		super(instructionData, args, myText);
