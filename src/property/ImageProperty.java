@@ -6,7 +6,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import exceptions.InvalidIndexException;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -143,4 +142,5 @@ public class ImageProperty extends Property<ImageView>
 		chooser.getExtensionFilters().add(new ExtensionFilter("IMAGE", PNG_EXTENSION, GIF_EXTENSION));
 		return chooser;
 	}
+
 }

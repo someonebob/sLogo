@@ -3,37 +3,28 @@ package view;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Observable;
+import java.util.Observer;
 
-import javafx.animation.PathTransition;
-import javafx.animation.PauseTransition;
-import javafx.animation.SequentialTransition;
+import javafx.animation.*;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.LineTo;
-import javafx.scene.shape.MoveTo;
-import javafx.scene.shape.Path;
+import javafx.scene.canvas.*;
+import javafx.scene.paint.*;
+import javafx.scene.shape.*;
 import javafx.util.Duration;
-import property.PenColorProperty;
-import property.PenThicknessProperty;
-import property.PenUpProperty;
-import property.Property;
-import property.SpeedProperty;
+import property.*;
+import tool.AnimationControlToolButtons.*;
 
 /**
  * 
  * @author jimmy
  *
  */
-public class PenView implements View
+public class PenView implements View, Observer
 {
 	public static final DoubleProperty NUMERATOR = new SimpleDoubleProperty(1000);
 	public static final double DEFAULT_FPS = 5;
@@ -91,7 +82,6 @@ public class PenView implements View
 		// create path transition
 		PathTransition pathTransition = new PathTransition(Duration.millis(1000 / speed.getValue()), myPath, pen);
 
-		System.out.println(speed.getValue());
 		pathTransition.currentTimeProperty().addListener(new ChangeListener<Duration>()
 		{
 
@@ -103,7 +93,6 @@ public class PenView implements View
 			@Override
 			public void changed(ObservableValue<? extends Duration> observable, Duration oldValue, Duration newValue)
 			{
-				System.out.println("hi");
 				// skip starting at 0/0
 				if (oldValue == Duration.ZERO)
 					return;
@@ -142,12 +131,6 @@ public class PenView implements View
 	public void setColor(Color color)
 	{
 		this.color.setValue(color);
-	}
-
-	@Override
-	public void update(Observable o, Object arg)
-	{
-
 	}
 
 	public void penUp()
@@ -209,5 +192,18 @@ public class PenView implements View
 	public List<Property<?>> getProperties()
 	{
 		return Arrays.asList(color, penUp, penThickness);
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		if(o instanceof AnimationPlayButton){
+			actorMove.play();
+		}
+		else if(o instanceof AnimationPauseButton){
+			actorMove.pause();
+		}
+		else if(o instanceof AnimationStopButton){
+			actorMove.stop();
+		}
 	}
 }
