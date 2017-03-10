@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Observer;
 
 import javafx.scene.Node;
+import javafx.scene.control.Separator;
 import javafx.scene.layout.HBox;
 
 /**
@@ -22,6 +23,7 @@ public abstract class ToolButton implements Tool{
 				group.getChildren().add(ab.getItem());
 			}
 		}
+		group.getChildren().add(new Separator());
 	}
 		
 	@Override

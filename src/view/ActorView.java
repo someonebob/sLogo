@@ -1,6 +1,8 @@
 package view;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
 import javafx.animation.Animation;
 import javafx.animation.SequentialTransition;
@@ -19,6 +21,7 @@ import property.ImageColorProperty;
 import property.ImageProperty;
 import property.Property;
 import property.SpeedProperty;
+import tool.AnimationControlToolButtons.*;
 import user_structures.ID;
 
 /**
@@ -27,7 +30,7 @@ import user_structures.ID;
  * @author Jesse
  *
  */
-public abstract class ActorView implements View, Cloneable
+public abstract class ActorView implements View, Cloneable, Observer
 {
 	public static final int ACTOR_HEIGHT = 75;
 	public static final int ACTOR_WIDTH = 75;
@@ -82,6 +85,18 @@ public abstract class ActorView implements View, Cloneable
 	public ID getID()
 	{
 		return id;
+	}
+	@Override
+	public void update(Observable o, Object arg) {
+		if(o instanceof AnimationPlayButton){
+			actorMove.play();
+		}
+		else if(o instanceof AnimationPauseButton){
+			actorMove.pause();
+		}
+		else if(o instanceof AnimationStopButton){
+			actorMove.stop();
+		}
 	}
 
 	public void step()

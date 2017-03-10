@@ -207,7 +207,8 @@ public class Controller implements Observer
 		settings.addObservers(this);
 		
 		//TODO: add observers for toolbuttons
-		//animation.addObservers(simulation.getTurtle());
+		animation.addObservers(simulation.getTurtle());
+		animation.addObservers(simulation.getTurtle().getPen());
 		actorControl.addObservers(simulation);
 	}
 
