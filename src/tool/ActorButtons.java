@@ -4,8 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Control;
+
 
 public class ActorButtons extends ToolButton {
 	private List<AbstractButton> buttons;
@@ -18,7 +17,7 @@ public class ActorButtons extends ToolButton {
 	@Override
 	public void makeItems() {
 		buttons = new ArrayList<>();
-		addButtons(buttons, new CreateActorButton());
+		addButtons(buttons, new CreateActorButton(), new DeleteActorButton());
 	}
 
 	@Override
@@ -39,11 +38,14 @@ public class ActorButtons extends ToolButton {
 		
 	}
 	
-	public class ActorListButton extends AbstractButton{
+	public class DeleteActorButton extends AbstractButton{
 
-		public ActorListButton() {
-			super(new ComboBox());
-			// TODO Auto-generated constructor stub
+		public DeleteActorButton() {
+			super(new Button("Delete Actor"));
+			this.getItem().setOnMouseClicked(e -> {
+				this.setChanged();
+				this.notifyObservers();
+			});
 		}
 		
 	}

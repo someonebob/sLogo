@@ -24,7 +24,9 @@ import main.Defaults;
 import property.BackgroundColorProperty;
 import property.Property;
 import tool.ActorButtons.CreateActorButton;
+import tool.ActorButtons.DeleteActorButton;
 import tool.SettingsMenuTool.*;
+import user_structures.ID;
 import xml.XMLEditor;
 import xml.XMLException;
 
@@ -44,6 +46,7 @@ public class SimulationView implements View, Cloneable, Observer
 		this.defaults = defaults;
 		List<ActorView> list = new ArrayList<>();
 		actors = FXCollections.observableList(list);
+		
 		for (int i = 0; i < defaults.numTurtles(); i++) {
 			newActor();
 		}
@@ -58,7 +61,11 @@ public class SimulationView implements View, Cloneable, Observer
 	public void step()
 	{
 		backupSimulation = this.clone();
-		actors.get(0).step();
+		for(ActorView actor : actors){
+			if(actor.isTold()){
+				actor.step();
+			}
+		}
 	}
 
 	public void move(Point2D deltaLocation)
@@ -101,9 +108,7 @@ public class SimulationView implements View, Cloneable, Observer
 		Tooltip tip = new Tooltip(actor.getLocation().toString());
 
 		Tooltip.install(actor.getImageView(), tip);
-		
 
-		
 		actor.getPen().getCanvas().toBack();
 		actor.getPen().getCanvas().widthProperty().bind(root.widthProperty());
 		actor.getPen().getCanvas().heightProperty().bind(root.heightProperty());
@@ -112,7 +117,6 @@ public class SimulationView implements View, Cloneable, Observer
 		root.getChildren().add(actor.display());
 
 		actors.add(actor);
-
 	}
 
 	@Override
@@ -134,6 +138,12 @@ public class SimulationView implements View, Cloneable, Observer
 			}
 		}else if (o instanceof CreateActorButton){
 			newActor();
+		}else if(o instanceof DeleteActorButton){
+			if(root.getChildren().size() != 0){
+				//remove last actor and its pen
+				root.getChildren().remove(root.getChildren().size()-1, root.getChildren().size());
+			}
+			
 		}else if(o instanceof DefaultButton){
 			XMLEditor editor = new XMLEditor();
 			String imageName ;

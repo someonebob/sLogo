@@ -34,7 +34,7 @@ public class InstructionData
 
 	public InstructionData()
 	{
-		this.simulation = null;
+		this.simulationView = null;
 		this.variables = new ArrayList<VariableData>();
 		this.functions = new ArrayList<FunctionData>();
 		this.language = "English";

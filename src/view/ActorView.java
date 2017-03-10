@@ -46,17 +46,18 @@ public abstract class ActorView implements View, Cloneable, Observer
 	private SequentialTransition actorMove;
 	private ID id;
 	protected SpeedProperty speed;
-	private boolean told = true;
+	private boolean told;
 
 	public ActorView(Defaults defaults, int id)
 	{
+		this.id = new ID(id);
+		setTold();
 		image = new ImageProperty("Actor Image");
 		imageColor = new ImageColorProperty("Actor Image Color", image);
 		speed = new SpeedProperty("FPS");
 		speed.setValue(5.0);
 		actorPosition = new ActorPositionProperty("Actor Position", this);
 		heading = new HeadingProperty("Actor Heading", this);
-		this.id = new ID(id);
 		
 
 		actorMove = new SequentialTransition();
