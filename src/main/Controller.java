@@ -37,6 +37,7 @@ import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import tool.ActorButtons;
 import tool.AnimationControlToolButtons;
@@ -56,10 +57,9 @@ import user_structures.FunctionData;
 import user_structures.VariableData;
 import view.InputBox;
 import view.PreferencesView;
-import view.SavedCommandsView;
 import view.SimulationView;
 import view.MultiLineInputBox;
-import view.WorkspaceView;
+import view.SavedStructuresView;
 
 /**
  * @author jimmy
@@ -74,8 +74,7 @@ public class Controller implements Observer
 	private Map<Tab, SelectionBar> selectionBarMap;
 	private Map<Tab, SimulationView> simulationMap;
 	private Map<Tab, InputBox> inputBoxMap;
-	private Map<Tab, WorkspaceView> workspaceMap;
-	private Map<Tab, SavedCommandsView> savedCommandsMap;
+	private Map<Tab, SavedStructuresView> workspaceMap;
 
 	private Map<Tab, ObservableList<VariableData>> variableMap;
 	private Map<Tab, ObservableList<FunctionData>> functionMap;
@@ -134,7 +133,6 @@ public class Controller implements Observer
 		simulationMap = new HashMap<>();
 		inputBoxMap = new HashMap<>();
 		workspaceMap = new HashMap<>();
-		savedCommandsMap = new HashMap<>();
 
 		variableMap = new HashMap<>();
 		functionMap = new HashMap<>();
@@ -151,8 +149,7 @@ public class Controller implements Observer
 		SimulationView simulation = new SimulationView(defaults);
 		InputBox inputBox = new MultiLineInputBox();
 		inputBox.setFocus();
-		WorkspaceView workspace = new WorkspaceView();
-		SavedCommandsView userCommands = new SavedCommandsView();
+		SavedStructuresView workspace = new SavedStructuresView();
 		PreferencesView preferences = new PreferencesView(simulation.getTurtle(), simulation);
 
 		SelectionBar selectionBar = new ComboBar();
@@ -168,11 +165,11 @@ public class Controller implements Observer
 		List<FunctionData> funcList = new ArrayList<>();
 		ObservableList<FunctionData> functions = FXCollections.observableList(funcList);
 
-		workspace.setItems(variables);
-		// TODO setup functions
+		workspace.setVariables(variables);
+		workspace.setFunctions(functions);
 
 		setupBorderPane(pane, selectionBar, simulation, inputBox, workspace, preferences);
-		putIntoMaps(tab, selectionBar, simulation, inputBox, workspace, userCommands, variables, functions);
+		putIntoMaps(tab, selectionBar, simulation, inputBox, workspace,variables, functions);
 		setupObservers(simulation, inputBox, file, settings, animation, actorControl, preferences);
 		setupCommands(inputBox);
 
@@ -181,7 +178,7 @@ public class Controller implements Observer
 	}
 
 	private void setupBorderPane(BorderPane pane, SelectionBar selectionBar, SimulationView simulation,
-			InputBox inputBox, WorkspaceView workspace, PreferencesView preferences)
+			InputBox inputBox, SavedStructuresView workspace, PreferencesView preferences)
 
 	{
 		pane.setTop(selectionBar.display());
@@ -193,14 +190,13 @@ public class Controller implements Observer
 
 	private void putIntoMaps(Tab tab, SelectionBar selectionBar, SimulationView simulation, InputBox inputBox,
 
-			WorkspaceView workspace, SavedCommandsView userCommands, ObservableList<VariableData> variables,
+			SavedStructuresView workspace, ObservableList<VariableData> variables,
 			ObservableList<FunctionData> functions)
 	{
 		selectionBarMap.put(tab, selectionBar);
 		simulationMap.put(tab, simulation);
 		inputBoxMap.put(tab, inputBox);
 		workspaceMap.put(tab, workspace);
-		savedCommandsMap.put(tab, userCommands);
 
 		variableMap.put(tab, variables);
 		functionMap.put(tab, functions);

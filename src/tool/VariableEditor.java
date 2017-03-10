@@ -7,6 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import user_structures.StructureData;
 import user_structures.VariableData;
 
 /**
@@ -59,6 +60,8 @@ public class VariableEditor {
 		grid.add(value, 0, 1);
 		grid.add(valueEntry, 1, 1);
 		grid.add(save, 1, 2);
+		grid.setHgap(5);
+		grid.setVgap(5);
 		
 		Scene scene = new Scene(grid);
 		window.setScene(scene);
@@ -80,5 +83,6 @@ public class VariableEditor {
 		}
 		window.close();
 	}
+
 
 }
