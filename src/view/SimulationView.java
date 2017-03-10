@@ -124,10 +124,12 @@ public class SimulationView implements View, Cloneable
 			newActor();
 		}else if(o instanceof DefaultButton){
 			XMLEditor editor = new XMLEditor();
+			int index = actors.get(0).getImageProperty().getValue().getImage().impl_getUrl().lastIndexOf("/")+1;
+			String imageName = actors.get(0).getImageProperty().getValue().getImage().impl_getUrl().substring(index);
 			try {
 				editor.setDefault("background", backgroundColor.getValue().toString());
 				editor.setDefault("pen", ((TurtleView)actors.get(0)).getPen().getPenColorProperty().getValue().toString());
-				editor.setDefault("image", actors.get(0).getImageProperty().getIndexedImages().get(actors.get(0).getImageProperty().getIndexedImages().indexOf(actors.get(0).getImageView())).getFilename());
+				editor.setDefault("image", imageName);
 				editor.setDefault("numTurtles", Integer.toString(actors.size()));
 			} catch (TransformerException e1) {
 				throw new XMLException(e1);
