@@ -88,7 +88,7 @@ public class SettingsMenuTool extends MenuTool
 		}
 	}
 
-	public class LanguageButton extends AbstractLanguageButton
+	public class LanguageButton extends AbstractLanguageItem
 	{
 		public LanguageButton()
 		{

@@ -15,6 +15,8 @@ import java.util.Observer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.imageio.ImageIO;
+
 import exceptions.SLogoException;
 import instruction.InstructionData;
 import interpreter.Interpreter;
@@ -24,9 +26,12 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.Scene;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.image.WritableImage;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
@@ -40,6 +45,7 @@ import tool.FileMenuTool;
 import tool.FileMenuTool.NewButton;
 import tool.FileMenuTool.OpenButton;
 import tool.FileMenuTool.SaveButton;
+import tool.FileMenuTool.SaveImageButton;
 import tool.HelpMenuTool;
 import tool.MenuTool;
 import tool.SelectionBar;
@@ -108,8 +114,11 @@ public class Controller implements Observer
 		else if (o instanceof OpenButton) {
 			openFile((File) arg);
 		}
-		if (o instanceof SaveButton) {
+		else if (o instanceof SaveButton) {
 			saveFile((File) arg);
+		}
+		else if(o instanceof SaveImageButton){
+			saveImage((File) arg);
 		}
 		else if (o instanceof LanguageButton) {
 			language.set(currentIndex.get(), (String) arg);
@@ -284,6 +293,17 @@ public class Controller implements Observer
 			currentTab.get().setText(file.getName());
 		} catch (IOException e) {
 			Logger.getLogger(MultiLineInputBox.class.getName()).log(Level.SEVERE, null, e);
+		}
+	}
+	
+	private void saveImage(File file){
+		WritableImage image = simulationMap.get(currentTab.get()).display().snapshot(new SnapshotParameters(), null);
+		
+		try {
+			ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file);
+		} catch (IOException e) {
+			Logger.getLogger(SimulationView.class.getName()).log(Level.SEVERE, null, e);
+
 		}
 	}
 

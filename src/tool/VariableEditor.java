@@ -1,6 +1,6 @@
 package tool;
 
-
+import exceptions.InvalidNumberException;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -27,6 +27,10 @@ public class VariableEditor {
 		save.setOnAction(e -> buttonAction());
 	}
 	
+	/**
+	 * 
+	 * @return the new updated variable data
+	 */
 	public VariableData getChangedVariable(){
 		return changedVariable;
 	}
@@ -68,10 +72,10 @@ public class VariableEditor {
 		}
 		if(valueEntry.getText().length() > 0){
 			//Check if works for negative numbers
-			if(valueEntry.getText().chars().allMatch( Character::isDigit )){
+			try{
 				changedVariable.setValue(Double.parseDouble(valueEntry.getText()));
-			}else{
-				//TODO make it pop up an alert that says value input must be a number
+			}catch(Exception e){
+				new InvalidNumberException("NotNumberMessage").displayAlert();
 			}
 		}
 		window.close();
