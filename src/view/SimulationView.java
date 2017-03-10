@@ -2,8 +2,11 @@ package view;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.Observable;
+
+import javax.xml.transform.TransformerException;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,9 +21,10 @@ import javafx.scene.paint.Paint;
 import main.Defaults;
 import property.BackgroundColorProperty;
 import property.Property;
-import tool.SettingsMenuTool.BackgroundColorButton;
-import tool.SettingsMenuTool.PenColorButton;
-import tool.SettingsMenuTool.TurtleImageButton;
+import tool.ActorButtons.CreateActorButton;
+import tool.SettingsMenuTool.*;
+import xml.XMLEditor;
+import xml.XMLException;
 
 public class SimulationView implements View, Cloneable
 {
@@ -28,7 +32,7 @@ public class SimulationView implements View, Cloneable
 	private StackPane root;
 	private BackgroundColorProperty backgroundColor;
 	private ObservableList<ActorView> actors;
-	private int id = 1;
+	private int id = 0;
 	private Defaults defaults;
 
 	public SimulationView(Defaults defaults)
@@ -64,6 +68,20 @@ public class SimulationView implements View, Cloneable
 	{
 		backgroundColor.setValue(color);
 	}
+	
+	public void setTold(List<Integer> toldTurtles){
+		for(int i = 0; i < actors.size(); i++){
+			if(toldTurtles.contains(i)){
+				actors.get(i).setTold();
+			}else{
+				actors.get(i).setUntold();
+			}
+		}
+	}
+	
+	public Collection<ActorView> getActors(){
+		return actors;
+	}
 
 	public TurtleView getTurtle()
 	{
@@ -90,25 +108,32 @@ public class SimulationView implements View, Cloneable
 	{
 		if (o instanceof BackgroundColorButton) {
 			if (arg instanceof Color) {
-
 				root.setBackground(new Background(new BackgroundFill((Paint) arg, null, null)));
 			}
-		}
-
-		if (o instanceof TurtleImageButton) {
+		}else if (o instanceof TurtleImageButton) {
 			if (arg instanceof Image) {
 				// TODO make ID's work
 				actors.get(0).setImage((Image) arg);
-
 			}
-		}
-
-		if (o instanceof PenColorButton) {
+		}else if (o instanceof PenColorButton) {
 			if (arg instanceof Color) {
-
 				// TODO make ID's work
 				((TurtleView) actors.get(0)).getPen().setColor((Color) arg);
 			}
+		}else if (o instanceof CreateActorButton){
+			newActor();
+		}else if(o instanceof DefaultButton){
+			XMLEditor editor = new XMLEditor();
+			try {
+				editor.setDefault("background", backgroundColor.getValue().toString());
+				editor.setDefault("pen", ((TurtleView)actors.get(0)).getPen().getPenColorProperty().getValue().toString());
+				editor.setDefault("image", actors.get(0).getImageProperty().getIndexedImages().get(actors.get(0).getImageProperty().getIndexedImages().indexOf(actors.get(0).getImageView())).getFilename());
+				editor.setDefault("numTurtles", Integer.toString(actors.size()));
+			} catch (TransformerException e1) {
+				throw new XMLException(e1);
+			}
+		}else{
+			
 		}
 
 	}
