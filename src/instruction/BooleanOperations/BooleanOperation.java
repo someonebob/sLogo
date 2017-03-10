@@ -2,6 +2,7 @@ package instruction.BooleanOperations;
 
 import java.util.List;
 
+import instruction.ActorSpecificInstruction;
 import instruction.Instruction;
 import instruction.InstructionData;
 
@@ -12,7 +13,7 @@ import instruction.InstructionData;
  * @author Matthew Barbano
  *
  */
-public abstract class BooleanOperation extends Instruction {
+public abstract class BooleanOperation extends Instruction{
 	public BooleanOperation(InstructionData instructionData,  List<String> args, String myText) {
 		super(instructionData, args, myText);
 	}

@@ -61,7 +61,7 @@ public class TreeExecuter
 	private void generateHead(InstructionNode head, List<String> args){
 		if(!myClass.getInstructionType(head.getMyCommand(), myData).equals("NO MATCH")){
 			Instruction i = myClass.generateInstruction(head.getMyCommand(), myData, args);
-			head.setMyRunValue(""+i.execute()); //Will change with list, for now, just tacks on result
+			head.setMyRunValue(""+i.executeAllToldTurtles()); //Will change with list, for now, just tacks on result
 		}
 		else{ //Unknown value, just set run value to string command
 			head.setMyRunValue(head.getMyCommand());

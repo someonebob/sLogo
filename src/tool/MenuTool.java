@@ -41,13 +41,15 @@ public abstract class MenuTool implements Tool
 		return menu;
 	}
 
-	public Stage getStage()
+	protected Stage getStage()
 	{
 		return stage;
 	}
-
-	public abstract void makeItems();
-
+	protected void addButtons(List<AbstractMenuItem> buttons, AbstractMenuItem... items){
+		for(AbstractMenuItem item : items){
+			buttons.add(item);
+		}
+	}
 	protected abstract List<AbstractMenuItem> getButtons();
 	@Override
 	public void addObservers(Observer ob){

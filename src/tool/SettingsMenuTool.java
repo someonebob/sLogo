@@ -30,11 +30,7 @@ public class SettingsMenuTool extends MenuTool
 	public void makeItems()
 	{
 		buttons = new ArrayList<>();
-		buttons.add(new BackgroundColorButton());
-		buttons.add(new TurtleImageButton());
-		buttons.add(new PenColorButton());
-		buttons.add(new LanguageButton());
-		buttons.add(new DefaultButton());
+		addButtons(buttons, new BackgroundColorButton(), new TurtleImageButton(), new PenColorButton(), new LanguageButton(), new DefaultButton());
 	}
 
 	@Override
@@ -43,6 +39,8 @@ public class SettingsMenuTool extends MenuTool
 		return buttons;
 
 	}
+	
+	
 
 	private FileChooser setupFileChooser()
 	{
@@ -103,8 +101,11 @@ public class SettingsMenuTool extends MenuTool
 	{
 		public DefaultButton()
 		{
-			super(new MenuItem("Set Defaults"));
-			this.getItem().setOnAction(e -> new DefaultChooser());
+			super(new MenuItem("Save Defaults"));
+			this.getItem().setOnAction(e -> {
+				this.setChanged();
+				this.notifyObservers();
+			});
 		}
 	}
 

@@ -1,7 +1,5 @@
 package view;
 
-import java.util.Observer;
-
 import javafx.scene.Node;
 
 /**
@@ -12,7 +10,7 @@ import javafx.scene.Node;
  * @author jimmy
  *
  */
-public interface View extends Observer
+public interface View
 {
 
 	/**

@@ -1,4 +1,7 @@
 package instruction.DisplayCommands;
+import java.util.List;
+
+import instruction.InstructionData;
 /**
  * Set the screen background color to that represented 
  * by index
@@ -6,10 +9,6 @@ package instruction.DisplayCommands;
  * @author maddiebriere
  *
  */
-
-public class SetBackground {
-
-import instruction.InstructionData;
 import javafx.scene.paint.Color;
 import util.MathUtil;
 

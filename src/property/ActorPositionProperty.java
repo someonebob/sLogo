@@ -1,15 +1,18 @@
 package property;
 
+import java.util.Arrays;
+import java.util.List;
+
 import javafx.animation.TranslateTransition;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.geometry.Point2D;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import util.MathUtil;
 import util.PointPolar;
@@ -20,15 +23,22 @@ import view.ActorView;
  * @author jimmy
  *
  */
-public class ActorPositionProperty extends Property<Point2D>
+public class ActorPositionProperty extends Property<Point2D> 
 {
 	private ActorView actor;
+	private StringProperty position;
 
 	public ActorPositionProperty(String name, ActorView actor)
 	{
 		super(name);
 		this.actor = actor;
+		position = new SimpleStringProperty();
 		super.setValue(new Point2D(0, 0));
+		position.set(this.getValue().toString());
+	}
+	
+	public StringProperty getLocationAsString(){
+		return position;
 	}
 
 	@Override
@@ -36,6 +46,7 @@ public class ActorPositionProperty extends Property<Point2D>
 	{
 		actorMove(location);
 		super.setValue(location);
+		position.set(this.getValue().toString());
 	}
 
 	@Override
@@ -48,13 +59,13 @@ public class ActorPositionProperty extends Property<Point2D>
 			double x = Double.parseDouble(coordinates[0]);
 			double y = Double.parseDouble(coordinates[1]);
 			this.setValue(new Point2D(x, y));
+			position.set(this.getValue().toString());
 		}
 	}
 
 	@Override
-	public Node makeDynamicUpdater()
+	public List<Node> makeDynamicUpdaters()
 	{
-		VBox vbox = new VBox();
 		Label label = new Label(String.format("Move %s", this.getName()));
 		// TODO: REPLACE THESE WITH RESOURCE FILE
 		ComboBox<String> directionPicker = new ComboBox<>(FXCollections.observableArrayList("fd", "bk", "lt", "rt"));
@@ -74,13 +85,8 @@ public class ActorPositionProperty extends Property<Point2D>
 			}
 			actor.step();
 		});
-
-		vbox.getChildren().add(label);
-		vbox.getChildren().add(directionPicker);
-		vbox.getChildren().add(distance);
-		vbox.getChildren().add(moveButton);
-		vbox.setAlignment(Pos.CENTER);
-		return vbox;
+		
+		return Arrays.asList(label, directionPicker, distance, moveButton);
 	}
 
 	private void move(double distance)
@@ -96,11 +102,15 @@ public class ActorPositionProperty extends Property<Point2D>
 	private void actorMove(Point2D newLocation)
 	{
 		TranslateTransition move = new TranslateTransition(Duration.millis(1000/actor.getSpeed()));
+		
+		
 		move.setFromX(this.getValue().getX());
 		move.setToX(newLocation.getX());
 		move.setFromY(this.getValue().getY());
 		move.setToY(newLocation.getY());
 		move.setCycleCount(1);
+		
 		actor.addTransition(move);
 	}
+
 }

@@ -12,7 +12,7 @@ public class Heading extends TurtleQuery {
 
 	@Override
 	public double execute() {
-		return getActiveActor().getHeading();
+		return getInstructionData().getActiveActor().getHeading();
 	}
 
 }

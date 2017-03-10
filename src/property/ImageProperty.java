@@ -2,18 +2,19 @@ package property;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-import javafx.geometry.Pos;
+import exceptions.InvalidIndexException;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
+import util.ImageViewTuple;
 import view.ActorView;
 
 /**
@@ -21,21 +22,29 @@ import view.ActorView;
  * @author jimmy
  *
  */
+
+/*
+ * Note from Matthew: Whenever you instantiate a new ImageProperty instance,
+ * you MUST call addDefaultImageToInitialImageFilename() after setting the default
+ * image, else several Instructions will not work. Ideally, you could do all this in the
+ * ImageProperty constructor, but I did not want to modify this class more than necessary.
+ * 
+ */
+
 public class ImageProperty extends Property<ImageView>
 {
-	private static final List<ImageView> INDEXED_IMAGES = new ArrayList<>();
+	private static final List<ImageViewTuple> INDEXED_IMAGES = new ArrayList<>();
 	private static final String TURTLE_IMAGES_LOCATION = "images";
-
+	private static final String RESOURCE_INDEX_NAME = "DefaultIndexMessage";
+	
 	private ImageView displayImage;
 
 	static {
 		File currentFolder = new File(".");
 		File srcFolder = currentFolder.getParentFile();
 		File imagesFolder = new File(srcFolder, TURTLE_IMAGES_LOCATION);
-		for (File imageFile : imagesFolder.listFiles()) {
-			// Cannot use the normal InputStream because getClass() has error
-			// when called from static context
-			INDEXED_IMAGES.add(new ImageView(new Image(imageFile.getName())));
+		for(File imageFile : imagesFolder.listFiles()){
+			INDEXED_IMAGES.add(new ImageViewTuple(imageFile.getName(), new ImageView(new Image(imageFile.getName()))));
 		}
 	}
 
@@ -48,12 +57,26 @@ public class ImageProperty extends Property<ImageView>
 		displayImage.setFitWidth(ActorView.ACTOR_WIDTH);
 		displayImage.setPreserveRatio(true);
 	}
-
-	public List<ImageView> getIndexedImages()
-	{
+	
+	public List<ImageViewTuple> getIndexedImages(){
 		return INDEXED_IMAGES;
 	}
-
+	/**
+	 * Fixes the .equals() problem. Consult me for details.
+	 * @author Matthew
+	 * @param initialImageFilename
+	 */
+	
+	public void mergeDuplicateDefaultImages(String initialImageFilename){
+		 for(ImageViewTuple tuple : INDEXED_IMAGES){
+			 if(tuple.getFilename().equals(initialImageFilename)){
+				 tuple.setImageView(displayImage);
+				 return;
+			 }
+		 }
+		 throw new InvalidIndexException(RESOURCE_INDEX_NAME);
+	}
+	
 	@Override
 	public void setValue(ImageView image)
 	{
@@ -86,15 +109,12 @@ public class ImageProperty extends Property<ImageView>
 	}
 
 	@Override
-	public Node makeDynamicUpdater()
+	public List<Node> makeDynamicUpdaters()
 	{
 		Label label = new Label(String.format("Update %s", this.getName()));
 		Button input = initializeButton(String.format("Update %s", this.getName()));
-		VBox vbox = new VBox();
-		vbox.getChildren().add(label);
-		vbox.getChildren().add(input);
-		vbox.setAlignment(Pos.CENTER);
-		return vbox;
+
+		return Arrays.asList(label, input);
 	}
 
 	private Button initializeButton(String defaultText)
@@ -122,4 +142,5 @@ public class ImageProperty extends Property<ImageView>
 		chooser.getExtensionFilters().add(new ExtensionFilter("IMAGE", PNG_EXTENSION, GIF_EXTENSION));
 		return chooser;
 	}
+
 }

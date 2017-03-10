@@ -22,9 +22,9 @@ public class SetTowards extends TurtleCommand
 	{
 		double x = getArgumentDouble(0);
 		double y = getArgumentDouble(1);
-		double currX = this.getActiveTurtle().getLocation().getX();
-		double currY = this.getActiveTurtle().getLocation().getY();
-		double currHeading = this.getActiveTurtle().getHeading();
+		double currX = this.getActiveActor().getLocation().getX();
+		double currY = this.getActiveActor().getLocation().getY();
+		double currHeading = this.getActiveActor().getHeading();
 		double newHeading = Math.toDegrees(Math.atan((y - currY) / (x - currX)));
 		if (y - currY < 0) {
 			newHeading += 180;

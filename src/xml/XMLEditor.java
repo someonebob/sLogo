@@ -14,7 +14,7 @@ public class XMLEditor extends XML{
 	
 	public void setDefault(String tagName, String newDefault) throws TransformerException{
 		if(newDefault != null){
-			root.getElementsByTagName(tagName).item(0).setTextContent(newDefault);
+			XML.ROOT.getElementsByTagName(tagName).item(0).setTextContent(newDefault);
 			transform();
 		}
 		
@@ -23,8 +23,8 @@ public class XMLEditor extends XML{
 	private void transform() throws TransformerException{
 		TransformerFactory transformerfactory = TransformerFactory.newInstance();
 		Transformer transformer = transformerfactory.newTransformer();
-		DOMSource source = new DOMSource(xmlDocument);
-		StreamResult result = new StreamResult(defaultFile);
+		DOMSource source = new DOMSource(XML.XML_DOCUMENT);
+		StreamResult result = new StreamResult(XML.DEFAULT_FILE);
 		transformer.transform(source, result);
 	}
 
