@@ -9,11 +9,12 @@ package instruction.DisplayCommands;
 
 import java.util.List;
 
+import instruction.ActorSpecificInstruction;
 import instruction.InstructionData;
 import javafx.scene.paint.Color;
 import util.MathUtil;
 
-public class SetPenColor extends DisplayCommand{
+public class SetPenColor extends DisplayCommand  implements ActorSpecificInstruction {
 
 	public SetPenColor(InstructionData instructionData, List<String> args, String myText) {
 		super(instructionData, args, myText);

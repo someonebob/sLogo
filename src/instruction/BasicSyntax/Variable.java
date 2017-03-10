@@ -12,7 +12,7 @@ import user_structures.VariableData;
  *
  */
 
-public class Variable extends Instruction{
+public class Variable extends BasicSyntax{
 
 	public Variable(InstructionData instructionData, List<String> args, String myText) {
 		super(instructionData, args, myText);
