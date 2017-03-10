@@ -2,6 +2,7 @@ package main;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -27,6 +28,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -36,6 +39,7 @@ import tool.ComboBar;
 import tool.FileMenuTool;
 import tool.FileMenuTool.NewButton;
 import tool.FileMenuTool.OpenButton;
+import tool.FileMenuTool.SaveButton;
 import tool.HelpMenuTool;
 import tool.MenuTool;
 import tool.SelectionBar;
@@ -48,7 +52,7 @@ import view.InputBox;
 import view.PreferencesView;
 import view.SavedCommandsView;
 import view.SimulationView;
-import view.SingleLineInputBox;
+import view.MultiLineInputBox;
 import view.WorkspaceView;
 
 /**
@@ -58,6 +62,7 @@ import view.WorkspaceView;
  */
 public class Controller implements Observer
 {
+	public static final KeyCombination SHIFT_ENTER = new KeyCodeCombination(KeyCode.ENTER, KeyCombination.SHIFT_DOWN);
 	private TabPane root;
 	private ObjectProperty<Tab> currentTab;
 	private Map<Tab, SelectionBar> selectionBarMap;
@@ -100,12 +105,16 @@ public class Controller implements Observer
 		if (o instanceof NewButton) {
 			newTab();
 		}
-		if (o instanceof OpenButton) {
+		else if (o instanceof OpenButton) {
 			openFile((File) arg);
 		}
-		if (o instanceof LanguageButton) {
+		if (o instanceof SaveButton) {
+			saveFile((File) arg);
+		}
+		else if (o instanceof LanguageButton) {
 			language.set(currentIndex.get(), (String) arg);
 		}
+		
 	}
 
 	private void setupItems()
@@ -127,12 +136,11 @@ public class Controller implements Observer
 	{
 		Tab tab = new Tab();
 		root.getSelectionModel().select(tab);
-		;
 		language.add(defaults.language());
 		tab.setText("untitled.logo");
 		BorderPane pane = new BorderPane();
 		SimulationView simulation = new SimulationView(defaults);
-		InputBox inputBox = new SingleLineInputBox();
+		InputBox inputBox = new MultiLineInputBox();
 		inputBox.setFocus();
 		WorkspaceView workspace = new WorkspaceView();
 		SavedCommandsView userCommands = new SavedCommandsView();
@@ -193,14 +201,13 @@ public class Controller implements Observer
 			MenuTool settings, ToolButton animation, ToolButton actorControl, PreferencesView preferences)
 	{
 		file.addObservers(simulation);
-		file.addObservers(inputBox);
 		file.addObservers(this);
 
 		settings.addObservers(simulation);
 		settings.addObservers(this);
 		
 		//TODO: add observers for toolbuttons
-		animation.addObservers(simulation.getTurtle());
+		//animation.addObservers(simulation.getTurtle());
 		actorControl.addObservers(simulation);
 	}
 
@@ -211,7 +218,9 @@ public class Controller implements Observer
 
 	private void executeCommand(KeyEvent e, InputBox inputBox)
 	{
-		if (e.getCode() == KeyCode.ENTER) {
+		if(SHIFT_ENTER.match(e)){
+			inputBox.shiftEnterAction(e);
+		}else if (e.getCode() == KeyCode.ENTER) {
 			inputBox.enterAction(e);
 
 			if (inputBox.getCurrentCommand() != null) {
@@ -221,6 +230,7 @@ public class Controller implements Observer
 			inputBox.appendText("\n" + Double.toString(printValue));
 			inputBox.appendPreamble();
 		}
+		
 		if (e.getCode() == KeyCode.UP) {
 			inputBox.upAction(e);
 		}
@@ -260,7 +270,19 @@ public class Controller implements Observer
 		} catch (FileNotFoundException e) {
 			System.out.println("Unable to open file");
 		} catch (IOException e) {
-			Logger.getLogger(SingleLineInputBox.class.getName()).log(Level.SEVERE, null, e);
+			Logger.getLogger(MultiLineInputBox.class.getName()).log(Level.SEVERE, null, e);
+		}
+	}
+
+	private void saveFile(File file) {
+		FileWriter fw = null;
+		try {
+			fw = new FileWriter(file);
+			fw.write(inputBoxMap.get(currentTab.get()).returnAllText());
+			fw.close();
+			currentTab.get().setText(file.getName());
+		} catch (IOException e) {
+			Logger.getLogger(MultiLineInputBox.class.getName()).log(Level.SEVERE, null, e);
 		}
 	}
 

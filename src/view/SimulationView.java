@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Observable;
+import java.util.Observer;
 
 import javax.xml.transform.TransformerException;
 
@@ -12,6 +13,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -26,7 +28,7 @@ import tool.SettingsMenuTool.*;
 import xml.XMLEditor;
 import xml.XMLException;
 
-public class SimulationView implements View, Cloneable
+public class SimulationView implements View, Cloneable, Observer
 {
 	private SimulationView backupSimulation;
 	private StackPane root;
@@ -61,7 +63,11 @@ public class SimulationView implements View, Cloneable
 
 	public void move(Point2D deltaLocation)
 	{
-		actors.get(0).move(deltaLocation);
+		for(ActorView actor : actors){
+			if(actor.isTold()){
+				actor.move(deltaLocation);
+			}
+		}
 	}
 
 	public void setBackgroundColor(String color)
@@ -92,6 +98,12 @@ public class SimulationView implements View, Cloneable
 	{
 		TurtleView actor = new TurtleView(defaults, id);
 		id++;
+		Tooltip tip = new Tooltip(actor.getLocation().toString());
+
+		Tooltip.install(actor.getImageView(), tip);
+		
+
+		
 		actor.getPen().getCanvas().toBack();
 		actor.getPen().getCanvas().widthProperty().bind(root.widthProperty());
 		actor.getPen().getCanvas().heightProperty().bind(root.heightProperty());
@@ -124,8 +136,14 @@ public class SimulationView implements View, Cloneable
 			newActor();
 		}else if(o instanceof DefaultButton){
 			XMLEditor editor = new XMLEditor();
-			int index = actors.get(0).getImageProperty().getValue().getImage().impl_getUrl().lastIndexOf("/")+1;
-			String imageName = actors.get(0).getImageProperty().getValue().getImage().impl_getUrl().substring(index);
+			String imageName ;
+			try{
+				int index = actors.get(0).getImageProperty().getValue().getImage().impl_getUrl().lastIndexOf("/")+1;
+				imageName = actors.get(0).getImageProperty().getValue().getImage().impl_getUrl().substring(index);
+			}catch(NullPointerException e){
+				imageName = defaults.image();
+			}
+			
 			try {
 				editor.setDefault("background", backgroundColor.getValue().toString());
 				editor.setDefault("pen", ((TurtleView)actors.get(0)).getPen().getPenColorProperty().getValue().toString());
@@ -134,8 +152,6 @@ public class SimulationView implements View, Cloneable
 			} catch (TransformerException e1) {
 				throw new XMLException(e1);
 			}
-		}else{
-			
 		}
 
 	}
@@ -165,7 +181,6 @@ public class SimulationView implements View, Cloneable
 	{
 		this.root.getChildren().clear();
 		this.root.getChildren().add(simulation.getTurtle().clone().display());
-		System.out.println(simulation.getTurtle().clone().getHeading());
 		this.backgroundColor.setValue(simulation.getBackgroundColorProperty().getValue());
 		this.actors.clear();
 		this.actors.addAll(simulation.getTurtle().clone());

@@ -1,7 +1,6 @@
 package view;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Observable;
 
 import javafx.animation.Animation;
 import javafx.animation.SequentialTransition;
@@ -109,12 +108,6 @@ public abstract class ActorView implements View, Cloneable
 		return image.getValue();
 	}
 
-	@Override
-	public void update(Observable o, Object arg)
-	{
-
-	}
-
 	public void move(Point2D point)
 	{
 		actorPosition.setValue(point);
@@ -146,7 +139,7 @@ public abstract class ActorView implements View, Cloneable
 	{
 
 		for (Animation trans : actorMove.getChildren()) {
-			System.out.print(trans);
+			//System.out.print(trans);
 		}
 		transition.setOnFinished(e -> {
 			actorMove.getChildren().remove(transition);

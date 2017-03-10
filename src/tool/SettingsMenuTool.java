@@ -4,14 +4,10 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.transform.TransformerException;
-
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
-import xml.XMLEditor;
-import xml.XMLException;
 import javafx.stage.Stage;
 
 /**

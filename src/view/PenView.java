@@ -2,7 +2,6 @@ package view;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Observable;
 
 import javafx.animation.PathTransition;
 import javafx.animation.PauseTransition;
@@ -91,7 +90,6 @@ public class PenView implements View
 		// create path transition
 		PathTransition pathTransition = new PathTransition(Duration.millis(1000 / speed.getValue()), myPath, pen);
 
-		System.out.println(speed.getValue());
 		pathTransition.currentTimeProperty().addListener(new ChangeListener<Duration>()
 		{
 
@@ -142,12 +140,6 @@ public class PenView implements View
 	public void setColor(Color color)
 	{
 		this.color.setValue(color);
-	}
-
-	@Override
-	public void update(Observable o, Object arg)
-	{
-
 	}
 
 	public void penUp()

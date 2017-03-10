@@ -1,7 +1,5 @@
 package view;
 
-import java.util.Observable;
-
 import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
@@ -22,12 +20,6 @@ public class SavedCommandsView implements View
 		return scroll;
 	}
 
-	@Override
-	public void update(Observable o, Object arg)
-	{
-		// TODO Auto-generated method stub
-
-	}
 
 	private void initiateItems()
 	{

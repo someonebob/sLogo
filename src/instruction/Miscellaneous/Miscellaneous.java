@@ -25,7 +25,7 @@ public abstract class Miscellaneous extends Instruction {
 	protected double runListCommands(int argumentNumber) {
 		//TODO Need to change when decide on way to set language (possibly through InstructionData)
 		Interpreter listInterpreter = new Interpreter(getInstructionData());
-		System.out.println(getArgumentString(argumentNumber));
+		//System.out.println(getArgumentString(argumentNumber));
 		return listInterpreter.parseAndRun(getArgumentString(argumentNumber));
 	}
 	

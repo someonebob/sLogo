@@ -1,7 +1,6 @@
 package view;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Observable;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -28,9 +27,6 @@ public class PreferencesView implements View
 		actorImage.setPreserveRatio(true);
 		actorImage.setFitHeight(70);
 		this.actor = initialActor;
-		actor.getImageView().setOnMouseClicked(e ->{
-			System.out.println("hi");
-		});
 		this.simulation = simulation;
 		setupHeader();
 		// root.setCenter(new PenPreferencesView(actor).display());
@@ -99,10 +95,7 @@ public class PreferencesView implements View
 		DisplayPreferencesView displayPreferences = new DisplayPreferencesView(simulation);
 		preferenceViews.put("Display", displayPreferences.display());
 	}
-	@Override
-	public void update(Observable o, Object arg)
-	{
-	}
+
 	@Override
 	public Node display()
 	{
