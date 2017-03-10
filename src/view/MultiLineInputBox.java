@@ -1,12 +1,5 @@
 package view;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.Observable;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
@@ -15,27 +8,24 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.Tooltip;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
-import tool.FileMenuTool.SaveButton;
 
-public class SingleLineInputBox implements InputBox {
+/**
+ * 
+ * @author Jesse
+ *
+ */
+public class MultiLineInputBox implements InputBox {
 	private BorderPane root;
 	private VBox box;
 	private TextArea console;
 	private ListView<String> previous;
 	private int historyIndex = 0;
 	private String preamble = "slogo_team07$ ";
-
-	@Override
-	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
-		if (o instanceof SaveButton) {
-			saveFile((File) arg);
-		}
-	}
 
 	@Override
 	public Node display() {
@@ -50,6 +40,8 @@ public class SingleLineInputBox implements InputBox {
 	private void initiateItems() {
 		root = new BorderPane();
 		console = new TextArea();
+		Tooltip tip = new Tooltip("Use SHIFT+ENTER to type multiple lines");
+		console.tooltipProperty().set(tip);
 		console.setOnMouseClicked(e -> console.positionCaret(console.getText().length()));
 		console.setWrapText(true);
 		console.textProperty().addListener(new ChangeListener<Object>() {
@@ -143,27 +135,20 @@ public class SingleLineInputBox implements InputBox {
 		e.consume();
 		historyIndex = 0;
 	}
+	public void shiftEnterAction(KeyEvent e){
+		e.consume();
+		console.appendText("\n");;
+	}
 	
 
 
-	public SingleLineInputBox() {
+	public MultiLineInputBox() {
 		initiateItems();
 	}
 
-	
 
-	private void saveFile(File file) {
-		FileWriter fw = null;
-		try {
-			fw = new FileWriter(file);
-			fw.write(convertPrevious());
-			fw.close();
-		} catch (IOException e) {
-			Logger.getLogger(SingleLineInputBox.class.getName()).log(Level.SEVERE, null, e);
-		}
-	}
 
-	private String convertPrevious() {
+	public String returnAllText() {
 		StringBuilder content = new StringBuilder();
 		for (String s : previous.getItems()) {
 			content.append(s + "\n");

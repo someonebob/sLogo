@@ -2,6 +2,8 @@ package property;
 
 import java.util.List;
 
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
@@ -17,29 +19,36 @@ import javafx.scene.layout.VBox;
  */
 public abstract class Property<T>
 {
-	private T value;
+	private ObjectProperty<T> value;
+	//private T value;
 	private Label valueLabel;
 	private String name;
 
 	public Property(String name)
 	{
+		value = new SimpleObjectProperty<>();
 		this.name = name;
 		valueLabel = new Label(name + " value: " + this.getValue());
+	}
+	
+	public ObjectProperty<T> getProperty()
+	{
+		return value;
 	}
 
 	public T getValue()
 	{
-		return value;
+		return value.get();
 	}
 
 	public String getName()
 	{
 		return name;
 	}
-
+	
 	public void setValue(T value)
 	{
-		this.value = value;
+		this.value.set(value);;
 		updateDisplay();
 	}
 
