@@ -38,6 +38,7 @@ public class SimulationView implements View, Cloneable, Observer
 	private ObservableList<ActorView> actors;
 	private int id = 0;
 	private Defaults defaults;
+	private Tooltip tip;
 
 	public SimulationView(Defaults defaults)
 	{
@@ -105,9 +106,10 @@ public class SimulationView implements View, Cloneable, Observer
 	{
 		TurtleView actor = new TurtleView(defaults, id);
 		id++;
-		Tooltip tip = new Tooltip(actor.getLocation().toString());
+		tip = new Tooltip();
+		tip.textProperty().bind(actor.getActorPositionProperty().getLocationAsString());
 
-		Tooltip.install(actor.getImageView(), tip);
+		tip.install(actor.getImageProperty().getValue(), tip);
 
 		actor.getPen().getCanvas().toBack();
 		actor.getPen().getCanvas().widthProperty().bind(root.widthProperty());
