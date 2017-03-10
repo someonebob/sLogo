@@ -24,4 +24,9 @@ Before we made changes, there were several areas with repeated code, particularl
 
 **3. Fixing magic values ** 
 
->>>>>>> REFACTORING_DISCUSSION.md
+In InstructionClassifier, there were a couple of "magic values" used to discern certain important data types (that do not conform to the set given commands) -- these were replaced with constant Strings to avoid hard-coding in the file. 
+
+
+
+
+
