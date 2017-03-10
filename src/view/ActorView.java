@@ -186,5 +186,6 @@ public abstract class ActorView implements View, Cloneable, Observer
 	public double getSpeed(){
 		return speed.getValue();
 	}
+	public abstract PenView getPen();
 
 }
