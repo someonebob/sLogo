@@ -37,7 +37,6 @@ import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import tool.ActorButtons;
 import tool.AnimationControlToolButtons;
@@ -57,9 +56,10 @@ import user_structures.FunctionData;
 import user_structures.VariableData;
 import view.InputBox;
 import view.PreferencesView;
-import view.SimulationView;
+import view.AnimatedSimulationView;
 import view.MultiLineInputBox;
 import view.SavedStructuresView;
+import view.SimulationView;
 
 /**
  * @author jimmy
@@ -146,7 +146,7 @@ public class Controller implements Observer
 		language.add(defaults.language());
 		tab.setText("untitled.logo");
 		BorderPane pane = new BorderPane();
-		SimulationView simulation = new SimulationView(defaults);
+		SimulationView simulation = new AnimatedSimulationView(defaults);
 		InputBox inputBox = new MultiLineInputBox();
 		inputBox.setFocus();
 		SavedStructuresView workspace = new SavedStructuresView();
