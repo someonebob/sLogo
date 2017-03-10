@@ -21,9 +21,8 @@ public class IsPenDown extends TurtleQuery
 	@Override
 	public double execute()
 	{
-		System.out.println("HAHGA");
-		if (getActiveActor() instanceof TurtleView) {
-			return ((TurtleView) getActiveActor()).getPen().isUp() ? 0 : 1;
+		if (getInstructionData().getActiveActor() instanceof TurtleView) {
+			return ((TurtleView) getInstructionData().getActiveActor()).getPen().isUp() ? 0 : 1;
 		}
 		return 0;
 	}

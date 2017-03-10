@@ -11,7 +11,7 @@ import instruction.InstructionData;
  * @author Matthew Barbano
  *
  */
-public class Constant extends Instruction {
+public class Constant extends BasicSyntax {
 
 	public Constant(InstructionData instructionData, List<String> args, String myText) {
 		super(instructionData, args, myText);

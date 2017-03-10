@@ -1,3 +1,16 @@
+REFACTORING_DISCUSSION.md
+Refactoring:
+Jimmy Shackfor, Jesse Yue
+Duplicated code:
+1. Change makeDynamicUpdater methods in Property class so that the code for creating a VBox and settings its alignment to center isn't repeated. Creating the VBox is done in displayDynamicUpdater, which calls the abstract method called makeDynamicUpdaters. 
+2. Add addButtons method to MenuTool to remove duplicated code for adding multiple buttons to the buttons list.
+
+Locate non-private features in project:
+1. Replaced protected instance variables in SingleLineInputBox and XML
+
+
+
+
 ## Refactoring Code Smells
 ## mfb33, meb100
 
@@ -12,8 +25,12 @@ Before we made changes, there were several areas with repeated code, particularl
 **3. Fixing magic values ** 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 In InstructionClassifier, there were a couple of "magic values" used to discern certain important data types (that do not conform to the set given commands) -- these were replaced with constant Strings to avoid hard-coding in the file. 
 
 
 =======
 >>>>>>> 36d25a96ae3f4bf89291e9978adac19193dbd593
+=======
+>>>>>>> REFACTORING_DISCUSSION.md
+>>>>>>> e5ff12898448ebf3e710cb7e70867ed769f8b3ff

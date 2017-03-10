@@ -18,11 +18,11 @@ public class XMLParser extends XML{
 	
 	public XMLParser() {
 		super();
-		background = root.getElementsByTagName(DATA_FIELDS.get(0)).item(0).getTextContent();
-		pen = root.getElementsByTagName(DATA_FIELDS.get(1)).item(0).getTextContent();
-		image = root.getElementsByTagName(DATA_FIELDS.get(2)).item(0).getTextContent();
-		numTurtles = root.getElementsByTagName(DATA_FIELDS.get(3)).item(0).getTextContent();
-		language = root.getElementsByTagName(DATA_FIELDS.get(4)).item(0).getTextContent();
+		background = XML.ROOT.getElementsByTagName(DATA_FIELDS.get(0)).item(0).getTextContent();
+		pen = XML.ROOT.getElementsByTagName(DATA_FIELDS.get(1)).item(0).getTextContent();
+		image = XML.ROOT.getElementsByTagName(DATA_FIELDS.get(2)).item(0).getTextContent();
+		numTurtles = XML.ROOT.getElementsByTagName(DATA_FIELDS.get(3)).item(0).getTextContent();
+		language = XML.ROOT.getElementsByTagName(DATA_FIELDS.get(4)).item(0).getTextContent();
 
 	}
 

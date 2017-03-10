@@ -25,4 +25,5 @@ public class BackgroundColorProperty extends AbstractColorProperty
 	{
 		root.setBackground(new Background(new BackgroundFill(color, null, null)));
 	}
+
 }

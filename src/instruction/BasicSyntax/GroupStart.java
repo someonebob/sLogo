@@ -14,7 +14,7 @@ import interpreter.Interpreter;
  *
  */
 
-public class GroupStart extends Instruction {
+public class GroupStart extends BasicSyntax {
 
 	public GroupStart(InstructionData instructionData, List<String> args, String myText) {
 		super(instructionData, args, myText);

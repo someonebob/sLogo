@@ -1,7 +1,5 @@
 package view;
 
-import java.util.Observable;
-
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -18,7 +16,7 @@ import user_structures.VariableData;
  * @author Jesse
  *
  */
-public class WorkspaceView implements PageView
+public class WorkspaceView implements View
 {
 	private BorderPane pane;
 	private TableView<VariableData> table;
@@ -38,13 +36,6 @@ public class WorkspaceView implements PageView
 	public Node display()
 	{
 		return pane;
-	}
-
-	@Override
-	public void update(Observable o, Object arg)
-	{
-		// TODO Auto-generated method stub
-
 	}
 
 	public void setItems(ObservableList<VariableData> data)

@@ -26,7 +26,7 @@ public abstract class AbstractButton extends Observable{
 		itemList.add(item);
 	}
 
-	public Control getItem()
+	protected Control getItem()
 	{
 		return myItem;
 	}

@@ -1,10 +1,11 @@
 package property;
 
-import javafx.geometry.Pos;
+import java.util.Arrays;
+import java.util.List;
+
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
 /**
@@ -40,9 +41,8 @@ public class PenUpProperty extends Property<Boolean>
 	}
 
 	@Override
-	public Node makeDynamicUpdater()
+	public List<Node> makeDynamicUpdaters()
 	{
-		VBox vbox = new VBox();
 		Label label = new Label(String.format("Set %s", this.getName()));
 		// TODO: REPLACE THESE WITH RESOURCE FILE
 		ToggleButton upDownButton = new ToggleButton(this.getValue() ? "up" : "down");
@@ -57,10 +57,6 @@ public class PenUpProperty extends Property<Boolean>
 			}
 		});
 
-		vbox.getChildren().add(label);
-		vbox.getChildren().add(upDownButton);
-		vbox.setAlignment(Pos.CENTER);
-
-		return vbox;
+		return Arrays.asList(label, upDownButton);
 	}
 }

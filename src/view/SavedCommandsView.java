@@ -1,12 +1,10 @@
 package view;
 
-import java.util.Observable;
-
 import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 
-public class SavedCommandsView implements PageView
+public class SavedCommandsView implements View
 {
 	private ScrollPane scroll;
 	private VBox commands;
@@ -22,12 +20,6 @@ public class SavedCommandsView implements PageView
 		return scroll;
 	}
 
-	@Override
-	public void update(Observable o, Object arg)
-	{
-		// TODO Auto-generated method stub
-
-	}
 
 	private void initiateItems()
 	{

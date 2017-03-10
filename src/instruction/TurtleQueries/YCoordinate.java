@@ -15,7 +15,7 @@ public class YCoordinate extends TurtleQuery
 	@Override
 	public double execute()
 	{
-		return getActiveActor().getLocation().getY();
+		return getInstructionData().getActiveActor().getLocation().getY();
 	}
 
 }

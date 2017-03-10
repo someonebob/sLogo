@@ -2,6 +2,7 @@ package view;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Observable;
+import java.util.Observer;
 
 import javafx.animation.Animation;
 import javafx.animation.SequentialTransition;
@@ -20,6 +21,7 @@ import property.ImageColorProperty;
 import property.ImageProperty;
 import property.Property;
 import property.SpeedProperty;
+import tool.AnimationControlToolButtons.*;
 import user_structures.ID;
 
 /**
@@ -28,7 +30,7 @@ import user_structures.ID;
  * @author Jesse
  *
  */
-public abstract class ActorView implements View, Cloneable
+public abstract class ActorView implements View, Cloneable, Observer
 {
 	public static final int ACTOR_HEIGHT = 75;
 	public static final int ACTOR_WIDTH = 75;
@@ -44,17 +46,18 @@ public abstract class ActorView implements View, Cloneable
 	private SequentialTransition actorMove;
 	private ID id;
 	protected SpeedProperty speed;
-	
+	private boolean told;
 
 	public ActorView(Defaults defaults, int id)
 	{
+		this.id = new ID(id);
+		setTold();
 		image = new ImageProperty("Actor Image");
 		imageColor = new ImageColorProperty("Actor Image Color", image);
 		speed = new SpeedProperty("FPS");
 		speed.setValue(5.0);
 		actorPosition = new ActorPositionProperty("Actor Position", this);
 		heading = new HeadingProperty("Actor Heading", this);
-		this.id = new ID(id);
 		
 
 		actorMove = new SequentialTransition();
@@ -69,10 +72,32 @@ public abstract class ActorView implements View, Cloneable
 		// // initial rotation
 		actorMove.play();
 	}
+	public boolean isTold(){
+		return told;
+	}
+	
+	public void setTold(){
+		told = true;
+	}
+	public void setUntold(){
+		told = false;
+	}
 
 	public ID getID()
 	{
 		return id;
+	}
+	@Override
+	public void update(Observable o, Object arg) {
+		if(o instanceof AnimationPlayButton){
+			actorMove.play();
+		}
+		else if(o instanceof AnimationPauseButton){
+			actorMove.pause();
+		}
+		else if(o instanceof AnimationStopButton){
+			actorMove.stop();
+		}
 	}
 
 	public void step()
@@ -99,12 +124,6 @@ public abstract class ActorView implements View, Cloneable
 		return image.getValue();
 	}
 
-	@Override
-	public void update(Observable o, Object arg)
-	{
-
-	}
-
 	public void move(Point2D point)
 	{
 		actorPosition.setValue(point);
@@ -129,13 +148,14 @@ public abstract class ActorView implements View, Cloneable
 	{
 		Image image = new Image(getClass().getClassLoader().getResourceAsStream(stringImage));
 		this.setImage(image);
+		this.image.mergeDuplicateDefaultImages(stringImage);
 	}
 
 	public void addTransition(Transition transition)
 	{
 
 		for (Animation trans : actorMove.getChildren()) {
-			System.out.print(trans);
+			//System.out.print(trans);
 		}
 		transition.setOnFinished(e -> {
 			actorMove.getChildren().remove(transition);
@@ -166,5 +186,6 @@ public abstract class ActorView implements View, Cloneable
 	public double getSpeed(){
 		return speed.getValue();
 	}
+	public abstract PenView getPen();
 
 }
