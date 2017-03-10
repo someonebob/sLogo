@@ -24,12 +24,12 @@ public class ClearScreen extends TurtleCommand
 	public double execute()
 	{
 		double distanceTraveled = MathUtil.distance(getPosition().getX(), getPosition().getY());
-		if (this.getActiveTurtle() instanceof TurtleView) {
+		if (this.getActiveActor() instanceof TurtleView) {
 			// TODO: penup doesn't actually put the pen up
-			this.getActiveTurtle().move(new Point2D(0, 0));
+			this.getActiveActor().move(new Point2D(0, 0));
 			setPosition(0, 0);
-			this.getActiveTurtle().getPen().clear();
-			this.getActiveTurtle().getPen().penDown();
+			this.getActiveActor().getPen().clear();
+			this.getActiveActor().getPen().penDown();
 		}
 		return distanceTraveled;
 	}

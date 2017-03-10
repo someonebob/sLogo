@@ -20,7 +20,7 @@ public class HideTurtle extends TurtleCommand
 	@Override
 	public double execute()
 	{
-		this.getActiveTurtle().getImageView().setVisible(false);
+		this.getActiveActor().getImageView().setVisible(false);
 		return 0;
 	}
 }

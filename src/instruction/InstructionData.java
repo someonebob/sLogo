@@ -1,7 +1,6 @@
 package instruction;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import exceptions.CastingException;
@@ -31,13 +30,15 @@ public class InstructionData
 	List<VariableData> variables;
 	List<FunctionData> functions;
 	String language;
+	int activeActorIndex;
 
 	public InstructionData()
 	{
-		this.simulation = null;
+		this.simulationView = null;
 		this.variables = new ArrayList<VariableData>();
 		this.functions = new ArrayList<FunctionData>();
 		this.language = "English";
+		this.activeActorIndex = 0;
 	}
 
 	public InstructionData(SimulationView simulation, List<VariableData> variables, List<FunctionData> functions,
@@ -47,13 +48,22 @@ public class InstructionData
 		this.variables = variables;
 		this.functions = functions;
 		this.language = language;
+		this.activeActorIndex = 0;
 	}
 
-	public TurtleView getActiveActor()
+	public ActorView getActiveActor()
 	{
-		return simulationView.getTurtle();
+		return simulationView.getActors().get(activeActorIndex);   //TODO naming Jesse
 	}
-
+	
+	public int getActiveActorIndex(){
+		return activeActorIndex;
+	}
+	
+	public void setActiveActorIndex(int newIndex){
+		activeActorIndex = newIndex;
+	}
+	
 	/**
 	 * Returns the List of Actors held by this class
 	 * 
@@ -61,7 +71,7 @@ public class InstructionData
 	 */
 	public List<ActorView> getActors()
 	{
-		return Arrays.asList(simulationView.getTurtle());
+		return simulationView.getActors();
 	}
 
 	public Bounds getSimulationBounds()

@@ -20,7 +20,7 @@ import instruction.InstructionData;
  *
  */
 
-public class ListStart extends Instruction {
+public class ListStart extends BasicSyntax {
 
 
 	public ListStart(InstructionData data,  List<String> args, String myText){

@@ -3,6 +3,7 @@ package instruction.TurtleCommands;
 import java.util.List;
 
 import exceptions.NonsensicalArgumentException;
+import instruction.ActorSpecificInstruction;
 import instruction.Instruction;
 import instruction.InstructionData;
 import javafx.geometry.Bounds;
@@ -20,7 +21,7 @@ import view.ActorView;
  * @author jimmy
  *
  */
-public abstract class TurtleCommand extends Instruction
+public abstract class TurtleCommand extends Instruction implements ActorSpecificInstruction
 {
 	private static final String RESOURCE_NEGATIVE_PIXELS_NAME = "MoveNegativeMessage";
 	private static final String RESOURCE_BOUNDS_NAME = "MoveBoundsMessage";
@@ -32,8 +33,8 @@ public abstract class TurtleCommand extends Instruction
 
 	protected void move(double distance)
 	{
-		Point2D currentLocation = getActiveTurtle().getLocation();
-		double currentHeading = getActiveTurtle().getHeading();
+		Point2D currentLocation = getActiveActor().getLocation();
+		double currentHeading = getActiveActor().getHeading();
 		Point2D deltaVector = MathUtil.polarToRectangular(new PointPolar(distance, currentHeading));
 		Point2D newLocation = currentLocation.add(deltaVector);
 		move(newLocation);
@@ -48,17 +49,17 @@ public abstract class TurtleCommand extends Instruction
 				|| MathUtil.doubleGreaterThan(newLocation.getY(), bounds.getMaxY() / 2)) {
 			throw new NonsensicalArgumentException(RESOURCE_BOUNDS_NAME);
 		}
-		getActiveTurtle().move(newLocation);
+		getActiveActor().move(newLocation);
 	}
 
 	protected void setHeading(double newHeading)
 	{
-		getActiveTurtle().setHeading(ActorView.STARTING_HEADING + newHeading);
+		getActiveActor().setHeading(ActorView.STARTING_HEADING + newHeading);
 	}
 
 	protected void turn(double deltaHeading)
 	{
-		getActiveTurtle().rotate(deltaHeading);
+		getActiveActor().rotate(deltaHeading);
 	}
 
 	protected void setPosition(double x, double y)
@@ -68,7 +69,7 @@ public abstract class TurtleCommand extends Instruction
 
 	protected Point2D getPosition()
 	{
-		return getActiveTurtle().getLocation();
+		return getActiveActor().getLocation();
 	}
 
 	protected void togglePenState()
