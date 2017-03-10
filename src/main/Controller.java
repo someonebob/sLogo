@@ -30,6 +30,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import tool.ActorButtons;
 import tool.AnimationControlToolButtons;
 import tool.ComboBar;
 import tool.FileMenuTool;
@@ -142,7 +143,8 @@ public class Controller implements Observer
 		MenuTool settings = new SettingsMenuTool(stage);
 		MenuTool help = new HelpMenuTool(stage);
 		ToolButton animation = new AnimationControlToolButtons();
-		selectionBar.addAllTools(file, settings, help, animation);
+		ToolButton actorControl = new ActorButtons();
+		selectionBar.addAllTools(file, settings, help, animation, actorControl);
 
 		List<VariableData> varList = new ArrayList<>();
 		ObservableList<VariableData> variables = FXCollections.observableList(varList);
@@ -154,7 +156,7 @@ public class Controller implements Observer
 
 		setupBorderPane(pane, selectionBar, simulation, inputBox, workspace, preferences);
 		putIntoMaps(tab, selectionBar, simulation, inputBox, workspace, userCommands, variables, functions);
-		setupObservers(simulation, inputBox, file, settings, animation, preferences);
+		setupObservers(simulation, inputBox, file, settings, animation, actorControl, preferences);
 		setupCommands(inputBox);
 
 		tab.setContent(pane);
@@ -188,7 +190,7 @@ public class Controller implements Observer
 	}
 
 	private void setupObservers(SimulationView simulation, InputBox inputBox, MenuTool file,
-			MenuTool settings, ToolButton slider, PreferencesView preferences)
+			MenuTool settings, ToolButton animation, ToolButton actorControl, PreferencesView preferences)
 	{
 		file.addObservers(simulation);
 		file.addObservers(inputBox);
@@ -197,7 +199,9 @@ public class Controller implements Observer
 		settings.addObservers(simulation);
 		settings.addObservers(this);
 		
-		slider.addObservers(simulation.getTurtle());
+		//TODO: add observers for toolbuttons
+		animation.addObservers(simulation.getTurtle());
+		actorControl.addObservers(simulation);
 	}
 
 	private void setupCommands(InputBox inputBox)

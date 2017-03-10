@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?><defaults>
-	<background>indigo</background>
-	<pen>yellow</pen>
-	<image>Squirt.png</image>
+	<background>0x8099ffff</background>
+	<pen>0xff6666ff</pen>
+	<image>Squirtle.png</image>
 	<numTurtles>1</numTurtles>
 	<language>English</language>
 </defaults>

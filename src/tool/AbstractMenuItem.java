@@ -28,7 +28,7 @@ public abstract class AbstractMenuItem extends Observable
 		itemList.add(item);
 	}
 
-	public MenuItem getItem()
+	protected MenuItem getItem()
 	{
 		return myItem;
 	}
