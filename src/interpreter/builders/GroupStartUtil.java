@@ -21,7 +21,6 @@ import interpreter.util.ArgumentReaderUtil;
 public class GroupStartUtil extends BuilderUtil{
 	private final static String END = "GroupEnd";
 	private final static String START = "GroupStart";
-	private final static String LAYER = "Layer";
 	
 	public GroupStartUtil(InstructionNode head, InstructionTracker track){
 		super(head, track);
