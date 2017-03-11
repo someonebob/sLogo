@@ -1,0 +1,14 @@
+to circle [ :N ] [ 
+	repeat 36 [ 
+		fd :N rt 10 
+		] 
+	]
+
+to spaghetti [ ] [
+	circle 5 
+	circle 4 
+	circle 3 
+	circle 2
+	rt 45 spaghetti
+]
+
