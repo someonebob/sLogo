@@ -5,7 +5,7 @@ import exceptions.InvalidCommandException;
 import exceptions.WrongArgumentNumberException;
 import instruction.Instruction;
 import instruction.InstructionData;
-import interpreter.classification.InstructionClassifier;
+import interpreter.factories.InstructionClassifier;
 import interpreter.misc.InstructionNode;
 import interpreter.util.ArgumentReaderUtil;
 /**
@@ -24,6 +24,7 @@ public class TreeExecuter
 	
 	private InstructionData myData;
 	private InstructionClassifier myClass;
+	
 	public TreeExecuter(InstructionData data, InstructionClassifier clzz)
 	{
 		myData = data;

@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.List;
 
 import exceptions.CastingException;
-import interpreter.util.WorkspaceUpdater;
+import interpreter.util.WorkspaceUpdaterUtil;
 import javafx.geometry.Bounds;
 import property.BackgroundColorProperty;
 import user_structures.FunctionData;
@@ -144,9 +144,10 @@ public class InstructionData
 		return null;
 	}
 
+
 	public void addFunction(FunctionData f)
 	{
-		WorkspaceUpdater.add(functions, f);
+		WorkspaceUpdaterUtil.add(functions, f);
 	}
 
 	public String getLanguage()

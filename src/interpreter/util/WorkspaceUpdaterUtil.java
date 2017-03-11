@@ -12,7 +12,7 @@ import user_structures.VariableData;
  *
  */
 
-public class WorkspaceUpdater {
+public class WorkspaceUpdaterUtil {
 	
 	public static <T> void add(List<T> current, T toAdd){
 		for(int i=0; i<current.size(); i++){

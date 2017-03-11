@@ -5,7 +5,7 @@ import java.util.List;
 
 import instruction.InstructionData;
 import interpreter.builders.TreeBuilder;
-import interpreter.classification.InstructionClassifier;
+import interpreter.factories.InstructionClassifier;
 import interpreter.misc.InstructionNode;
 
 /**
@@ -21,7 +21,7 @@ public class TreeBuilderTester {
 		//problem with string value in tree
 		//change in node so that no string need be saved
 		String spiral = "to spiral [ :len ] [ if less? :len 200 [ fd :len rt 89 spiral + :len 3 ] ] spiral 10";
-		String tree = "to tree [ :length :angle :depth :scale ] [ ifelse equal? :depth 1 [ fd :length bk :length ] [ fd :length lt :angle tree product :length :scale :angle difference :depth 1 :scale rt :angle rt :angle tree product :length :scale :angle difference :depth 1 :scale lt :angle bk :length ] ]";
+		//String tree = "to tree [ :length :angle :depth :scale ] [ ifelse equal? :depth 1 [ fd :length bk :length ] [ fd :length lt :angle tree product :length :scale :angle difference :depth 1 :scale rt :angle rt :angle tree product :length :scale :angle difference :depth 1 :scale lt :angle bk :length ] ]";
 
 		TreeBuilder build = new TreeBuilder(spiral,
 				new InstructionClassifier("English"), new InstructionData());

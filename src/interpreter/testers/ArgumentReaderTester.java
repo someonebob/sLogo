@@ -1,6 +1,5 @@
 package interpreter.testers;
 
-import interpreter.util.ArgumentReaderUtil;
 
 /**
  * Test argument reader

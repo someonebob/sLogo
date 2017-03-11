@@ -1,12 +1,11 @@
 package interpreter.builders;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import instruction.InstructionData;
 import interpreter.misc.InstructionNode;
+import interpreter.misc.InstructionTracker;
 import interpreter.util.ArgumentReaderUtil;
-import interpreter.util.GroupReader;
+import interpreter.util.GroupReaderUtil;
 
 /**
  * Subclass of BuilderUtil that processes the current
@@ -20,13 +19,13 @@ import interpreter.util.GroupReader;
  *
  */
 
-public class GroupStartUtil extends BuilderUtil{
+public abstract class GroupStartUtil extends BuilderUtil{
 	private final static String END = "GroupEnd";
 	private final static String START = "GroupStart";
+	private final static String LAYER = "Layer";
 	
-	public GroupStartUtil(List<InstructionNode> nodes,
-			InstructionNode head, String current, InstructionData data){
-		super(nodes, head, current, data);
+	public GroupStartUtil(InstructionNode head, InstructionTracker track){
+		super(head, track);
 	}
 	
 	/**
@@ -40,16 +39,17 @@ public class GroupStartUtil extends BuilderUtil{
 	 * @return The String representing the new current text (re-ordered)
 	 */
 	public String construct() {
-		InstructionNode next = removeNext();
-		decrementCurrentText();
+		InstructionNode next = getTrack().removeNext();
+		getTrack().decrementCurrentText();
 		String value;
 		
-		String instruction = next.getMyCommand(); //remove head instruction
+		//TODO: Replace with abstract factory use
+		String instruction = next.getMyCommand();
 		String type = next.getMyClassification();
-		int numArgs = getNumArgs(next);
+		int numArgs = ArgumentReaderUtil.getNumArgs(next, getTrack().getData());
 		
-		String group = GroupReader.getGroup(type);
-		if(group.equals("Layer")){
+		String group = GroupReaderUtil.getGroup(type);
+		if(group.equals(LAYER)){
 			value = layerArguments(instruction, numArgs);
 		}
 		else{
@@ -57,8 +57,11 @@ public class GroupStartUtil extends BuilderUtil{
 		}
 		addChild(value);
 		
-		return getCurrent();
+		return getTrack().getCurrentText();
 	}
+	
+	
+	public abstract String rearrangeWords(String instruction, int numArgs);
 	
 	/**
 	 * WAY 1: The first way for Groups to be parsed is by layering arguments.
@@ -78,29 +81,41 @@ public class GroupStartUtil extends BuilderUtil{
 	private String layerArguments(String instruction, int numArgs){
 		String value = "";
 		int grouping = numArgs - 1;
-		List<InstructionNode> constants = countAndRemoveArgs();
+		List<InstructionNode> constants = getTrack().countAndRemoveArgs(END);
 		
 		//remove inner arguments
 		if(constants.size() >= numArgs){
-			for(int i=0; i<numArgs; i++){
-				InstructionNode cu = constants.remove(0);
-				if(!cu.getMyClassification().equals(END))
-					value += cu.getMyCommand() + " ";
-			}
+			value = removeCommands(numArgs, constants, value);
 		}
 		else{
 			return value;
 		}
 		
 		while(!constants.isEmpty()){
-			for(int i=0; i < grouping; i++){
-				InstructionNode cu = constants.remove(0);
-				if(!cu.getMyClassification().equals(END))
-					value += cu.getMyCommand() + " ";
-			}
+			value = removeCommands(grouping, constants, value);
 			value = instruction + " " + value;
 		}
 		value = removeSpace(value);
+		return value;
+	}
+	
+	/**
+	 * Repeated loop moved to a helper method to avoid duplicate code.
+	 * 
+	 * Iterates through the list toModify until the limit is reached by removing the first
+	 * item 'limit' times, and concatenating this item's command to the return value
+	 * 
+	 * @param limit Number of times to remove the first item
+	 * @param toModify List of InstructionNodes to modify
+	 * @param value Current string value
+	 * @return
+	 */
+	public String removeCommands(int limit, List<InstructionNode> toModify, String value){
+		for(int i=0; i<limit; i++){
+			InstructionNode cu = toModify.remove(0);
+			if(!cu.getMyClassification().equals(END))
+				value += cu.getMyCommand() + " ";
+		}
 		return value;
 	}
 	
@@ -128,9 +143,9 @@ public class GroupStartUtil extends BuilderUtil{
 			String name = "";
 
 			for(int i=0; i<numArgs; i++){
-				if(!isEmpty()){
-					currNode = removeNext();
-					decrementCurrentText();
+				if(!getTrack().isEmpty()){
+					currNode = getTrack().removeNext();
+					getTrack().decrementCurrentText();
 					name = currNode.getMyClassification();
 					if(name.equals(END)){
 						break;
@@ -149,31 +164,6 @@ public class GroupStartUtil extends BuilderUtil{
 		return value;
 	}
 	
-	/**
-	 * Counts the number of arguments in the grouping and removes the arguments (as well as 
-	 * the end bracket) from the list of nodes and current text. 
-	 * 
-	 * Ex: This method called on the following list of nodes: 
-	 * { '(' 'fd' '50' '50' ')' 'fd' '50')}
-	 * Would decrement the current text accordingly and return the nodes: 
-	 * { 'fd', '50'}
-	 * 
-	 * @return
-	 */
-	private  List<InstructionNode> countAndRemoveArgs(){
-		List<InstructionNode> toRet = new ArrayList<InstructionNode>();
-		while(!isEmpty()){
-			decrementCurrentText();
-			if(peekNext().equals(END)){
-				removeNext(); //remove bracket
-				break;
-			}
-			else{
-				toRet.add(removeNext());
-			}
-		}
-		return toRet;
-	}
 	
 	/**
 	 * Removes the last space from the given string and returns the result
