@@ -34,9 +34,7 @@ public class PreferencesView implements View
 		actorImage.setFitHeight(70);
 		this.actor = initialActor;
 		this.simulation = simulation;
-		setupHeader();
-		setupFooter();
-		step();
+		updateDisplay();
 	}
 
 	public void step()
@@ -44,11 +42,8 @@ public class PreferencesView implements View
 		actors = simulation.getActors();
 		for (TurtleView turtle : actors) {
 			turtle.getImageView().setOnMouseClicked(e -> {
-				System.out.println("hi");
 				actor = turtle;
-				updateActorImage();
-				setupHeader();
-				setupFooter();
+				updateDisplay();
 			});
 		}
 	}
@@ -68,6 +63,14 @@ public class PreferencesView implements View
 		updateActorImage();
 		header.getChildren().add(actor.getImageProperty().display());
 		root.setTop(header);
+	}
+
+	private void updateDisplay()
+	{
+		root.getChildren().clear();
+		setupHeader();
+		setupFooter();
+		updateActorImage();
 	}
 
 	private void setupFooter()
