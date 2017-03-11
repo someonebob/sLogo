@@ -2,6 +2,7 @@ package view;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
@@ -210,5 +211,15 @@ public class AnimatedSimulationView implements SimulationView, Cloneable
 		// System.out.println(clone.getTurtle().getHeading());
 		// return clone;
 		return null;
+	}
+	
+	public void setTold(Collection<Integer> toldTurtles){
+		for(int i = 0; i < actors.size(); i++){
+			if(toldTurtles.contains(i)){
+				actors.get(i).setTold();
+			}else{
+				actors.get(i).setUntold();
+			}
+		}
 	}
 }
