@@ -31,6 +31,7 @@ public class InstructionData
 	List<VariableData> variables;
 	List<FunctionData> functions;
 	String language;
+	int activeActorIndex;
 
 	public InstructionData()
 	{
@@ -38,6 +39,7 @@ public class InstructionData
 		this.variables = new ArrayList<VariableData>();
 		this.functions = new ArrayList<FunctionData>();
 		this.language = "English";
+		this.activeActorIndex = 0;
 	}
 
 	public InstructionData(SimulationView simulation, List<VariableData> variables, List<FunctionData> functions,
@@ -47,11 +49,22 @@ public class InstructionData
 		this.variables = variables;
 		this.functions = functions;
 		this.language = language;
+		this.activeActorIndex = 0;
 	}
 
-	public TurtleView getActiveActor()
+	public ActorView getActiveActor()
 	{
-		return simulationView.getTurtle();
+		return simulationView.getActors().get(activeActorIndex);
+	}
+	
+	public int getActiveActorIndex(){
+		return activeActorIndex;
+
+	}
+
+	public void setActiveActorIndex(int newIndex){
+
+		activeActorIndex = newIndex;
 	}
 
 	/**
@@ -61,7 +74,7 @@ public class InstructionData
 	 */
 	public List<ActorView> getActors()
 	{
-		return Arrays.asList(simulationView.getTurtle());
+		return simulationView.getActors();
 	}
 
 	public Bounds getSimulationBounds()
@@ -169,11 +182,6 @@ public class InstructionData
 			throw new CastingException(RESOURCE_CAST_EXCEPTION);
 		}
 		return ((TurtleView) getActiveActor()).getPen();
-	}
-
-	public void setActiveActorIndex(int index) {
-		// TODO Auto-generated method stub
-		
 	}
 
 }
