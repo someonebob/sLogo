@@ -11,6 +11,6 @@ public class Turtles extends MultipleTurtleCommand {
 
 	@Override
 	public double execute() {
-		return getInstructionData().getActors().size();
+		return getInstructionData().getActorList().size();
 	}
 }
