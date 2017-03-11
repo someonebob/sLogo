@@ -1,7 +1,6 @@
 package instruction;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import exceptions.CastingException;
@@ -10,7 +9,6 @@ import javafx.geometry.Bounds;
 import user_structures.FunctionData;
 import user_structures.VariableData;
 import view.ActorView;
-import view.AnimatedSimulationView;
 import view.PenView;
 import view.SimulationView;
 import view.TurtleView;
@@ -27,14 +25,10 @@ import view.TurtleView;
  */
 
 /*
- * public interface InstructionData{
-	public List<Actor> getActorList();
-	public Color getBackgroundColor();
-	public ImageView getTurtleImage();
-	public void setActorList(List<Actor> actorList);
-	public void setBackgroundColor(Color color);
-	public void setTurtleImage(ImageView imageView);
-}
+ * public interface InstructionData{ public List<Actor> getActorList(); public
+ * Color getBackgroundColor(); public ImageView getTurtleImage(); public void
+ * setActorList(List<Actor> actorList); public void setBackgroundColor(Color
+ * color); public void setTurtleImage(ImageView imageView); }
  */
 
 public class InstructionData
@@ -69,21 +63,23 @@ public class InstructionData
 	{
 		return simulationView.getActors().get(activeActorIndex);
 	}
-	
-	public int getActiveActorIndex(){
+
+	public int getActiveActorIndex()
+	{
 		return activeActorIndex;
 	}
-	
-	public void setActiveActorIndex(int newIndex){
+
+	public void setActiveActorIndex(int newIndex)
+	{
 		activeActorIndex = newIndex;
 	}
-	
+
 	/**
 	 * Returns the List of Actors held by this class
 	 * 
 	 * @return
 	 */
-	public List<ActorView> getActors()
+	public List<TurtleView> getActors()
 	{
 		return simulationView.getActors();
 	}
@@ -97,12 +93,12 @@ public class InstructionData
 	{
 		return variables;
 	}
-	
+
 	public List<VariableData> getStackVariables()
 	{
-		for(VariableData v: variables){
-			if(v.getStackSize()!=0)
-				v.popFromStack(); //iterate through and pop items
+		for (VariableData v : variables) {
+			if (v.getStackSize() != 0)
+				v.popFromStack(); // iterate through and pop items
 		}
 		return variables;
 	}
@@ -187,9 +183,10 @@ public class InstructionData
 	{
 		return simulationView;
 	}
-	
-	public PenView getActivePenView(){
-		if(!(getActiveActor() instanceof TurtleView)){
+
+	public PenView getActivePenView()
+	{
+		if (!(getActiveActor() instanceof TurtleView)) {
 			throw new CastingException(RESOURCE_CAST_EXCEPTION);
 		}
 		return ((TurtleView) getActiveActor()).getPen();
