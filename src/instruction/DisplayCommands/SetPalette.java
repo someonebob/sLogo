@@ -37,6 +37,7 @@ public class SetPalette extends DisplayCommand
 		} else {
 			indexedColors.set((int) getArgumentDouble(0), newColor);
 		}
+		getInstructionData().getSimulation().getBackgroundColorProperty().updateColorPalette();
 		return getArgumentDouble(0);
 	}
 
