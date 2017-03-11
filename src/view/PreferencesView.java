@@ -1,6 +1,7 @@
 package view;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javafx.beans.value.ChangeListener;
@@ -18,6 +19,7 @@ public class PreferencesView implements View
 {
 	private BorderPane root;
 	private TurtleView actor;
+	private List<TurtleView> actors;
 	private SimulationView simulation;
 	private ImageView actorImage;
 	private Map<String, Node> preferenceViews;
@@ -34,6 +36,21 @@ public class PreferencesView implements View
 		this.simulation = simulation;
 		setupHeader();
 		setupFooter();
+		step();
+	}
+
+	public void step()
+	{
+		actors = simulation.getActors();
+		for (TurtleView turtle : actors) {
+			turtle.getImageView().setOnMouseClicked(e -> {
+				System.out.println("hi");
+				actor = turtle;
+				updateActorImage();
+				setupHeader();
+				setupFooter();
+			});
+		}
 	}
 
 	private void setupHeader()
