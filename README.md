@@ -146,14 +146,23 @@ Setshape occasionally does not properly update the image list
 **Front-end bugs**
 
 Turtle does not cleanly stop at simulation borders - is only a rough border detection algorithm
+
 Running a command only affects the most recently opened tab (this functionality used to work--where a command would only execute on the currently opened tab--but it got messed up somehow. **FIXED**
+
 When you load a new image for an actor, it doesn’t replace the last one and just gets placed over the old one. Moreover, new commands don’t work on the new image. **FIXED**
+
 If you enter a forward/backward command too quickly after the last one and a Timeline animation is still running, the most recently run forward/backward command will not execute. **FIXED**
+
 Only the most recent turtle is able to be clicked and updated in the preferences view.
+
 Only the most recent turtle has the tooltip on hover.
+
 The pen of new turtles overlaps the old turtles
+
 Sidebar information sometimes runs off of the screen (like when you add too many colors to the color palette)
+
 Whenever you set the image color of a turtle from the sidebar, you cannot return the image to the default color
+
 Due to the loaded css file, some of the buttons are transparent and you can’t tell that they are actually buttons. (update actor image button)
 
 
