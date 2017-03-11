@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import javafx.animation.TranslateTransition;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -24,12 +26,15 @@ import view.ActorView;
 public class ActorPositionProperty extends Property<Point2D>
 {
 	private ActorView actor;
+	private StringProperty position;
 
 	public ActorPositionProperty(String name, ActorView actor)
 	{
 		super(name);
 		this.actor = actor;
+		position = new SimpleStringProperty();
 		super.setValue(new Point2D(0, 0));
+		position.set(this.getValue().toString());
 	}
 
 	@Override
@@ -37,6 +42,7 @@ public class ActorPositionProperty extends Property<Point2D>
 	{
 		actorMove(location);
 		super.setValue(location);
+		position.set(this.getValue().toString());
 	}
 
 	@Override
@@ -49,6 +55,7 @@ public class ActorPositionProperty extends Property<Point2D>
 			double x = Double.parseDouble(coordinates[0]);
 			double y = Double.parseDouble(coordinates[1]);
 			this.setValue(new Point2D(x, y));
+			position.set(this.getValue().toString());
 		}
 	}
 
@@ -83,6 +90,9 @@ public class ActorPositionProperty extends Property<Point2D>
 
 		return Arrays.asList(xyBox, moveButton);
 		// return Arrays.asList(label, directionPicker, distance, moveButton);
+	}
+	public StringProperty getLocationAsString(){
+		return position;
 	}
 
 	private void move(double distance)
