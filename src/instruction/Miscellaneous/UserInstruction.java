@@ -50,7 +50,7 @@ public class UserInstruction extends Miscellaneous {
 			v.addToStack(copyVal); //add new stack variable for every current variable
 			v.setValue(copyVal); //Copy current value into 
 		}
-		//TODO: Make sure this replaces initial value
+		
 		for(int i=0; i<function.getArgs().size(); i++){
 			String name = function.getArgs().get(i);
 			double value = getArgumentDouble(i);

@@ -107,9 +107,13 @@ public class InstructionData
 
 	public List<VariableData> getStackVariables()
 	{
-		for (VariableData v : variables) {
+		for (int i=0; i<variables.size(); i++) {
+			VariableData v = variables.get(i);
 			if (v.getStackSize() != 0)
 				v.popFromStack(); // iterate through and pop items
+			else{
+				variables.remove(v);
+			}
 		}
 		return variables;
 	}

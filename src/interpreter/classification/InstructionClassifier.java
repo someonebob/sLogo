@@ -104,7 +104,6 @@ public class InstructionClassifier {
 	public String findAddressKey(String text) {
 		for (Entry<String, Pattern> e : myPathsList) {
 			if (match(text, e.getKey())) {
-				System.out.println( e.getValue().toString());
 				return e.getValue().toString();
 			}
 		}
