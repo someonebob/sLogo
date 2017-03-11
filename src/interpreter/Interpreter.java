@@ -48,7 +48,7 @@ public class Interpreter {
 		instruction = ins;
 		double toRet = 0;
 		InstructionCleaner clean = new InstructionCleaner(getMyData(), getMyClassifier());
-		instruction = clean.clean(instruction);
+		instruction = clean.fullTextClean(instruction);
 		TreeBuilder builder = new TreeBuilder(instruction, getMyClassifier(), getMyData());
 		while (!instruction.isEmpty()) {
 			toRet = singleExecute(builder);
