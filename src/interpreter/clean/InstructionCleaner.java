@@ -63,7 +63,7 @@ public class InstructionCleaner{
 	 * @return Text without comments
 	 */
 	private String removeComments(String text){
-		Scanner toScan = new Scanner(text);
+		/*Scanner toScan = new Scanner(text);
 		String toRet = "";
 		while(toScan.hasNext()){
 			String line = toScan.nextLine();
@@ -79,8 +79,8 @@ public class InstructionCleaner{
 				toRet += line + " ";
 			}
 		}
-		toScan.close();
-		return toRet;
+		toScan.close();*/
+		return text;
 	}
 
 	public InstructionData getData() {

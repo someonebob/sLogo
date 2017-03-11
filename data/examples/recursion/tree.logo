@@ -1,6 +1,6 @@
 to tree [ :length :angle :depth :scale ]
 [
-  ifelse equal? :depth 1 
+  ifelse less? :depth 1 
   [
      fd :length
      bk :length
