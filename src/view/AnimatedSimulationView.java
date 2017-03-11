@@ -2,9 +2,9 @@ package view;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.Observable;
-import java.util.Observer;
 
 import javax.xml.transform.TransformerException;
 
@@ -24,7 +24,10 @@ import property.BackgroundColorProperty;
 import property.Property;
 import tool.ActorButtons.CreateActorButton;
 import tool.ActorButtons.DeleteActorButton;
-import tool.SettingsMenuTool.*;
+import tool.SettingsMenuTool.BackgroundColorButton;
+import tool.SettingsMenuTool.DefaultButton;
+import tool.SettingsMenuTool.PenColorButton;
+import tool.SettingsMenuTool.TurtleImageButton;
 import xml.XMLEditor;
 import xml.XMLException;
 
@@ -86,7 +89,7 @@ public class AnimatedSimulationView implements SimulationView, Cloneable
 		backgroundColor.setValue(color);
 	}
 	
-	public void setTold(List<Integer> toldTurtles){
+	public void setTold(Collection<Integer> toldTurtles){
 		for(int i = 0; i < actors.size(); i++){
 			if(toldTurtles.contains(i)){
 				actors.get(i).setTold();
@@ -122,6 +125,8 @@ public class AnimatedSimulationView implements SimulationView, Cloneable
 		root.getChildren().add(actor.display());
 
 		actors.add(actor);
+		System.out.println("Successfully added to list");
+		System.out.println("In class print of list: " + actors);
 	}
 
 	public void update(Observable o, Object arg)

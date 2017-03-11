@@ -1,6 +1,7 @@
 package view;
 
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Observer;
 
@@ -40,7 +41,7 @@ public interface SimulationView extends View, Observer{
 	 * Allows user to choose which turtles to be active
 	 * @param toldTurtles
 	 */
-	public void setTold(List<Integer> toldTurtles);
+	public void setTold(Collection<Integer> toldTurtles);
 	/**
 	 * 
 	 * @return list of all actors
