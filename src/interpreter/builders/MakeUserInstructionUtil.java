@@ -34,7 +34,7 @@ public class MakeUserInstructionUtil extends BuilderUtil{
 		ArrayList<InstructionNode> children = new ArrayList<InstructionNode>();
 		addChild(removeNext().getMyCommand());
 		decrementCurrentText();
-		int numArgs = getNumArgs(getHead());
+		int numArgs = ArgumentReaderUtil.getNumArgs(getHead(), getData());
 		for(int i=1; i<numArgs; i++){
 			InstructionNode child = removeNext();
 			decrementCurrentText();

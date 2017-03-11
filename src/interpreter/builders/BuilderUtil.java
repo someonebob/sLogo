@@ -84,12 +84,6 @@ public abstract class BuilderUtil {
 		getHead().setMyChildren(newChildren);
 	}
 	
-	public int getNumArgs(InstructionNode next){
-		String instruction = next.getMyCommand(); //remove head instruction
-		String type = next.getMyClassification();
-		int numArgs = ArgumentReaderUtil.getNumArgs(type, instruction, getData());
-		return numArgs;
-	}
 	
 	public InstructionNode removeNext(){
 		return getNodes().remove(0);

@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import exceptions.CastingException;
-import interpreter.util.WorkspaceUpdater;
+import interpreter.util.WorkspaceUpdaterUtil;
 import javafx.geometry.Bounds;
 import user_structures.FunctionData;
 import user_structures.VariableData;
@@ -146,12 +146,12 @@ public class InstructionData
 
 	public void addVariable(VariableData v)
 	{
-		WorkspaceUpdater.add(variables, v);
+		WorkspaceUpdaterUtil.add(variables, v);
 	}
 
 	public void addFunction(FunctionData f)
 	{
-		WorkspaceUpdater.add(functions, f);
+		WorkspaceUpdaterUtil.add(functions, f);
 	}
 
 	public String getLanguage()

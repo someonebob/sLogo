@@ -8,7 +8,7 @@ import java.util.Set;
 import instruction.InstructionData;
 import interpreter.Interpreter;
 import interpreter.misc.InstructionNode;
-import interpreter.util.WorkspaceUpdater;
+import interpreter.util.WorkspaceUpdaterUtil;
 import user_structures.FunctionData;
 import user_structures.VariableData;
 
@@ -59,7 +59,7 @@ public class UserInstruction extends Miscellaneous {
 		for(int i=0; i<function.getArgs().size(); i++){
 			String name = function.getArgs().get(i);
 			double value = getArgumentDouble(i);
-			WorkspaceUpdater.varAdd(localVariables, name, value);
+			WorkspaceUpdaterUtil.varAdd(localVariables, name, value);
 		}
 		return localVariables;
 	}

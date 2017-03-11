@@ -6,7 +6,7 @@ import java.util.List;
 import instruction.InstructionData;
 import interpreter.misc.InstructionNode;
 import interpreter.util.ArgumentReaderUtil;
-import interpreter.util.GroupReader;
+import interpreter.util.GroupReaderUtil;
 
 /**
  * Subclass of BuilderUtil that processes the current
@@ -46,9 +46,9 @@ public class GroupStartUtil extends BuilderUtil{
 		
 		String instruction = next.getMyCommand(); //remove head instruction
 		String type = next.getMyClassification();
-		int numArgs = getNumArgs(next);
+		int numArgs = ArgumentReaderUtil.getNumArgs(next, getData());
 		
-		String group = GroupReader.getGroup(type);
+		String group = GroupReaderUtil.getGroup(type);
 		if(group.equals("Layer")){
 			value = layerArguments(instruction, numArgs);
 		}
