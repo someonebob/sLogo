@@ -2,7 +2,7 @@ package interpreter.clean;
 
 
 import instruction.InstructionData;
-import interpreter.factories.InstructionClassifier;
+import interpreter.classification.InstructionClassifier;
 
 /**
  * Clean up the text before it is

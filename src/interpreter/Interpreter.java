@@ -2,9 +2,9 @@ package interpreter;
 
 import instruction.*;
 import interpreter.builders.TreeBuilder;
+import interpreter.classification.InstructionClassifier;
 import interpreter.clean.InstructionCleaner;
 import interpreter.execute.TreeExecuter;
-import interpreter.factories.InstructionClassifier;
 import interpreter.misc.InstructionNode;
 import util.Pair;
 

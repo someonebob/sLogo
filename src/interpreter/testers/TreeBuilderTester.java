@@ -5,7 +5,7 @@ import java.util.List;
 
 import instruction.InstructionData;
 import interpreter.builders.TreeBuilder;
-import interpreter.factories.InstructionClassifier;
+import interpreter.classification.InstructionClassifier;
 import interpreter.misc.InstructionNode;
 
 /**

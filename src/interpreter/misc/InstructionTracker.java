@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import instruction.InstructionData;
+import interpreter.classification.InstructionClassifier;
 import interpreter.clean.InstructionSplitter;
-import interpreter.factories.InstructionClassifier;
 
 /**
  * Used to keep track of the current status of
