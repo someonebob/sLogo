@@ -62,7 +62,6 @@ public abstract class AbstractFactory <A> {
 		Class [] classes = new Class [args.length];
 		for(int i=0; i<classes.length; i++){
 			classes[i] = args[i].getClass();
-			System.out.println(classes[i]);
 		}
 		return classes;
 	}
