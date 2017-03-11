@@ -38,7 +38,7 @@ public abstract class MultipleTurtleCommand extends Instruction
 	}
 	
 	protected void handleTolds(Collection<Integer> idsAsInts){
-		List<ActorView> actorList = getInstructionData().getActorList();
+		List<TurtleView> actorList = getInstructionData().getActorList();
 		//Set told for all actors to false
 		getInstructionData().setToldAndUntellRest(new ArrayList<>());
 		//Set told for those actors specified in argument list to true
