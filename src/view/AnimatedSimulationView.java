@@ -2,11 +2,13 @@ package view;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.Observable;
 
 import javax.xml.transform.TransformerException;
 
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Bounds;
@@ -37,7 +39,7 @@ public class AnimatedSimulationView implements SimulationView, Cloneable
 	private SimulationView backupSimulation;
 	private StackPane root;
 	private BackgroundColorProperty backgroundColor;
-	private ObservableList<ActorView> actors;
+	private ObservableList<TurtleView> actors;
 	private int id = 0;
 	private Defaults defaults;
 	private Tooltip tip;
@@ -47,7 +49,7 @@ public class AnimatedSimulationView implements SimulationView, Cloneable
 		root = new StackPane();
 		backgroundColor = new BackgroundColorProperty("Background Color", root);
 		this.defaults = defaults;
-		List<ActorView> list = new ArrayList<>();
+		List<TurtleView> list = new ArrayList<>();
 		actors = FXCollections.observableList(list);
 
 		for (int i = 0; i < defaults.numTurtles(); i++) {
@@ -90,7 +92,7 @@ public class AnimatedSimulationView implements SimulationView, Cloneable
 	}
 
 	@Override
-	public void setTold(List<Integer> toldTurtles)
+	public void setTold(Collection<Integer> toldTurtles)
 	{
 		for (int i = 0; i < actors.size(); i++) {
 			if (toldTurtles.contains(i)) {
@@ -102,7 +104,8 @@ public class AnimatedSimulationView implements SimulationView, Cloneable
 	}
 
 	@Override
-	public ObservableList<ActorView> getActors()
+	public List<TurtleView> getActors()
+
 	{
 		return actors;
 	}
@@ -110,7 +113,7 @@ public class AnimatedSimulationView implements SimulationView, Cloneable
 	@Override
 	public TurtleView getTurtle()
 	{
-		return (TurtleView) actors.get(0);
+		return actors.get(0);
 	}
 
 	@Override
@@ -120,9 +123,11 @@ public class AnimatedSimulationView implements SimulationView, Cloneable
 		
 		id++;
 		tip = new Tooltip();
-		tip.textProperty().bind(actor.getActorPositionProperty().getLocationAsString());
+		tip.textProperty().bind(Bindings.concat(actor.getActorPositionProperty().getStringValue(), "\n",
+				actor.getHeadingProperty().getStringValue(), "\n", actor.getPen().getPenUpProperty().getStringValue()));
 
 		Tooltip.install(actor.display(), tip);
+
 
 		actor.getPen().getCanvas().toBack();
 		actor.getPen().getCanvas().widthProperty().bind(root.widthProperty());
@@ -148,7 +153,7 @@ public class AnimatedSimulationView implements SimulationView, Cloneable
 		} else if (o instanceof PenColorButton) {
 			if (arg instanceof Color) {
 				// TODO make ID's work
-				((TurtleView) actors.get(0)).getPen().setColor((Color) arg);
+				actors.get(0).getPen().setColor((Color) arg);
 			}
 		} else if (o instanceof CreateActorButton) {
 			newActor();
@@ -170,8 +175,7 @@ public class AnimatedSimulationView implements SimulationView, Cloneable
 
 			try {
 				editor.setDefault("background", backgroundColor.getValue().toString());
-				editor.setDefault("pen",
-						((TurtleView) actors.get(0)).getPen().getPenColorProperty().getValue().toString());
+				editor.setDefault("pen", actors.get(0).getPen().getPenColorProperty().getValue().toString());
 				editor.setDefault("image", imageName);
 				editor.setDefault("numTurtles", Integer.toString(actors.size()));
 			} catch (TransformerException e1) {

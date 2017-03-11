@@ -53,19 +53,29 @@ public abstract class Instruction
 		int index = 0;
 		double returnValue = -1.0;
 		//TODO Return values
-		//System.out.println("Name: " + myText);
+		
+		for(ActorView av : getInstructionData().getActors()){
+			System.out.println("Id: " + av.getID().getID() + " Told: " + av.isTold());
+		}
+		
 		if(this instanceof ActorSpecificInstruction){
 			for(ActorView actor : instructionData.getActors()){
 				instructionData.setActiveActorIndex(index);
 				if(actor.isTold()){
-					//System.out.println("ID: " + actor.getID().getID());
+					System.out.println("Specific");
+					System.out.println("Name: " + myText);
+					System.out.println("ID: " + actor.getID().getID());
+					for(ActorView av : getInstructionData().getActors()){
+						System.out.println("Id: " + av.getID().getID() + " Told: " + av.isTold());
+					}
 					returnValue = execute();
 				}
 				index++;
 			}
 		}
 		else{
-			//System.out.println("This time here");
+			System.out.println("Nonspecific");
+			System.out.println("Name: " + myText);
 			returnValue = execute();
 		}
 		return returnValue;

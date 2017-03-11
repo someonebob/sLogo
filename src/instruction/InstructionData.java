@@ -1,7 +1,6 @@
 package instruction;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import exceptions.CastingException;
@@ -24,6 +23,14 @@ import view.TurtleView;
  * @author maddiebriere
  *
  */
+
+/*
+ * public interface InstructionData{ public List<Actor> getActorList(); public
+ * Color getBackgroundColor(); public ImageView getTurtleImage(); public void
+ * setActorList(List<Actor> actorList); public void setBackgroundColor(Color
+ * color); public void setTurtleImage(ImageView imageView); }
+ */
+
 public class InstructionData
 {
 	private static final String RESOURCE_CAST_EXCEPTION = "CastingMessage";
@@ -56,13 +63,14 @@ public class InstructionData
 	{
 		return simulationView.getActors().get(activeActorIndex);
 	}
-	
-	public int getActiveActorIndex(){
-		return activeActorIndex;
 
+	public int getActiveActorIndex()
+	{
+		return activeActorIndex;
 	}
 
-	public void setActiveActorIndex(int newIndex){
+	public void setActiveActorIndex(int newIndex)
+	{
 
 		activeActorIndex = newIndex;
 	}
@@ -72,7 +80,7 @@ public class InstructionData
 	 * 
 	 * @return
 	 */
-	public List<ActorView> getActors()
+	public List<TurtleView> getActors()
 	{
 		return simulationView.getActors();
 	}
@@ -86,12 +94,12 @@ public class InstructionData
 	{
 		return variables;
 	}
-	
+
 	public List<VariableData> getStackVariables()
 	{
-		for(VariableData v: variables){
-			if(v.getStackSize()!=0)
-				v.popFromStack(); //iterate through and pop items
+		for (VariableData v : variables) {
+			if (v.getStackSize() != 0)
+				v.popFromStack(); // iterate through and pop items
 		}
 		return variables;
 	}
@@ -176,9 +184,10 @@ public class InstructionData
 	{
 		return simulationView;
 	}
-	
-	public PenView getActivePenView(){
-		if(!(getActiveActor() instanceof TurtleView)){
+
+	public PenView getActivePenView()
+	{
+		if (!(getActiveActor() instanceof TurtleView)) {
 			throw new CastingException(RESOURCE_CAST_EXCEPTION);
 		}
 		return ((TurtleView) getActiveActor()).getPen();

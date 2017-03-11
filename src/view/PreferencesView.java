@@ -1,6 +1,7 @@
 package view;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
@@ -10,7 +11,6 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -21,6 +21,7 @@ public class PreferencesView implements View, Observer
 {
 	private BorderPane root;
 	private TurtleView actor;
+	private List<TurtleView> actors;
 	private SimulationView simulation;
 	private ImageView actorImage;
 	private Map<String, Node> preferenceViews;
@@ -36,9 +37,20 @@ public class PreferencesView implements View, Observer
 		actorImage.setFitHeight(70);
 		this.actor = initialActor;
 		this.simulation = simulation;
-		setupHeader();
-		setupFooter();
-//		root.setCenter(new PenPreferencesView(actor).display());
+
+		updateDisplay();
+	}
+
+	public void step()
+	{
+		actors = simulation.getActors();
+		for (TurtleView turtle : actors) {
+			turtle.getImageView().setOnMouseClicked(e -> {
+				actor = turtle;
+				updateDisplay();
+			});
+		}
+
 	}
 
 	private void setupHeader()
@@ -46,7 +58,7 @@ public class PreferencesView implements View, Observer
 		header = new VBox();
 		header.setAlignment(Pos.CENTER);
 		header.setPrefWidth(200);
-		header.getChildren().add(makeUndoButton());
+		// header.getChildren().add(makeUndoButton());
 		header.getChildren().add(new Label("Change Property:"));
 		initializePreferenceViews();
 		ComboBox<String> preferenceChooser = makePreferencesChooser();
@@ -56,6 +68,14 @@ public class PreferencesView implements View, Observer
 		updateActorImage();
 		header.getChildren().add(actor.getImageProperty().display());
 		root.setTop(header);
+	}
+
+	private void updateDisplay()
+	{
+		root.getChildren().clear();
+		setupHeader();
+		setupFooter();
+		updateActorImage();
 	}
 
 	private void setupFooter()
@@ -89,14 +109,14 @@ public class PreferencesView implements View, Observer
 		return chooser;
 	}
 
-	private Button makeUndoButton()
-	{
-		Button undo = new Button("Undo");
-		undo.setOnAction(e -> {
-			simulation.undo();
-		});
-		return undo;
-	}
+	// private Button makeUndoButton()
+	// {
+	// Button undo = new Button("Undo");
+	// undo.setOnAction(e -> {
+	// simulation.undo();
+	// });
+	// return undo;
+	// }
 
 	private void initializePreferenceViews()
 	{

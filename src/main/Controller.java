@@ -74,6 +74,7 @@ public class Controller implements Observer
 	private ObjectProperty<Tab> currentTab;
 	private Map<Tab, SelectionBar> selectionBarMap;
 	private Map<Tab, SimulationView> simulationMap;
+	private Map<Tab, PreferencesView> preferencesMap;
 	private Map<Tab, InputBox> inputBoxMap;
 	private Map<Tab, SavedStructuresView> workspaceMap;
 
@@ -128,6 +129,7 @@ public class Controller implements Observer
 		currentTab = new SimpleObjectProperty<>();
 		selectionBarMap = new HashMap<>();
 		simulationMap = new HashMap<>();
+		preferencesMap = new HashMap<>();
 		inputBoxMap = new HashMap<>();
 		workspaceMap = new HashMap<>();
 
@@ -166,7 +168,7 @@ public class Controller implements Observer
 		// workspace.setFunctions(functions);
 
 		setupBorderPane(pane, selectionBar, simulation, inputBox, workspace, preferences);
-		putIntoMaps(tab, selectionBar, simulation, inputBox, workspace, variables, functions);
+		putIntoMaps(tab, selectionBar, simulation, inputBox, workspace, variables, preferences, functions);
 		setupObservers(simulation, inputBox, file, settings, animation, actorControl, preferences);
 		setupCommands(inputBox);
 
@@ -187,11 +189,12 @@ public class Controller implements Observer
 
 	private void putIntoMaps(Tab tab, SelectionBar selectionBar, SimulationView simulation, InputBox inputBox,
 
-			SavedStructuresView workspace, ObservableList<VariableData> variables,
+			SavedStructuresView workspace, ObservableList<VariableData> variables, PreferencesView preferences,
 			ObservableList<FunctionData> functions)
 	{
 		selectionBarMap.put(tab, selectionBar);
 		simulationMap.put(tab, simulation);
+		preferencesMap.put(tab, preferences);
 		inputBoxMap.put(tab, inputBox);
 		workspaceMap.put(tab, workspace);
 
@@ -255,6 +258,7 @@ public class Controller implements Observer
 
 			printValue = interpreter.parseAndRun(command);
 			simulationMap.get(currentTab.get()).step();
+			preferencesMap.get(currentTab.get()).step();
 			inputBox.updateData(command);
 		} catch (SLogoException exception) {
 			exception.displayAlert();
