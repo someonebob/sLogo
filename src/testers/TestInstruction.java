@@ -1,4 +1,4 @@
-package instruction.MultipleTurtleCommands;
+package testers;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -19,11 +19,12 @@ public abstract class TestInstruction extends Instruction{
 	public double execute(){
 		System.out.println("------");
 		System.out.println("Contents of actor list:");
-		for(ActorView av : getInstructionData().getActors()){
+		for(ActorView av : getInstructionData().getActorList()){
 			System.out.println("Id: " + av.getID().getID() + " Told: " + av.isTold());
 		}
 		System.out.println("Active actor " + getInstructionData().getActiveActor());
 		System.out.println("------");
+		return 0;
 	}
 	
 }

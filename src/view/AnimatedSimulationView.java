@@ -132,8 +132,6 @@ public class AnimatedSimulationView implements SimulationView, Cloneable
 		root.getChildren().add(actor.display());
 
 		actors.add(actor);
-		System.out.println("Successfully added to list");
-		System.out.println("In class print of list: " + actors);
 	}
 
 	@Override

@@ -32,7 +32,7 @@ public class AskWith extends MultipleTurtleCommand {
 		
 		//Save List<Integer> savedToldActors
 		Set<Integer> savedToldActors = new TreeSet<>();
-		for(ActorView actor : getInstructionData().getActors()){
+		for(ActorView actor : getInstructionData().getActorList()){
 			if(actor.isTold()){
 				savedToldActors.add(actor.getID().getID());
 			}
@@ -44,7 +44,7 @@ public class AskWith extends MultipleTurtleCommand {
 			 * - execute condition for that actor and get result - store in idsAsInts
 		*/
 		List<Integer> idsAsInts = new ArrayList<>();
-		for(ActorView actor : getInstructionData().getActors()){
+		for(ActorView actor : getInstructionData().getActorList()){
 			Collection<Integer> actorToCheck = new TreeSet<>();
 			actorToCheck.add(actor.getID().getID());
 			handleTolds(new TreeSet<>());
