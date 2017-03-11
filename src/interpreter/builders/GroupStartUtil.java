@@ -19,7 +19,7 @@ import interpreter.util.GroupReaderUtil;
  *
  */
 
-public abstract class GroupStartUtil extends BuilderUtil{
+public class GroupStartUtil extends BuilderUtil{
 	private final static String END = "GroupEnd";
 	private final static String START = "GroupStart";
 	private final static String LAYER = "Layer";
@@ -61,7 +61,7 @@ public abstract class GroupStartUtil extends BuilderUtil{
 	}
 	
 	
-	public abstract String rearrangeWords(String instruction, int numArgs);
+	//public abstract String rearrangeWords(String instruction, int numArgs);
 	
 	/**
 	 * WAY 1: The first way for Groups to be parsed is by layering arguments.
