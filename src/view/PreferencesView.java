@@ -1,8 +1,6 @@
 package view;
-
 import java.util.HashMap;
 import java.util.Map;
-
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -14,7 +12,6 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
-
 public class PreferencesView implements View
 {
 	private BorderPane root;
@@ -23,8 +20,6 @@ public class PreferencesView implements View
 	private ImageView actorImage;
 	private Map<String, Node> preferenceViews;
 	private VBox header;
-	private VBox footer;
-
 	public PreferencesView(TurtleView initialActor, SimulationView simulation)
 	{
 		root = new BorderPane();
@@ -34,10 +29,8 @@ public class PreferencesView implements View
 		this.actor = initialActor;
 		this.simulation = simulation;
 		setupHeader();
-		setupFooter();
 		// root.setCenter(new PenPreferencesView(actor).display());
 	}
-
 	private void setupHeader()
 	{
 		header = new VBox();
@@ -50,23 +43,22 @@ public class PreferencesView implements View
 		header.getChildren().add(new Label("Current Actor:"));
 		updateActorImage();
 		header.getChildren().add(actor.getImageProperty().display());
+		// header.getChildren().add(actorImage);
+		// root.getChildren().add(header);
 		root.setTop(header);
-	}
 
-	private void setupFooter()
-	{
-		footer = new VBox();
-		footer.setAlignment(Pos.CENTER);
-		footer.getChildren().add(new Label("Color Palette:"));
-		footer.getChildren().add(simulation.getBackgroundColorProperty().getColorPalette());
-		root.setBottom(footer);
+		// header.getChildren().add(actor.getActorPositionProperty().display());
+		// header.getChildren().add(new Label(String.format("Position: %s",
+		// actor.getActor().getLocation())));
+		// header.getChildren().add(new Label(String.format("Heading: %s",
+		// actor.getHeading())));
+		// header.getChildren().add(new Label(String.format("Pen up/down: %s",
+		// actor.getPen().isUp() ? "up" : "down")));
 	}
-
 	private void updateActorImage()
 	{
 		actorImage.setImage(actor.getImageView().getImage());
 	}
-
 	private void makePreferencesChooser()
 	{
 		ComboBox<String> chooser = new ComboBox<String>(FXCollections.observableArrayList(preferenceViews.keySet()));

@@ -10,7 +10,7 @@ import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 
 /**
- * This tool handles everything related to files
+ * 
  * @author Jesse
  *
  */
@@ -18,6 +18,7 @@ public class FileMenuTool extends MenuTool
 {
 
 	public static final String name = "File";
+	public static final String EXTENSION = "*.logo";
 
 	private List<AbstractMenuItem> buttons;
 
@@ -40,11 +41,6 @@ public class FileMenuTool extends MenuTool
 		return buttons;
 	}
 	
-	/**
-	 * Button that creates a new file
-	 * @author Jesse
-	 *
-	 */
 	public class NewButton extends AbstractMenuItem{
 
 		public NewButton() {
@@ -58,18 +54,13 @@ public class FileMenuTool extends MenuTool
 		
 	}
 	
-	/**
-	 * Button that opens an existing file
-	 * @author Jesse
-	 *
-	 */
 	public class OpenButton extends AbstractMenuItem{
 
 		public OpenButton() {
 			super(new MenuItem("Open"));
 			// TODO Auto-generated constructor stub
 			this.getItem().setOnAction(e -> {
-				File selectedFile = setupFileChooser("LOGO Programs", "/data", "LOGO", "*.logo").showOpenDialog(getStage());
+				File selectedFile = setupFileChooser().showOpenDialog(getStage());
 				if(selectedFile != null){
 					this.setChanged();
 					this.notifyObservers(selectedFile);
@@ -80,17 +71,13 @@ public class FileMenuTool extends MenuTool
 		
 	}
 	
-	/**
-	 * Button that saves the file
-	 * @author Jesse
-	 *
-	 */
 	public class SaveButton extends AbstractMenuItem{
 
 		public SaveButton() {
 			super(new MenuItem("Save"));
+			// TODO Make it save
 			this.getItem().setOnAction(e -> {
-				File save = setupFileChooser("LOGO Programs", "/data", "LOGO", "*.logo").showSaveDialog(getStage());
+				File save = setupFileChooser().showSaveDialog(getStage());
 				if(save != null){
 					this.setChanged();
 					this.notifyObservers(save);
@@ -100,35 +87,27 @@ public class FileMenuTool extends MenuTool
 		}
 		
 	}
-	
-	/**
-	 * Button that saves the view as an image
-	 * @author Jesse
-	 *
-	 */
+
 	public class SaveImageButton extends AbstractMenuItem{
 
 		public SaveImageButton() {
 			super(new MenuItem("Save Image"));
+			// TODO make it save
 			this.getItem().setOnAction(e -> {
-				File save = setupFileChooser("Saved Images", "/saved_images", "PNG", "*.png").showSaveDialog(getStage());
-				if(save != null){
-					this.setChanged();
-					this.notifyObservers(save);
-				}
-				
+				this.setChanged();
+				this.notifyObservers();
 			});
 		}
 		
 	}
 	
 	
-	private FileChooser setupFileChooser(String title, String location, String extensionName, String extension){
+	private FileChooser setupFileChooser(){
 		FileChooser chooser = new FileChooser();
-		chooser.setTitle(title);
-		File defaultDirectory = new File(System.getProperty("user.dir") + location);
+		chooser.setTitle("LOGO Programs");
+		File defaultDirectory = new File(System.getProperty("user.dir") + "/data");
 		chooser.setInitialDirectory(defaultDirectory);
-		chooser.getExtensionFilters().setAll(new ExtensionFilter(extensionName, extension));
+		chooser.getExtensionFilters().setAll(new ExtensionFilter("LOGO", EXTENSION));
 
 		return chooser;
 	}

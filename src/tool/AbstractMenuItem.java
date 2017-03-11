@@ -7,8 +7,6 @@ import java.util.Observable;
 import javafx.scene.control.MenuItem;
 
 /**
- * Abstract class extended by every MenuItem in the Menu bar
- * Makes every item observable and handles commonalities
  * @author jimmy
  * @author Jesse
  *

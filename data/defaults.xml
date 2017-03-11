@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?><defaults>
-	<background>0xff8080ff</background>
+	<background>0x8099ffff</background>
 	<pen>0xff6666ff</pen>
-	<image>bowser.gif</image>
+	<image>Koopa.png</image>
 	<numTurtles>1</numTurtles>
 	<language>English</language>
 </defaults>

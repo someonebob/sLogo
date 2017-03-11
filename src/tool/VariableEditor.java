@@ -1,13 +1,12 @@
 package tool;
 
-import exceptions.InvalidNumberException;
+
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-import user_structures.StructureData;
 import user_structures.VariableData;
 
 /**
@@ -28,10 +27,6 @@ public class VariableEditor {
 		save.setOnAction(e -> buttonAction());
 	}
 	
-	/**
-	 * 
-	 * @return the new updated variable data
-	 */
 	public VariableData getChangedVariable(){
 		return changedVariable;
 	}
@@ -60,8 +55,6 @@ public class VariableEditor {
 		grid.add(value, 0, 1);
 		grid.add(valueEntry, 1, 1);
 		grid.add(save, 1, 2);
-		grid.setHgap(5);
-		grid.setVgap(5);
 		
 		Scene scene = new Scene(grid);
 		window.setScene(scene);
@@ -75,14 +68,13 @@ public class VariableEditor {
 		}
 		if(valueEntry.getText().length() > 0){
 			//Check if works for negative numbers
-			try{
+			if(valueEntry.getText().chars().allMatch( Character::isDigit )){
 				changedVariable.setValue(Double.parseDouble(valueEntry.getText()));
-			}catch(Exception e){
-				new InvalidNumberException("NotNumberMessage").displayAlert();
+			}else{
+				//TODO make it pop up an alert that says value input must be a number
 			}
 		}
 		window.close();
 	}
-
 
 }

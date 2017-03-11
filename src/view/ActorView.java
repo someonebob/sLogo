@@ -1,5 +1,4 @@
 package view;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.Observable;
@@ -7,7 +6,10 @@ import java.util.Observer;
 
 import javafx.animation.Animation;
 import javafx.animation.SequentialTransition;
+
+
 import javafx.animation.Transition;
+
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
@@ -19,9 +21,7 @@ import property.ImageColorProperty;
 import property.ImageProperty;
 import property.Property;
 import property.SpeedProperty;
-import tool.AnimationControlToolButtons.AnimationPauseButton;
-import tool.AnimationControlToolButtons.AnimationPlayButton;
-import tool.AnimationControlToolButtons.AnimationStopButton;
+import tool.AnimationControlToolButtons.*;
 import user_structures.ID;
 
 /**
@@ -58,6 +58,7 @@ public abstract class ActorView implements View, Cloneable, Observer
 		speed.setValue(5.0);
 		actorPosition = new ActorPositionProperty("Actor Position", this);
 		heading = new HeadingProperty("Actor Heading", this);
+		
 
 		actorMove = new SequentialTransition();
 		actorMove.setNode(this.getImageView());
@@ -66,20 +67,19 @@ public abstract class ActorView implements View, Cloneable, Observer
 		image.getValue().setFitWidth(ACTOR_WIDTH);
 		image.getValue().setPreserveRatio(true);
 		loadImage(defaults.image());
+		// start facing up
+		this.setHeading(STARTING_HEADING);
+		// // initial rotation
+		actorMove.play();
 	}
-
-	public boolean isTold()
-	{
+	public boolean isTold(){
 		return told;
 	}
-
-	public void setTold()
-	{
+	
+	public void setTold(){
 		told = true;
 	}
-
-	public void setUntold()
-	{
+	public void setUntold(){
 		told = false;
 	}
 
@@ -87,15 +87,15 @@ public abstract class ActorView implements View, Cloneable, Observer
 	{
 		return id;
 	}
-
 	@Override
-	public void update(Observable o, Object arg)
-	{
-		if (o instanceof AnimationPlayButton) {
+	public void update(Observable o, Object arg) {
+		if(o instanceof AnimationPlayButton){
 			actorMove.play();
-		} else if (o instanceof AnimationPauseButton) {
+		}
+		else if(o instanceof AnimationPauseButton){
 			actorMove.pause();
-		} else if (o instanceof AnimationStopButton) {
+		}
+		else if(o instanceof AnimationStopButton){
 			actorMove.stop();
 		}
 	}
@@ -114,12 +114,10 @@ public abstract class ActorView implements View, Cloneable, Observer
 	{
 		return imageColor;
 	}
-
 	public ActorPositionProperty getActorPositionProperty()
 	{
 		return actorPosition;
 	}
-
 	@Override
 	public Node display()
 	{
@@ -157,7 +155,7 @@ public abstract class ActorView implements View, Cloneable, Observer
 	{
 
 		for (Animation trans : actorMove.getChildren()) {
-			// System.out.print(trans);
+			//System.out.print(trans);
 		}
 		transition.setOnFinished(e -> {
 			actorMove.getChildren().remove(transition);
@@ -175,26 +173,19 @@ public abstract class ActorView implements View, Cloneable, Observer
 		setHeading(heading.getValue() + rotateAngle);
 	}
 
+
 	public double getHeading()
 	{
 		return heading.getValue();
 	}
-
-	public HeadingProperty getHeadingProperty()
-	{
-		return this.heading;
-	}
-
 	public List<Property<?>> getProperties()
 	{
 		return Arrays.asList(image, imageColor, actorPosition, heading, speed);
 	}
-
-	public double getSpeed()
-	{
+	
+	public double getSpeed(){
 		return speed.getValue();
 	}
-
 	public abstract PenView getPen();
 
 }
