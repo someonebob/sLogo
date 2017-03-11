@@ -36,8 +36,7 @@ public class UserInstruction extends Miscellaneous {
 	
 	private double runInWorkspace(FunctionData function){
 		List<VariableData> local = generateLocalVars(function);
-		InstructionData pre = getInstructionData();
-		InstructionData info = new InstructionData(pre.getSimulation(), local, pre.getFunctions(), pre.getLanguage());
+		InstructionData info = getInstructionData().replicateSelfWithNewVariables(local);
 		Interpreter listInterpreter = new Interpreter(info);  //Need to change when decide on way to set language
 		double ret = listInterpreter.parseAndRun(function.getCommands());
 		getInstructionData().getStackVariables(); //pop off stack

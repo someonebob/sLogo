@@ -15,6 +15,7 @@ import view.ActorView;
  * @author Matthew Barbano
  *
  */
+
 public abstract class Instruction
 {
 	private InstructionData instructionData;
@@ -52,20 +53,17 @@ public abstract class Instruction
 	public double executeAllToldTurtles(){
 		int index = 0;
 		double returnValue = -1.0;
-		//TODO Return values
-		//System.out.println("Name: " + myText);
+		
 		if(this instanceof ActorSpecificInstruction){
-			for(ActorView actor : instructionData.getActors()){
+			for(ActorView actor : instructionData.getActorList()){
 				instructionData.setActiveActorIndex(index);
 				if(actor.isTold()){
-					//System.out.println("ID: " + actor.getID().getID());
 					returnValue = execute();
 				}
 				index++;
 			}
 		}
 		else{
-			//System.out.println("This time here");
 			returnValue = execute();
 		}
 		return returnValue;

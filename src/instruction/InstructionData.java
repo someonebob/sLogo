@@ -1,12 +1,13 @@
 package instruction;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import exceptions.CastingException;
 import interpreter.util.WorkspaceUpdaterUtil;
 import javafx.geometry.Bounds;
+import property.BackgroundColorProperty;
 import user_structures.FunctionData;
 import user_structures.VariableData;
 import view.ActorView;
@@ -24,6 +25,7 @@ import view.TurtleView;
  * @author maddiebriere
  *
  */
+
 public class InstructionData
 {
 	private static final String RESOURCE_CAST_EXCEPTION = "CastingMessage";
@@ -31,6 +33,7 @@ public class InstructionData
 	List<VariableData> variables;
 	List<FunctionData> functions;
 	String language;
+	int activeActorIndex;
 
 	public InstructionData()
 	{
@@ -38,6 +41,7 @@ public class InstructionData
 		this.variables = new ArrayList<VariableData>();
 		this.functions = new ArrayList<FunctionData>();
 		this.language = "English";
+		this.activeActorIndex = 0;
 	}
 
 	public InstructionData(SimulationView simulation, List<VariableData> variables, List<FunctionData> functions,
@@ -47,11 +51,7 @@ public class InstructionData
 		this.variables = variables;
 		this.functions = functions;
 		this.language = language;
-	}
-
-	public TurtleView getActiveActor()
-	{
-		return simulationView.getTurtle();
+		this.activeActorIndex = 0;
 	}
 
 	/**
@@ -59,9 +59,34 @@ public class InstructionData
 	 * 
 	 * @return
 	 */
-	public List<ActorView> getActors()
+	public List<ActorView> getActorList()
 	{
-		return Arrays.asList(simulationView.getTurtle());
+		return simulationView.getActors();
+	}
+	
+	public BackgroundColorProperty getBackgroundColorProperty(){
+		return simulationView.getBackgroundColorProperty();
+	}
+	
+	public void newActor(){
+		simulationView.newActor();
+	}
+	
+	public void setToldAndUntellRest(Collection<Integer> toldTurtles){
+		simulationView.setTold(toldTurtles);
+	}
+	
+	public InstructionData replicateSelfWithNewVariables(List<VariableData> newVariableList){
+		return new InstructionData(simulationView, newVariableList, functions, language);
+	}
+	
+	public ActorView getActiveActor()
+	{
+		return simulationView.getActors().get(activeActorIndex);
+	}
+	
+	public void setActiveActorIndex(int newIndex){
+		activeActorIndex = newIndex;
 	}
 
 	public Bounds getSimulationBounds()
@@ -73,19 +98,14 @@ public class InstructionData
 	{
 		return variables;
 	}
-	
+
 	public List<VariableData> getStackVariables()
 	{
-		for(VariableData v: variables){
-			if(v.getStackSize()!=0)
-				v.popFromStack(); //iterate through and pop items
+		for (VariableData v : variables) {
+			if (v.getStackSize() != 0)
+				v.popFromStack(); // iterate through and pop items
 		}
 		return variables;
-	}
-
-	public List<FunctionData> getFunctions()
-	{
-		return functions;
 	}
 
 	/**
@@ -124,30 +144,6 @@ public class InstructionData
 		return null;
 	}
 
-	public String getVariableValue(String variableName)
-	{
-		for (VariableData v : variables) {
-			if (v.getName().equals(variableName)) {
-				return "" + v.getValue();
-			}
-		}
-		return "NO MATCH";
-	}
-
-	public String getFunctionValue(String functionName)
-	{
-		for (FunctionData f : functions) {
-			if (f.getName().equals(functionName)) {
-				return f.getCommands();
-			}
-		}
-		return "NO MATCH";
-	}
-
-	public void addVariable(VariableData v)
-	{
-		WorkspaceUpdaterUtil.add(variables, v);
-	}
 
 	public void addFunction(FunctionData f)
 	{
@@ -158,22 +154,12 @@ public class InstructionData
 	{
 		return language;
 	}
-
-	public SimulationView getSimulation()
-	{
-		return simulationView;
-	}
 	
 	public PenView getActivePenView(){
 		if(!(getActiveActor() instanceof TurtleView)){
 			throw new CastingException(RESOURCE_CAST_EXCEPTION);
 		}
 		return ((TurtleView) getActiveActor()).getPen();
-	}
-
-	public void setActiveActorIndex(int index) {
-		// TODO Auto-generated method stub
-		
 	}
 
 }
