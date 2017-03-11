@@ -36,10 +36,10 @@ public class SavedStructuresView implements View
 	{
 		initiateSetup();
 		initiateVariableItems();
-		initiateFunctionItems();
+		// initiateFunctionItems();
 
 		varEdit.setOnAction(e -> varButtonAction());
-		funcEdit.setOnAction(e -> funcButtonAction());
+		// funcEdit.setOnAction(e -> funcButtonAction());
 
 	}
 
@@ -54,10 +54,10 @@ public class SavedStructuresView implements View
 		varTable.setItems(data);
 	}
 
-	public void setFunctions(ObservableList<FunctionData> data)
-	{
-		funcTable.setItems(data);
-	}
+	// public void setFunctions(ObservableList<FunctionData> data)
+	// {
+	// funcTable.setItems(data);
+	// }
 
 	private void initiateSetup()
 	{
@@ -77,7 +77,7 @@ public class SavedStructuresView implements View
 		// variables.setPrefWidth(150);
 		values = new TableColumn<>("Value");
 		values.setCellValueFactory(new PropertyValueFactory("value"));
-		values.setPrefWidth(150);
+		// values.setPrefWidth(150);
 
 		varTable.getColumns().setAll(variables, values);
 
