@@ -7,6 +7,7 @@ import java.util.Observable;
 
 import javax.xml.transform.TransformerException;
 
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Bounds;
@@ -119,9 +120,10 @@ public class AnimatedSimulationView implements SimulationView, Cloneable
 		TurtleView actor = new TurtleView(defaults, id);
 		id++;
 		tip = new Tooltip();
-		tip.textProperty().bind(actor.getActorPositionProperty().getLocationAsString());
+		tip.textProperty().bind(Bindings.concat(actor.getActorPositionProperty().getStringValue(), "\n",
+				actor.getHeadingProperty().getStringValue(), "\n", actor.getPen().getPenUpProperty().getStringValue()));
 
-		tip.install(actor.getImageProperty().getValue(), tip);
+		Tooltip.install(actor.getImageProperty().getValue(), tip);
 
 		actor.getPen().getCanvas().toBack();
 		actor.getPen().getCanvas().widthProperty().bind(root.widthProperty());

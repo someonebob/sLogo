@@ -5,9 +5,8 @@ import java.io.File;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
-import javafx.stage.FileChooser;
-import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
+import util.FileChooserUtil;
 
 public abstract class ImageUpdater extends AbstractUpdater
 {
@@ -25,7 +24,9 @@ public abstract class ImageUpdater extends AbstractUpdater
 		input.setText(defaultText);
 		Stage newWindow = new Stage();
 		input.setOnAction(e -> {
-			File selectedFile = setupFileChooser().showOpenDialog(newWindow);
+			File selectedFile = FileChooserUtil
+					.setupFileChooser("IMAGE", "IMAGE", new File(System.getProperty("user.dir") + "/images"), "*.png")
+					.showOpenDialog(newWindow);
 			if (selectedFile != null) {
 				Image newImage = new Image(selectedFile.toURI().toString());
 				this.setChanged();
@@ -39,19 +40,6 @@ public abstract class ImageUpdater extends AbstractUpdater
 	public Node display()
 	{
 		return input;
-	}
-
-	private FileChooser setupFileChooser()
-	{
-		final String EXTENSION = "*.png";
-
-		FileChooser chooser = new FileChooser();
-		chooser.setTitle("New Image");
-		File defaultDirectory = new File(System.getProperty("user.dir") + "/images");
-		chooser.setInitialDirectory(defaultDirectory);
-		chooser.getExtensionFilters().setAll(new ExtensionFilter("IMAGE", EXTENSION));
-
-		return chooser;
 	}
 
 }
