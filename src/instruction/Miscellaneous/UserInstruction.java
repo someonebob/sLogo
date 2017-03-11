@@ -1,14 +1,10 @@
 package instruction.Miscellaneous;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import instruction.InstructionData;
 import interpreter.Interpreter;
-import interpreter.misc.InstructionNode;
-import interpreter.util.WorkspaceUpdater;
+import interpreter.util.WorkspaceUpdaterUtil;
 import user_structures.FunctionData;
 import user_structures.VariableData;
 
@@ -40,8 +36,7 @@ public class UserInstruction extends Miscellaneous {
 	
 	private double runInWorkspace(FunctionData function){
 		List<VariableData> local = generateLocalVars(function);
-		InstructionData pre = getInstructionData();
-		InstructionData info = new InstructionData(pre.getSimulation(), local, pre.getFunctions(), pre.getLanguage());
+		InstructionData info = getInstructionData().replicateSelfWithNewVariables(local);
 		Interpreter listInterpreter = new Interpreter(info);  //Need to change when decide on way to set language
 		double ret = listInterpreter.parseAndRun(function.getCommands());
 		getInstructionData().getStackVariables(); //pop off stack
@@ -59,7 +54,7 @@ public class UserInstruction extends Miscellaneous {
 		for(int i=0; i<function.getArgs().size(); i++){
 			String name = function.getArgs().get(i);
 			double value = getArgumentDouble(i);
-			WorkspaceUpdater.varAdd(localVariables, name, value);
+			WorkspaceUpdaterUtil.varAdd(localVariables, name, value);
 		}
 		return localVariables;
 	}

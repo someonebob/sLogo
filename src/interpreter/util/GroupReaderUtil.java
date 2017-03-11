@@ -6,6 +6,10 @@ import java.util.Map.Entry;
 import java.util.regex.Pattern;
 
 import instruction.InstructionData;
+import interpreter.builders.GroupStartUtil;
+import interpreter.factories.BuilderUtilFactory;
+import interpreter.misc.InstructionNode;
+import interpreter.misc.InstructionTracker;
 import util.Pair;
 
 /**
@@ -18,10 +22,16 @@ import util.Pair;
  *
  */
 
-public class GroupReader {
+public class GroupReaderUtil {
 
 	public static final String GROUPS = "resources/interpreter/Groupings";
 	public static final String DEFAULT = "Multiple";
+	
+	//TODO: Remove cast by creating abstract Factory class
+	/*public static GroupStartUtil make(InstructionNode head, InstructionTracker track){
+		String instructionType = getGroup(head.getMyClassification()) + head.getMyClassification();
+		return (GroupStartUtil)BuilderUtilFactory.make(head, instructionType, track);
+	}*/
 	
 	public static Pair<String, Integer> getGroupAndNumArgs(String instructionType, String exactCommand, InstructionData data){
 		String group = getGroup(instructionType);

@@ -1,6 +1,7 @@
 package interpreter.util;
 
 import instruction.InstructionData;
+import interpreter.misc.InstructionNode;
 
 /**
  * Class dedicated to reading in the number of arguments held by each command
@@ -33,6 +34,13 @@ public final class ArgumentReaderUtil
 			return data.containsFunction(exactCommand).getArgs().size();
 		}
 		int numArgs = ResourceToListUtil.getNumericalTerm(NUM_ARGS, instructionType);
+		return numArgs;
+	}
+	
+	public static int getNumArgs(InstructionNode next, InstructionData data){
+		String instruction = next.getMyCommand(); //remove head instruction
+		String type = next.getMyClassification();
+		int numArgs = ArgumentReaderUtil.getNumArgs(type, instruction, data);
 		return numArgs;
 	}
 

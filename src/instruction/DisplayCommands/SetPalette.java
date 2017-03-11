@@ -19,7 +19,7 @@ public class SetPalette extends DisplayCommand
 	@Override
 	public double execute()
 	{
-		List<Color> indexedColors = getInstructionData().getSimulation().getBackgroundColorProperty()
+		List<Color> indexedColors = getInstructionData().getBackgroundColorProperty()
 				.getIndexedColors();
 		MathUtil.checkValidIndex(getArgumentDouble(0), indexedColors.size() + 1);
 		if (!MathUtil.hasIntegerValue(getArgumentDouble(1)) || !MathUtil.hasIntegerValue(getArgumentDouble(2))
@@ -37,7 +37,7 @@ public class SetPalette extends DisplayCommand
 		} else {
 			indexedColors.set((int) getArgumentDouble(0), newColor);
 		}
-		getInstructionData().getSimulation().getBackgroundColorProperty().updateColorPalette();
+		getInstructionData().getBackgroundColorProperty().updateColorPalette();
 		return getArgumentDouble(0);
 	}
 

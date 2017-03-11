@@ -36,20 +36,18 @@ public abstract class MultipleTurtleCommand extends Instruction
 		}
 		return idsAsInts;
 	}
-
-	protected void handleTolds(Collection<Integer> idsAsInts)
-	{
-		List<TurtleView> actorList = getInstructionData().getActors();
-		// Set told for all actors to false
-		getInstructionData().getSimulation().setTold(new ArrayList<>());
-		// Set told for those actors specified in argument list to true
-		getInstructionData().getSimulation().setTold(idsAsInts);
-		// If not in actor list, then add it/draw it
-		for (Integer id : idsAsInts) {
-			if (id >= actorList.size()) {
-				getInstructionData().getSimulation().newActor();
-				System.out.println("Created new actor, I think");
-			}
+	
+	protected void handleTolds(Collection<Integer> idsAsInts){
+		List<TurtleView> actorList = getInstructionData().getActorList();
+		//Set told for all actors to false
+		getInstructionData().setToldAndUntellRest(new ArrayList<>());
+		//Set told for those actors specified in argument list to true
+		getInstructionData().setToldAndUntellRest(idsAsInts);
+		//If not in actor list, then add it/draw it
+		for(Integer id : idsAsInts){
+			 if(id >= actorList.size()){
+				 getInstructionData().newActor();
+			 }
 		}
 	}
 

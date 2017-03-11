@@ -1,12 +1,12 @@
-package interpreter.builders;
+package interpreter.factories;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.List;
 
 import exceptions.ReflectionException;
-import instruction.InstructionData;
+import interpreter.builders.BuilderUtil;
 import interpreter.misc.InstructionNode;
+import interpreter.misc.InstructionTracker;
 /**
  * Class based on Factory Design Pattern
  * 
@@ -28,17 +28,13 @@ public class BuilderUtilFactory {
 	 * is not a "special" node requiring pre-processing before 
 	 * going through the generalized parsing (in TreeBuilder)
 	 * 
-	 * @param nodes The current nodes left to be processed
 	 * @param head The head node (the one that was removed in this cycle, precedes the list
 	 * of current nodes)
-	 * @param current The text from the instruction that has yet to be parsed
-	 * @param data The InstructionData object holding information about the workspace
+	 * @param track Holds information about current instruction and workspace
 	 * @return The correct BuilderUtil type corresponding to the
 	 * head InstructionNode or null (if no special treatment is required)
 	 */
-	public static BuilderUtil make(List<InstructionNode> nodes,
-			InstructionNode head, String current, InstructionData data){
-		String instructionType = head.getMyClassification();
+	public static BuilderUtil make(InstructionNode head, String instructionType, InstructionTracker track){
 		BuilderUtil toRet = null;
 		Class<?> clazz;
 		Object builderHopeful = new Object();
@@ -52,9 +48,8 @@ public class BuilderUtilFactory {
 		
 		Constructor<?> ctor;
 		try {
-			ctor = clazz.getDeclaredConstructor(List.class, InstructionNode.class, 
-					String.class, InstructionData.class);
-			builderHopeful = ctor.newInstance(nodes, head, current, data);
+			ctor = clazz.getDeclaredConstructor(InstructionNode.class, InstructionTracker.class);
+			builderHopeful = ctor.newInstance(head, track);
 		} catch (NoSuchMethodException | SecurityException | InstantiationException 
 				| IllegalAccessException | IllegalArgumentException 
 				| InvocationTargetException e) {
