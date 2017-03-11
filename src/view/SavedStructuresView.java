@@ -1,13 +1,16 @@
 package view;
 
 import javafx.collections.ObservableList;
+import javafx.geometry.Orientation;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.SplitPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import tool.FunctionEditor;
 import tool.VariableEditor;
 import user_structures.FunctionData;
@@ -21,6 +24,7 @@ import user_structures.VariableData;
  */
 public class SavedStructuresView implements View {
 	private BorderPane pane;
+	private SplitPane split;
 	private TableView<VariableData> varTable;
 	private TableColumn<VariableData, String> variables;
 	private TableColumn<VariableData, Double> values;
@@ -56,14 +60,18 @@ public class SavedStructuresView implements View {
 
 	private void initiateSetup() {
 		pane = new BorderPane();
+		split = new SplitPane();
+		split.setOrientation(Orientation.VERTICAL);
+		pane.setCenter(split);
 		buttonBox = new HBox();
 		pane.setTop(buttonBox);
 	}
 
 	private void initiateVariableItems() {
 		varTable = new TableView<>();
+
 		varTable.setPrefWidth(300);
-		varTable.setPrefHeight(300);
+		varTable.setPrefHeight(100);
 
 		variables = new TableColumn<>("Variable Name");
 		variables.setCellValueFactory(new PropertyValueFactory("name"));
@@ -77,13 +85,16 @@ public class SavedStructuresView implements View {
 		varEdit = new Button("Edit Variable");
 		buttonBox.getChildren().add(varEdit);
 
-		pane.setCenter(varTable);
+		split.getItems().add(varTable);
 
 	}
 
 	private void initiateFunctionItems() {
 		funcTable = new TableView<>();
+
 		funcTable.setPrefWidth(300);
+
+		funcTable.setPrefHeight(100);
 
 		funcNames = new TableColumn<>("Command Name");
 		funcNames.setCellValueFactory(new PropertyValueFactory("name"));
@@ -97,8 +108,7 @@ public class SavedStructuresView implements View {
 		funcEdit = new Button("Edit Command");
 		buttonBox.getChildren().add(funcEdit);
 
-		pane.setBottom(funcTable);
-
+		split.getItems().add(funcTable);
 	}
 
 	private void varButtonAction() {

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?><defaults>
-	<background>0xff8080ff</background>
-	<pen>0xff6666ff</pen>
+	<background>0x4d001aff</background>
+	<pen>0x4d8080ff</pen>
 	<image>bowser.gif</image>
 	<numTurtles>1</numTurtles>
 	<language>English</language>

@@ -46,7 +46,9 @@ public class PreferencesView implements View
 		header.getChildren().add(makeUndoButton());
 		header.getChildren().add(new Label("Change Property:"));
 		initializePreferenceViews();
-		makePreferencesChooser();
+		ComboBox<String> preferenceChooser = makePreferencesChooser();
+		preferenceChooser.setValue(preferenceChooser.getItems().get(0));
+		header.getChildren().add(preferenceChooser);
 		header.getChildren().add(new Label("Current Actor:"));
 		updateActorImage();
 		header.getChildren().add(actor.getImageProperty().display());
@@ -67,7 +69,7 @@ public class PreferencesView implements View
 		actorImage.setImage(actor.getImageView().getImage());
 	}
 
-	private void makePreferencesChooser()
+	private ComboBox<String> makePreferencesChooser()
 	{
 		ComboBox<String> chooser = new ComboBox<String>(FXCollections.observableArrayList(preferenceViews.keySet()));
 		chooser.valueProperty().addListener(new ChangeListener<String>()
@@ -81,7 +83,7 @@ public class PreferencesView implements View
 				root.setCenter(preferenceViews.get(newValue));
 			}
 		});
-		header.getChildren().add(chooser);
+		return chooser;
 	}
 
 	private Button makeUndoButton()
