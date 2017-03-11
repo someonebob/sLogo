@@ -2,6 +2,8 @@ package view;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Observable;
+import java.util.Observer;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -15,7 +17,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 
-public class PreferencesView implements View
+public class PreferencesView implements View, Observer
 {
 	private BorderPane root;
 	private TurtleView actor;
@@ -24,6 +26,7 @@ public class PreferencesView implements View
 	private Map<String, Node> preferenceViews;
 	private VBox header;
 	private VBox footer;
+	
 
 	public PreferencesView(TurtleView initialActor, SimulationView simulation)
 	{
@@ -35,7 +38,7 @@ public class PreferencesView implements View
 		this.simulation = simulation;
 		setupHeader();
 		setupFooter();
-		// root.setCenter(new PenPreferencesView(actor).display());
+//		root.setCenter(new PenPreferencesView(actor).display());
 	}
 
 	private void setupHeader()
@@ -110,5 +113,14 @@ public class PreferencesView implements View
 	public Node display()
 	{
 		return root;
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		if (o instanceof ActorView){
+			//TODO MAKE THIS WORK
+			actor.setImage(((ImageView)arg).getImage());
+		}
+		
 	}
 }

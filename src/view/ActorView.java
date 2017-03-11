@@ -30,7 +30,7 @@ import user_structures.ID;
  * @author Jesse
  *
  */
-public abstract class ActorView implements View, Cloneable, Observer
+public abstract class ActorView extends Observable implements View, Cloneable, Observer
 {
 	public static final int ACTOR_HEIGHT = 75;
 	public static final int ACTOR_WIDTH = 75;
@@ -66,6 +66,10 @@ public abstract class ActorView implements View, Cloneable, Observer
 		image.getValue().setFitWidth(ACTOR_WIDTH);
 		image.getValue().setPreserveRatio(true);
 		loadImage(defaults.image());
+		image.getValue().setOnMouseClicked(e -> {
+			this.setChanged();
+			this.notifyObservers(image.getValue());
+		});
 	}
 
 	public boolean isTold()

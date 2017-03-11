@@ -102,7 +102,7 @@ public class AnimatedSimulationView implements SimulationView, Cloneable
 	}
 
 	@Override
-	public List<ActorView> getActors()
+	public ObservableList<ActorView> getActors()
 	{
 		return actors;
 	}
@@ -117,11 +117,12 @@ public class AnimatedSimulationView implements SimulationView, Cloneable
 	public void newActor()
 	{
 		TurtleView actor = new TurtleView(defaults, id);
+		
 		id++;
 		tip = new Tooltip();
 		tip.textProperty().bind(actor.getActorPositionProperty().getLocationAsString());
 
-		tip.install(actor.getImageProperty().getValue(), tip);
+		Tooltip.install(actor.display(), tip);
 
 		actor.getPen().getCanvas().toBack();
 		actor.getPen().getCanvas().widthProperty().bind(root.widthProperty());
@@ -154,7 +155,7 @@ public class AnimatedSimulationView implements SimulationView, Cloneable
 		} else if (o instanceof DeleteActorButton) {
 			if (root.getChildren().size() != 0) {
 				// remove last actor and its pen
-				root.getChildren().remove(root.getChildren().size() - 1, root.getChildren().size());
+				root.getChildren().remove(root.getChildren().size() - 2, root.getChildren().size());
 			}
 
 		} else if (o instanceof DefaultButton) {
