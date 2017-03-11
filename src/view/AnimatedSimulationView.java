@@ -105,7 +105,7 @@ public class AnimatedSimulationView implements SimulationView, Cloneable
 		return (TurtleView) actors.get(0);
 	}
 
-	private void newActor()
+	public void newActor()
 	{
 		TurtleView actor = new TurtleView(defaults, id);
 		id++;
@@ -133,6 +133,7 @@ public class AnimatedSimulationView implements SimulationView, Cloneable
 		}else if (o instanceof TurtleImageButton) {
 			if (arg instanceof Image) {
 				// TODO make ID's work
+
 				actors.get(0).setImage((Image) arg);
 			}
 		}else if (o instanceof PenColorButton) {

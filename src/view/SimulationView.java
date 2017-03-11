@@ -69,5 +69,10 @@ public interface SimulationView extends View, Observer{
 	 */
 	public void set(SimulationView simulation);
 	
+	/**
+	 * Creates a new actor in the simulation
+	 */
+	public void newActor();
+	
 	
 }
