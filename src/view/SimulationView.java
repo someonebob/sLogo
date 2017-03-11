@@ -83,7 +83,7 @@ public class SimulationView implements View, Cloneable, Observer
 		backgroundColor.setValue(color);
 	}
 	
-	public void setTold(List<Integer> toldTurtles){
+	public void setTold(Collection<Integer> toldTurtles){
 		for(int i = 0; i < actors.size(); i++){
 			if(toldTurtles.contains(i)){
 				actors.get(i).setTold();
