@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Observable;
-import java.util.Observer;
 
 import javax.xml.transform.TransformerException;
 
@@ -14,17 +13,17 @@ import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import main.Defaults;
 import property.BackgroundColorProperty;
 import property.Property;
 import tool.ActorButtons.CreateActorButton;
 import tool.ActorButtons.DeleteActorButton;
-import tool.SettingsMenuTool.*;
+import tool.SettingsMenuTool.BackgroundColorButton;
+import tool.SettingsMenuTool.DefaultButton;
+import tool.SettingsMenuTool.PenColorButton;
+import tool.SettingsMenuTool.TurtleImageButton;
 import xml.XMLEditor;
 import xml.XMLException;
 
@@ -50,61 +49,71 @@ public class AnimatedSimulationView implements SimulationView, Cloneable
 		this.defaults = defaults;
 		List<ActorView> list = new ArrayList<>();
 		actors = FXCollections.observableList(list);
-		
+
 		for (int i = 0; i < defaults.numTurtles(); i++) {
 			newActor();
 		}
 		backgroundColor.setValue((Color) defaults.background());
 	}
 
+	@Override
 	public void undo()
 	{
 		this.set(backupSimulation);
 	}
 
+	@Override
 	public void step()
 	{
 		backupSimulation = this.clone();
-		for(ActorView actor : actors){
-			if(actor.isTold()){
+		for (ActorView actor : actors) {
+			if (actor.isTold()) {
 				actor.step();
 			}
 		}
 	}
 
+	@Override
 	public void move(Point2D deltaLocation)
 	{
-		for(ActorView actor : actors){
-			if(actor.isTold()){
+		for (ActorView actor : actors) {
+			if (actor.isTold()) {
 				actor.move(deltaLocation);
 			}
 		}
 	}
 
+	@Override
 	public void setBackgroundColor(String color)
 	{
 		backgroundColor.setValue(color);
 	}
-	
-	public void setTold(List<Integer> toldTurtles){
-		for(int i = 0; i < actors.size(); i++){
-			if(toldTurtles.contains(i)){
+
+	@Override
+	public void setTold(List<Integer> toldTurtles)
+	{
+		for (int i = 0; i < actors.size(); i++) {
+			if (toldTurtles.contains(i)) {
 				actors.get(i).setTold();
-			}else{
+			} else {
 				actors.get(i).setUntold();
 			}
 		}
 	}
-	
-	public List<ActorView> getActors(){
+
+	@Override
+	public List<ActorView> getActors()
+	{
 		return actors;
 	}
 
+	@Override
 	public TurtleView getTurtle()
 	{
 		return (TurtleView) actors.get(0);
 	}
 
+	@Override
 	public void newActor()
 	{
 		TurtleView actor = new TurtleView(defaults, id);
@@ -124,44 +133,44 @@ public class AnimatedSimulationView implements SimulationView, Cloneable
 		actors.add(actor);
 	}
 
+	@Override
 	public void update(Observable o, Object arg)
 	{
 		if (o instanceof BackgroundColorButton) {
 			if (arg instanceof Color) {
-				root.setBackground(new Background(new BackgroundFill((Paint) arg, null, null)));
+				backgroundColor.setValue((Color) arg);
 			}
-		}else if (o instanceof TurtleImageButton) {
+		} else if (o instanceof TurtleImageButton) {
 			if (arg instanceof Image) {
-				// TODO make ID's work
-
 				actors.get(0).setImage((Image) arg);
 			}
-		}else if (o instanceof PenColorButton) {
+		} else if (o instanceof PenColorButton) {
 			if (arg instanceof Color) {
 				// TODO make ID's work
 				((TurtleView) actors.get(0)).getPen().setColor((Color) arg);
 			}
-		}else if (o instanceof CreateActorButton){
+		} else if (o instanceof CreateActorButton) {
 			newActor();
-		}else if(o instanceof DeleteActorButton){
-			if(root.getChildren().size() != 0){
-				//remove last actor and its pen
-				root.getChildren().remove(root.getChildren().size()-1, root.getChildren().size());
+		} else if (o instanceof DeleteActorButton) {
+			if (root.getChildren().size() != 0) {
+				// remove last actor and its pen
+				root.getChildren().remove(root.getChildren().size() - 1, root.getChildren().size());
 			}
-			
-		}else if(o instanceof DefaultButton){
+
+		} else if (o instanceof DefaultButton) {
 			XMLEditor editor = new XMLEditor();
-			String imageName ;
-			try{
-				int index = actors.get(0).getImageProperty().getValue().getImage().impl_getUrl().lastIndexOf("/")+1;
+			String imageName;
+			try {
+				int index = actors.get(0).getImageProperty().getValue().getImage().impl_getUrl().lastIndexOf("/") + 1;
 				imageName = actors.get(0).getImageProperty().getValue().getImage().impl_getUrl().substring(index);
-			}catch(NullPointerException e){
+			} catch (NullPointerException e) {
 				imageName = defaults.image();
 			}
-			
+
 			try {
 				editor.setDefault("background", backgroundColor.getValue().toString());
-				editor.setDefault("pen", ((TurtleView)actors.get(0)).getPen().getPenColorProperty().getValue().toString());
+				editor.setDefault("pen",
+						((TurtleView) actors.get(0)).getPen().getPenColorProperty().getValue().toString());
 				editor.setDefault("image", imageName);
 				editor.setDefault("numTurtles", Integer.toString(actors.size()));
 			} catch (TransformerException e1) {
@@ -177,21 +186,25 @@ public class AnimatedSimulationView implements SimulationView, Cloneable
 		return root;
 	}
 
+	@Override
 	public Bounds getBounds()
 	{
 		return root.getBoundsInLocal();
 	}
 
+	@Override
 	public BackgroundColorProperty getBackgroundColorProperty()
 	{
 		return backgroundColor;
 	}
 
+	@Override
 	public List<Property<?>> getProperties()
 	{
 		return Arrays.asList(backgroundColor);
 	}
 
+	@Override
 	public void set(SimulationView simulation)
 	{
 		this.root.getChildren().clear();
