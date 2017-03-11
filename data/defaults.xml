@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?><defaults>
-	<background>0x8099ffff</background>
+	<background>0xff8080ff</background>
 	<pen>0xff6666ff</pen>
 	<image>bowser.gif</image>
 	<numTurtles>1</numTurtles>

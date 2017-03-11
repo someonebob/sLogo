@@ -1,6 +1,7 @@
 package instruction;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import exceptions.CastingException;
@@ -30,7 +31,6 @@ public class InstructionData
 	List<VariableData> variables;
 	List<FunctionData> functions;
 	String language;
-	int activeActorIndex;
 
 	public InstructionData()
 	{
@@ -38,7 +38,6 @@ public class InstructionData
 		this.variables = new ArrayList<VariableData>();
 		this.functions = new ArrayList<FunctionData>();
 		this.language = "English";
-		this.activeActorIndex = 0;
 	}
 
 	public InstructionData(SimulationView simulation, List<VariableData> variables, List<FunctionData> functions,
@@ -48,22 +47,13 @@ public class InstructionData
 		this.variables = variables;
 		this.functions = functions;
 		this.language = language;
-		this.activeActorIndex = 0;
 	}
 
-	public ActorView getActiveActor()
+	public TurtleView getActiveActor()
 	{
-		return simulationView.getActors().get(activeActorIndex);   //TODO naming Jesse
+		return simulationView.getTurtle();
 	}
-	
-	public int getActiveActorIndex(){
-		return activeActorIndex;
-	}
-	
-	public void setActiveActorIndex(int newIndex){
-		activeActorIndex = newIndex;
-	}
-	
+
 	/**
 	 * Returns the List of Actors held by this class
 	 * 
@@ -71,7 +61,7 @@ public class InstructionData
 	 */
 	public List<ActorView> getActors()
 	{
-		return simulationView.getActors();
+		return Arrays.asList(simulationView.getTurtle());
 	}
 
 	public Bounds getSimulationBounds()
@@ -170,6 +160,11 @@ public class InstructionData
 			throw new CastingException(RESOURCE_CAST_EXCEPTION);
 		}
 		return ((TurtleView) getActiveActor()).getPen();
+	}
+
+	public void setActiveActorIndex(int index) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
