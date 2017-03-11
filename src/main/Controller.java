@@ -54,6 +54,7 @@ import tool.SettingsMenuTool.LanguageButton;
 import tool.ToolButton;
 import user_structures.FunctionData;
 import user_structures.VariableData;
+import view.ActorView;
 import view.AnimatedSimulationView;
 import view.InputBox;
 import view.MultiLineInputBox;
@@ -164,7 +165,7 @@ public class Controller implements Observer
 		ObservableList<FunctionData> functions = FXCollections.observableList(funcList);
 
 		workspace.setVariables(variables);
-		// workspace.setFunctions(functions);
+		workspace.setFunctions(functions);
 
 		setupBorderPane(pane, selectionBar, simulation, inputBox, workspace, preferences);
 		putIntoMaps(tab, selectionBar, simulation, inputBox, workspace, variables, preferences, functions);
@@ -214,6 +215,7 @@ public class Controller implements Observer
 		animation.addObservers(simulation.getTurtle());
 		animation.addObservers(simulation.getTurtle().getPen());
 		actorControl.addObservers(simulation);
+
 	}
 
 	private void setupCommands(InputBox inputBox)

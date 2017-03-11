@@ -54,6 +54,12 @@ public class InstructionData
 		this.activeActorIndex = 0;
 	}
 
+
+	public int getActiveActorIndex()
+	{
+		return activeActorIndex;
+	}
+
 	/**
 	 * Returns the List of Actors held by this class
 	 * 

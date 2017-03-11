@@ -25,6 +25,7 @@ public class PreferencesView implements View
 	private Map<String, Node> preferenceViews;
 	private VBox header;
 	private VBox footer;
+	
 
 	public PreferencesView(TurtleView initialActor, SimulationView simulation)
 	{
@@ -34,6 +35,7 @@ public class PreferencesView implements View
 		actorImage.setFitHeight(70);
 		this.actor = initialActor;
 		this.simulation = simulation;
+
 		updateDisplay();
 	}
 
@@ -46,6 +48,7 @@ public class PreferencesView implements View
 				updateDisplay();
 			});
 		}
+
 	}
 
 	private void setupHeader()
@@ -129,4 +132,5 @@ public class PreferencesView implements View
 	{
 		return root;
 	}
+
 }
