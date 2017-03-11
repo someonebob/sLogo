@@ -13,10 +13,21 @@ public class Forward extends TurtleCommand{
 
 	@Override
 	public double execute() {
+		/*
 		System.out.println("ID: " + getActiveActor().getID().getID());
 		for(ActorView av : getInstructionData().getActors()){
 			System.out.println(av.isTold());
 		}
+		*/
+		System.out.println("------");
+		System.out.println("Contents of actor list:");
+		for(ActorView av : getInstructionData().getActors()){
+			System.out.println("Id: " + av.getID().getID() + " Told: " + av.isTold());
+		}
+		System.out.println("Active actor " + getInstructionData().getActiveActor());
+		System.out.println("------");
+		
+		
 		double distance = getArgumentDouble(0);
 		checkNegativeArgumentException(distance);
 		move(distance);
