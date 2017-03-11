@@ -162,7 +162,7 @@ public class Controller implements Observer
 		ObservableList<FunctionData> functions = FXCollections.observableList(funcList);
 
 		workspace.setVariables(variables);
-		workspace.setFunctions(functions);
+		// workspace.setFunctions(functions);
 
 		setupBorderPane(pane, selectionBar, simulation, inputBox, workspace, preferences);
 		putIntoMaps(tab, selectionBar, simulation, inputBox, workspace, variables, functions);
