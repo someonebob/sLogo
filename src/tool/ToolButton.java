@@ -31,12 +31,20 @@ public abstract class ToolButton implements Tool{
 		return group;
 	}
 	
+	/**
+	 * This allows us to add multiple buttons to the list at a time
+	 * @param buttons
+	 * @param items
+	 */
 	protected void addButtons(List<AbstractButton> buttons, AbstractButton... items){
 		for(AbstractButton item : items){
 			buttons.add(item);
 		}
 	}
-	
+	/**
+	 * 
+	 * @returns the list of AbstractButtons to loop over them to add each to the tool 
+	 */
 	protected abstract List<AbstractButton> getButtons();
 
 	@Override

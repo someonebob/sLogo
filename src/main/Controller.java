@@ -15,6 +15,8 @@ import java.util.Observer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.imageio.ImageIO;
+
 import exceptions.SLogoException;
 import instruction.InstructionData;
 import interpreter.Interpreter;
@@ -24,9 +26,12 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.Scene;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.image.WritableImage;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
@@ -40,6 +45,7 @@ import tool.FileMenuTool;
 import tool.FileMenuTool.NewButton;
 import tool.FileMenuTool.OpenButton;
 import tool.FileMenuTool.SaveButton;
+import tool.FileMenuTool.SaveImageButton;
 import tool.HelpMenuTool;
 import tool.MenuTool;
 import tool.SelectionBar;
@@ -50,10 +56,10 @@ import user_structures.FunctionData;
 import user_structures.VariableData;
 import view.InputBox;
 import view.PreferencesView;
-import view.SavedCommandsView;
-import view.SimulationView;
+import view.AnimatedSimulationView;
 import view.MultiLineInputBox;
-import view.WorkspaceView;
+import view.SavedStructuresView;
+import view.SimulationView;
 
 /**
  * @author jimmy
@@ -68,8 +74,7 @@ public class Controller implements Observer
 	private Map<Tab, SelectionBar> selectionBarMap;
 	private Map<Tab, SimulationView> simulationMap;
 	private Map<Tab, InputBox> inputBoxMap;
-	private Map<Tab, WorkspaceView> workspaceMap;
-	private Map<Tab, SavedCommandsView> savedCommandsMap;
+	private Map<Tab, SavedStructuresView> workspaceMap;
 
 	private Map<Tab, ObservableList<VariableData>> variableMap;
 	private Map<Tab, ObservableList<FunctionData>> functionMap;
@@ -108,8 +113,11 @@ public class Controller implements Observer
 		else if (o instanceof OpenButton) {
 			openFile((File) arg);
 		}
-		if (o instanceof SaveButton) {
+		else if (o instanceof SaveButton) {
 			saveFile((File) arg);
+		}
+		else if(o instanceof SaveImageButton){
+			saveImage((File) arg);
 		}
 		else if (o instanceof LanguageButton) {
 			language.set(currentIndex.get(), (String) arg);
@@ -125,7 +133,6 @@ public class Controller implements Observer
 		simulationMap = new HashMap<>();
 		inputBoxMap = new HashMap<>();
 		workspaceMap = new HashMap<>();
-		savedCommandsMap = new HashMap<>();
 
 		variableMap = new HashMap<>();
 		functionMap = new HashMap<>();
@@ -139,11 +146,10 @@ public class Controller implements Observer
 		language.add(defaults.language());
 		tab.setText("untitled.logo");
 		BorderPane pane = new BorderPane();
-		SimulationView simulation = new SimulationView(defaults);
+		SimulationView simulation = new AnimatedSimulationView(defaults);
 		InputBox inputBox = new MultiLineInputBox();
 		inputBox.setFocus();
-		WorkspaceView workspace = new WorkspaceView();
-		SavedCommandsView userCommands = new SavedCommandsView();
+		SavedStructuresView workspace = new SavedStructuresView();
 		PreferencesView preferences = new PreferencesView(simulation.getTurtle(), simulation);
 
 		SelectionBar selectionBar = new ComboBar();
@@ -159,11 +165,11 @@ public class Controller implements Observer
 		List<FunctionData> funcList = new ArrayList<>();
 		ObservableList<FunctionData> functions = FXCollections.observableList(funcList);
 
-		workspace.setItems(variables);
-		// TODO setup functions
+		workspace.setVariables(variables);
+		workspace.setFunctions(functions);
 
 		setupBorderPane(pane, selectionBar, simulation, inputBox, workspace, preferences);
-		putIntoMaps(tab, selectionBar, simulation, inputBox, workspace, userCommands, variables, functions);
+		putIntoMaps(tab, selectionBar, simulation, inputBox, workspace,variables, functions);
 		setupObservers(simulation, inputBox, file, settings, animation, actorControl, preferences);
 		setupCommands(inputBox);
 
@@ -172,7 +178,7 @@ public class Controller implements Observer
 	}
 
 	private void setupBorderPane(BorderPane pane, SelectionBar selectionBar, SimulationView simulation,
-			InputBox inputBox, WorkspaceView workspace, PreferencesView preferences)
+			InputBox inputBox, SavedStructuresView workspace, PreferencesView preferences)
 
 	{
 		pane.setTop(selectionBar.display());
@@ -184,14 +190,13 @@ public class Controller implements Observer
 
 	private void putIntoMaps(Tab tab, SelectionBar selectionBar, SimulationView simulation, InputBox inputBox,
 
-			WorkspaceView workspace, SavedCommandsView userCommands, ObservableList<VariableData> variables,
+			SavedStructuresView workspace, ObservableList<VariableData> variables,
 			ObservableList<FunctionData> functions)
 	{
 		selectionBarMap.put(tab, selectionBar);
 		simulationMap.put(tab, simulation);
 		inputBoxMap.put(tab, inputBox);
 		workspaceMap.put(tab, workspace);
-		savedCommandsMap.put(tab, userCommands);
 
 		variableMap.put(tab, variables);
 		functionMap.put(tab, functions);
@@ -266,6 +271,7 @@ public class Controller implements Observer
 			for (Tab t : root.getTabs()) {
 				if (t.isSelected()) {
 					runCommand(inputBoxMap.get(t), command);
+					System.out.println(inputBoxMap.get(t));
 				}
 			}
 		} catch (FileNotFoundException e) {
@@ -284,6 +290,17 @@ public class Controller implements Observer
 			currentTab.get().setText(file.getName());
 		} catch (IOException e) {
 			Logger.getLogger(MultiLineInputBox.class.getName()).log(Level.SEVERE, null, e);
+		}
+	}
+	
+	private void saveImage(File file){
+		WritableImage image = simulationMap.get(currentTab.get()).display().snapshot(new SnapshotParameters(), null);
+		
+		try {
+			ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file);
+		} catch (IOException e) {
+			Logger.getLogger(SimulationView.class.getName()).log(Level.SEVERE, null, e);
+
 		}
 	}
 
