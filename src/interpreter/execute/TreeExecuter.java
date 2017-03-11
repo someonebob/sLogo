@@ -119,7 +119,6 @@ public class TreeExecuter
 			if(child != null)
 				numberNonNullChildren++;
 		}
-		
 		if(numberNonNullChildren != ArgumentReaderUtil.
 				getNumArgs(head.getMyClassification(), head.getMyCommand(), myData)){
 			throw new WrongArgumentNumberException(RESOURCE_ARGUMENT_NAME);
