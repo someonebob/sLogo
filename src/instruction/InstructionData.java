@@ -59,7 +59,7 @@ public class InstructionData
 	 * 
 	 * @return
 	 */
-	public List<ActorView> getActorList()
+	public List<TurtleView> getActorList()
 	{
 		return simulationView.getActors();
 	}
