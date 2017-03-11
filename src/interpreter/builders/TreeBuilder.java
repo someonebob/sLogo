@@ -2,8 +2,8 @@ package interpreter.builders;
 import java.util.ArrayList;
 import java.util.List;
 import instruction.InstructionData;
+import interpreter.classification.InstructionClassifier;
 import interpreter.factories.BuilderUtilFactory;
-import interpreter.factories.InstructionClassifier;
 import interpreter.misc.InstructionNode;
 import interpreter.misc.InstructionTracker;
 import interpreter.util.ArgumentReaderUtil;
@@ -89,7 +89,8 @@ public class TreeBuilder {
 		track.setHeadText(head, headText); 
 		track.decrementCurrentText(); //remove a node
 		
-		BuilderUtil build = BuilderUtilFactory.make(head, head.getMyClassification(), track);
+		BuilderUtilFactory builder = new BuilderUtilFactory(head);
+		BuilderUtil build = builder.make(head, track);
 		if(build!=null){
 			track.setCurrentText(build.construct()); //change current text according to builder
 		}

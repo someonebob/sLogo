@@ -1,18 +1,13 @@
-package interpreter.factories;
+package interpreter.classification;
 
 import java.util.List;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Map.Entry;
 import java.util.regex.Pattern;
-import exceptions.InvalidCommandException;
 import instruction.*;
 import interpreter.util.ResourceToListUtil;
 
-/**
- * This class performs the reflection necessary to produce instances of each
- * command type without direct statement of the desired class type. This class
+/** This class
  * can translate a String into an instance of the intended class type.
  * 
  * @author maddiebriere
@@ -23,11 +18,7 @@ public class InstructionClassifier {
 	private final String USER_INSTRUCTION = "UserInstruction";
 
 	public final String SYNTAX = "resources/languages/Syntax";
-	public final String PATHS = "resources/interpreter/JavaSpeak"; // Full class
-																	// names
-																	// matched
-																	// to
-																	// shortcuts
+	public final String PATHS = "resources/interpreter/JavaSpeak"; 
 	public final String LANGUAGE = "resources/languages/";
 	public final String RESOURCE_REFLECTION_NAME = "InvalidCommandMessage";
 
@@ -113,6 +104,7 @@ public class InstructionClassifier {
 	public String findAddressKey(String text) {
 		for (Entry<String, Pattern> e : myPathsList) {
 			if (match(text, e.getKey())) {
+				System.out.println( e.getValue().toString());
 				return e.getValue().toString();
 			}
 		}
@@ -145,40 +137,6 @@ public class InstructionClassifier {
 	 */
 	private boolean match(String text, String regex) {
 		return text.equals(regex);
-	}
-
-	/**
-	 * Main avenue of reflection
-	 * 
-	 * @param command
-	 *            String representing instruction (e.g., fd)
-	 * @param args
-	 *            The arguments used to make the instruction
-	 * 
-	 * @return Instruction object corresponding to String
-	 */
-	public Instruction generateInstruction(String comm, InstructionData data, List<String> args) {
-		String classification = getInstructionType(comm, data);
-		String classPath;
-		classPath = findAddressKey(classification);
-		return buildObject(classPath, comm, data, args);
-	}
-
-	private Instruction buildObject(String classPath, String comm, InstructionData data, List<String> args) {
-		Instruction instruction = null;
-		Class<?> clazz;
-		Object instructionHopeful = new Object();
-
-		try {
-			clazz = Class.forName(classPath);
-			Constructor<?> ctor = clazz.getDeclaredConstructor(InstructionData.class, List.class, String.class);
-			instructionHopeful = ctor.newInstance(data, args, comm);
-			instruction = (Instruction) instructionHopeful;
-		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | NoSuchMethodException
-				| SecurityException | IllegalArgumentException | InvocationTargetException e) {
-			throw new InvalidCommandException(RESOURCE_REFLECTION_NAME);
-		}
-		return instruction;
 	}
 
 	public void generateTerms() {

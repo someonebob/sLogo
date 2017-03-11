@@ -5,7 +5,7 @@ import java.util.Map.Entry;
 import java.util.regex.Pattern;
 
 import instruction.Instruction;
-import interpreter.factories.InstructionClassifier;
+import interpreter.classification.InstructionClassifier;
 
 public class InstructionClassifierTester {
 
@@ -51,13 +51,13 @@ public class InstructionClassifierTester {
             	String shorty ="";// = classifier.findShortcutKey(s);
                 System.out.println(String.format("%s : %s", s, shorty));
                 System.out.println(String.format("%s : %s", shorty, classifier.findAddressKey(shorty)));
-               	Instruction generated = classifier.generateInstruction(s,null,null);
+               /*	Instruction generated = classifier.generateInstruction(s,null,null);
                	if(generated == null){
                		System.out.println(String.format("%s : %s", s + " Instruction", "NO INSTRUCTION MATCH"));
                	}else{
                		String className = generated.getClass().getName();
                     System.out.println(String.format("%s : %s", s + " Instruction", className));
-               	}
+               	}*/
             }
             System.out.println();
         }

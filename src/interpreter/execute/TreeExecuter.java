@@ -1,11 +1,13 @@
 package interpreter.execute;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import exceptions.InvalidCommandException;
 import exceptions.WrongArgumentNumberException;
 import instruction.Instruction;
 import instruction.InstructionData;
-import interpreter.factories.InstructionClassifier;
+import interpreter.classification.InstructionClassifier;
+import interpreter.factories.InstructionFactory;
 import interpreter.misc.InstructionNode;
 import interpreter.util.ArgumentReaderUtil;
 /**
@@ -61,7 +63,7 @@ public class TreeExecuter
 	 */
 	private void generateHead(InstructionNode head, List<String> args){
 		if(!myClass.getInstructionType(head.getMyCommand(), myData).equals("NO MATCH")){
-			Instruction i = myClass.generateInstruction(head.getMyCommand(), myData, args);
+			Instruction i = generateInstruction(head.getMyCommand(), myData, args);
 			head.setMyRunValue(""+i.executeAllToldTurtles()); //Will change with list, for now, just tacks on result
 		}
 		else{ //Unknown value, just set run value to string command
@@ -124,5 +126,24 @@ public class TreeExecuter
 				getNumArgs(head.getMyClassification(), head.getMyCommand(), myData)){
 			throw new WrongArgumentNumberException(RESOURCE_ARGUMENT_NAME);
 		}
+	}
+	
+	/**
+	 * Main avenue of reflection
+	 * 
+	 * @param command
+	 *            String representing instruction (e.g., fd)
+	 * @param args
+	 *            The arguments used to make the instruction
+	 * 
+	 * @return Instruction object corresponding to String
+	 */
+	public Instruction generateInstruction(String comm, 
+			InstructionData data, List<String> args) {
+		String classification = myClass.getInstructionType(comm, data);
+		String classPath;
+		classPath = myClass.findAddressKey(classification);
+		InstructionFactory builder = new InstructionFactory(classPath);
+		return builder.make(data, args, comm);
 	}
 }
