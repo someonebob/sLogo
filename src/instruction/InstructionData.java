@@ -98,12 +98,12 @@ public class InstructionData
 	{
 		return variables;
 	}
-	
+
 	public List<VariableData> getStackVariables()
 	{
-		for(VariableData v: variables){
-			if(v.getStackSize()!=0)
-				v.popFromStack(); //iterate through and pop items
+		for (VariableData v : variables) {
+			if (v.getStackSize() != 0)
+				v.popFromStack(); // iterate through and pop items
 		}
 		return variables;
 	}

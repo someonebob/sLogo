@@ -78,7 +78,7 @@ public class FileMenuTool extends MenuTool
 			// TODO Auto-generated constructor stub
 			this.getItem().setOnAction(e -> {
 				File selectedFile = FileChooserUtil.setupFileChooser("LOGO", "LOGO Programs",
-						new File(System.getProperty("user.dir") + "/data"), "*.logo").showSaveDialog(getStage());
+						new File(System.getProperty("user.dir") + "/data"), "*.logo").showOpenDialog(getStage());
 				if (selectedFile != null) {
 					this.setChanged();
 					this.notifyObservers(selectedFile);

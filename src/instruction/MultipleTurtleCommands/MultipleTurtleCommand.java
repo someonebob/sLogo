@@ -7,29 +7,30 @@ import java.util.List;
 import exceptions.NonsensicalArgumentException;
 import instruction.Instruction;
 import instruction.InstructionData;
-import view.ActorView;
+import view.TurtleView;
 
-public abstract class MultipleTurtleCommand extends Instruction{
+public abstract class MultipleTurtleCommand extends Instruction
+{
 	private static final String RESOURCE_INVALID_ID_NAME = "InvalidIDMessage";
-	
-	public MultipleTurtleCommand(InstructionData data, List<String> args, String myText) {
+
+	public MultipleTurtleCommand(InstructionData data, List<String> args, String myText)
+	{
 		super(data, args, myText);
 	}
-	
-	protected List<Integer> convertStringToIntegerList(String toConvert){
+
+	protected List<Integer> convertStringToIntegerList(String toConvert)
+	{
 		String[] idsAsStrings = toConvert.split("\\s+");
 		List<Integer> idsAsInts = new ArrayList<>();
-		for(String idString : idsAsStrings){
-			try{
+		for (String idString : idsAsStrings) {
+			try {
 				int candidateInt = Integer.parseInt(idString);
-				if(candidateInt < 0){
+				if (candidateInt < 0) {
 					throw new NonsensicalArgumentException(RESOURCE_INVALID_ID_NAME);
-				}
-				else{
+				} else {
 					idsAsInts.add(candidateInt);
 				}
-			}
-			catch(NumberFormatException exception){
+			} catch (NumberFormatException exception) {
 				throw new NonsensicalArgumentException(RESOURCE_INVALID_ID_NAME);
 			}
 		}
@@ -49,5 +50,5 @@ public abstract class MultipleTurtleCommand extends Instruction{
 			 }
 		}
 	}
-	
+
 }
