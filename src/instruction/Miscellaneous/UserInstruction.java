@@ -55,6 +55,9 @@ public class UserInstruction extends Miscellaneous {
 			VariableData newVar = new VariableData(function.getArgs().get(i), getArgumentDouble(i));
 			WorkspaceUpdater.add(localVariables, newVar);
 		}
+		for(VariableData v: localVariables){
+			System.out.println(v.getName()+ " " + v.getValue());
+		}
 		return localVariables;
 	}
 

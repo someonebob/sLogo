@@ -30,7 +30,7 @@ public class TreeBuilderTester {
 				"tree product :length :scale :angle difference :depth 1 :scale "+
 				  "lt :angle bk :length ] ]";
 
-		TreeBuilder build = new TreeBuilder(tree,
+		TreeBuilder build = new TreeBuilder("( sum 10 20 30 )",
 				new InstructionClassifier("English"), new InstructionData());
 		List<InstructionNode> headNodes = build.buildFullTree();
 		System.out.println("Single Node, Level-labelled Print:");

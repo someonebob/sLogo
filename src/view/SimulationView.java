@@ -1,5 +1,6 @@
 package view;
 
+
 import java.util.List;
 import java.util.Observer;
 
@@ -7,6 +8,8 @@ import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import property.BackgroundColorProperty;
 import property.Property;
+
+
 
 /**
  * Interface to be implemented by Simulations, if we ever want to have different kinds of SimulationViews
@@ -29,7 +32,7 @@ public interface SimulationView extends View, Observer{
 	 */
 	public void move(Point2D deltaLocation);
 	/**
-	 * Sets the backgroundc color of the simulation
+	 * Sets the background color of the simulation
 	 * @param color
 	 */
 	public void setBackgroundColor(String color);

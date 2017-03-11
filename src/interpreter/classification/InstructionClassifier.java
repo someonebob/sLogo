@@ -46,12 +46,10 @@ public class InstructionClassifier {
     /**
      * Step before actually generating instruction
      * 
-     *TODO: Bug, can't find comments???
-     * 
      * Searches for text to match String to key
      * @author rcd
-     * @param text
-     * @return matching Key
+     * @param text Text to search for instruction type
+     * @return Matching key
      */
     public String getInstructionType(String text, InstructionData data) {
         /**
