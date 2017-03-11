@@ -1,9 +1,8 @@
 package interpreter.clean;
 
-import java.util.Scanner;
 
 import instruction.InstructionData;
-import interpreter.classification.InstructionClassifier;
+import interpreter.factories.InstructionClassifier;
 
 /**
  * Clean up the text before it is

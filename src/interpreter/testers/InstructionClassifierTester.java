@@ -5,7 +5,7 @@ import java.util.Map.Entry;
 import java.util.regex.Pattern;
 
 import instruction.Instruction;
-import interpreter.classification.InstructionClassifier;
+import interpreter.factories.InstructionClassifier;
 
 public class InstructionClassifierTester {
 

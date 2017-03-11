@@ -1,13 +1,9 @@
 package instruction.Miscellaneous;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import instruction.InstructionData;
 import interpreter.Interpreter;
-import interpreter.misc.InstructionNode;
 import interpreter.util.WorkspaceUpdaterUtil;
 import user_structures.FunctionData;
 import user_structures.VariableData;
