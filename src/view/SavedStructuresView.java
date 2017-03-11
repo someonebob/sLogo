@@ -69,9 +69,9 @@ public class SavedStructuresView implements View {
 
 	private void initiateVariableItems() {
 		varTable = new TableView<>();
+
 		varTable.setPrefWidth(300);
-		
-		varTable.setPrefHeight(200);
+		varTable.setPrefHeight(100);
 
 		variables = new TableColumn<>("Variable Name");
 		variables.setCellValueFactory(new PropertyValueFactory("name"));
@@ -91,9 +91,10 @@ public class SavedStructuresView implements View {
 
 	private void initiateFunctionItems() {
 		funcTable = new TableView<>();
+
 		funcTable.setPrefWidth(300);
-		
-		funcTable.setPrefHeight(200);
+
+		funcTable.setPrefHeight(100);
 
 		funcNames = new TableColumn<>("Command Name");
 		funcNames.setCellValueFactory(new PropertyValueFactory("name"));

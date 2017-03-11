@@ -20,17 +20,10 @@ public class TreeBuilderTester {
 	public static void main(String [] args){
 		//problem with string value in tree
 		//change in node so that no string need be saved
-		String spiral = "to spiral [ :len ] "
-				+ "[ if less? :len 200 [ fd :len rt 89 spiral + :len 3 ] ] spiral 10";
-		String tree = "to tree [ :length :angle :depth :scale ] "+
-				"[ ifelse equal? :depth 1 [ fd :length bk :length ] "+
-				 "[ fd :length lt :angle "+
-				"tree product :length :scale :angle difference :depth 1 :scale " +
-				 "rt :angle rt :angle "+
-				"tree product :length :scale :angle difference :depth 1 :scale "+
-				  "lt :angle bk :length ] ]";
+		String spiral = "to spiral [ :len ] [ if less? :len 200 [ fd :len rt 89 spiral + :len 3 ] ] spiral 10";
+		String tree = "to tree [ :length :angle :depth :scale ] [ ifelse equal? :depth 1 [ fd :length bk :length ] [ fd :length lt :angle tree product :length :scale :angle difference :depth 1 :scale rt :angle rt :angle tree product :length :scale :angle difference :depth 1 :scale lt :angle bk :length ] ]";
 
-		TreeBuilder build = new TreeBuilder("( sum 10 20 30 )",
+		TreeBuilder build = new TreeBuilder(spiral,
 				new InstructionClassifier("English"), new InstructionData());
 		List<InstructionNode> headNodes = build.buildFullTree();
 		System.out.println("Single Node, Level-labelled Print:");
