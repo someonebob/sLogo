@@ -15,6 +15,7 @@ import view.ActorView;
  * @author Matthew Barbano
  *
  */
+
 public abstract class Instruction
 {
 	private InstructionData instructionData;
@@ -52,22 +53,17 @@ public abstract class Instruction
 	public double executeAllToldTurtles(){
 		int index = 0;
 		double returnValue = -1.0;
-		//TODO Return values
+		
 		if(this instanceof ActorSpecificInstruction){
-			for(ActorView actor : instructionData.getActors()){
+			for(ActorView actor : instructionData.getActorList()){
 				instructionData.setActiveActorIndex(index);
 				if(actor.isTold()){
-					System.out.println("Executing ActorSpecificCommand:");
-					System.out.println("Name: " + myText);
-					System.out.println("ID: " + actor.getID().getID());
 					returnValue = execute();
 				}
 				index++;
 			}
 		}
 		else{
-			System.out.println("Executing non-ActorSpecificCommand");
-			System.out.println("Name: " + myText);
 			returnValue = execute();
 		}
 		return returnValue;
@@ -92,7 +88,6 @@ public abstract class Instruction
 	protected double runListCommands(int argumentNumber) {
 		//TODO Need to change when decide on way to set language (possibly through InstructionData)
 		Interpreter listInterpreter = new Interpreter(getInstructionData());
-		//System.out.println(getArgumentString(argumentNumber));
 		return listInterpreter.parseAndRun(getArgumentString(argumentNumber));
 	}
 

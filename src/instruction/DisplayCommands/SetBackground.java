@@ -20,10 +20,10 @@ public class SetBackground extends DisplayCommand{
 
 	@Override
 	public double execute() {
-		List<Color> indexedColors = getInstructionData().getSimulation().getBackgroundColorProperty().getIndexedColors();
+		List<Color> indexedColors = getInstructionData().getBackgroundColorProperty().getIndexedColors();
 		MathUtil.checkValidIndex(getArgumentDouble(0), indexedColors.size());
 		Color newColor = indexedColors.get((int)getArgumentDouble(0));
-		getInstructionData().getSimulation().getBackgroundColorProperty().setValue(newColor);
+		getInstructionData().getBackgroundColorProperty().setValue(newColor);
 		return getArgumentDouble(0);
 	}
 	

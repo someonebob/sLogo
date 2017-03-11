@@ -1,9 +1,15 @@
 package interpreter.clean;
 
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map.Entry;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 import instruction.InstructionData;
 import interpreter.classification.InstructionClassifier;
+import interpreter.util.ResourceToListUtil;
 
 /**
  * Clean up the text before it is
@@ -14,6 +20,7 @@ import interpreter.classification.InstructionClassifier;
  *
  */
 public class InstructionCleaner{
+	public static final String BRACKETS = "resources.interpreter.Brackets";
 	
 	private InstructionData data;
 	private InstructionClassifier clazz; 
@@ -23,10 +30,13 @@ public class InstructionCleaner{
 		this.clazz = clazz;
 	}
 	
-	public String clean(String text) {
+	public String fullTextClean(String text) {
+		return removeComments(text);
+	}
+	
+	public String singleWordClean(String text){
 		text = spaceBrackets(text);
 		text = fixTypos(text);
-		text = removeComments(text);
 		return text;
 	}
 	
@@ -38,16 +48,25 @@ public class InstructionCleaner{
 	 */
 	private String spaceBrackets(String text){
 		//TODO: Complete
+		List<Entry<String, Pattern>> list = new ArrayList<Entry<String,Pattern>>();
+		ResourceToListUtil.addTerms(BRACKETS, list);
 		return text;
 	}
 	/**
 	 * Fix obvious typos
-	 * ex: forwardd 50 --> forward 50
+	 * ex: forwardd --> forward
 	 * @param text Text to modify
 	 * @return Text with typos fixed
 	 */
 	private String fixTypos(String text){
-		//TODO:Complete
+		String extraFirst = text.substring(1, text.length());
+		String extraLast = text.substring(0, text.length()-1);
+		if(clazz.isValid(extraFirst, data)){
+			return extraFirst;
+		}
+		if(clazz.isValid(extraLast,data)){
+			return extraLast;
+		}
 		return text;
 	}
 
@@ -67,14 +86,14 @@ public class InstructionCleaner{
 		String toRet = "";
 		while(toScan.hasNext()){
 			String line = toScan.nextLine();
-			int space = line.indexOf(" ");
+			Scanner word = new Scanner(line);
 			String firstWord;
-			if(space!=-1){
-				firstWord = line.substring(0, space);
+			if(word.hasNext()){
+				firstWord = word.next();
+			} else{
+				firstWord = "";
 			}
-			else{
-				firstWord = text;
-			}
+			word.close();
 			if(!getClazz().getInstructionType(firstWord, getData()).equals("Comment")){
 				toRet += line + " ";
 			}

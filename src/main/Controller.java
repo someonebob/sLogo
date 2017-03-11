@@ -54,10 +54,11 @@ import tool.SettingsMenuTool.LanguageButton;
 import tool.ToolButton;
 import user_structures.FunctionData;
 import user_structures.VariableData;
-import view.InputBox;
-import view.PreferencesView;
+import view.ActorView;
 import view.AnimatedSimulationView;
+import view.InputBox;
 import view.MultiLineInputBox;
+import view.PreferencesView;
 import view.SavedStructuresView;
 import view.SimulationView;
 
@@ -73,6 +74,7 @@ public class Controller implements Observer
 	private ObjectProperty<Tab> currentTab;
 	private Map<Tab, SelectionBar> selectionBarMap;
 	private Map<Tab, SimulationView> simulationMap;
+	private Map<Tab, PreferencesView> preferencesMap;
 	private Map<Tab, InputBox> inputBoxMap;
 	private Map<Tab, SavedStructuresView> workspaceMap;
 
@@ -109,20 +111,16 @@ public class Controller implements Observer
 	{
 		if (o instanceof NewButton) {
 			newTab();
-		}
-		else if (o instanceof OpenButton) {
+		} else if (o instanceof OpenButton) {
 			openFile((File) arg);
-		}
-		else if (o instanceof SaveButton) {
+		} else if (o instanceof SaveButton) {
 			saveFile((File) arg);
-		}
-		else if(o instanceof SaveImageButton){
+		} else if (o instanceof SaveImageButton) {
 			saveImage((File) arg);
-		}
-		else if (o instanceof LanguageButton) {
+		} else if (o instanceof LanguageButton) {
 			language.set(currentIndex.get(), (String) arg);
 		}
-		
+
 	}
 
 	private void setupItems()
@@ -131,6 +129,7 @@ public class Controller implements Observer
 		currentTab = new SimpleObjectProperty<>();
 		selectionBarMap = new HashMap<>();
 		simulationMap = new HashMap<>();
+		preferencesMap = new HashMap<>();
 		inputBoxMap = new HashMap<>();
 		workspaceMap = new HashMap<>();
 
@@ -169,7 +168,7 @@ public class Controller implements Observer
 		workspace.setFunctions(functions);
 
 		setupBorderPane(pane, selectionBar, simulation, inputBox, workspace, preferences);
-		putIntoMaps(tab, selectionBar, simulation, inputBox, workspace,variables, functions);
+		putIntoMaps(tab, selectionBar, simulation, inputBox, workspace, variables, preferences, functions);
 		setupObservers(simulation, inputBox, file, settings, animation, actorControl, preferences);
 		setupCommands(inputBox);
 
@@ -190,11 +189,12 @@ public class Controller implements Observer
 
 	private void putIntoMaps(Tab tab, SelectionBar selectionBar, SimulationView simulation, InputBox inputBox,
 
-			SavedStructuresView workspace, ObservableList<VariableData> variables,
+			SavedStructuresView workspace, ObservableList<VariableData> variables, PreferencesView preferences,
 			ObservableList<FunctionData> functions)
 	{
 		selectionBarMap.put(tab, selectionBar);
 		simulationMap.put(tab, simulation);
+		preferencesMap.put(tab, preferences);
 		inputBoxMap.put(tab, inputBox);
 		workspaceMap.put(tab, workspace);
 
@@ -202,19 +202,20 @@ public class Controller implements Observer
 		functionMap.put(tab, functions);
 	}
 
-	private void setupObservers(SimulationView simulation, InputBox inputBox, MenuTool file,
-			MenuTool settings, ToolButton animation, ToolButton actorControl, PreferencesView preferences)
+	private void setupObservers(SimulationView simulation, InputBox inputBox, MenuTool file, MenuTool settings,
+			ToolButton animation, ToolButton actorControl, PreferencesView preferences)
 	{
 		file.addObservers(simulation);
 		file.addObservers(this);
 
 		settings.addObservers(simulation);
 		settings.addObservers(this);
-		
-		//TODO: add observers for toolbuttons
+
+		// TODO: add observers for toolbuttons
 		animation.addObservers(simulation.getTurtle());
 		animation.addObservers(simulation.getTurtle().getPen());
 		actorControl.addObservers(simulation);
+
 	}
 
 	private void setupCommands(InputBox inputBox)
@@ -224,9 +225,9 @@ public class Controller implements Observer
 
 	private void executeCommand(KeyEvent e, InputBox inputBox)
 	{
-		if(SHIFT_ENTER.match(e)){
+		if (SHIFT_ENTER.match(e)) {
 			inputBox.shiftEnterAction(e);
-		}else if (e.getCode() == KeyCode.ENTER) {
+		} else if (e.getCode() == KeyCode.ENTER) {
 			inputBox.enterAction(e);
 
 			if (inputBox.getCurrentCommand() != null) {
@@ -236,7 +237,7 @@ public class Controller implements Observer
 			inputBox.appendText("\n" + Double.toString(printValue));
 			inputBox.appendPreamble();
 		}
-		
+
 		if (e.getCode() == KeyCode.UP) {
 			inputBox.upAction(e);
 		}
@@ -257,6 +258,7 @@ public class Controller implements Observer
 
 			printValue = interpreter.parseAndRun(command);
 			simulationMap.get(currentTab.get()).step();
+			preferencesMap.get(currentTab.get()).step();
 			inputBox.updateData(command);
 		} catch (SLogoException exception) {
 			exception.displayAlert();
@@ -281,7 +283,8 @@ public class Controller implements Observer
 		}
 	}
 
-	private void saveFile(File file) {
+	private void saveFile(File file)
+	{
 		FileWriter fw = null;
 		try {
 			fw = new FileWriter(file);
@@ -292,10 +295,11 @@ public class Controller implements Observer
 			Logger.getLogger(MultiLineInputBox.class.getName()).log(Level.SEVERE, null, e);
 		}
 	}
-	
-	private void saveImage(File file){
+
+	private void saveImage(File file)
+	{
 		WritableImage image = simulationMap.get(currentTab.get()).display().snapshot(new SnapshotParameters(), null);
-		
+
 		try {
 			ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file);
 		} catch (IOException e) {

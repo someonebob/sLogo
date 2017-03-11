@@ -84,6 +84,11 @@ public abstract class AbstractColorProperty extends Property<Color>
 		return colorPicker;
 	}
 
+	public void updateColorPalette()
+	{
+		this.updateColorPalette(colorPalette);
+	}
+
 	private void updateColorPalette(HBox colorPalette)
 	{
 		colorPalette.getChildren().clear();

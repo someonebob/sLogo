@@ -18,7 +18,7 @@ public class Ask extends MultipleTurtleCommand {
 		List<Integer> idsAsInts = convertStringToIntegerList(getArgumentString(0));
 		//Save List<Integer> savedToldActors
 		Set<Integer> savedToldActors = new TreeSet<>();
-		for(ActorView actor : getInstructionData().getActors()){
+		for(ActorView actor : getInstructionData().getActorList()){
 			if(actor.isTold()){
 				savedToldActors.add(actor.getID().getID());
 			}
@@ -28,10 +28,6 @@ public class Ask extends MultipleTurtleCommand {
 			//Activate proper tolds
 			//Make new turtles if necessary
 		handleTolds(idsAsInts);
-		
-		for(ActorView av : getInstructionData().getActors()){
-			 System.out.println(av.getID().getID() + " " + av.isTold());
-		}
 		
 		//Execute commands for arg list (use new Interpreters)
 		double returnValue = runListCommands(1);
