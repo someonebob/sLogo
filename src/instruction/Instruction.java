@@ -3,6 +3,7 @@ package instruction;
 import java.util.ArrayList;
 import java.util.List;
 
+import interpreter.Interpreter;
 import view.ActorView;
 
 /**
@@ -51,17 +52,20 @@ public abstract class Instruction
 	public double executeAllToldTurtles(){
 		int index = 0;
 		double returnValue = -1.0;
-		//Return values
+		//TODO Return values
+		//System.out.println("Name: " + myText);
 		if(this instanceof ActorSpecificInstruction){
 			for(ActorView actor : instructionData.getActors()){
 				instructionData.setActiveActorIndex(index);
 				if(actor.isTold()){
+					//System.out.println("ID: " + actor.getID().getID());
 					returnValue = execute();
 				}
 				index++;
 			}
 		}
 		else{
+			//System.out.println("This time here");
 			returnValue = execute();
 		}
 		return returnValue;
@@ -81,6 +85,13 @@ public abstract class Instruction
 			doubleList.add(Double.parseDouble(stringArgument));
 		}
 		return doubleList;
+	}
+	
+	protected double runListCommands(int argumentNumber) {
+		//TODO Need to change when decide on way to set language (possibly through InstructionData)
+		Interpreter listInterpreter = new Interpreter(getInstructionData());
+		//System.out.println(getArgumentString(argumentNumber));
+		return listInterpreter.parseAndRun(getArgumentString(argumentNumber));
 	}
 
 	protected double getArgumentDouble(int index)

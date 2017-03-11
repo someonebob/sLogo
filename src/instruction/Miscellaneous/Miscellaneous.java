@@ -5,7 +5,6 @@ import java.util.List;
 import instruction.ActorSpecificInstruction;
 import instruction.Instruction;
 import instruction.InstructionData;
-import interpreter.Interpreter;
 import user_structures.VariableData;
 import util.MathUtil;
 
@@ -21,13 +20,6 @@ public abstract class Miscellaneous extends Instruction implements ActorSpecific
 	
 	public Miscellaneous(InstructionData instructionData, List<String> args, String myText) {
 		super(instructionData, args, myText);
-	}
-	
-	protected double runListCommands(int argumentNumber) {
-		//TODO Need to change when decide on way to set language (possibly through InstructionData)
-		Interpreter listInterpreter = new Interpreter(getInstructionData());
-		//System.out.println(getArgumentString(argumentNumber));
-		return listInterpreter.parseAndRun(getArgumentString(argumentNumber));
 	}
 	
 	/**
