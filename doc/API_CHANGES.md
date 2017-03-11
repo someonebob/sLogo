@@ -43,7 +43,7 @@
 
 1. **New classes for tree-building:** Several new classes with public methods were added to the back-end for the purposes of tree-building (InstructionNode trees) for interpretation. The process turned out to be much more work than expected and required several helper classes (such as TreeBuilder) with which to work. These had to have public methods for the purposes of communication between the interpreter and the other classes in the package. These classes were added to split up functionality and avoid having the Interpreter class become one monstrous class of code. 
 
-2. **New util classes: ** Several new util classes were added for use in tree-construction, tree-execution, instruction-processing, etc. The new classes are as follows:
+2. **New util classes:** Several new util classes were added for use in tree-construction, tree-execution, instruction-processing, etc. The new classes are as follows:
 
 **InstructionSplitter:** Holds a variety of text-processing methods used for converting instructions to nodes for tree-construction. The most notable public methods are getInstructions (which parses from a String into a List of InstructionNodes) and getInstructionStrings (which parses a String in words representing individual commands). This class also holds a public removeFirstItem method which removes the first command from a String (used in tree construction). This class was necessary in order to make the String processing independent of the actual tree-construction and instruction execution.
 
