@@ -2,13 +2,13 @@ package view;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
 import javax.xml.transform.TransformerException;
 
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Bounds;
@@ -25,11 +25,19 @@ import property.BackgroundColorProperty;
 import property.Property;
 import tool.ActorButtons.CreateActorButton;
 import tool.ActorButtons.DeleteActorButton;
-import tool.SettingsMenuTool.*;
-import user_structures.ID;
+import tool.SettingsMenuTool.BackgroundColorButton;
+import tool.SettingsMenuTool.DefaultButton;
+import tool.SettingsMenuTool.PenColorButton;
+import tool.SettingsMenuTool.TurtleImageButton;
 import xml.XMLEditor;
 import xml.XMLException;
 
+/**
+ * 
+ * @author jimmy
+ * @author jesse
+ *
+ */
 public class SimulationView implements View, Cloneable, Observer
 {
 	private SimulationView backupSimulation;
@@ -47,7 +55,7 @@ public class SimulationView implements View, Cloneable, Observer
 		this.defaults = defaults;
 		List<ActorView> list = new ArrayList<>();
 		actors = FXCollections.observableList(list);
-		
+
 		for (int i = 0; i < defaults.numTurtles(); i++) {
 			newActor();
 		}
@@ -62,8 +70,8 @@ public class SimulationView implements View, Cloneable, Observer
 	public void step()
 	{
 		backupSimulation = this.clone();
-		for(ActorView actor : actors){
-			if(actor.isTold()){
+		for (ActorView actor : actors) {
+			if (actor.isTold()) {
 				actor.step();
 			}
 		}
@@ -71,8 +79,8 @@ public class SimulationView implements View, Cloneable, Observer
 
 	public void move(Point2D deltaLocation)
 	{
-		for(ActorView actor : actors){
-			if(actor.isTold()){
+		for (ActorView actor : actors) {
+			if (actor.isTold()) {
 				actor.move(deltaLocation);
 			}
 		}
@@ -82,18 +90,20 @@ public class SimulationView implements View, Cloneable, Observer
 	{
 		backgroundColor.setValue(color);
 	}
-	
-	public void setTold(List<Integer> toldTurtles){
-		for(int i = 0; i < actors.size(); i++){
-			if(toldTurtles.contains(i)){
+
+	public void setTold(List<Integer> toldTurtles)
+	{
+		for (int i = 0; i < actors.size(); i++) {
+			if (toldTurtles.contains(i)) {
 				actors.get(i).setTold();
-			}else{
+			} else {
 				actors.get(i).setUntold();
 			}
 		}
 	}
-	
-	public List<ActorView> getActors(){
+
+	public List<ActorView> getActors()
+	{
 		return actors;
 	}
 
@@ -107,9 +117,10 @@ public class SimulationView implements View, Cloneable, Observer
 		TurtleView actor = new TurtleView(defaults, id);
 		id++;
 		tip = new Tooltip();
-		tip.textProperty().bind(actor.getActorPositionProperty().getLocationAsString());
+		tip.textProperty().bind(Bindings.concat(actor.getActorPositionProperty().getStringValue(), "\n",
+				actor.getHeadingProperty().getStringValue(), "\n", actor.getPen().getPenUpProperty().getStringValue()));
 
-		tip.install(actor.getImageProperty().getValue(), tip);
+		Tooltip.install(actor.getImageProperty().getValue(), tip);
 
 		actor.getPen().getCanvas().toBack();
 		actor.getPen().getCanvas().widthProperty().bind(root.widthProperty());
@@ -128,22 +139,22 @@ public class SimulationView implements View, Cloneable, Observer
 			if (arg instanceof Color) {
 				root.setBackground(new Background(new BackgroundFill((Paint) arg, null, null)));
 			}
-		}else if (o instanceof TurtleImageButton) {
+		} else if (o instanceof TurtleImageButton) {
 			if (arg instanceof Image) {
 				// TODO make ID's work
 				actors.get(0).setImage((Image) arg);
 			}
-		}else if (o instanceof PenColorButton) {
+		} else if (o instanceof PenColorButton) {
 			if (arg instanceof Color) {
 				// TODO make ID's work
 				((TurtleView) actors.get(0)).getPen().setColor((Color) arg);
 			}
-		}else if (o instanceof CreateActorButton){
+		} else if (o instanceof CreateActorButton) {
 			newActor();
-		}else if(o instanceof DeleteActorButton){
-			if(root.getChildren().size() != 0){
-				//remove last actor and its pen
-				root.getChildren().remove(root.getChildren().size()-1, root.getChildren().size());
+		} else if (o instanceof DeleteActorButton) {
+			if (root.getChildren().size() != 0) {
+				// remove last actor and its pen
+				root.getChildren().remove(root.getChildren().size() - 1, root.getChildren().size());
 			}
 			if(actors.size() != 0){
 				//remove last actor from actors ObservableList
@@ -153,17 +164,18 @@ public class SimulationView implements View, Cloneable, Observer
 			
 		}else if(o instanceof DefaultButton){
 			XMLEditor editor = new XMLEditor();
-			String imageName ;
-			try{
-				int index = actors.get(0).getImageProperty().getValue().getImage().impl_getUrl().lastIndexOf("/")+1;
+			String imageName;
+			try {
+				int index = actors.get(0).getImageProperty().getValue().getImage().impl_getUrl().lastIndexOf("/") + 1;
 				imageName = actors.get(0).getImageProperty().getValue().getImage().impl_getUrl().substring(index);
-			}catch(NullPointerException e){
+			} catch (NullPointerException e) {
 				imageName = defaults.image();
 			}
-			
+
 			try {
 				editor.setDefault("background", backgroundColor.getValue().toString());
-				editor.setDefault("pen", ((TurtleView)actors.get(0)).getPen().getPenColorProperty().getValue().toString());
+				editor.setDefault("pen",
+						((TurtleView) actors.get(0)).getPen().getPenColorProperty().getValue().toString());
 				editor.setDefault("image", imageName);
 				editor.setDefault("numTurtles", Integer.toString(actors.size()));
 			} catch (TransformerException e1) {

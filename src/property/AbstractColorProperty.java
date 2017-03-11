@@ -11,26 +11,32 @@ import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
 
+/**
+ * 
+ * @author jimmy
+ *
+ */
 public abstract class AbstractColorProperty extends Property<Color>
 {
 	private static final List<Color> INDEXED_COLORS = new ArrayList<>();
-	
-	//TODO Change to read in XML File
-	static{
+
+	// TODO Change to read in XML File
+	static {
 		INDEXED_COLORS.add(Color.rgb(255, 0, 0));
 		INDEXED_COLORS.add(Color.rgb(0, 255, 0));
 		INDEXED_COLORS.add(Color.rgb(0, 0, 255));
 	}
-	
+
 	public AbstractColorProperty(String name)
 	{
 		super(name);
 	}
-	
-	public List<Color> getIndexedColors(){
+
+	public List<Color> getIndexedColors()
+	{
 		return INDEXED_COLORS;
 	}
-	
+
 	@Override
 	public void setValue(Color color)
 	{
@@ -43,7 +49,7 @@ public abstract class AbstractColorProperty extends Property<Color>
 	{
 		this.setValue(Color.web(stringValue));
 	}
-	
+
 	@Override
 	public List<Node> makeDynamicUpdaters()
 	{
