@@ -10,12 +10,17 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class AbstractLanguageButton extends AbstractMenuItem{
+/**
+ * This specific item requires more details to invoke a new window so is made into a new class so that the tool is cleaner
+ * @author Jesse
+ *
+ */
+public class AbstractLanguageItem extends AbstractMenuItem{
 	public static final List<String> LANGUAGES = Arrays.asList(new String[]{"Chinese", "English", "French", "German", "Italian", "Portuguese", "Russian", "Spanish"});
 	
 	private String language;
 	
-	public AbstractLanguageButton(MenuItem menu) {
+	public AbstractLanguageItem(MenuItem menu) {
 		super(menu);
 		this.getItem().setOnAction(e -> {
 			Stage stage = new Stage();
