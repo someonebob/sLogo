@@ -3,8 +3,6 @@ package view;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Observable;
-import java.util.Observer;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -17,7 +15,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 
-public class PreferencesView implements View, Observer
+public class PreferencesView implements View
 {
 	private BorderPane root;
 	private TurtleView actor;
@@ -135,12 +133,4 @@ public class PreferencesView implements View, Observer
 		return root;
 	}
 
-	@Override
-	public void update(Observable o, Object arg) {
-		if (o instanceof ActorView){
-			//TODO MAKE THIS WORK
-			actor.setImage(((ImageView)arg).getImage());
-		}
-		
-	}
 }

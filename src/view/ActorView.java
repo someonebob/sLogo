@@ -68,7 +68,7 @@ public abstract class ActorView extends Observable implements View, Cloneable, O
 		loadImage(defaults.image());
 		image.getValue().setOnMouseClicked(e -> {
 			this.setChanged();
-			this.notifyObservers(image.getValue());
+			this.notifyObservers(this);
 		});
 	}
 
