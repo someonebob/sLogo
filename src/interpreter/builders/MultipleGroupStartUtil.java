@@ -21,10 +21,10 @@ public class MultipleGroupStartUtil extends GroupStartUtil {
 		// TODO Auto-generated constructor stub
 	}
 
-	@Override
+/*	@Override
 	public String rearrangeWords(String instruction, int numArgs) {
 		// TODO Auto-generated method stub
 		return null;
-	}
+	}*/
 
 }
