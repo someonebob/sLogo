@@ -70,6 +70,7 @@ public class SimulationView implements View, Cloneable, Observer
 	public void step()
 	{
 		backupSimulation = this.clone();
+		System.out.println(backgroundColor.getIndexedColors());
 		for (ActorView actor : actors) {
 			if (actor.isTold()) {
 				actor.step();
@@ -156,13 +157,13 @@ public class SimulationView implements View, Cloneable, Observer
 				// remove last actor and its pen
 				root.getChildren().remove(root.getChildren().size() - 1, root.getChildren().size());
 			}
-			if(actors.size() != 0){
-				//remove last actor from actors ObservableList
-				actors.remove(actors.size()-1);
+			if (actors.size() != 0) {
+				// remove last actor from actors ObservableList
+				actors.remove(actors.size() - 1);
 				id--;
 			}
-			
-		}else if(o instanceof DefaultButton){
+
+		} else if (o instanceof DefaultButton) {
 			XMLEditor editor = new XMLEditor();
 			String imageName;
 			try {

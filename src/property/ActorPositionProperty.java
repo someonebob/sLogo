@@ -12,8 +12,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
-import util.MathUtil;
-import util.PointPolar;
 import view.ActorView;
 
 /**
@@ -83,16 +81,6 @@ public class ActorPositionProperty extends Property<Point2D>
 
 		return Arrays.asList(xyBox, moveButton);
 		// return Arrays.asList(label, directionPicker, distance, moveButton);
-	}
-
-	private void move(double distance)
-	{
-		Point2D currentLocation = this.getValue();
-		double currentHeading = actor.getHeading();
-		Point2D deltaVector = MathUtil.polarToRectangular(new PointPolar(distance, currentHeading));
-		Point2D newLocation = currentLocation.add(deltaVector);
-		actorMove(newLocation);
-		this.setValue(newLocation);
 	}
 
 	private void actorMove(Point2D newLocation)

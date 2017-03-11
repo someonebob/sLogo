@@ -66,10 +66,6 @@ public abstract class ActorView implements View, Cloneable, Observer
 		image.getValue().setFitWidth(ACTOR_WIDTH);
 		image.getValue().setPreserveRatio(true);
 		loadImage(defaults.image());
-		// start facing up
-		this.setHeading(STARTING_HEADING);
-		// // initial rotation
-		actorMove.play();
 	}
 
 	public boolean isTold()
