@@ -3,13 +3,11 @@ package tool;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observer;
 
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
-import javafx.stage.FileChooser;
-import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
+import util.FileChooserUtil;
 
 /**
  * @author jimmy
@@ -31,7 +29,8 @@ public class SettingsMenuTool extends MenuTool
 	public void makeItems()
 	{
 		buttons = new ArrayList<>();
-		addButtons(buttons, new BackgroundColorButton(), new TurtleImageButton(), new PenColorButton(), new LanguageButton(), new DefaultButton());
+		addButtons(buttons, new BackgroundColorButton(), new TurtleImageButton(), new PenColorButton(),
+				new LanguageButton(), new DefaultButton());
 	}
 
 	@Override
@@ -39,21 +38,6 @@ public class SettingsMenuTool extends MenuTool
 	{
 		return buttons;
 
-	}
-	
-	
-
-	private FileChooser setupFileChooser()
-	{
-		final String EXTENSION = "*.png";
-
-		FileChooser chooser = new FileChooser();
-		chooser.setTitle("New Image");
-		File defaultDirectory = new File(System.getProperty("user.dir") + "/images");
-		chooser.setInitialDirectory(defaultDirectory);
-		chooser.getExtensionFilters().setAll(new ExtensionFilter("IMAGE", EXTENSION));
-
-		return chooser;
 	}
 
 	public class BackgroundColorButton extends AbstractColorButton
@@ -71,7 +55,8 @@ public class SettingsMenuTool extends MenuTool
 			super(new MenuItem("Turtle Image"));
 			this.getItem().setOnAction(e -> {
 				Stage newWindow = new Stage();
-				File selectedFile = setupFileChooser().showOpenDialog(newWindow);
+				File selectedFile = FileChooserUtil.setupFileChooser("IMAGE", "New Image",
+						new File(System.getProperty("user.dir") + "/images"), "*.png").showSaveDialog(newWindow);
 				if (selectedFile != null) {
 					Image newImage = new Image(selectedFile.toURI().toString());
 					this.setChanged();
@@ -97,7 +82,7 @@ public class SettingsMenuTool extends MenuTool
 
 		}
 	}
-	
+
 	public class DefaultButton extends AbstractMenuItem
 	{
 		public DefaultButton()
@@ -109,6 +94,5 @@ public class SettingsMenuTool extends MenuTool
 			});
 		}
 	}
-
 
 }
