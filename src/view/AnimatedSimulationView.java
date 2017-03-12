@@ -229,14 +229,4 @@ public class AnimatedSimulationView implements SimulationView, Cloneable
 		// return clone;
 		return null;
 	}
-	
-	public void setTold(Collection<Integer> toldTurtles){
-		for(int i = 0; i < actors.size(); i++){
-			if(toldTurtles.contains(i)){
-				actors.get(i).setTold();
-			}else{
-				actors.get(i).setUntold();
-			}
-		}
-	}
 }
