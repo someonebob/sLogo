@@ -1,8 +1,7 @@
 package interpreter.builders;
-import java.util.List;
 
-import instruction.InstructionData;
 import interpreter.misc.InstructionNode;
+import interpreter.misc.InstructionTracker;
 /**
  * This is a class dedicated to the creation of 
  * Lists, which cannot be execute and must be handled differently.
@@ -28,9 +27,8 @@ public class ListStartUtil extends BuilderUtil {
 	private final static String END = "ListEnd";
 	private final static String START = "ListStart";
 	
-	public ListStartUtil(List<InstructionNode> nodes,
-			InstructionNode head, String current, InstructionData data){
-		super(nodes, head, current, data);
+	public ListStartUtil(InstructionNode head, InstructionTracker track){
+		super(head, track);
 	}
 	
 	/**
@@ -47,11 +45,11 @@ public class ListStartUtil extends BuilderUtil {
 	public String construct() {
 		String value = "";
 		int innerCount = 0; //how many layers in are you
-		while(!getNodes().isEmpty())
+		while(!getTrack().isEmpty())
 		{
-			InstructionNode next = removeNext();
+			InstructionNode next = getTrack().removeNext();
 			String name = next.getMyClassification();
-			decrementCurrentText();
+			getTrack().decrementCurrentText();
 			
 			if(name.equals(START)){
 				innerCount++;
@@ -67,7 +65,7 @@ public class ListStartUtil extends BuilderUtil {
 		}
 		value = removeSpace(value);
 		getHead().setMyRunValue(value);
-		return getCurrent();
+		return getTrack().getCurrentText();
 	}
 	
 	private static String removeSpace(String value){

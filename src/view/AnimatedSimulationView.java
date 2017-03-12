@@ -105,6 +105,7 @@ public class AnimatedSimulationView implements SimulationView, Cloneable
 
 	@Override
 	public List<TurtleView> getActors()
+
 	{
 		return actors;
 	}
@@ -119,12 +120,14 @@ public class AnimatedSimulationView implements SimulationView, Cloneable
 	public void newActor()
 	{
 		TurtleView actor = new TurtleView(defaults, id);
+		
 		id++;
 		tip = new Tooltip();
 		tip.textProperty().bind(Bindings.concat(actor.getActorPositionProperty().getStringValue(), "\n",
 				actor.getHeadingProperty().getStringValue(), "\n", actor.getPen().getPenUpProperty().getStringValue()));
 
-		Tooltip.install(actor.getImageProperty().getValue(), tip);
+		Tooltip.install(actor.display(), tip);
+
 
 		actor.getPen().getCanvas().toBack();
 		actor.getPen().getCanvas().widthProperty().bind(root.widthProperty());
@@ -157,7 +160,7 @@ public class AnimatedSimulationView implements SimulationView, Cloneable
 		} else if (o instanceof DeleteActorButton) {
 			if (root.getChildren().size() != 0) {
 				// remove last actor and its pen
-				root.getChildren().remove(root.getChildren().size() - 1, root.getChildren().size());
+				root.getChildren().remove(root.getChildren().size() - 2, root.getChildren().size());
 			}
 
 		} else if (o instanceof DefaultButton) {
@@ -225,5 +228,15 @@ public class AnimatedSimulationView implements SimulationView, Cloneable
 		// System.out.println(clone.getTurtle().getHeading());
 		// return clone;
 		return null;
+	}
+	
+	public void setTold(Collection<Integer> toldTurtles){
+		for(int i = 0; i < actors.size(); i++){
+			if(toldTurtles.contains(i)){
+				actors.get(i).setTold();
+			}else{
+				actors.get(i).setUntold();
+			}
+		}
 	}
 }

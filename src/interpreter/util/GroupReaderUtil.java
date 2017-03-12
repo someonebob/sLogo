@@ -18,10 +18,11 @@ import util.Pair;
  *
  */
 
-public class GroupReader {
+public class GroupReaderUtil {
 
 	public static final String GROUPS = "resources/interpreter/Groupings";
 	public static final String DEFAULT = "Multiple";
+	
 	
 	public static Pair<String, Integer> getGroupAndNumArgs(String instructionType, String exactCommand, InstructionData data){
 		String group = getGroup(instructionType);

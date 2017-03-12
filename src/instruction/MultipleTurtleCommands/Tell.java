@@ -23,7 +23,6 @@ public class Tell extends MultipleTurtleCommand {
 	@Override
 	public double execute() {
 		//Get list argument as string of numbers (ex: "1 2 3") and convert to array
-		//System.out.println("Arg string: " + getArgumentString(0));
 		List<Integer> idsAsInts = convertStringToIntegerList(getArgumentString(0));
 		handleTolds(idsAsInts);
 		return idsAsInts.get(idsAsInts.size() - 1);

@@ -1,14 +1,10 @@
 package instruction.Miscellaneous;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import instruction.InstructionData;
 import interpreter.Interpreter;
-import interpreter.misc.InstructionNode;
-import interpreter.util.WorkspaceUpdater;
+import interpreter.util.WorkspaceUpdaterUtil;
 import user_structures.FunctionData;
 import user_structures.VariableData;
 
@@ -54,11 +50,11 @@ public class UserInstruction extends Miscellaneous {
 			v.addToStack(copyVal); //add new stack variable for every current variable
 			v.setValue(copyVal); //Copy current value into 
 		}
-		//TODO: Make sure this replaces initial value
+		
 		for(int i=0; i<function.getArgs().size(); i++){
 			String name = function.getArgs().get(i);
 			double value = getArgumentDouble(i);
-			WorkspaceUpdater.varAdd(localVariables, name, value);
+			WorkspaceUpdaterUtil.varAdd(localVariables, name, value);
 		}
 		return localVariables;
 	}

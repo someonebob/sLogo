@@ -17,6 +17,7 @@ public class VariableData extends StructureData {
 	public VariableData(String name, double value){
 		super(name);
 		values = new Stack<Double>();
+		addToStack(value);
 		setValue(value);
 	}
 	
@@ -41,7 +42,11 @@ public class VariableData extends StructureData {
 	}
 	
 	public double popFromStack(){
-		return values.pop();
+		double toRet = values.pop();
+		if(values.size()!=0){
+			setValue(values.peek());
+		}
+		return toRet;
 	}
 	
 	public int getStackSize(){

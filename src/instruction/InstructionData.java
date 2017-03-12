@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.List;
 
 import exceptions.CastingException;
-import interpreter.util.WorkspaceUpdater;
+import interpreter.util.WorkspaceUpdaterUtil;
 import javafx.geometry.Bounds;
 import property.BackgroundColorProperty;
 import user_structures.FunctionData;
@@ -52,6 +52,12 @@ public class InstructionData
 		this.functions = functions;
 		this.language = language;
 		this.activeActorIndex = 0;
+	}
+
+
+	public int getActiveActorIndex()
+	{
+		return activeActorIndex;
 	}
 
 	/**
@@ -101,9 +107,13 @@ public class InstructionData
 
 	public List<VariableData> getStackVariables()
 	{
-		for (VariableData v : variables) {
+		for (int i=0; i<variables.size(); i++) {
+			VariableData v = variables.get(i);
 			if (v.getStackSize() != 0)
 				v.popFromStack(); // iterate through and pop items
+			else{
+				variables.remove(v);
+			}
 		}
 		return variables;
 	}
@@ -144,9 +154,10 @@ public class InstructionData
 		return null;
 	}
 
+
 	public void addFunction(FunctionData f)
 	{
-		WorkspaceUpdater.add(functions, f);
+		WorkspaceUpdaterUtil.add(functions, f);
 	}
 
 	public String getLanguage()

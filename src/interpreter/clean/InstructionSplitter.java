@@ -16,6 +16,8 @@ import interpreter.misc.InstructionNode;
  *
  */
 public class InstructionSplitter {
+	private final static String ERROR = "NO MATCH";
+	
 	/**
 	 * Parses string into individual words, uses the given instruction
 	 * classifier to create corresponding InstructionNodes in list for return.
@@ -33,14 +35,19 @@ public class InstructionSplitter {
 	public static List<InstructionNode> getInstructions(String toParse, InstructionClassifier classifier, InstructionData data) {
 		ArrayList<InstructionNode> toRet = new ArrayList<InstructionNode>();
 		List<String> commands = getInstructionStrings(toParse);
-		for (String name : commands) {
+		for (int i=0; i<commands.size(); i++) {
+			String name = commands.get(i);
+			InstructionCleaner cleanse = new InstructionCleaner(data, classifier);
+			if(!classifier.isValid(name, data)){
+				name = cleanse.singleWordClean(name);
+				commands.set(i, name);
+			}
 			String type = classifier.getInstructionType(name, data);
 			toRet.add(new InstructionNode(type,name));
 		}
 		return toRet;
 	}
 	public static List<String> getInstructionStrings(String toParse) {
-		// TODO: Error check for empty string
 		return splitString(toParse);
 	}
 	

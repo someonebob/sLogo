@@ -92,5 +92,5 @@ public interface SimulationView extends View, Observer
 	 * Creates a new actor in the simulation
 	 */
 	public void newActor();
-
+	
 }

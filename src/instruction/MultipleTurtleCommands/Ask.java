@@ -29,10 +29,6 @@ public class Ask extends MultipleTurtleCommand {
 			//Make new turtles if necessary
 		handleTolds(idsAsInts);
 		
-		for(ActorView av : getInstructionData().getActorList()){
-			 System.out.println(av.getID().getID() + " " + av.isTold());
-		}
-		
 		//Execute commands for arg list (use new Interpreters)
 		double returnValue = runListCommands(1);
 		//Restore old tolds - possibly have new turtles than from before, but told = true only for old turtles
