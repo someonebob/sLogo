@@ -47,7 +47,7 @@ public class AskWith extends MultipleTurtleCommand {
 		for(ActorView actor : getInstructionData().getActorList()){
 			Collection<Integer> actorToCheck = new TreeSet<>();
 			actorToCheck.add(actor.getID().getID());
-			handleTolds(new TreeSet<>());
+			handleTolds(actorToCheck);
 			double conditionValue = runListCommands(0);
 			if(!MathUtil.doubleEquals(conditionValue, 0.0)){
 				idsAsInts.add(actor.getID().getID());
