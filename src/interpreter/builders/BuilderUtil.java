@@ -22,8 +22,9 @@ public abstract class BuilderUtil {
 	 *            The head node (the one removed from the slot right in from of
 	 *            the current list of nodes) Example: ( fd 50 50 ) -> head: (
 	 *            and nodes: {fd, 50, 50, )}
-	 * @param track An InstructionTracker holding information about the instruction
-	 * and the workspace in which it was initialized
+	 * @param track
+	 *            An InstructionTracker holding information about the
+	 *            instruction and the workspace in which it was initialized
 	 * 
 	 * 
 	 */
@@ -41,17 +42,20 @@ public abstract class BuilderUtil {
 	 * current text.
 	 * 
 	 * 
-	 * Most instructions will invoke the default BuilderUtil (DefaultUtil)
+	 * Most instructions will NOT invoke a BuilderUtil
 	 * because they can be parsed in a generalized way. Certain instructions,
 	 * however, require special parsing to avoid errors and provide the
 	 * instruction classes with the arguments they need.
 	 * 
-	 * Examples of specialized BuilderUtils include: 1) GroupStartUtil (the
-	 * brackets must be removed from the instruction and the instructions
-	 * re-ordered according to the grouping of that instruction type 2)
-	 * ListStartUtil (anything invoking a list start, like an ifelse, needs to
-	 * have the raw text for the instructions held in the list) 3)
-	 * MakeUserInstructionUtil (if a command has already been produced, we still
+	 * Examples of specialized BuilderUtils include: 
+	 * 
+	 * 1) GroupStartUtil (the brackets must be removed from the instruction and 
+	 * the instructions re-ordered according to the grouping of that instruction type 
+	 * 
+	 * 2) ListStartUtil (anything invoking a list start, like an ifelse, needs to
+	 * have the raw text for the instructions held in the list) 
+	 * 
+	 * 3) MakeUserInstructionUtil (if a command has already been produced, we still
 	 * want to be able to redefine it without having the command now act within
 	 * the declaration as a command)
 	 * 
@@ -80,7 +84,7 @@ public abstract class BuilderUtil {
 		newChildren.add(child);
 		getHead().setMyChildren(newChildren);
 	}
-	
+
 	public InstructionNode getHead() {
 		return head;
 	}
@@ -96,8 +100,5 @@ public abstract class BuilderUtil {
 	public void setTrack(InstructionTracker track) {
 		this.track = track;
 	}
-	
-	
-
 
 }

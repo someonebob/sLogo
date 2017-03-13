@@ -51,8 +51,18 @@ public abstract class Miscellaneous extends Instruction implements ActorSpecific
 		return lastReturnedValue;
 	}
 
+	/**
+	 * Method to initialize variable "safely" (check for its existence in the
+	 * current workspace and either add it or update it)
+	 * 
+	 * @param name
+	 *            The name of the new variable
+	 * @param value
+	 *            The value of the new variable
+	 * @return The new (or updated) variable
+	 */
 	protected VariableData initializeVariable(String name, double value) {
-		VariableData variable = getInstructionData().containsVariable(name);
+		VariableData variable = getInstructionData().getVariable(name);
 		if (variable == null) {
 			variable = new VariableData(name, value);
 			getInstructionData().getVariables().add(variable);

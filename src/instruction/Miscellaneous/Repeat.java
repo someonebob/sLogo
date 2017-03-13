@@ -5,6 +5,14 @@ import java.util.List;
 import instruction.InstructionData;
 import user_structures.VariableData;
 
+/**
+ * Class to repeat a command the given
+ * number of times.
+ * 
+ * @author Matthew Barbano
+ *
+ */
+
 public class Repeat extends Miscellaneous {
 	private static final String COUNTER_NAME = "repcount";
 	
