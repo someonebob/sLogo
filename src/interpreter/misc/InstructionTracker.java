@@ -8,10 +8,8 @@ import interpreter.classification.InstructionClassifier;
 import interpreter.clean.InstructionSplitter;
 
 /**
- * Used to keep track of the current status of
- * processing within an instruction, including
- * the String of text and the nodes created in
- * the initial sweep.
+ * Used to keep track of the current status of processing within an instruction,
+ * including the String of text and the nodes created in the initial sweep.
  * 
  * @author maddiebriere
  *
@@ -23,39 +21,37 @@ public class InstructionTracker {
 	private String currentText;
 	private InstructionData data;
 	private InstructionClassifier classifier;
-	
-	public InstructionTracker(String current,
-			InstructionData data, InstructionClassifier classifier){
+
+	public InstructionTracker(String current, InstructionData data, InstructionClassifier classifier) {
 		this.currentText = current;
 		this.data = data;
 		this.classifier = classifier;
-		if(!(current.isEmpty())&& !(classifier == null))
+		if (!(current.isEmpty()) && !(classifier == null))
 			nodes = InstructionSplitter.getInstructions(current, classifier, data);
 		else
 			nodes = new ArrayList<InstructionNode>();
 	}
-	
+
 	/**
-	 * Count words up to a given stopping phrase (while removing the words) 
-	 * and return the number iterated over.
+	 * Count words up to a given stopping phrase (while removing the words) and
+	 * return the number iterated over.
 	 * 
 	 * @return
 	 */
-	public List<InstructionNode> countAndRemoveArgs(String END){
+	public List<InstructionNode> countAndRemoveArgs(String END) {
 		List<InstructionNode> toRet = new ArrayList<InstructionNode>();
-		while(!isEmpty()){
+		while (!isEmpty()) {
 			decrementCurrentText();
-			if(peekNext().equals(END)){
+			if (peekNext().equals(END)) {
 				removeNext();
 				break;
-			}
-			else{
+			} else {
 				toRet.add(removeNext());
 			}
 		}
 		return toRet;
 	}
-	
+
 	public void decrementCurrentText() {
 		setCurrentText(InstructionSplitter.removeFirstItem(getCurrentText()));
 	}
@@ -95,15 +91,15 @@ public class InstructionTracker {
 	public void setData(InstructionData data) {
 		this.data = data;
 	}
-	
-	public List<InstructionNode> getNodes(){
+
+	public List<InstructionNode> getNodes() {
 		return nodes;
 	}
-	
+
 	public void setNodes(List<InstructionNode> nodes) {
 		this.nodes = nodes;
 	}
-	
+
 	public InstructionNode removeNext() {
 		return getNodes().remove(0);
 	}
@@ -115,6 +111,5 @@ public class InstructionTracker {
 	public boolean isEmpty() {
 		return getNodes().isEmpty();
 	}
-
 
 }

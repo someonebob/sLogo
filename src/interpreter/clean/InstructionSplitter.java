@@ -1,4 +1,5 @@
 package interpreter.clean;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -6,23 +7,27 @@ import java.util.Scanner;
 import instruction.InstructionData;
 import interpreter.classification.InstructionClassifier;
 import interpreter.misc.InstructionNode;
+
 /**
  * Purely a utility class, used for purposes of splitting an input line and
- * returning strings or Instructions from input
+ * returning strings or Instructions from input.
  * 
- * Hopeful extension: Cleansing of input
+ * This class allows for transformation both "forwards" and "backwards:" 1) From
+ * String instruction to a list of InstructionNodes 2) From a List of
+ * InstructionNodes to a String instructions.
+ * 
+ * Pure text processing methods should be placed in this class.
  * 
  * @author maddiebriere
  *
  */
 public class InstructionSplitter {
-	private final static String ERROR = "NO MATCH";
-	
+
 	/**
 	 * Parses string into individual words, uses the given instruction
 	 * classifier to create corresponding InstructionNodes in list for return.
-	 * NOTE: THESE INSTRUCTION NODES WILL NOT HAVE ANY CHILDREN -- THIS MUST
-	 * BE COMPLETED BY TREE BUILDER.
+	 * NOTE: THESE INSTRUCTION NODES WILL NOT HAVE ANY CHILDREN -- THIS MUST BE
+	 * COMPLETED BY TREE BUILDER.
 	 * 
 	 * @param toParse
 	 *            Input line to be parsed for instructions
@@ -32,43 +37,48 @@ public class InstructionSplitter {
 	 *            (reflection)
 	 * @return List of InstructionNodes corresponding to the instructions input
 	 */
-	public static List<InstructionNode> getInstructions(String toParse, InstructionClassifier classifier, InstructionData data) {
+	public static List<InstructionNode> getInstructions(String toParse, InstructionClassifier classifier,
+			InstructionData data) {
 		ArrayList<InstructionNode> toRet = new ArrayList<InstructionNode>();
 		List<String> commands = getInstructionStrings(toParse);
-		for (int i=0; i<commands.size(); i++) {
+		for (int i = 0; i < commands.size(); i++) {
 			String name = commands.get(i);
 			InstructionCleaner cleanse = new InstructionCleaner(data, classifier);
-			if(!classifier.isValid(name, data)){
+			if (!classifier.isValid(name, data)) {
 				name = cleanse.singleWordClean(name);
 				commands.set(i, name);
 			}
 			String type = classifier.getInstructionType(name, data);
-			toRet.add(new InstructionNode(type,name));
+			toRet.add(new InstructionNode(type, name));
 		}
 		return toRet;
 	}
+
 	public static List<String> getInstructionStrings(String toParse) {
 		return splitString(toParse);
 	}
-	
+
 	/**
 	 * Rewrite the Instruction from the given list of nodes
-	 * @param list List of nodes
+	 * 
+	 * @param list
+	 *            List of nodes
 	 * @return String representing original instruction
 	 */
-	public static String rewriteNonLinkedInstruction(List<InstructionNode> list){
+	public static String rewriteNonLinkedInstruction(List<InstructionNode> list) {
 		String toRet = "";
-		for(InstructionNode n: list){
+		for (InstructionNode n : list) {
 			toRet += n.getMyCommand() + " ";
 		}
-		return toRet.substring(0,toRet.length()-1);
+		return toRet.substring(0, toRet.length() - 1);
 	}
 
 	/**
 	 * Split String by whitespace to get relevant words
 	 * 
 	 * @param toParse
-	 * @return
+	 *            The String to split into individuals words
+	 * @return A List of Strings held within the toParse String
 	 */
 	private static List<String> splitString(String toParse) {
 		ArrayList<String> toRet = new ArrayList<String>();
@@ -79,23 +89,24 @@ public class InstructionSplitter {
 		scan.close();
 		return toRet;
 	}
-	
-	
+
 	/**
 	 * Removes the first instruction from the String
-	 * @param toParse String to remove item from
+	 * 
+	 * @param toParse
+	 *            String to remove item from
 	 * @return String with item removed
 	 */
-	public static String removeFirstItem(String toParse){
-		String toRet="";
+	public static String removeFirstItem(String toParse) {
+		String toRet = "";
 		List<String> parsed = getInstructionStrings(toParse);
-		if(parsed.size()<=1){
+		if (parsed.size() <= 1) {
 			return toRet;
 		}
-		for(int i=1; i<parsed.size()-1; i++){
-			toRet+=parsed.get(i) + " ";
+		for (int i = 1; i < parsed.size() - 1; i++) {
+			toRet += parsed.get(i) + " ";
 		}
-		toRet+=parsed.get(parsed.size()-1);
+		toRet += parsed.get(parsed.size() - 1);
 		return toRet;
 	}
 }

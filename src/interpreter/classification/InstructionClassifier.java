@@ -87,7 +87,7 @@ public class InstructionClassifier {
 		}
 
 		/** User instruction **/
-		if (data.containsFunction(key) != null) {
+		if (data.getFunction(key) != null) {
 			return USER_INSTRUCTION;
 		}
 		return ERROR;

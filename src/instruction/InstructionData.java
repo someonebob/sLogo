@@ -126,7 +126,7 @@ public class InstructionData
 	 *            The potential variable name
 	 * @return Variable matching to the current name, otherwise null
 	 */
-	public VariableData containsVariable(String variableName)
+	public VariableData getVariable(String variableName)
 	{
 		for (VariableData v : variables) {
 			if (v.getName().equals(variableName)) {
@@ -134,6 +134,10 @@ public class InstructionData
 			}
 		}
 		return null;
+	}
+	
+	public boolean containsVariable(String variableName){
+		return !(getVariable(variableName)==null);
 	}
 
 	/**
@@ -144,7 +148,7 @@ public class InstructionData
 	 *            The potential function name
 	 * @return Function matching to the current name, otherwise null
 	 */
-	public FunctionData containsFunction(String functionName)
+	public FunctionData getFunction(String functionName)
 	{
 		for (FunctionData f : functions) {
 			if (f.getName().equals(functionName)) {
@@ -152,6 +156,10 @@ public class InstructionData
 			}
 		}
 		return null;
+	}
+	
+	public boolean containsFunction(String functionName){
+		return !(getFunction(functionName)==null);
 	}
 
 

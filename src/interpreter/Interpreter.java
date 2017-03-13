@@ -10,9 +10,10 @@ import util.Pair;
 
 /**
  * This class uses a variety of resource files to transform an input string into
- * a useable command (we call it an Instruction). By returning an Instruction,
- * we have transformed something with no functionality Into something capable of
- * executing and returning knowledge about itself.
+ * a useable command (we call it an Instruction). By parsing the String and
+ * creating an Instruction, we have transformed something with no functionality
+ * (a String command input by the user) into something capable of executing and
+ * returning knowledge about itself.
  * 
  * @maddiebriere
  **/
@@ -25,7 +26,7 @@ public class Interpreter {
 	public Interpreter(InstructionData data) {
 		myData = data;
 		myClassifier = new InstructionClassifier(data.getLanguage());
-		instruction="";
+		instruction = "";
 	}
 
 	/**
@@ -39,36 +40,47 @@ public class Interpreter {
 	 * This method only splits the given input into a list of instructions and
 	 * then calls upon helper methods to create the root node from the list.
 	 * 
-	 * Runs each InstructionNode as it is created.
+	 * Runs each InstructionNode as it is created so that an instructions
+	 * executed sequentially will have "knowledge" of their predecessors.
 	 * 
 	 * @param instruction
 	 *            Input line from user
 	 */
 	public double parseAndRun(String ins) {
-		instruction = ins;
 		double toRet = 0;
-		InstructionCleaner clean = new InstructionCleaner(getMyData(), getMyClassifier());
-		instruction = clean.fullTextClean(instruction);
+		instruction = cleanInstruction(ins);
 		TreeBuilder builder = new TreeBuilder(instruction, getMyClassifier(), getMyData());
 		while (!instruction.isEmpty()) {
 			toRet = singleExecute(builder);
 		}
 		return toRet;
 	}
-	
+
 	/**
-	 * Executes a single loop through the current instructions, creating and executing
-	 * the sub-tree for a single instruction.
+	 * Create an InstructionCleaner and use it to pre-process the input command.
 	 * 
-	 * @param builder TreeBuilder used to create each sub-tree
+	 * @param instruction
+	 *            The input String
+	 * @return The "cleansed" input String
+	 */
+	private String cleanInstruction(String instruction) {
+		InstructionCleaner clean = new InstructionCleaner(getMyData(), getMyClassifier());
+		return clean.fullTextClean(instruction);
+	}
+
+	/**
+	 * Executes a single loop through the current instructions, creating and
+	 * executing the sub-tree for a single instruction.
+	 * 
+	 * @param builder
+	 *            TreeBuilder used to create each sub-tree
 	 * @return the return value of execution
 	 */
-	private double singleExecute(TreeBuilder builder){
+	private double singleExecute(TreeBuilder builder) {
 		Pair<InstructionNode, String> current = builder.buildTree();
-		InstructionNode node = current.getMyA();
 		instruction = current.getMyB();
 		TreeExecuter executer = new TreeExecuter(getMyData(), getMyClassifier());
-		return executer.execute(node);
+		return executer.execute(current.getMyA());
 	}
 
 	public InstructionClassifier getMyClassifier() {
