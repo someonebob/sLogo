@@ -20,7 +20,7 @@ public class Variable extends BasicSyntax{
 
 	@Override
 	public double execute() {
-		VariableData name = getInstructionData().containsVariable(getMyText().substring(1));
+		VariableData name = getInstructionData().getVariable(getMyText().substring(1));
 		if(name!=null){
 			return name.getValue();
 		}

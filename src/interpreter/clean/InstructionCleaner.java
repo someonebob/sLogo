@@ -14,7 +14,11 @@ import interpreter.util.ResourceToListUtil;
 /**
  * Clean up the text before it is
  * parsed to avoid unnecessary 
- * errors
+ * errors. 
+ * 
+ * NOTE: This class is not fully functional,
+ * but the framework has been laid for the 
+ * functionality it could potentially grow into.
  * 
  * @author maddiebriere
  *
@@ -47,7 +51,6 @@ public class InstructionCleaner{
 	 * @return Text with brackets separated
 	 */
 	private String spaceBrackets(String text){
-		//TODO: Complete
 		List<Entry<String, Pattern>> list = new ArrayList<Entry<String,Pattern>>();
 		ResourceToListUtil.addTerms(BRACKETS, list);
 		return text;

@@ -4,56 +4,52 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 /**
- * superclass to VariableData and FunctionData to
- * remove duplicated code
+ * Superclass to VariableData and FunctionData, created to remove duplicated code.
+ * Commonality represented in 'name' as both Variables and Functions are
+ * identified via name (hence the shared compareTo and equals methods).
  * 
  * @author maddiebriere
  *
  */
 
-public abstract class StructureData implements Comparable<StructureData>{
+public abstract class StructureData implements Comparable<StructureData> {
 	private StringProperty name;
-	
-	public StructureData(String name){
+
+	public StructureData(String name) {
 		setName(name);
 	}
-	
+
 	@Override
 	public int compareTo(StructureData o) {
-		if(this == o){
+		if (this == o) {
 			return 0;
 		}
 		return this.getName().compareTo(o.getName());
 	}
-	
+
 	@Override
-	public boolean equals(Object o){
-		if (!(o instanceof StructureData)){
+	public boolean equals(Object o) {
+		if (!(o instanceof StructureData)) {
 			return false;
-			//TODO: Error handling
 		}
-		if(this == o){
+		if (this == o) {
 			return true;
 		}
-		return this.getName().equals(((StructureData)o).getName());
+		return this.getName().equals(((StructureData) o).getName());
 	}
-	
-	public StringProperty nameProperty()
-	{
+
+	public StringProperty nameProperty() {
 		if (name == null) {
-			//Might have messed this up
 			name = new SimpleStringProperty(this, "");
 		}
 		return name;
 	}
 
-	public void setName(String value)
-	{
+	public void setName(String value) {
 		nameProperty().set(value);
 	}
 
-	public String getName()
-	{
+	public String getName() {
 		return nameProperty().get();
 	}
 

@@ -2,6 +2,7 @@ package instruction.MultipleTurtleCommands;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import exceptions.NonsensicalArgumentException;
@@ -12,6 +13,7 @@ import view.TurtleView;
 public abstract class MultipleTurtleCommand extends Instruction
 {
 	private static final String RESOURCE_INVALID_ID_NAME = "InvalidIDMessage";
+	private static final String RESOURCE_NONCONSECUTIVE_ID_NAME = "NonconsecutiveIDMessage";
 
 	public MultipleTurtleCommand(InstructionData data, List<String> args, String myText)
 	{
@@ -34,6 +36,7 @@ public abstract class MultipleTurtleCommand extends Instruction
 				throw new NonsensicalArgumentException(RESOURCE_INVALID_ID_NAME);
 			}
 		}
+		Collections.sort(idsAsInts);
 		return idsAsInts;
 	}
 	
@@ -45,10 +48,12 @@ public abstract class MultipleTurtleCommand extends Instruction
 		getInstructionData().setToldAndUntellRest(idsAsInts);
 		//If not in actor list, then add it/draw it
 		for(Integer id : idsAsInts){
-			 if(id >= actorList.size()){
+			 if(id == actorList.size()){
 				 getInstructionData().newActor();
+			 }
+			 else if(id > actorList.size()){
+				 throw new NonsensicalArgumentException(RESOURCE_NONCONSECUTIVE_ID_NAME);
 			 }
 		}
 	}
-
 }

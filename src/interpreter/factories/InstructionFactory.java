@@ -32,9 +32,14 @@ public class InstructionFactory extends AbstractFactory<Instruction>{
 	 */
 	@SuppressWarnings("rawtypes")
 	@Override
-	protected Class[] getClasses(Object ...args){
+	protected Class<?>[] getClasses(Object ...args){
 		Class[] toRet = new Class[]{InstructionData.class, List.class, String.class};
 		return toRet;
+	}
+
+	@Override
+	public String generateObjectType(String name) {
+		return "";
 	}
 
 }
