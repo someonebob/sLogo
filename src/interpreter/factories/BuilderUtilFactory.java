@@ -4,7 +4,6 @@
 package interpreter.factories;
 
 import interpreter.builders.BuilderUtil;
-import interpreter.misc.InstructionNode;
 
 /**
  * This class extends the AbstractFactory class with a type BuilderUtil.

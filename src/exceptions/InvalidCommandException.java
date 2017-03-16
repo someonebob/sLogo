@@ -1,23 +1,46 @@
 package exceptions;
 
 /**
- * A subclass of SyntaxException thrown when the spelling of a
- * command is not recognized.
+ * A subclass of SyntaxException thrown when the spelling of a command is not
+ * recognized.
+ * 
  * @author Matthew Barbano
- *
+ * @see SLogoException SLogoException for assumptions, dependencies, and
+ *      examples
  */
-public class InvalidCommandException extends SyntaxException{
+public class InvalidCommandException extends SyntaxException {
 	private static final long serialVersionUID = 1L;
-	
-	public InvalidCommandException(String instructionSpecificErrorName){
+
+	/**
+	 * Calls SLogoException constructor with same set of parameters.
+	 * 
+	 * @param instructionSpecificErrorName
+	 * @see SLogoException SLogoException for assumptions, dependencies, and
+	 *      examples
+	 */
+	public InvalidCommandException(String instructionSpecificErrorName) {
 		super(instructionSpecificErrorName);
 	}
-	
-	public InvalidCommandException(Throwable cause){
+
+	/**
+	 * Calls SLogoException constructor with same set of parameters.
+	 * 
+	 * @param instructionSpecificErrorName
+	 * @see SLogoException SLogoException for assumptions, dependencies, and
+	 *      examples
+	 */
+	public InvalidCommandException(Throwable cause) {
 		super(cause);
 	}
-	
-	public InvalidCommandException(String errorReport, Throwable cause){
+
+	/**
+	 * Calls SLogoException constructor with same set of parameters.
+	 * 
+	 * @param instructionSpecificErrorName
+	 * @see SLogoException SLogoException for assumptions, dependencies, and
+	 *      examples
+	 */
+	public InvalidCommandException(String errorReport, Throwable cause) {
 		super(errorReport, cause);
 	}
 

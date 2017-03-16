@@ -2,7 +2,6 @@ package tool;
 
 import java.util.List;
 
-import exceptions.InvalidNumberException;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
