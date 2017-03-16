@@ -2,7 +2,6 @@ package instruction.BasicSyntax;
 
 import java.util.List;
 
-import instruction.Instruction;
 import instruction.InstructionData;
 import user_structures.VariableData;
 

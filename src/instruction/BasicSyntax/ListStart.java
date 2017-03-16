@@ -3,8 +3,6 @@ package instruction.BasicSyntax;
 
 import java.util.List;
 
-
-import instruction.Instruction;
 import instruction.InstructionData;
 
 /**
