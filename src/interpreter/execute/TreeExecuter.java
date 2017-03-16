@@ -1,8 +1,8 @@
 package interpreter.execute;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+
 import exceptions.InvalidCommandException;
 import exceptions.WrongArgumentNumberException;
 import instruction.Instruction;

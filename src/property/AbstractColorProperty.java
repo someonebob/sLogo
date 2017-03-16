@@ -19,7 +19,7 @@ import javafx.scene.text.Text;
 /**
  * 
  * @author jimmy
- *
+ * @author Matthew Barbano
  */
 public abstract class AbstractColorProperty extends Property<Color>
 {

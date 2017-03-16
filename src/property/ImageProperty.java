@@ -17,18 +17,12 @@ import util.ImageViewTuple;
 import view.ActorView;
 
 /**
+ * Note: Whenever you instantiate a new ImageProperty instance, you
+ * must call addDefaultImageToInitialImageFilename() after setting the default
+ * image.
  * 
  * @author jimmy
- *
- */
-
-/*
- * Note from Matthew: Whenever you instantiate a new ImageProperty instance, you
- * MUST call addDefaultImageToInitialImageFilename() after setting the default
- * image, else several Instructions will not work. Ideally, you could do all
- * this in the ImageProperty constructor, but I did not want to modify this
- * class more than necessary.
- * 
+ * @author Matthew Barbano
  */
 
 public class ImageProperty extends Property<ImageView>

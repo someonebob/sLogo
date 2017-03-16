@@ -54,7 +54,6 @@ import tool.SettingsMenuTool.LanguageButton;
 import tool.ToolButton;
 import user_structures.FunctionData;
 import user_structures.VariableData;
-import view.ActorView;
 import view.AnimatedSimulationView;
 import view.InputBox;
 import view.MultiLineInputBox;

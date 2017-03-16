@@ -6,9 +6,6 @@ package interpreter.factories;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 import exceptions.InvalidCommandException;
 
