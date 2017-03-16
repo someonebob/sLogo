@@ -9,9 +9,11 @@ import user_structures.FunctionData;
 import user_structures.VariableData;
 
 /**
- * Separate class to take care of the parsing required when you run a new
- * Instruction. This class parses a given String into Instructions and re-runs
- * the defined command.
+ * <p>
+ * <b>SLogo Documentation:</b>Separate class to take care of the parsing
+ * required when you run a new Instruction. This class parses a given String
+ * into Instructions and re-runs the defined command.
+ * </p>
  * 
  * @author maddiebriere
  *
@@ -19,10 +21,32 @@ import user_structures.VariableData;
 
 public class UserInstruction extends Miscellaneous {
 
+	/**
+	 * Standard 3-argument constructor for the Instruction hierarchy. Through a
+	 * series of super() constructor calls up the hierarchy, sets 3
+	 * corresponding variables in Instruction. No assumptions cause direct
+	 * impact in this constructor. Setting any arguments or entries in args to
+	 * null will cause errors elsewhere. Design decision: Making args a List
+	 * accommodates SLogo commands with different numbers of arguments.
+	 * 
+	 * @param instructionData
+	 *            for accessing frontend data
+	 * @param args
+	 *            for storing arguments to SLogo commands
+	 * @param myText
+	 *            a String representation of this Instruction
+	 */
 	public UserInstruction(InstructionData instructionData, List<String> args, String myText) {
 		super(instructionData, args, myText);
 	}
 
+	/**
+	 * Executes command as described in class Javadoc comment. Assumptions:
+	 * Correct number of SLogo arguments, numerically valued SLogo arguments.
+	 * Dependencies: Instruction, InstructionData, Miscellaneous.
+	 * 
+	 * @return the return value of the final command executed (or 0 if none do)
+	 */
 	@Override
 	public double execute() {
 		if (!getInstructionData().containsFunction(getMyText())) {
@@ -72,8 +96,8 @@ public class UserInstruction extends Miscellaneous {
 	private void duplicateCurrentVariables(List<VariableData> localVariables) {
 		for (VariableData v : localVariables) {
 			double copyVal = v.getValue();
-			v.addToStack(copyVal); 
-			v.setValue(copyVal); 
+			v.addToStack(copyVal);
+			v.setValue(copyVal);
 		}
 	}
 
