@@ -7,7 +7,10 @@ import instruction.InstructionData;
 import user_structures.VariableData;
 
 /**
- * Variable class for variables in workspace
+ * Variable class for variables in workspace. Holds both
+ * a name for the variable and a value to 
+ * assign to this new variable
+ * 
  * @author maddiebriere
  *
  */
