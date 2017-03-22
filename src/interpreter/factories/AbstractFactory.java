@@ -82,7 +82,7 @@ public abstract class AbstractFactory<A> {
 	 *            The name of the object being created
 	 * @return A String representing the class path
 	 */
-	public String generateClassPath(String name) {
+	private String generateClassPath(String name) {
 		return path + generateObjectType(name);
 	}
 
@@ -94,15 +94,15 @@ public abstract class AbstractFactory<A> {
 	 *            The "shorthand" name of the initial object
 	 * @return The extended name of the expected object
 	 */
-	public abstract String generateObjectType(String name);
+	protected abstract String generateObjectType(String name);
 
 	/**
 	 * The object A returned/ response of the class if the reflection does not
-	 * work.
+	 * work. A sample response could be to throw a reflection error.
 	 * 
 	 * @return Default object of type A
 	 */
-	public abstract A failResponse();
+	protected abstract A failResponse();
 
 	/**
 	 * The core of the reflection. This takes in specification for an object of
@@ -114,7 +114,7 @@ public abstract class AbstractFactory<A> {
 	 *            The arguments to pass to the constructor
 	 * @return An object of type A
 	 */
-	public A buildObject(String classPath, Object... args) {
+	private A buildObject(String classPath, Object... args) {
 		Class<?> clazz;
 		try {
 			clazz = Class.forName(classPath);
