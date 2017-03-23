@@ -157,7 +157,7 @@ public abstract class AbstractFactory<A> {
 	protected void throwError() {
 		throw new InvalidCommandException(RESOURCE_REFLECTION_NAME);
 	}
-	
+
 	/**
 	 * Generate a Class [] corresponding to the Object [] args
 	 * 
