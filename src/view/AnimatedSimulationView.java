@@ -152,7 +152,6 @@ public class AnimatedSimulationView implements SimulationView, Cloneable
 			}
 		} else if (o instanceof PenColorButton) {
 			if (arg instanceof Color) {
-				// TODO make ID's work
 				actors.get(0).getPen().setColor((Color) arg);
 			}
 		} else if (o instanceof CreateActorButton) {

@@ -24,7 +24,6 @@ public class HelpMenuTool extends MenuTool
 	@Override
 	public void makeItems()
 	{
-		// TODO Auto-generated method stub
 
 	}
 

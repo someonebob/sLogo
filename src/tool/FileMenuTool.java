@@ -54,7 +54,6 @@ public class FileMenuTool extends MenuTool
 		public NewButton()
 		{
 			super(new MenuItem("New"));
-			// TODO action
 			this.getItem().setOnAction(e -> {
 				this.setChanged();
 				this.notifyObservers();
@@ -75,7 +74,6 @@ public class FileMenuTool extends MenuTool
 		public OpenButton()
 		{
 			super(new MenuItem("Open"));
-			// TODO Auto-generated constructor stub
 			this.getItem().setOnAction(e -> {
 				File selectedFile = FileChooserUtil.setupFileChooser("LOGO", "LOGO Programs",
 						new File(System.getProperty("user.dir") + "/data"), "*.logo").showOpenDialog(getStage());

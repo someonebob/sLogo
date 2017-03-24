@@ -1,3 +1,6 @@
+// This entire file is part of my masterpiece.
+// Jesse Yue
+// This is the interface at the top of the hierarchy of my masterpiece which holds the basic methods needed for the Tools
 package tool;
 
 import java.util.Observer;

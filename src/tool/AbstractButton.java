@@ -1,3 +1,8 @@
+// This entire file is part of my masterpiece.
+// Jesse Yue
+// This is the abstract class that all the individual buttons are designed after.
+// It extends Observable to allow each button to be observed when a change occurs.
+// The AbstractButton adds itself to a list that is used to create a Tool.
 package tool;
 
 import java.util.ArrayList;
@@ -19,8 +24,7 @@ public abstract class AbstractButton extends Observable{
 	public AbstractButton(Control item){
 		myItem = item;
 		itemList = new ArrayList<>();
-		itemList.add(this);
-		
+		itemList.add(this);		
 	}
 	/**
 	 * Add an item to the group of buttons

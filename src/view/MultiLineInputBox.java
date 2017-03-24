@@ -29,7 +29,6 @@ public class MultiLineInputBox implements InputBox {
 
 	@Override
 	public Node display() {
-		// TODO Auto-generated method stub
 		return root;
 	}
 
