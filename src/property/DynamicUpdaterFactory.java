@@ -24,6 +24,9 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import util.FileChooserUtil;
 
+//This entire file is part of my masterpiece.
+//Jimmy Shackford
+
 /**
  * This factory class is used to create a dynamic updater for any arbitrary
  * property type. The factory design pattern allows you to check if a property
