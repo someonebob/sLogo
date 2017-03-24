@@ -3,9 +3,11 @@ package property;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import exceptions.InvalidIndexException;
+import instruction.DisplayCommands.IndexedProperty;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -25,7 +27,7 @@ import view.ActorView;
  * @author Matthew Barbano
  */
 
-public class ImageProperty extends Property<ImageView>
+public class ImageProperty extends Property<ImageView> implements IndexedProperty<ImageViewTuple> 
 {
 	private static final List<ImageViewTuple> INDEXED_IMAGES = new ArrayList<>();
 	private static final String TURTLE_IMAGES_LOCATION = "images";
@@ -56,7 +58,12 @@ public class ImageProperty extends Property<ImageView>
 	{
 		return INDEXED_IMAGES;
 	}
-
+	
+	//For functionality of Matthew's masterpiece
+	@Override
+	public Collection<ImageViewTuple> getIndexedCollection(){
+		return INDEXED_IMAGES;
+	}
 	/**
 	 * Fixes the .equals() problem. Consult me for details.
 	 * 

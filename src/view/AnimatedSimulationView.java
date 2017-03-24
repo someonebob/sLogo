@@ -8,6 +8,7 @@ import java.util.Observable;
 
 import javax.xml.transform.TransformerException;
 
+import instruction.DisplayCommands.IndexedProperty;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -34,7 +35,7 @@ import xml.XMLException;
  * @author Jesse
  *
  */
-public class AnimatedSimulationView implements SimulationView, Cloneable
+public class AnimatedSimulationView implements SimulationView, Cloneable, IndexedProperty<TurtleView>
 {
 	private SimulationView backupSimulation;
 	private StackPane root;
@@ -109,7 +110,14 @@ public class AnimatedSimulationView implements SimulationView, Cloneable
 	{
 		return actors;
 	}
-
+	
+	//For Matthew's masterpiece (just for functionality - if refactored AnimatedSimulationView, would remove getActors() and replace it in all classes for which it is a dependency
+	@Override
+	public Collection<TurtleView> getIndexedCollection(){
+		return actors;
+	}
+	
+	
 	@Override
 	public TurtleView getTurtle()
 	{

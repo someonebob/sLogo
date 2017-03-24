@@ -1,13 +1,10 @@
 package instruction.DisplayCommands;
-
 import java.util.List;
-
 import exceptions.InvalidIndexException;
 import exceptions.NonsensicalArgumentException;
 import instruction.ActorSpecificInstruction;
 import instruction.InstructionData;
 import property.PenThicknessProperty;
-
 /**
  * <p>
  * <b>SLogo Documentation:</b> Concrete Instruction subclass which sets active
@@ -27,10 +24,8 @@ import property.PenThicknessProperty;
  * @author Matthew Barbano
  *
  */
-
 public class SetPenSize extends DisplayCommand implements ActorSpecificInstruction {
 	private static final String RESOURCE_NEGATIVE_NAME = "NonpositivePenThicknessMessage";
-
 	/**
 	 * Standard 3-argument constructor for the Instruction hierarchy. Through a
 	 * series of super() constructor calls up the hierarchy, sets 3
@@ -49,7 +44,6 @@ public class SetPenSize extends DisplayCommand implements ActorSpecificInstructi
 	public SetPenSize(InstructionData instructionData, List<String> args, String myText) {
 		super(instructionData, args, myText);
 	}
-
 	/**
 	 * Executes command as described in class Javadoc comment. Assumptions:
 	 * Correct number of SLogo arguments, numerically valued SLogo arguments,

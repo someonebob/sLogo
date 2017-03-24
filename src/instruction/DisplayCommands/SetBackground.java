@@ -75,5 +75,4 @@ public class SetBackground extends DisplayCommand {
 		getInstructionData().getBackgroundColorProperty().setValue(newColor);
 		return getArgumentDouble(0);
 	}
-
 }

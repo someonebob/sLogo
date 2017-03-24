@@ -2,8 +2,10 @@ package property;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
+import instruction.DisplayCommands.IndexedProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -21,7 +23,7 @@ import javafx.scene.text.Text;
  * @author jimmy
  * @author Matthew Barbano
  */
-public abstract class AbstractColorProperty extends Property<Color>
+public abstract class AbstractColorProperty extends Property<Color> implements IndexedProperty<Color>
 {
 	private static final List<Color> INDEXED_COLORS = new ArrayList<>();
 	private HBox colorPalette;
@@ -41,6 +43,12 @@ public abstract class AbstractColorProperty extends Property<Color>
 		updateColorPalette(colorPalette);
 	}
 
+	//For functionality of Matthew's masterpiece
+	@Override
+	public Collection<Color> getIndexedCollection(){
+		return INDEXED_COLORS;
+	}
+	
 	public List<Color> getIndexedColors()
 	{
 		updateColorPalette(colorPalette);

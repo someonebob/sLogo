@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
+import instruction.DisplayCommands.IndexedProperty;
 import javafx.animation.Animation;
 import javafx.animation.SequentialTransition;
 import javafx.animation.Transition;
