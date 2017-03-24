@@ -1,11 +1,8 @@
 package property;
 
-import java.util.Arrays;
 import java.util.List;
 
 import javafx.scene.Node;
-import javafx.scene.control.Label;
-import javafx.scene.control.Slider;
 
 public class SpeedProperty extends Property<Double>
 {
@@ -16,7 +13,7 @@ public class SpeedProperty extends Property<Double>
 
 	public SpeedProperty(String name)
 	{
-		super(name);
+		super(name, Double.class);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -29,16 +26,8 @@ public class SpeedProperty extends Property<Double>
 	@Override
 	public List<Node> makeDynamicUpdaters()
 	{
-		Label label = new Label(String.format("Set %s", this.getName()));
-		Slider slider = new Slider(MIN_FPS, MAX_FPS, DEFAULT_FPS);
-		slider.setShowTickLabels(true);
-		slider.setMajorTickUnit(100);
-		slider.setOnMouseReleased(e -> {
-			this.setValue(slider.getValue());
-		});
-
-
-		return Arrays.asList(label, slider);
+		this.setValue(DEFAULT_FPS);
+		return new DynamicUpdaterFactory<Double>().makeDynamicUpdater(this, MIN_FPS, MAX_FPS);
 	}
 
 }

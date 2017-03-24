@@ -13,7 +13,7 @@ import javafx.scene.layout.VBox;
 
 /**
  * Because of the intertwinings between xml and graphically updatable settings,
- * these methods are intertwined into one class--Property
+ * these methods are combined into one class--Property
  * 
  * @author jimmy
  *
@@ -26,13 +26,15 @@ public abstract class Property<T>
 	private Label valueLabel;
 	private String name;
 	private StringProperty stringValue;
+	private Class<T> classType;
 
-	public Property(String name)
+	public Property(String name, Class<T> type)
 	{
 		value = new SimpleObjectProperty<>();
 		this.name = name;
 		valueLabel = new Label(name + " value: " + this.getValue());
 		stringValue = new SimpleStringProperty(name);
+		classType = type;
 	}
 
 	public ObjectProperty<T> getProperty()
@@ -79,7 +81,10 @@ public abstract class Property<T>
 
 	public abstract void setValue(String stringValue);
 
-	public abstract List<Node> makeDynamicUpdaters();
+	public List<Node> makeDynamicUpdaters()
+	{
+		return new DynamicUpdaterFactory<T>().makeDynamicUpdater(this);
+	}
 
 	public Node displayDynamicUpdater()
 	{
@@ -87,6 +92,11 @@ public abstract class Property<T>
 		vbox.getChildren().addAll(makeDynamicUpdaters());
 		vbox.setAlignment(Pos.CENTER);
 		return vbox;
+	}
+
+	public Class<T> getClassType()
+	{
+		return classType;
 	}
 
 }

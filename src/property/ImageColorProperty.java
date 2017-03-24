@@ -22,11 +22,6 @@ public class ImageColorProperty extends AbstractColorProperty
 	@Override
 	protected void updateColor(Color color)
 	{
-		// ColorAdjust monochrome = new ColorAdjust();
-		// monochrome.setSaturation(-1.0);
-
-		// actor.getImage().setClip(actor.getImage());
-		// actor.getImage().setClip(value);
 
 		Lighting lighting = new Lighting();
 		lighting.setDiffuseConstant(1.0);
@@ -35,13 +30,6 @@ public class ImageColorProperty extends AbstractColorProperty
 		lighting.setSurfaceScale(0.0);
 		lighting.setLight(new Light.Distant(45, 45, color));
 
-		// Blend changeColor = new Blend(BlendMode.MULTIPLY, monochrome,
-		// new
-		// ColorInput(0, 0,
-		// actor.getImage().getFitWidth(),
-		// actor.getImage().getFitHeight(),
-		// Color.ORANGE));
-		// actor.getImage().setEffect(lighting);
 		actingImage.getValue().setEffect(lighting);
 		actingImage.updateDisplay();
 	}

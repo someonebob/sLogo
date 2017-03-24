@@ -1,15 +1,10 @@
 package property;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.control.ColorPicker;
-import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -35,7 +30,7 @@ public abstract class AbstractColorProperty extends Property<Color>
 
 	public AbstractColorProperty(String name)
 	{
-		super(name);
+		super(name, Color.class);
 		colorPalette = new HBox();
 		colorPalette.setAlignment(Pos.CENTER);
 		updateColorPalette(colorPalette);
@@ -58,30 +53,6 @@ public abstract class AbstractColorProperty extends Property<Color>
 	public void setValue(String stringValue)
 	{
 		this.setValue(Color.web(stringValue));
-	}
-
-	@Override
-	public List<Node> makeDynamicUpdaters()
-	{
-		Label label = new Label(String.format("Update %s", this.getName()));
-		ColorPicker colorPicker = initializeColorPicker();
-
-		return Arrays.asList(label, colorPicker);
-	}
-
-	private ColorPicker initializeColorPicker()
-	{
-		ColorPicker colorPicker = new ColorPicker();
-		colorPicker.setValue(this.getValue());
-		colorPicker.setOnAction(new EventHandler<ActionEvent>()
-		{
-			@Override
-			public void handle(ActionEvent t)
-			{
-				setValue(colorPicker.getValue());
-			}
-		});
-		return colorPicker;
 	}
 
 	public void updateColorPalette()

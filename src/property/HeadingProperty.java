@@ -21,7 +21,7 @@ public class HeadingProperty extends Property<Double>
 
 	public HeadingProperty(String name, ActorView actor)
 	{
-		super(name);
+		super(name, Double.class);
 		this.actor = actor;
 		super.setValue(0.0);
 	}

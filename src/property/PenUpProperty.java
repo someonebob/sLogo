@@ -19,7 +19,7 @@ public class PenUpProperty extends Property<Boolean>
 
 	public PenUpProperty(String name, PenColorProperty color)
 	{
-		super(name);
+		super(name, Boolean.class);
 		this.color = color;
 	}
 

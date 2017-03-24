@@ -272,7 +272,6 @@ public class Controller implements Observer
 			for (Tab t : root.getTabs()) {
 				if (t.isSelected()) {
 					runCommand(inputBoxMap.get(t), command);
-					System.out.println(inputBoxMap.get(t));
 				}
 			}
 		} catch (FileNotFoundException e) {

@@ -2,24 +2,17 @@ package property;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import exceptions.InvalidIndexException;
-import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.stage.Stage;
-import util.FileChooserUtil;
 import util.ImageViewTuple;
 import view.ActorView;
 
 /**
- * Note: Whenever you instantiate a new ImageProperty instance, you
- * must call addDefaultImageToInitialImageFilename() after setting the default
- * image.
+ * Note: Whenever you instantiate a new ImageProperty instance, you must call
+ * addDefaultImageToInitialImageFilename() after setting the default image.
  * 
  * @author jimmy
  * @author Matthew Barbano
@@ -44,7 +37,7 @@ public class ImageProperty extends Property<ImageView>
 
 	public ImageProperty(String name)
 	{
-		super(name);
+		super(name, ImageView.class);
 		displayImage = new ImageView();
 		super.setValue(new ImageView());
 		displayImage.setFitHeight(ActorView.ACTOR_HEIGHT);
@@ -104,30 +97,6 @@ public class ImageProperty extends Property<ImageView>
 	public ImageView display()
 	{
 		return displayImage;
-	}
-
-	@Override
-	public List<Node> makeDynamicUpdaters()
-	{
-		Label label = new Label(String.format("Update %s", this.getName()));
-		Button input = initializeButton(String.format("Update %s", this.getName()));
-
-		return Arrays.asList(label, input);
-	}
-
-	private Button initializeButton(String defaultText)
-	{
-		Button input = new Button();
-		input.setText(defaultText);
-		Stage newWindow = new Stage();
-		input.setOnAction(e -> {
-			File selectedFile = FileChooserUtil.setupFileChooser("IMAGE", "New Image",
-					new File(System.getProperty("user.dir") + "/images"), "*.png", "*.gif").showOpenDialog(newWindow);
-			if (selectedFile != null) {
-				this.setValue(new Image(selectedFile.toURI().toString()));
-			}
-		});
-		return input;
 	}
 
 }

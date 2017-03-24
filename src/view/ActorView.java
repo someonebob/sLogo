@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
-import javafx.animation.Animation;
 import javafx.animation.SequentialTransition;
 import javafx.animation.Transition;
 import javafx.geometry.Point2D;
@@ -160,9 +159,6 @@ public abstract class ActorView extends Observable implements View, Cloneable, O
 	public void addTransition(Transition transition)
 	{
 
-		for (Animation trans : actorMove.getChildren()) {
-			// System.out.print(trans);
-		}
 		transition.setOnFinished(e -> {
 			actorMove.getChildren().remove(transition);
 		});

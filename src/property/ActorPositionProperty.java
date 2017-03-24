@@ -1,18 +1,9 @@
 package property;
 
-import java.util.Arrays;
-import java.util.List;
-
 import javafx.animation.TranslateTransition;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.geometry.Point2D;
-import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import view.ActorView;
 
@@ -28,7 +19,7 @@ public class ActorPositionProperty extends Property<Point2D>
 
 	public ActorPositionProperty(String name, ActorView actor)
 	{
-		super(name);
+		super(name, Point2D.class);
 		this.actor = actor;
 		position = new SimpleStringProperty();
 		super.setValue(new Point2D(0, 0));
@@ -57,39 +48,42 @@ public class ActorPositionProperty extends Property<Point2D>
 		}
 	}
 
-	@Override
-	public List<Node> makeDynamicUpdaters()
+	// @Override
+	// public List<Node> makeDynamicUpdaters()
+	// {
+	// // //Label label = new Label(String.format("Move %s", this.getName()));
+	// VBox xBox = new VBox();
+	// VBox yBox = new VBox();
+	// HBox xyBox = new HBox();
+	// xBox.getChildren().add(new Label("x"));
+	// yBox.getChildren().add(new Label("y"));
+	// TextField x = new TextField();
+	// TextField y = new TextField();
+	// xBox.getChildren().add(x);
+	// yBox.getChildren().add(y);
+	// xyBox.setPrefWidth(100);
+	// xyBox.getChildren().addAll(xBox, yBox);
+	// // TODO: REPLACE THESE WITH RESOURCE FILE
+	// // ComboBox<String> directionPicker = new
+	// // ComboBox<>(FXCollections.observableArrayList("fd", "bk", "lt",
+	// // "rt"));
+	// // TextField distance = new TextField();
+	// // distance.setPromptText("Amount to move");
+	// // Button moveButton = new Button("Move");
+	// Button moveButton = new Button("Move");
+	//
+	// moveButton.setOnAction(e -> {
+	// actor.move(new Point2D(Integer.valueOf(x.getText()),
+	// Integer.valueOf(y.getText())));
+	// actor.step();
+	// });
+	//
+	// return Arrays.asList(xyBox, moveButton);
+	// // return Arrays.asList(label, directionPicker, distance, moveButton);
+	// }
+
+	public StringProperty getLocationAsString()
 	{
-		// //Label label = new Label(String.format("Move %s", this.getName()));
-		VBox xBox = new VBox();
-		VBox yBox = new VBox();
-		HBox xyBox = new HBox();
-		xBox.getChildren().add(new Label("x"));
-		yBox.getChildren().add(new Label("y"));
-		TextField x = new TextField();
-		TextField y = new TextField();
-		xBox.getChildren().add(x);
-		yBox.getChildren().add(y);
-		xyBox.setPrefWidth(100);
-		xyBox.getChildren().addAll(xBox, yBox);
-		// TODO: REPLACE THESE WITH RESOURCE FILE
-		// ComboBox<String> directionPicker = new
-		// ComboBox<>(FXCollections.observableArrayList("fd", "bk", "lt",
-		// "rt"));
-		// TextField distance = new TextField();
-		// distance.setPromptText("Amount to move");
-		// Button moveButton = new Button("Move");
-		Button moveButton = new Button("Move");
-
-		moveButton.setOnAction(e -> {
-			actor.move(new Point2D(Integer.valueOf(x.getText()), Integer.valueOf(y.getText())));
-			actor.step();
-		});
-
-		return Arrays.asList(xyBox, moveButton);
-		// return Arrays.asList(label, directionPicker, distance, moveButton);
-	}
-	public StringProperty getLocationAsString(){
 		return position;
 	}
 
