@@ -47,6 +47,7 @@ public abstract class ActorView extends Observable implements View, Cloneable, O
 	private ID id;
 	protected SpeedProperty speed;
 	private boolean told;
+	private String stringImage;
 
 	public ActorView(Defaults defaults, int id)
 	{
@@ -151,12 +152,17 @@ public abstract class ActorView extends Observable implements View, Cloneable, O
 	}
 
 	private void loadImage(String stringImage)
-	{
+	{	
+		this.stringImage = stringImage;
 		Image image = new Image(getClass().getClassLoader().getResourceAsStream(stringImage));
 		this.setImage(image);
 		this.image.mergeDuplicateDefaultImages(stringImage);
 	}
-
+	
+	public ImageView getDuplicateImageView(){
+		return new ImageView(new Image(getClass().getClassLoader().getResourceAsStream(stringImage)));
+	}
+	
 	public void addTransition(Transition transition)
 	{
 

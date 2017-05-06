@@ -7,6 +7,7 @@ import java.util.List;
 import exceptions.CastingException;
 import interpreter.util.WorkspaceUpdaterUtil;
 import javafx.geometry.Bounds;
+import javafx.scene.image.ImageView;
 import property.BackgroundColorProperty;
 import user_structures.FunctionData;
 import user_structures.VariableData;
@@ -320,12 +321,15 @@ public class InstructionData {
 		return ((TurtleView) getActiveActor()).getPen();
 	}
 	
-	public List<TurtleView> getStamps(){
-		return simulationView.getStamps();
+	public void drawStamp(){
+		simulationView.drawStamp(getActiveActor());
 	}
 	
-	public void drawStamp(TurtleView stamp){
-		simulationView.drawStamp(stamp);
+	public List<ImageView> getStamps(){
+		 return simulationView.getStamps();
 	}
-
+	
+	public void clearStamps(){
+		simulationView.clearStamps();
+	}
 }

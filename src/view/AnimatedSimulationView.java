@@ -15,6 +15,7 @@ import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import main.Defaults;
@@ -40,7 +41,7 @@ public class AnimatedSimulationView implements SimulationView, Cloneable
 	private StackPane root;
 	private BackgroundColorProperty backgroundColor;
 	private ObservableList<TurtleView> actors;
-	private ObservableList<TurtleView> stamps;
+	private List<ImageView> stamps;
 	private int id = 0;
 	private Defaults defaults;
 	private Tooltip tip;
@@ -57,6 +58,7 @@ public class AnimatedSimulationView implements SimulationView, Cloneable
 			newActor();
 		}
 		backgroundColor.setValue((Color) defaults.background());
+		stamps = new ArrayList<ImageView>();
 	}
 
 	@Override
@@ -140,12 +142,29 @@ public class AnimatedSimulationView implements SimulationView, Cloneable
 		actors.add(actor);
 	}
 	
-	public List<TurtleView> getStamps(){
-		return stamps;
+	@Override
+	public void drawStamp(ActorView activeActor){
+		ImageView imageViewToAdd = activeActor.getDuplicateImageView();
+		imageViewToAdd.setLayoutX(activeActor.getImageView().getLayoutX());
+		imageViewToAdd.setTranslateX(activeActor.getImageView().getTranslateX());
+		imageViewToAdd.setLayoutY(activeActor.getImageView().getLayoutY());
+		imageViewToAdd.setTranslateY(activeActor.getImageView().getTranslateY());
+		imageViewToAdd.setRotate(activeActor.getHeading());
+		root.getChildren().add(imageViewToAdd);
+		stamps.add(imageViewToAdd);
 	}
 	
-	public void drawStamp(TurtleView stamp){
-		root.getChildren().add(stamp.display());
+	@Override
+	public void clearStamps(){
+		for(ImageView stamp : stamps){
+			root.getChildren().remove(stamp);
+		}
+		stamps.removeAll(stamps);
+	}
+	
+	@Override
+	public List<ImageView> getStamps(){
+		return stamps;
 	}
 	
 	@Override
@@ -238,4 +257,5 @@ public class AnimatedSimulationView implements SimulationView, Cloneable
 		// return clone;
 		return null;
 	}
+
 }

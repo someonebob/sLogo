@@ -9,19 +9,12 @@ public class TurtleView extends ActorView implements Cloneable
 
 	private PenView pen;
 	private Defaults defaults;
-	private boolean isStamp;
 
 	public TurtleView(Defaults defaults, int id)
 	{
 		super(defaults, id);
 		pen = new PenView(defaults.pen(), speed);
 		this.defaults = defaults;
-		isStamp = false;
-	}
-	
-	public TurtleView(Defaults defaults, int id, boolean isStamp){
-		this(defaults, id);
-		this.isStamp = isStamp;
 	}
 	
 	@Override
@@ -62,16 +55,12 @@ public class TurtleView extends ActorView implements Cloneable
 
 	@Override
 	public TurtleView clone()
-	{
+	{	
 		TurtleView clone = new TurtleView(defaults, this.getID().getID());
 		clone.getImageProperty().setValue(this.getImageProperty().display());
 		clone.setHeading(200);
 		// clone.getImageColorProperty().setValue(this.getImageColorProperty().getValue());
 		clone.getActorPositionProperty().setValue(this.getActorPositionProperty().getValue());
 		return clone;
-	}
-
-	public boolean isStamp() {
-		return isStamp;
 	}
 }

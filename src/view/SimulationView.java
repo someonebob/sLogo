@@ -6,6 +6,7 @@ import java.util.Observer;
 
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
+import javafx.scene.image.ImageView;
 import property.BackgroundColorProperty;
 import property.Property;
 
@@ -94,14 +95,19 @@ public interface SimulationView extends View, Observer
 	public void newActor();
 	
 	/**
-	 * @return list of stamps for the STAMP and CLEARSTAMPS commands
-	 */
-	public List<TurtleView> getStamps();
-	
-	/**
-	 * Draws stamp on screen. 
+	 * Draws stamp on screen with same positioning and heading as "stamp"
 	 * @param stamp
 	 */
-	public abstract void drawStamp(TurtleView stamp);
+	public abstract void drawStamp(ActorView stamp);
 	
+	/**
+	 * Returns a list of image views representing the current stamps on screen.
+	 */
+	public abstract List<ImageView> getStamps();
+	
+	/**
+	 * Removes all stamps from the "stamps" list and removed them
+	 * from the root StackPane so they disappear from screen.
+	 */
+	public abstract void clearStamps();
 }

@@ -136,7 +136,7 @@ public class Controller implements Observer
 		functionMap = new HashMap<>();
 
 	}
-
+	
 	private void newTab()
 	{
 		Tab tab = new Tab();
