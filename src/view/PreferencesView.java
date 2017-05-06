@@ -7,6 +7,7 @@ import java.util.Map;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
@@ -27,7 +28,8 @@ public class PreferencesView implements View
 	private VBox footer;
 	
 
-	public PreferencesView(TurtleView initialActor, SimulationView simulation)
+	public PreferencesView(TurtleView initialActor, 
+			SimulationView simulation)
 	{
 		root = new BorderPane();
 		actorImage = new ImageView();
@@ -56,8 +58,8 @@ public class PreferencesView implements View
 		header = new VBox();
 		header.setAlignment(Pos.CENTER);
 		header.setPrefWidth(200);
-		// header.getChildren().add(makeUndoButton());
-		header.getChildren().add(new Label("Change Property:"));
+		//header.getChildren().add(makeUndoButton());
+		header.getChildren().add(new Label("Property:"));
 		initializePreferenceViews();
 		ComboBox<String> preferenceChooser = makePreferencesChooser();
 		preferenceChooser.setValue(preferenceChooser.getItems().get(0));
@@ -122,9 +124,11 @@ public class PreferencesView implements View
 		PenPreferencesView penPreferences = new PenPreferencesView(actor);
 		preferenceViews.put("Pen", penPreferences.display());
 		TurtlePreferencesView turtlePreferences = new TurtlePreferencesView(actor);
-		preferenceViews.put("Turtle", turtlePreferences.display());
+		preferenceViews.put("Single Turtle", turtlePreferences.display());
 		DisplayPreferencesView displayPreferences = new DisplayPreferencesView(simulation);
 		preferenceViews.put("Display", displayPreferences.display());
+		AllTurtlesPreferencesView allTurtlePreferences = new AllTurtlesPreferencesView(simulation.getActors());
+		preferenceViews.put("All Turtles", allTurtlePreferences.display());
 	}
 
 	@Override

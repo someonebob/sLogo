@@ -13,6 +13,7 @@ import user_structures.VariableData;
 import view.ActorView;
 import view.PenView;
 import view.SimulationView;
+import view.StampView;
 import view.TurtleView;
 
 /**
@@ -178,6 +179,13 @@ public class InstructionData
 			throw new CastingException(RESOURCE_CAST_EXCEPTION);
 		}
 		return ((TurtleView) getActiveActor()).getPen();
+	}
+	
+	public StampView getActiveStampView(){
+		if(!(getActiveActor() instanceof TurtleView)){
+			throw new CastingException(RESOURCE_CAST_EXCEPTION);
+		}
+		return ((TurtleView) getActiveActor()).getStamp();
 	}
 
 }

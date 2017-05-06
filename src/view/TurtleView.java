@@ -6,7 +6,7 @@ import main.Defaults;
 
 public class TurtleView extends ActorView implements Cloneable
 {
-
+	private StampView stamp;
 	private PenView pen;
 	private Defaults defaults;
 
@@ -14,6 +14,7 @@ public class TurtleView extends ActorView implements Cloneable
 	{
 		super(defaults, id);
 		pen = new PenView(defaults.pen(), speed);
+		stamp = new StampView();
 		this.defaults = defaults;
 	}
 
@@ -35,6 +36,10 @@ public class TurtleView extends ActorView implements Cloneable
 	public PenView getPen()
 	{
 		return pen;
+	}
+	
+	public StampView getStamp(){
+		return stamp;
 	}
 
 	@Override

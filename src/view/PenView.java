@@ -50,8 +50,7 @@ public class PenView implements View, Observer
 		this.speed = speed;
 	}
 
-	public void step()
-	{
+	public void step(){
 		actorMove.play();
 	}
 

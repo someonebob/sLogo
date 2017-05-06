@@ -115,10 +115,10 @@ public class ImageProperty extends Property<ImageView>
 	@Override
 	public List<Node> makeDynamicUpdaters()
 	{
-		Label label = new Label(String.format("Update %s", this.getName()));
-		Button input = initializeButton(String.format("Update %s", this.getName()));
+		String s  = String.format("Update %s", this.getName());
+		Button input = initializeButton(s);
 
-		return Arrays.asList(label, input);
+		return Arrays.asList(input);
 	}
 
 	private Button initializeButton(String defaultText)

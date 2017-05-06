@@ -149,7 +149,8 @@ public class Controller implements Observer
 		InputBox inputBox = new MultiLineInputBox();
 		inputBox.setFocus();
 		SavedStructuresView workspace = new SavedStructuresView();
-		PreferencesView preferences = new PreferencesView(simulation.getTurtle(), simulation);
+		PreferencesView preferences = new PreferencesView(simulation.getTurtle(), 
+				simulation);
 
 		SelectionBar selectionBar = new ComboBar();
 		MenuTool file = new FileMenuTool(stage);

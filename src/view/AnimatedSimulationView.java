@@ -50,6 +50,7 @@ public class AnimatedSimulationView implements SimulationView, Cloneable
 		backgroundColor = new BackgroundColorProperty("Background Color", root);
 		this.defaults = defaults;
 		List<TurtleView> list = new ArrayList<>();
+		List<StampView> sList = new ArrayList<StampView>();
 		actors = FXCollections.observableList(list);
 
 		for (int i = 0; i < defaults.numTurtles(); i++) {
@@ -132,8 +133,13 @@ public class AnimatedSimulationView implements SimulationView, Cloneable
 		actor.getPen().getCanvas().toBack();
 		actor.getPen().getCanvas().widthProperty().bind(root.widthProperty());
 		actor.getPen().getCanvas().heightProperty().bind(root.heightProperty());
+		
+		actor.getStamp().getCanvas().toBack();
+		actor.getStamp().getCanvas().widthProperty().bind(root.widthProperty());
+		actor.getStamp().getCanvas().heightProperty().bind(root.heightProperty());
 
 		root.getChildren().add(actor.getPen().getCanvas());
+		root.getChildren().add(actor.getStamp().getCanvas());
 		root.getChildren().add(actor.display());
 
 		actors.add(actor);

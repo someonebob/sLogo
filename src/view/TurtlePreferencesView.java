@@ -14,7 +14,8 @@ public class TurtlePreferencesView implements View
 		this.turtle = turtle;
 		display = new VBox();
 		display.setAlignment(Pos.CENTER);
-		turtle.getProperties().forEach(property -> display.getChildren().add(property.displayDynamicUpdater()));
+		turtle.getProperties().forEach(property ->
+			display.getChildren().add(property.displayDynamicUpdater()));
 	}
 	
 	@Override
