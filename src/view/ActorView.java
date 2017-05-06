@@ -200,5 +200,4 @@ public abstract class ActorView extends Observable implements View, Cloneable, O
 	}
 
 	public abstract PenView getPen();
-
 }

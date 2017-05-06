@@ -40,6 +40,7 @@ public class AnimatedSimulationView implements SimulationView, Cloneable
 	private StackPane root;
 	private BackgroundColorProperty backgroundColor;
 	private ObservableList<TurtleView> actors;
+	private ObservableList<TurtleView> stamps;
 	private int id = 0;
 	private Defaults defaults;
 	private Tooltip tip;
@@ -138,7 +139,15 @@ public class AnimatedSimulationView implements SimulationView, Cloneable
 
 		actors.add(actor);
 	}
-
+	
+	public List<TurtleView> getStamps(){
+		return stamps;
+	}
+	
+	public void drawStamp(TurtleView stamp){
+		root.getChildren().add(stamp.display());
+	}
+	
 	@Override
 	public void update(Observable o, Object arg)
 	{

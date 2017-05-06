@@ -9,14 +9,21 @@ public class TurtleView extends ActorView implements Cloneable
 
 	private PenView pen;
 	private Defaults defaults;
+	private boolean isStamp;
 
 	public TurtleView(Defaults defaults, int id)
 	{
 		super(defaults, id);
 		pen = new PenView(defaults.pen(), speed);
 		this.defaults = defaults;
+		isStamp = false;
 	}
-
+	
+	public TurtleView(Defaults defaults, int id, boolean isStamp){
+		this(defaults, id);
+		this.isStamp = isStamp;
+	}
+	
 	@Override
 	public void step()
 	{
@@ -64,4 +71,7 @@ public class TurtleView extends ActorView implements Cloneable
 		return clone;
 	}
 
+	public boolean isStamp() {
+		return isStamp;
+	}
 }

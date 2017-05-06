@@ -93,4 +93,15 @@ public interface SimulationView extends View, Observer
 	 */
 	public void newActor();
 	
+	/**
+	 * @return list of stamps for the STAMP and CLEARSTAMPS commands
+	 */
+	public List<TurtleView> getStamps();
+	
+	/**
+	 * Draws stamp on screen. 
+	 * @param stamp
+	 */
+	public abstract void drawStamp(TurtleView stamp);
+	
 }

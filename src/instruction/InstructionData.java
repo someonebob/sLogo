@@ -319,5 +319,13 @@ public class InstructionData {
 		}
 		return ((TurtleView) getActiveActor()).getPen();
 	}
+	
+	public List<TurtleView> getStamps(){
+		return simulationView.getStamps();
+	}
+	
+	public void drawStamp(TurtleView stamp){
+		simulationView.drawStamp(stamp);
+	}
 
 }

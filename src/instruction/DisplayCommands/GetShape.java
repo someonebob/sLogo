@@ -32,7 +32,7 @@ import util.ImageViewTuple;
  *
  */
 public class GetShape extends DisplayCommand implements ActorSpecificInstruction {
-	private static final String RESOURCE_NONINDEXED_NAME = "NonindexedImageMessage";
+	
 
 	/**
 	 * Standard 3-argument constructor for the Instruction hierarchy. Through a
@@ -66,14 +66,7 @@ public class GetShape extends DisplayCommand implements ActorSpecificInstruction
 	 */
 	@Override
 	public double execute() {
-		ImageProperty imageProperty = getInstructionData().getActiveActor().getImageProperty();
-		List<ImageViewTuple> indexedImages = imageProperty.getIndexedImages();
-		ImageView currentImage = imageProperty.getValue();
-		int index = indexedImages.indexOf(new ImageViewTuple("filler", currentImage));
-		if (index == -1) {
-			throw new InvalidIndexException(RESOURCE_NONINDEXED_NAME);
-		}
-		return index;
+		return getActiveImageIndex();
 	}
 
 }

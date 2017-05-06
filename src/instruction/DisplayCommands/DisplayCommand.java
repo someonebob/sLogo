@@ -2,8 +2,12 @@ package instruction.DisplayCommands;
 
 import java.util.List;
 
+import exceptions.InvalidIndexException;
 import instruction.Instruction;
 import instruction.InstructionData;
+import javafx.scene.image.ImageView;
+import property.ImageProperty;
+import util.ImageViewTuple;
 
 /**
  * Superclass of all display command Instructions. All of these Instructions
@@ -17,7 +21,8 @@ import instruction.InstructionData;
  *
  */
 public abstract class DisplayCommand extends Instruction {
-
+	private static final String RESOURCE_NONINDEXED_NAME = "NonindexedImageMessage";
+	
 	/**
 	 * Standard 3-argument constructor for the Instruction hierarchy. Through a
 	 * series of super() constructor calls up the hierarchy, sets 3
@@ -35,5 +40,16 @@ public abstract class DisplayCommand extends Instruction {
 	 */
 	public DisplayCommand(InstructionData instructionData, List<String> args, String myText) {
 		super(instructionData, args, myText);
+	}
+	
+	protected int getActiveImageIndex(){
+		ImageProperty imageProperty = getInstructionData().getActiveActor().getImageProperty();
+		List<ImageViewTuple> indexedImages = imageProperty.getIndexedImages();
+		ImageView currentImage = imageProperty.getValue();
+		int index = indexedImages.indexOf(new ImageViewTuple("filler", currentImage));
+		if (index == -1) {
+			throw new InvalidIndexException(RESOURCE_NONINDEXED_NAME);
+		}
+		return index;
 	}
 }
