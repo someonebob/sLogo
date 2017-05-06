@@ -4,6 +4,10 @@ By: Matthew Barbano (meb100)
 
 Doing the backend extension (stamp and clearstamps)
 
+## Sources
+http://stackoverflow.com/questions/21118394/explicitly-positioning-nodes-in-javafx
+Java FX 8 Documentation https://docs.oracle.com/javase/8/javafx/api/toc.htm
+
 ## Estimation: before looking at the old code:
 ### how long do you think it will take you to complete this new feature?
 1 hour
