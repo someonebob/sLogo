@@ -3,6 +3,7 @@ package instruction.DisplayCommands;
 import java.util.List;
 
 import instruction.InstructionData;
+import view.TurtleView;
 
 public class ClearStamps extends DisplayCommand {
 
@@ -12,8 +13,10 @@ public class ClearStamps extends DisplayCommand {
 
 	@Override
 	protected double execute() {
-		// TODO Auto-generated method stub
-		return 0;
+		List<TurtleView> stamps = getInstructionData().getStamps();
+		int returnValue = stamps.isEmpty() ? 0 : 1;
+		stamps.removeAll(stamps);
+		return returnValue;
 	}
 
 }
