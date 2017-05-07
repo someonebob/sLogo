@@ -31,7 +31,8 @@ import util.ImageViewTuple;
  * @author Matthew Barbano
  *
  */
-public class GetShape extends DisplayCommand implements ActorSpecificInstruction {
+public class GetShape extends DisplayCommand implements ActorSpecificInstruction
+{
 	private static final String RESOURCE_NONINDEXED_NAME = "NonindexedImageMessage";
 
 	/**
@@ -49,7 +50,8 @@ public class GetShape extends DisplayCommand implements ActorSpecificInstruction
 	 * @param myText
 	 *            a String representation of this Instruction
 	 */
-	public GetShape(InstructionData instructionData, List<String> args, String myText) {
+	public GetShape(InstructionData instructionData, List<String> args, String myText)
+	{
 		super(instructionData, args, myText);
 	}
 
@@ -65,7 +67,9 @@ public class GetShape extends DisplayCommand implements ActorSpecificInstruction
 	 * @return index of active actor's pen color
 	 */
 	@Override
-	public double execute() {
+	public double execute()
+	{
+
 		ImageProperty imageProperty = getInstructionData().getActiveActor().getImageProperty();
 		List<ImageViewTuple> indexedImages = imageProperty.getIndexedImages();
 		ImageView currentImage = imageProperty.getValue();

@@ -46,7 +46,8 @@ import view.TurtleView;
  *
  */
 
-public class InstructionData {
+public class InstructionData
+{
 	private static final String RESOURCE_CAST_EXCEPTION = "CastingMessage";
 	SimulationView simulationView;
 	List<VariableData> variables;
@@ -61,7 +62,8 @@ public class InstructionData {
 	 * purposes; call the other constructor otherwise. Dependencies are
 	 * SimulatioView, VariableData, FunctionData, List, and String.
 	 */
-	public InstructionData() {
+	public InstructionData()
+	{
 		this.simulationView = null;
 		this.variables = new ArrayList<VariableData>();
 		this.functions = new ArrayList<FunctionData>();
@@ -86,7 +88,8 @@ public class InstructionData {
 	 *            the current language of the simulation
 	 */
 	public InstructionData(SimulationView simulation, List<VariableData> variables, List<FunctionData> functions,
-			String language) {
+			String language)
+	{
 		this.simulationView = simulation;
 		this.variables = variables;
 		this.functions = functions;
@@ -99,7 +102,8 @@ public class InstructionData {
 	 * 
 	 * @return activeActorIndex
 	 */
-	public int getActiveActorIndex() {
+	public int getActiveActorIndex()
+	{
 		return activeActorIndex;
 	}
 
@@ -109,7 +113,8 @@ public class InstructionData {
 	 * 
 	 * @return the List of TurtleView actors
 	 */
-	public List<TurtleView> getActorList() {
+	public List<TurtleView> getActorList()
+	{
 		return simulationView.getActors();
 	}
 
@@ -120,7 +125,8 @@ public class InstructionData {
 	 * 
 	 * @return the background color
 	 */
-	public BackgroundColorProperty getBackgroundColorProperty() {
+	public BackgroundColorProperty getBackgroundColorProperty()
+	{
 		return simulationView.getBackgroundColorProperty();
 	}
 
@@ -130,8 +136,19 @@ public class InstructionData {
 	 * adding a new actor. Assumes the new actor is to be added at the end of
 	 * the current ObservableList called "actors", dependency is simulationView.
 	 */
-	public void newActor() {
+	public void newActor()
+	{
 		simulationView.newActor();
+	}
+
+	public void newStamp()
+	{
+		simulationView.newStamp(this.getActiveActor());
+	}
+
+	public double clearStamps()
+	{
+		return simulationView.clearStamps();
 	}
 
 	/**
@@ -142,7 +159,8 @@ public class InstructionData {
 	 * @param toldTurtles
 	 *            the subset of turtles to set to "told"
 	 */
-	public void setToldAndUntellRest(Collection<Integer> toldTurtles) {
+	public void setToldAndUntellRest(Collection<Integer> toldTurtles)
+	{
 		simulationView.setTold(toldTurtles);
 	}
 
@@ -157,7 +175,8 @@ public class InstructionData {
 	 *            the new list of variables
 	 * @return the copy of itself with the new list of variables
 	 */
-	public InstructionData replicateSelfWithNewVariables(List<VariableData> newVariableList) {
+	public InstructionData replicateSelfWithNewVariables(List<VariableData> newVariableList)
+	{
 		return new InstructionData(simulationView, newVariableList, functions, language);
 	}
 
@@ -168,7 +187,8 @@ public class InstructionData {
 	 * 
 	 * @return
 	 */
-	public ActorView getActiveActor() {
+	public ActorView getActiveActor()
+	{
 		return simulationView.getActors().get(activeActorIndex);
 	}
 
@@ -178,7 +198,8 @@ public class InstructionData {
 	 * @param newIndex
 	 *            the new active actor index
 	 */
-	public void setActiveActorIndex(int newIndex) {
+	public void setActiveActorIndex(int newIndex)
+	{
 		activeActorIndex = newIndex;
 	}
 
@@ -189,7 +210,8 @@ public class InstructionData {
 	 * 
 	 * @return the Bounds representing the borders
 	 */
-	public Bounds getSimulationBounds() {
+	public Bounds getSimulationBounds()
+	{
 		return simulationView.getBounds();
 	}
 
@@ -199,7 +221,8 @@ public class InstructionData {
 	 * 
 	 * @return variables
 	 */
-	public List<VariableData> getVariables() {
+	public List<VariableData> getVariables()
+	{
 		return variables;
 	}
 
@@ -211,7 +234,8 @@ public class InstructionData {
 	 * 
 	 * @return the List of variables initially on the stack
 	 */
-	public List<VariableData> getStackVariables() {
+	public List<VariableData> getStackVariables()
+	{
 		for (int i = 0; i < variables.size(); i++) {
 			VariableData v = variables.get(i);
 			if (v.getStackSize() != 0)
@@ -231,7 +255,8 @@ public class InstructionData {
 	 *            The potential variable name
 	 * @return Variable matching to the current name, otherwise null
 	 */
-	public VariableData getVariable(String variableName) {
+	public VariableData getVariable(String variableName)
+	{
 		for (VariableData v : variables) {
 			if (v.getName().equals(variableName)) {
 				return v;
@@ -249,7 +274,8 @@ public class InstructionData {
 	 *            the queried variable
 	 * @return true if variable exists
 	 */
-	public boolean containsVariable(String variableName) {
+	public boolean containsVariable(String variableName)
+	{
 		return !(getVariable(variableName) == null);
 	}
 
@@ -261,7 +287,8 @@ public class InstructionData {
 	 *            The potential function name
 	 * @return Function matching to the current name, otherwise null
 	 */
-	public FunctionData getFunction(String functionName) {
+	public FunctionData getFunction(String functionName)
+	{
 		for (FunctionData f : functions) {
 			if (f.getName().equals(functionName)) {
 				return f;
@@ -279,7 +306,8 @@ public class InstructionData {
 	 *            the queried function
 	 * @return true if the function exists
 	 */
-	public boolean containsFunction(String functionName) {
+	public boolean containsFunction(String functionName)
+	{
 		return !(getFunction(functionName) == null);
 	}
 
@@ -290,7 +318,8 @@ public class InstructionData {
 	 * @param f
 	 *            the function to be added
 	 */
-	public void addFunction(FunctionData f) {
+	public void addFunction(FunctionData f)
+	{
 		WorkspaceUpdaterUtil.add(functions, f);
 	}
 
@@ -300,7 +329,8 @@ public class InstructionData {
 	 * 
 	 * @return language
 	 */
-	public String getLanguage() {
+	public String getLanguage()
+	{
 		return language;
 	}
 
@@ -313,7 +343,8 @@ public class InstructionData {
 	 * @throws CastingException
 	 *             if active actor not a TurtleView
 	 */
-	public PenView getActivePenView() {
+	public PenView getActivePenView()
+	{
 		if (!(getActiveActor() instanceof TurtleView)) {
 			throw new CastingException(RESOURCE_CAST_EXCEPTION);
 		}

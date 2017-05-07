@@ -40,6 +40,7 @@ public class AnimatedSimulationView implements SimulationView, Cloneable
 	private StackPane root;
 	private BackgroundColorProperty backgroundColor;
 	private ObservableList<TurtleView> actors;
+	private ObservableList<StampView> stamps;
 	private int id = 0;
 	private Defaults defaults;
 	private Tooltip tip;
@@ -51,6 +52,8 @@ public class AnimatedSimulationView implements SimulationView, Cloneable
 		this.defaults = defaults;
 		List<TurtleView> list = new ArrayList<>();
 		actors = FXCollections.observableList(list);
+		List<StampView> stampList = new ArrayList<>();
+		stamps = FXCollections.observableList(stampList);
 
 		for (int i = 0; i < defaults.numTurtles(); i++) {
 			newActor();
@@ -120,14 +123,13 @@ public class AnimatedSimulationView implements SimulationView, Cloneable
 	public void newActor()
 	{
 		TurtleView actor = new TurtleView(defaults, id);
-		
+
 		id++;
 		tip = new Tooltip();
 		tip.textProperty().bind(Bindings.concat(actor.getActorPositionProperty().getStringValue(), "\n",
 				actor.getHeadingProperty().getStringValue(), "\n", actor.getPen().getPenUpProperty().getStringValue()));
 
 		Tooltip.install(actor.display(), tip);
-
 
 		actor.getPen().getCanvas().toBack();
 		actor.getPen().getCanvas().widthProperty().bind(root.widthProperty());
@@ -137,6 +139,30 @@ public class AnimatedSimulationView implements SimulationView, Cloneable
 		root.getChildren().add(actor.display());
 
 		actors.add(actor);
+	}
+
+	@Override
+	public void newStamp(ActorView actor)
+	{
+		StampView stamp = new StampView(actor);
+
+		root.getChildren().add(stamp.display());
+
+		stamps.add(stamp);
+	}
+
+	@Override
+	public double clearStamps()
+	{
+		if (stamps.size() == 0) {
+			return 0;
+		}
+		stamps.forEach(stamp -> {
+			root.getChildren().remove(stamp.display());
+		});
+		stamps.clear();
+		return 1;
+
 	}
 
 	@Override

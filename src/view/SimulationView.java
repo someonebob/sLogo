@@ -92,5 +92,20 @@ public interface SimulationView extends View, Observer
 	 * Creates a new actor in the simulation
 	 */
 	public void newActor();
-	
+
+	/**
+	 * Create a stamp for the given ActorView
+	 * 
+	 * @param actor
+	 *            ActorView to base the stamp off of
+	 */
+	public void newStamp(ActorView actor);
+
+	/**
+	 * Clear all of the stamps from the screen
+	 * 
+	 * @return 0 if no stamps were cleared. 1 if stamps were cleared.
+	 */
+	public double clearStamps();
+
 }
