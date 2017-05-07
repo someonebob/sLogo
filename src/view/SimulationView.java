@@ -93,4 +93,10 @@ public interface SimulationView extends View, Observer
 	 */
 	public void newActor();
 	
+	/**
+	 * Creates side view
+	 * @return
+	 */
+	public AllActorsView getActorImages();
+	
 }

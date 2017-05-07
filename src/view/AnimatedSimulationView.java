@@ -13,6 +13,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
+import javafx.scene.Node;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
@@ -43,6 +44,7 @@ public class AnimatedSimulationView implements SimulationView, Cloneable
 	private int id = 0;
 	private Defaults defaults;
 	private Tooltip tip;
+	private AllActorsView actorView;
 
 	public AnimatedSimulationView(Defaults defaults)
 	{
@@ -51,11 +53,16 @@ public class AnimatedSimulationView implements SimulationView, Cloneable
 		this.defaults = defaults;
 		List<TurtleView> list = new ArrayList<>();
 		actors = FXCollections.observableList(list);
-
+		actorView = new AllActorsView(actors);
 		for (int i = 0; i < defaults.numTurtles(); i++) {
 			newActor();
 		}
 		backgroundColor.setValue((Color) defaults.background());
+		
+	}
+	
+	public AllActorsView getActorImages(){
+		return actorView;
 	}
 
 	@Override
@@ -137,6 +144,7 @@ public class AnimatedSimulationView implements SimulationView, Cloneable
 		root.getChildren().add(actor.display());
 
 		actors.add(actor);
+		actorView.update();
 	}
 
 	@Override
@@ -160,6 +168,8 @@ public class AnimatedSimulationView implements SimulationView, Cloneable
 			if (root.getChildren().size() != 0) {
 				// remove last actor and its pen
 				root.getChildren().remove(root.getChildren().size() - 2, root.getChildren().size());
+				actors.remove(actors.size()-1);
+				actorView.update();
 			}
 
 		} else if (o instanceof DefaultButton) {

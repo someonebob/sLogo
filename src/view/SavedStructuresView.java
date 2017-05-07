@@ -73,10 +73,10 @@ public class SavedStructuresView implements View {
 		varTable.setPrefHeight(100);
 
 		variables = new TableColumn<>("Variable Name");
-		variables.setCellValueFactory(new PropertyValueFactory("name"));
+		variables.setCellValueFactory(new PropertyValueFactory<>("name"));
 		variables.setPrefWidth(150);
 		values = new TableColumn<>("Value");
-		values.setCellValueFactory(new PropertyValueFactory("value"));
+		values.setCellValueFactory(new PropertyValueFactory<>("value"));
 		values.setPrefWidth(150);
 
 		varTable.getColumns().setAll(variables, values);

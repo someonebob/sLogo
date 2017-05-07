@@ -54,6 +54,7 @@ import tool.SettingsMenuTool.LanguageButton;
 import tool.ToolButton;
 import user_structures.FunctionData;
 import user_structures.VariableData;
+import view.AllActorsView;
 import view.AnimatedSimulationView;
 import view.InputBox;
 import view.MultiLineInputBox;
@@ -73,7 +74,7 @@ public class Controller implements Observer
 	private ObjectProperty<Tab> currentTab;
 	private Map<Tab, SelectionBar> selectionBarMap;
 	private Map<Tab, SimulationView> simulationMap;
-	private Map<Tab, PreferencesView> preferencesMap;
+	private Map<Tab, AllActorsView> preferencesMap;
 	private Map<Tab, InputBox> inputBoxMap;
 	private Map<Tab, SavedStructuresView> workspaceMap;
 
@@ -148,7 +149,8 @@ public class Controller implements Observer
 		InputBox inputBox = new MultiLineInputBox();
 		inputBox.setFocus();
 		SavedStructuresView workspace = new SavedStructuresView();
-		PreferencesView preferences = new PreferencesView(simulation.getTurtle(), simulation);
+		//PreferencesView preferences = new PreferencesView(simulation.getTurtle(), simulation);
+		AllActorsView preferences = simulation.getActorImages();
 
 		SelectionBar selectionBar = new ComboBar();
 		MenuTool file = new FileMenuTool(stage);
@@ -176,7 +178,7 @@ public class Controller implements Observer
 	}
 
 	private void setupBorderPane(BorderPane pane, SelectionBar selectionBar, SimulationView simulation,
-			InputBox inputBox, SavedStructuresView workspace, PreferencesView preferences)
+			InputBox inputBox, SavedStructuresView workspace, AllActorsView preferences)
 
 	{
 		pane.setTop(selectionBar.display());
@@ -188,7 +190,7 @@ public class Controller implements Observer
 
 	private void putIntoMaps(Tab tab, SelectionBar selectionBar, SimulationView simulation, InputBox inputBox,
 
-			SavedStructuresView workspace, ObservableList<VariableData> variables, PreferencesView preferences,
+			SavedStructuresView workspace, ObservableList<VariableData> variables, AllActorsView preferences,
 			ObservableList<FunctionData> functions)
 	{
 		selectionBarMap.put(tab, selectionBar);
@@ -202,7 +204,7 @@ public class Controller implements Observer
 	}
 
 	private void setupObservers(SimulationView simulation, InputBox inputBox, MenuTool file, MenuTool settings,
-			ToolButton animation, ToolButton actorControl, PreferencesView preferences)
+			ToolButton animation, ToolButton actorControl, AllActorsView preferences)
 	{
 		file.addObservers(simulation);
 		file.addObservers(this);
@@ -256,7 +258,7 @@ public class Controller implements Observer
 
 			printValue = interpreter.parseAndRun(command);
 			simulationMap.get(currentTab.get()).step();
-			preferencesMap.get(currentTab.get()).step();
+			//preferencesMap.get(currentTab.get()).step();
 			inputBox.updateData(command);
 		} catch (SLogoException exception) {
 			exception.displayAlert();

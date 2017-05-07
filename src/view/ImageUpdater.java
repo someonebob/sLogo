@@ -22,18 +22,21 @@ public abstract class ImageUpdater extends AbstractUpdater
 	{
 		Button input = new Button();
 		input.setText(defaultText);
-		Stage newWindow = new Stage();
-		input.setOnAction(e -> {
-			File selectedFile = FileChooserUtil
-					.setupFileChooser("IMAGE", "IMAGE", new File(System.getProperty("user.dir") + "/images"), "*.png")
-					.showOpenDialog(newWindow);
-			if (selectedFile != null) {
-				Image newImage = new Image(selectedFile.toURI().toString());
-				this.setChanged();
-				this.notifyObservers(newImage);
-			}
-		});
+		
+		input.setOnAction(e -> update());
 		return input;
+	}
+	
+	private void update(){
+		Stage newWindow = new Stage();
+		File selectedFile = FileChooserUtil
+				.setupFileChooser("IMAGE", "IMAGE", new File(System.getProperty("user.dir") + "/images"), "*.png")
+				.showOpenDialog(newWindow);
+		if (selectedFile != null) {
+			Image newImage = new Image(selectedFile.toURI().toString());
+			this.setChanged();
+			this.notifyObservers(newImage);
+		}
 	}
 
 	@Override
