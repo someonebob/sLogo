@@ -1,0 +1,15 @@
+Slogo Addition
+==============
+
+###Estimation: before looking at the old code:
+1 hour
+2 files, add a view class, update in controller.
+
+###Review: after completing the feature:
+1 hour
+Updated 3 files, had to tie it to the SimulationView to connect the actors.
+It took me a few tries and I had to refamiliarize myself with the code.
+
+###Analysis: what do you feel this exercise reveals about your project's design and documentation?
+It isn't as good as I remembered. It should've been simpler to add to the preferencesView but there were too many dependencies tied together and on image updating wouldn't update another image somewhere else and it was a mess to deal with. I ended up replaing our original preferencesView for the additional view.
+It would've been manageable if I didn't know the code but would've taken maybe an extra hour.
