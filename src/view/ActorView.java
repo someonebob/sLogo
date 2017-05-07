@@ -159,6 +159,10 @@ public abstract class ActorView extends Observable implements View, Cloneable, O
 		this.image.mergeDuplicateDefaultImages(stringImage);
 	}
 	
+	/**
+	 * Returns a copy of the imageView representing this actor
+	 * @return
+	 */
 	public ImageView getDuplicateImageView(){
 		return new ImageView(new Image(getClass().getClassLoader().getResourceAsStream(stringImage)));
 	}

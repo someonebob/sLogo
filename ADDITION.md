@@ -25,7 +25,7 @@ Java FX 8 Documentation https://docs.oracle.com/javase/8/javafx/api/toc.htm
 Added Stamp and ClearStamps to Instruction hierarchy
 Edited InstructionData to pass stamp list from frontend to backend
 Edited AnimatedSimulationView and SimulationView to add stamp list and associated methods
-Edited TurtleView to add method to duplicate image
+Edited ActorView to add method to duplicate image
 
 ### did you get it completely right on the first try?
 No - there was significant debugging especially when adding the stamp list associated methods

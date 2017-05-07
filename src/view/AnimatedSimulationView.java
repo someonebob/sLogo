@@ -142,6 +142,9 @@ public class AnimatedSimulationView implements SimulationView, Cloneable
 		actors.add(actor);
 	}
 	
+	/**
+	 * Draws the stamp as an imageView and adds it to the stamp list
+	 */
 	@Override
 	public void drawStamp(ActorView activeActor){
 		ImageView imageViewToAdd = activeActor.getDuplicateImageView();
@@ -154,6 +157,9 @@ public class AnimatedSimulationView implements SimulationView, Cloneable
 		stamps.add(imageViewToAdd);
 	}
 	
+	/**
+	 * Removes all stamps from the stamp list and from the screen.
+	 */
 	@Override
 	public void clearStamps(){
 		for(ImageView stamp : stamps){

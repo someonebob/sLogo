@@ -321,14 +321,24 @@ public class InstructionData {
 		return ((TurtleView) getActiveActor()).getPen();
 	}
 	
+	/**
+	 * Calls simulation view's drawStamp() on the active actor.
+	 */
 	public void drawStamp(){
 		simulationView.drawStamp(getActiveActor());
 	}
 	
+	/**
+	 * Returns the stamp list from simulationView.
+	 * @return
+	 */
 	public List<ImageView> getStamps(){
 		 return simulationView.getStamps();
 	}
 	
+	/**
+	 * Removes all stamps from the stamp list.
+	 */
 	public void clearStamps(){
 		simulationView.clearStamps();
 	}
