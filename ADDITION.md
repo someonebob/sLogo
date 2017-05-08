@@ -1,8 +1,8 @@
-###Addition to SLogo
+### Addition to SLogo
 **Maddie Briere**
 ---
 
-###Before looking at the old code (Friday May 5)
+### Before looking at the old code (Friday May 5)
 
 **How long do you think it will take you to complete this new feature?**
 
@@ -37,7 +37,7 @@ Likewise, I will probably have to add code to display stamps on the screen/updat
 
 I would estimate the total number of files changed or added as **4 files.**
 
-###After working on assignment (Sunday May 7)
+### After working on assignment (Sunday May 7)
 
 **Review: after completing the feature:**
 
